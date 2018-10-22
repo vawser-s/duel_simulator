@@ -1,0 +1,1009 @@
+from settings import *
+import random
+import sys
+from typing import Type
+
+import time
+from enum import Enum
+# https://docs.python.org/3/library/enum.html <-- FOR ENUM INFO
+from duelist import *
+from card import *
+from effect import *
+
+
+# Method to setup the card database and runs decksetup()
+def cardSetup():
+
+    # The card template is as follows:
+    # card(Name, Atk Points, Effect Name, Effect Trigger Enum, Effect Derscription)
+
+    # Cyber Deck
+    global microCoder
+    global microCoder2
+    global codeGenerator
+    global codeGenerator2
+    global codeRadiator
+    global codeRadiator2
+    global ladyDebug
+    global ladyDebug2
+    global cyberseGadget
+    global cyberseGadget2
+    global dongleAcorn
+    global dongleAcorn2
+    global cyberseWhiteHat
+    global cyberseWhiteHat2
+    global fireWallDragon
+    global fireWallDragon2
+    global dualAssembwurm
+    global dualAssembwurm2
+    global segmentDriver
+    global segmentDriver2
+    microCoder = card("Micro Coder", 300, 0, PlayerDraw2, effTrigger.summon, PlayerDraw2.desc)
+    microCoder2 = card("Micro Coder", 300, 0, PlayerDraw2, effTrigger.summon, PlayerDraw2.desc)
+    codeGenerator = card("Code Generator", 1300, 0, effectCodeSearch, effTrigger.summon, effectCodeSearch.desc)
+    codeGenerator2 = card("Code Generator", 1300, 0, effectCodeSearch, effTrigger.summon, effectCodeSearch.desc)
+    codeRadiator = card("Code Radiator", 1600, 0, doubleSummon, effTrigger.summon, doubleSummon.desc)
+    codeRadiator2 = card("Code Radiator", 1600, 0, doubleSummon, effTrigger.summon, doubleSummon.desc)
+    ladyDebug = card("Lady Debug", 1000, 0, specialCyberseHand, effTrigger.summon, specialCyberseHand.desc)
+    ladyDebug2 = card("Lady Debug", 1000, 0, specialCyberseHand, effTrigger.summon, specialCyberseHand.desc)
+    cyberseGadget = card("Cyberse Gadget", 1400, 0, Destroy, effTrigger.summon, Destroy.desc)
+    cyberseGadget2 = card("Cyberse Gadget", 1400, 0, Destroy, effTrigger.summon, Destroy.desc)
+    dongleAcorn = card("Dongle Acorn", 0, 0, battleImmune, effTrigger.destructionBat, battleImmune.desc)
+    dongleAcorn2 = card("Dongle Acorn", 0, 0, battleImmune, effTrigger.destructionBat, battleImmune.desc)
+    cyberseWhiteHat = card("Cyberse White Hat", 2100, 1, effectSearch, effTrigger.summon, effectSearch.desc)
+    cyberseWhiteHat2 = card("Cyberse White Hat", 2100, 1, effectSearch, effTrigger.summon, effectSearch.desc)
+    fireWallDragon = card("Cyberse Dragon", 2500, 1, specialfromHand, effTrigger.destructionEff, (specialfromHand.desc + " (Destroyed by Card Effect)"))
+    fireWallDragon2 = card("Cyberse Dragon", 2500, 1, specialfromHand, effTrigger.destructionEff, (specialfromHand.desc + " (Destroyed by Card Effect)"))
+    dualAssembwurm = card("Dual Assembwurm", 2800, 1, oppDisc2, effTrigger.summon, oppDisc2.desc)
+    dualAssembwurm2 = card("Dual Assembwurm", 2800, 1, oppDisc2, effTrigger.summon, oppDisc2.desc)
+    segmentDriver = card("Cyberse Driver", 2200, 1, oppDisc1, effTrigger.summon, oppDisc1.desc)
+    segmentDriver2 = card("Cyberse Driver", 2200, 1, oppDisc1, effTrigger.summon, oppDisc1.desc)
+
+    # Vampire Deck
+    global vampireFamiliar
+    global vampireFamiliar2
+    global vampireSucker
+    global vampireSucker2
+    global vampireFraulein
+    global vampireFraulein2
+    global vampireGrace
+    global vampireGrace2
+    global vampireGenesis
+    global vampireGenesis2
+    global mezuki
+    global mezuki2
+    global unizombie
+    global unizombie2
+    global shiranuiSolitare
+    global shiranuiSolitare2
+    global armageddonKnight
+    global armageddonKnight2
+    global zombieMaster
+    global zombieMaster2
+    vampireFamiliar = card("Vampire Familiar", 300, 0, effectVampSearch, effTrigger.summon, effectVampSearch.desc)
+    vampireFamiliar2 = card("Vampire Familiar", 300, 0, effectVampSearch, effTrigger.summon, effectVampSearch.desc)
+    vampireSucker = card("Vampire Sucker", 1600, 0, specialVampireHand, effTrigger.summon, specialVampireHand.desc)
+    vampireSucker2 = card("Vampire Sucker", 1600, 0, specialVampireHand, effTrigger.summon, specialVampireHand.desc)
+    vampireFraulein = card("Vampire Fraulein", 800, 0, battleImmune, effTrigger.destructionBat, battleImmune.desc)
+    vampireFraulein2 = card("Vampire Fraulein", 800, 0, battleImmune, effTrigger.destructionBat, battleImmune.desc)
+    vampireGrace = card("Vampire Grace", 2200, 1, SiphonLife800, effTrigger.battle, (SiphonLife800.desc + " (Battle)"))
+    vampireGrace2 = card("Vampire Grace", 2200, 1, SiphonLife800, effTrigger.battle, (SiphonLife800.desc + " (Battle)"))
+    vampireGenesis = card("Vampire Genesis", 2800, 1, SiphonLife1500, effTrigger.battle, (SiphonLife1500.desc + " (Battle)"))
+    vampireGenesis2 = card("Vampire Genesis", 2800, 1, SiphonLife1500, effTrigger.battle, (SiphonLife1500.desc + " (Battle)"))
+    mezuki = card("Mezuki", 1600, 0, Destroy, effTrigger.summon, Destroy.desc)
+    mezuki2 = card("Mezuki", 1600, 0, Destroy, effTrigger.summon, Destroy.desc)
+    unizombie = card("Uni-Zombie", 1500, 0, PlayerDraw1, effTrigger.summon, PlayerDraw1.desc)
+    unizombie2 = card("Uni-Zombie", 1500, 0, PlayerDraw1, effTrigger.summon, PlayerDraw1.desc)
+    shiranuiSolitare = card("Shiranui Solitare", 1300, 0, PlayerDraw2, effTrigger.summon, PlayerDraw2.desc)
+    shiranuiSolitare2 = card("Shiranui Solitare", 1300, 0, PlayerDraw2, effTrigger.summon, PlayerDraw2.desc)
+    armageddonKnight = card("Armageddon Knight", 1400, 0, doubleSummon, effTrigger.summon, doubleSummon.desc)
+    armageddonKnight2 = card("Armageddon Knight", 1400, 0, doubleSummon, effTrigger.summon, doubleSummon.desc)
+    zombieMaster = card("Zombie Master", 1800, 0, oppDisc1, effTrigger.summon, oppDisc1.desc)
+    zombieMaster2 = card("Zombie Master", 1800, 0, oppDisc1, effTrigger.summon, oppDisc1.desc)
+
+    # Gishki Deck
+    global gishkiBeast
+    global gishkiBeast2
+    global gishkiAbyss
+    global gishkiAbyss2
+    global gishkiAquamirror
+    global gishkiAquamirror2
+    global gishkiShadow
+    global gishkiShadow2
+    global visionGishki
+    global visionGishki2
+    global gishkiAriel
+    global gishkiAriel2
+    global evigishkiLevianima
+    global evigishkiLevianima2
+    global evigishkiSoulOgre
+    global evigishkiSoulOgre2
+    global evigishkiGustKraken
+    global evigishkiGustKraken2
+    global evigishkiPsychlone
+    global evigishkiPsychlone2
+    gishkiBeast = card("Gishki Beast", 1500, 0, gain500, effTrigger.battle, (gain500.desc + " (Battle)"))
+    gishkiBeast2 = card("Gishki Beast", 1500, 0, gain500, effTrigger.battle, (gain500.desc + " (Battle)"))
+    gishkiAbyss = card("Gishki Abyss", 800, 0, PlayerDraw2, effTrigger.battle, (PlayerDraw2.desc + " (Battle)"))
+    gishkiAbyss2 = card("Gishki Abyss", 800, 0, PlayerDraw2, effTrigger.battle, (PlayerDraw2.desc + " (Battle)"))
+    gishkiAquamirror = card("Gishki Aquamirror", 0, 0, doubleSummon, effTrigger.summon, doubleSummon.desc)
+    gishkiAquamirror2 = card("Gishki Aquamirror", 0, 0, doubleSummon, effTrigger.summon, doubleSummon.desc)
+    gishkiShadow = card("Gishki Shadow", 1200, 0, battleImmune, effTrigger.destructionBat, battleImmune.desc)
+    gishkiShadow2 = card("Gishki Shadow", 1200, 0, battleImmune, effTrigger.destructionBat, battleImmune.desc)
+    visionGishki = card("Vision Gishki ", 1000, 0, effectGishkiSearch, effTrigger.summon, effectGishkiSearch.desc)
+    visionGishki2 = card("Vision Gishki ", 1000, 0, effectGishkiSearch, effTrigger.summon, effectGishkiSearch.desc)
+    gishkiAriel = card("Gishki Ariel", 1200, 0, bounceMonster, effTrigger.summon, bounceMonster.desc)
+    gishkiAriel2 = card("Gishki Ariel", 1200, 0, bounceMonster, effTrigger.summon, bounceMonster.desc)
+    evigishkiLevianima = card("Evigishki Levianima", 2200, 1, effectGishkiSearch, effTrigger.summon, effectGishkiSearch.desc)
+    evigishkiLevianima2 = card("Evigishki Levianima", 2200, 1, effectGishkiSearch, effTrigger.summon, effectGishkiSearch.desc)
+    evigishkiSoulOgre = card("Evigishki Soul Ogre", 2800, 1, gain1000, effTrigger.battle, (gain1000.desc + " (Battle)"))
+    evigishkiSoulOgre2 = card("Evigishki Soul Ogre", 2800, 1, gain1000, effTrigger.battle, (gain1000.desc + " (Battle)"))
+    evigishkiGustKraken = card("Evigishki Gustkraken", 2500, 1, specialGishkiHand, effTrigger.battle, (effectEvigishkiSearch.desc + " (Battle)"))
+    evigishkiGustKraken2 = card("Evigishki Gustkraken", 2500, 1, specialGishkiHand, effTrigger.battle, (effectEvigishkiSearch.desc + " (Battle)"))
+    evigishkiPsychlone = card("Evigishki Psychlone", 2000, 1, Destroy, effTrigger.battle, (Destroy.desc + " (Battle)"))
+    evigishkiPsychlone2 = card("Evigishki Psychlone", 2000, 1, Destroy, effTrigger.battle, (Destroy.desc + " (Battle)"))
+
+    # Herald Deck
+    global orangeHerald
+    global orangeHerald2
+    global purpleHerald
+    global purpleHerald2
+    global arcHerald
+    global arcHerald2
+    global dawnHerald
+    global dawnHerald2
+    global agentEarth
+    global agentEarth2
+    global agentVenus
+    global agentVenus2
+    global agentMars
+    global agentMars2
+    global agentSaturn
+    global agentSaturn2
+    global heraldPerfection
+    global heraldPerfection2
+    global masterHyperion
+    global masterHyperion2
+    orangeHerald = card("Herald of Orange Light", 800, 0, effectHeraldSearch, effTrigger.summon, effectHeraldSearch.desc)
+    orangeHerald2 = card("Herald of Orange Light", 800, 0, effectHeraldSearch, effTrigger.summon, effectHeraldSearch.desc)
+    purpleHerald = card("Herald of Purple Light", 800, 0, matchAttack, effTrigger.battle, matchAttack.desc)
+    purpleHerald2 = card("Herald of Purple Light", 800, 0, matchAttack, effTrigger.battle, matchAttack.desc)
+    arcHerald = card("Herald of Arc Light", 800, 0, Restore2000, effTrigger.summon, Restore2000.desc)
+    arcHerald2 = card("Herald of Arc Light", 800, 0, Restore2000, effTrigger.summon, Restore2000.desc)
+    dawnHerald = card("Herald of the Dawn", 0, 0, doubleSummon, effTrigger.summon, doubleSummon.desc)
+    dawnHerald2 = card("Herald of the Dawn", 0, 0, doubleSummon, effTrigger.summon, doubleSummon.desc)
+    agentEarth = card("Agent of Mystery: Earth", 1200, 0, effectAgentSearch, effTrigger.summon, effectAgentSearch.desc)
+    agentEarth2 = card("Agent of Mystery: Earth", 1200, 0, effectAgentSearch, effTrigger.summon, effectAgentSearch.desc)
+    agentVenus = card("Agent of Creation: Venus", 1600, 0, specialAgentHand, effTrigger.summon, specialAgentHand.desc)
+    agentVenus2 = card("Agent of Creation: Venus", 1600, 0, specialAgentHand, effTrigger.summon, specialAgentHand.desc)
+    agentMars = card("Agent of Force: Mars", 0, 0, gainDifference, effTrigger.summon, gainDifference.desc)
+    agentMars2 = card("Agent of Force: Mars", 0, 0, gainDifference, effTrigger.summon, gainDifference.desc)
+    agentSaturn = card("Agent of Judgment: Saturn", 2400, 1, Restore2000, effTrigger.summon, Restore2000.desc)
+    agentSaturn2 = card("Agent of Judgment: Saturn", 2400, 1, Restore2000, effTrigger.summon, Restore2000.desc)
+    heraldPerfection = card("Herald of Perfection", 2800, 1, gainDifference, effTrigger.summon, gainDifference.desc)
+    heraldPerfection2 = card("Herald of Perfection", 2800, 1, gainDifference, effTrigger.summon, gainDifference.desc)
+    masterHyperion = card("Master Hyperion", 2800, 1, specialfromHand, effTrigger.summon, specialfromHand.desc)
+    masterHyperion2 = card("Master Hyperion", 2800, 1, specialfromHand, effTrigger.summon, specialfromHand.desc)
+
+    # TEST CARDS
+
+    global copyMachine
+    copyMachine = card("Copy Machine", 0, 0, matchAttack, effTrigger.battle, matchAttack.desc)
+
+    global discard1Guy
+    global deviousDiscard1Guy
+    global deviousDiscardDiva
+    global tributeMasterJerry
+    global battleImmuneIvan
+    global effectImmuneEdgar
+    global cyberDigger
+    global deckDigger
+    global doubleSummoner
+    global resurrector
+    global reAdder
+    global graveyardGarry
+    global lifeVitalizer
+    discard1Guy = card("Discard Guy", 500, 0, playerDisc1, effTrigger.summon, playerDisc1.desc)
+    deviousDiscard1Guy = card("Devious Discard Guy", 0, 0, oppDisc1, effTrigger.summon, oppDisc1.desc)
+    deviousDiscardDiva = card("Devious Discard Diva", 2500, 0, playerDisc1, effTrigger.battle, (playerDisc1.desc + " (Battle)"))
+    tributeMasterJerry = card("Tribute Master Jerry", 2500, 1)
+    battleImmuneIvan = card("Battle Immune Ivan", 0, 0, battleImmune, effTrigger.destructionBat, battleImmune.desc)
+    effectImmuneEdgar = card("Effect Immune Edgar", 1500, 0, effectImmune, effTrigger.destructionEff, effectImmune.desc)
+    cyberDigger = card("Cyber Digger", 1000, 0, effectCodeSearch, effTrigger.summon, effectCodeSearch.desc)
+    deckDigger = card("Deck Digger", 200, 0, effectSearch, effTrigger.summon, effectSearch.desc)
+    doubleSummoner = card("Double Summoner", 1500, 0, doubleSummon, effTrigger.summon, doubleSummon.desc)
+    resurrector = card("Resurrector", 0, 0, Trib_SS_GY, effTrigger.summon, Trib_SS_GY.desc)
+    reAdder = card("Re-Adder", 1200, 0, GYToHand, effTrigger.summon, GYToHand.desc)
+    graveyardGarry = card("Graveyard Garry", 2000, 1, PlayerDraw2, effTrigger.graveyard, PlayerDraw2.desc)
+    lifeVitalizer = card("Life Vitalizer", 1800, 0, gainDifference, effTrigger.summon, gainDifference.desc)
+
+
+# Method to setup decks once the cards have been set
+def decksetup():
+    CyberDeck = []
+    VampireDeck = []
+    GishkiDeck = []
+    HeraldDeck = []
+    DeckList = []
+
+    pass
+
+    CyberDeck.append(microCoder)
+    CyberDeck.append(microCoder2)
+    CyberDeck.append(codeGenerator)
+    CyberDeck.append(codeGenerator2)
+    CyberDeck.append(codeRadiator)
+    CyberDeck.append(codeRadiator2)
+    CyberDeck.append(ladyDebug)
+    CyberDeck.append(ladyDebug2)
+    CyberDeck.append(cyberseGadget)
+    CyberDeck.append(cyberseGadget2)
+    CyberDeck.append(dongleAcorn)
+    CyberDeck.append(dongleAcorn2)
+    CyberDeck.append(cyberseWhiteHat)
+    CyberDeck.append(cyberseWhiteHat2)
+    CyberDeck.append(fireWallDragon)
+    CyberDeck.append(dualAssembwurm)
+    CyberDeck.append(segmentDriver)
+    CyberDeck.append(segmentDriver2)
+
+    VampireDeck.append(vampireFamiliar)
+    VampireDeck.append(vampireFamiliar2)
+    VampireDeck.append(vampireSucker)
+    VampireDeck.append(vampireSucker2)
+    VampireDeck.append(vampireFraulein)
+    VampireDeck.append(vampireFraulein2)
+    VampireDeck.append(vampireGrace)
+    VampireDeck.append(vampireGrace2)
+    VampireDeck.append(vampireGenesis)
+    VampireDeck.append(vampireGenesis2)
+    VampireDeck.append(mezuki)
+    VampireDeck.append(mezuki2)
+    VampireDeck.append(unizombie)
+    VampireDeck.append(unizombie2)
+    VampireDeck.append(shiranuiSolitare)
+    VampireDeck.append(shiranuiSolitare2)
+    VampireDeck.append(armageddonKnight)
+    VampireDeck.append(armageddonKnight2)
+    VampireDeck.append(zombieMaster)
+    VampireDeck.append(zombieMaster2)
+
+    GishkiDeck.append(gishkiBeast)
+    GishkiDeck.append(gishkiBeast2)
+    GishkiDeck.append(gishkiAbyss)
+    GishkiDeck.append(gishkiAbyss2)
+    GishkiDeck.append(gishkiAquamirror)
+    GishkiDeck.append(gishkiAquamirror2)
+    GishkiDeck.append(gishkiShadow)
+    GishkiDeck.append(gishkiShadow2)
+    GishkiDeck.append(visionGishki)
+    GishkiDeck.append(visionGishki2)
+    GishkiDeck.append(gishkiAriel)
+    GishkiDeck.append(gishkiAriel2)
+    GishkiDeck.append(evigishkiLevianima)
+    GishkiDeck.append(evigishkiLevianima2)
+    GishkiDeck.append(evigishkiSoulOgre)
+    GishkiDeck.append(evigishkiGustKraken)
+    GishkiDeck.append(evigishkiPsychlone)
+    GishkiDeck.append(evigishkiPsychlone2)
+
+    HeraldDeck.append(orangeHerald)
+    HeraldDeck.append(orangeHerald2)
+    HeraldDeck.append(orangeHerald2)
+    HeraldDeck.append(purpleHerald)
+    HeraldDeck.append(purpleHerald2)
+    HeraldDeck.append(arcHerald)
+    HeraldDeck.append(arcHerald2)
+    HeraldDeck.append(dawnHerald)
+    HeraldDeck.append(dawnHerald2)
+    HeraldDeck.append(agentEarth)
+    HeraldDeck.append(agentEarth2)
+    HeraldDeck.append(agentVenus)
+    HeraldDeck.append(agentVenus2)
+    HeraldDeck.append(agentMars)
+    HeraldDeck.append(agentMars2)
+    HeraldDeck.append(agentSaturn)
+    HeraldDeck.append(agentSaturn2)
+    HeraldDeck.append(heraldPerfection)
+    HeraldDeck.append(heraldPerfection2)
+    HeraldDeck.append(masterHyperion)
+
+    random.shuffle(CyberDeck)
+    random.shuffle(VampireDeck)
+    random.shuffle(GishkiDeck)
+    random.shuffle(HeraldDeck)
+
+    DeckList.append(CyberDeck)
+    DeckList.append(VampireDeck)
+    DeckList.append(GishkiDeck)
+    DeckList.append(HeraldDeck)
+
+    for monster in CyberDeck:
+        monster.attacked = 0
+
+    for monster in VampireDeck:
+        monster.attacked = 0
+
+    for monster in GishkiDeck:
+        monster.attacked = 0
+
+    for monster in HeraldDeck:
+        monster.attacked = 0
+
+    # Get user deck selection
+    while True:
+        print("--------------------------------------")
+        print("Deck List:")
+        # Hardcode values for the Deck Selection here | Impliment a Deck object with a description element, like the
+        # effect description
+        print("[1] Cyber Deck   | Theme: Discarding / Tribute")
+        print("[2] Vampire Deck | Theme: Stealing Life / Graveyard Effects")
+        print("[3] Gishki Deck  | Theme: Attack Boosts / Battling")
+        print("[4] Herald Deck  | Theme: Life Point Gain / Special Summon From Hand")
+        # print("[5] Magician Deck | Theme: Graveyard Boosts / Destruction")
+        selection = input("~~Select a Deck to Use:")
+        try:
+            selection = int(selection)
+
+            try:
+                if selection == 1:
+                    _player.deck = CyberDeck
+                    print("--------------------------------------")
+                    print("You have selected the Cyber Deck")
+                    break
+                elif selection == 2:
+                    _player.deck = VampireDeck
+                    print("--------------------------------------")
+                    print("You have selected the Vampire Deck")
+                    break
+                elif selection == 3:
+                    _player.deck = GishkiDeck
+                    print("--------------------------------------")
+                    print("You have selected the Gishki Deck")
+                    break
+                elif selection == 4:
+                    _player.deck = HeraldDeck
+                    print("You have selected the Herald Deck")
+                    break
+                else:
+                    print("--------------------------------------")
+                    print("Invalid Selection")
+            except TypeError:
+                print("--------------------------------------")
+                print("Invalid Selection")
+        except ValueError:
+            print("--------------------------------------")
+            print("Invalid Selection")
+
+    time.sleep(0.5)
+
+    # Random deck selection for the opponent
+    while True:
+        oppselection = random.randint(0, (DeckList.__len__()))
+        _foe.deck = DeckList[oppselection]
+
+        # Print the opponent's random selection for the player
+        if oppselection == 0 and _player.deck != _foe.deck:
+            print("--------------------------------------")
+            print("{} has selected the Cyber Deck".format(_foe.name))
+            break
+        if oppselection == 1 and _player.deck != _foe.deck:
+            print("--------------------------------------")
+            print("{} has selected the Vampire Deck".format(_foe.name))
+            break
+        if oppselection == 2 and _player.deck != _foe.deck:
+            print("--------------------------------------")
+            print("{} has selected the Gishki Deck".format(_foe.name))
+            break
+        if oppselection == 2 and _player.deck != _foe.deck:
+            print("{} has selected the Herald Deck".format(_foe.name))
+
+    print("--------------------------------------")
+
+    time.sleep(0.75)
+
+    print("\n" * 50)
+
+
+def reset():
+
+    print("Resetting Gamestate: ")
+    _player.monfield = []
+    _foe.monfield = []
+
+    _player.hand = []
+    _foe.hand = []
+
+    _player.lifepoints = 8000
+    _foe.lifepoints = 8000
+
+    global turnCount
+    turnCount = 0
+
+    global firstTurn
+    firstTurn = 0
+
+    resetNormalSummon()
+
+    print("\n" * 50)
+
+    pass
+
+
+# Method to contain the main menu and all its options
+def mainMenu():
+
+    # Loop through menu always, program should system.exit() before this gets broken
+    while True:
+
+        # Print menu options
+        print("---------- Welcome to Duels ----------")
+        
+        print("[1] Play a Duel")
+        
+        print("[2] Exit")
+
+        print("[3] Debug")
+
+        # get the selection, and open the appropriate submenu
+        try:
+            selection = input("~~~Please select a menu option")
+            selection = int(selection)
+            if selection == 1:
+                i = 0
+
+                cardSetup()
+
+                decksetup()
+
+                # -- Main loop from which the duels run --
+                while True:
+                    if i == 1:
+                        exitProg = turnMenu(_foe, _player)
+                        i = 0
+                    elif i == 0:
+                        exitProg = turnMenu(_player, _foe)
+                        i = 1
+                    else:
+                        print("Duel Machine Broke: Turn Error")
+                        exitProg = None
+
+                    if exitProg == "true":
+                        break
+                    elif exitProg == "false":
+                        pass
+                    else:
+                        print("exitProg error")
+                        pass
+
+            elif selection == 2:
+                # Ends program with no errors
+                sys.exit(0)
+
+            elif selection == 3:
+                # Sets yup debug mode and allows python console input by returning
+                print("--------------------------------------")
+                print("Debug Mode Enabled")
+
+                cardSetup()
+
+                TestDeck = [discard1Guy, deviousDiscard1Guy, tributeMasterJerry, battleImmuneIvan, cyberDigger,
+                            deckDigger, doubleSummoner, resurrector, reAdder, graveyardGarry]
+
+                _player.hand.append(discard1Guy)
+                _player.hand.append(deviousDiscard1Guy)
+                _player.hand.append(tributeMasterJerry)
+                _player.hand.append(battleImmuneIvan)
+                _player.hand.append(cyberDigger)
+                _player.hand.append(deckDigger)
+                _player.hand.append(doubleSummoner)
+                _player.hand.append(resurrector)
+                _player.hand.append(reAdder)
+                _player.hand.append(graveyardGarry)
+
+                _foe.hand.append(deviousDiscard1Guy)
+                _foe.hand.append(tributeMasterJerry)
+                _foe.hand.append(battleImmuneIvan)
+
+                _player.gy.append(discard1Guy)
+                _player.gy.append(deviousDiscard1Guy)
+                _player.gy.append(tributeMasterJerry)
+                _player.gy.append(battleImmuneIvan)
+                _player.gy.append(cyberDigger)
+                _player.gy.append(deckDigger)
+                _player.gy.append(doubleSummoner)
+                _player.gy.append(resurrector)
+                _player.gy.append(reAdder)
+                _player.gy.append(graveyardGarry)
+
+                _player.deck = TestDeck
+                _foe.deck = TestDeck
+
+                return
+            else:
+                # Return Error
+                print("--------------------------------------")
+                print("Invalid Selection")
+        except ValueError:
+            # Return error
+            print("--------------------------------------")
+            print("Invalid Selection")
+
+
+# Menu that contains a players turn menus
+def turnMenu(currentPlayer: object, passivePlayer: object):
+
+    # resetting attacked values on Field
+    try:
+        for monster in currentPlayer.monfield:
+            monster.attacked = 0
+    except IndexError:
+        pass
+    try:
+        for monster in passivePlayer.monfield:
+            monster.attacked = 0
+    except IndexError:
+        pass
+
+    # resetting attacked values in graveyard
+
+    try:
+        for monster in currentPlayer.gy:
+            monster.attacked = 0
+    except IndexError:
+        pass
+
+    try:
+        for monster in passivePlayer.gy:
+            monster.attacked = 0
+    except IndexError:
+        pass
+
+    # Retrieve the global variables and set up rest of needed variables
+    global turnCount
+    global firstTurn
+    global destination
+    destination = ""
+
+    effectCheck = 0
+
+    resetNormalSummon()
+
+    # Move the turn count and announce the turn
+    turnCount = turnCount + 1
+    print("--------------------------------------")
+    print("Turn {}: {}'s Turn".format(turnCount, currentPlayer.name))
+
+    time.sleep(0.7)
+
+    # Checks for first turn
+
+    # DRAW PHASE
+    if firstTurn == 0:
+        _player.draw(4)
+
+        # -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
+        # -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
+        # -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
+        # -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
+        # _player.hand.append()
+        # _foe.hand.append()
+        # -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------
+        # -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------
+        # -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------
+        # -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------
+
+        _foe.draw(4)
+        
+    else:
+        currentPlayer.draw(1)
+
+    # Print current field status
+    print("--------------------------------------")
+    currentPlayer.checkField()
+
+    # MAIN PHASE
+    while True:
+
+        while True:
+            print("--------------------------------------")
+            print("[1] Play a Card")
+            
+            print("[2] Check your Hand")
+            
+            print("[3] Check your Field")
+            
+            print("[4] Check your Graveyard")
+
+            print("[5] Check Player Life Points and Deck")
+            
+            print("[6] Go to Battle Phase (Ends turn after)")
+            
+            print("[7] End your Turn")
+            
+            print("[8] Return to Main Menu")
+
+            # get user selection
+            try:
+                selection = input("~~~Select an Action")
+                selection = int(selection)
+                print("--------------------------------------")
+                break
+            except ValueError:
+                print("--------------------------------------")
+                print("Invalid Selection")
+
+        # applies applicable action to selection
+        if selection == 1:  # [1] Play a Card
+
+            nSummon = int(returnNormalSummon())
+
+            if nSummon == 0:
+                effectCheck = 0
+
+            # Play the card, and return whether a card was actually played (can just return)
+            result = currentPlayer.playCard()
+
+            length = currentPlayer.monfield.__len__()
+
+            # checks if the user returned ®or actually played a card
+            if result == 0:
+                pass
+            else:
+                playedCard = currentPlayer.monfield[length - 1]
+
+                # Check if the monster has an on-summon effect effect, and activate it if it hasn't used it yet
+                if effectCheck == 0:
+                    try:
+                        if playedCard.trigger.name == "summon":
+                            monster = playedCard
+                            if currentPlayer == _player:
+                                passivePlayer = _foe
+                            else:
+                                passivePlayer = _player
+
+                            try:
+                                oppmonster = None
+                                monster.effect.resolve(currentPlayer, passivePlayer, monster,
+                                                       oppmonster, currentPlayer.gy, passivePlayer.gy, currentPlayer)
+                                effectCheck = 1
+                            except IndexError:
+                                oppmonster = None
+                                monster.effect.resolve(currentPlayer, passivePlayer, monster,
+                                                       oppmonster, currentPlayer.gy, passivePlayer.gy, currentPlayer)
+                                effectCheck = 1
+                    except AttributeError:
+                        effectCheck = 1
+                        pass
+                    except IndexError:
+                        pass
+
+                else:
+                    pass
+
+        elif selection == 2:  # [2] Check Hand
+            currentPlayer.checkHand()
+            pass
+
+        elif selection == 3:  # [3] Check Field
+            print("{}'s Field:".format(_player.name))
+            currentPlayer.checkField()
+            print("{}'s Field:".format(_foe.name))
+            passivePlayer.checkField()
+
+        elif selection == 4:  # [4] Check your Graveyard
+            currentPlayer.checkGraveyard()
+            passivePlayer.checkGraveyard()
+
+        elif selection == 5:  # [5] Check Life Points and Deck Size
+            currentPlayer.checkLP_Deck()
+            passivePlayer.checkLP_Deck()
+
+        # Destinations
+        elif selection == 6 and firstTurn == 1:  # [6] Battle Phase
+            destination = "battle"
+            if currentPlayer.name == _player.name:
+                exitBattle = battleMenu(_player, _foe)
+
+                if exitBattle == 1:
+                    pass
+                elif exitBattle == 0:
+                    break
+            elif currentPlayer.name == _foe.name:
+                exitBattle = battleMenu(_foe, _player)
+
+                if exitBattle == 1:
+                    pass
+                elif exitBattle == 0:
+                    break
+
+        elif selection == 6 and firstTurn == 0:  # [6] Battle Phase
+            print("Cannot attack on first turn")
+            pass
+
+        elif selection == 7:  # [7] End Turn
+            destination = "end"
+            break
+
+        elif selection == 8:  # [8] Return to Main Menu
+            destination = "menu"
+            break
+
+        else:
+            print("--------------------------------------")
+            print("Invalid Selection")
+
+    # Checking Destinations here, to allow turn loop to end/reset and prevent nested loops
+    if destination == "end" or destination == "battle":
+        # move to next players turn
+        print("Turn End")
+        time.sleep(0.5)
+
+        print("\n" * 50)
+
+        if firstTurn == 0:
+            firstTurn = 1
+
+        exitProg = "false"
+        return exitProg
+    elif destination == "menu":
+        # Reset
+        reset()
+
+        exitProg = "true"
+
+        # exit method
+        print("\n" * 2)
+
+        # Return to Main Menu
+        return exitProg
+
+
+# BATTLE PHASE
+def battleMenu(turnPlayer: object, passivePlayer: object):
+    print("Battle Phase Engaged")
+
+    # Check Field
+
+    print("--------------------------------------")
+    print("Your Field:")
+    turnPlayer.checkField()
+
+    print("--------------------------------------")
+    print("{}'s Field".format(passivePlayer.name))
+    passivePlayer.checkField()
+
+    # Battle Phase Menu
+
+    while True:
+        print("--------------------------------------")
+        print("[1] Attack with a Monster")
+
+        print("[2] End your Turn")
+
+        print("[0]  Return")
+
+        try:
+            selection = input("~~~Select an Action")
+            selection = int(selection)
+
+            if selection > 2:
+                raise ValueError
+
+            break
+        except ValueError:
+            print("--------------------------------------")
+            print("Invalid Selection")
+
+    if selection == 1:
+
+        # loop through battle phase procedure
+        while True:
+
+            # Retrieve the user monster selection
+            while True:
+
+                # check if all monsters have attacked
+                global allAttacked
+                allAttacked = 1
+
+                # Check if any monsters have not attacked yet
+                for monster in turnPlayer.monfield:
+                    if monster.attacked == 0:
+                        allAttacked = 0
+
+                # If all monsters have attacked
+                if allAttacked == 1:
+                    print("All Monsters attacked, ending battle phase and turn...")
+                    time.sleep(1.5)
+                    return 0
+
+                # Print all monsters on your field
+                print("--------------------------------------")
+                turnPlayer.checkFieldAtk()
+
+                print("[0]  Return")
+                print("--------------------------------------")
+                target = input("~~Please select a monster to attack with")
+
+                try:
+                    target = int(target) - 1
+                except ValueError:
+                    pass
+                except TypeError:
+                    pass
+
+                if target == -1:
+                    return 1
+
+                try:
+                    if turnPlayer.monfield[target].attacked == 0:
+                        atkMon = turnPlayer.monfield[target]
+                        atkMon.attacked = 1
+                        break
+                    else:
+                        print("--------------------------------------")
+                        print("Invalid Selection")
+                except (ValueError, IndexError, TypeError):
+                    print("--------------------------------------")
+                    print("Invalid Selection")
+                    print("Group")
+
+            # retrieve the user attack target
+            if passivePlayer.monfield:
+                while True:
+
+                    passivePlayer.checkField()
+
+                    print("--------------------------------------")
+                    target = input("~~Please select a monster to attack:")
+
+                    try:
+                        target = int(target) - 1
+                    except (TypeError, IndexError, ValueError):
+                        pass
+
+                    try:
+                        atkTarget = passivePlayer.monfield[target]
+                        break
+                    except (IndexError, TypeError):
+                        print("--------------------------------------")
+                        print("Invalid Selection")
+                        print("--------------------------------------")
+
+                damage = atkMon.atkPoints - atkTarget.atkPoints
+            else:
+                print("Direct Attack!")
+                damage = atkMon.atkPoints
+                atkTarget = None
+
+            # Monster Effect: Attacker (Returns Damage)
+            try:
+                if atkMon.trigger.name == "battle":
+                    monster = atkMon
+                    if atkTarget is not None:
+                        oppmonster = atkTarget
+                        damage = monster.effect.resolve(turnPlayer, passivePlayer, monster,
+                                                        oppmonster, turnPlayer.gy, passivePlayer.gy, turnPlayer)
+                    else:
+                        damage = monster.effect.resolve(turnPlayer, passivePlayer, monster,
+                                                        None, turnPlayer.gy, passivePlayer.gy, turnPlayer)
+            except AttributeError:
+                pass
+            except IndexError:
+                pass
+
+            # Monster Effect: Defender (Returns Damage)
+            try:
+                if atkTarget.trigger.name == "battle":
+                    monster = atkTarget
+                    if atkTarget is not None:
+                        oppmonster = atkMon
+                        damage = monster.effect.resolve(passivePlayer, turnPlayer, monster,
+                                                        oppmonster, turnPlayer.gy, passivePlayer.gy, turnPlayer)
+                    else:
+                        damage = monster.effect.resolve(passivePlayer, turnPlayer, monster,
+                                                        None, turnPlayer.gy, passivePlayer.gy, turnPlayer)
+            except AttributeError:
+                pass
+            except IndexError:
+                pass
+
+            if damage is None:  # This occurs for effect returns that don't impact damage
+                try:
+                    damage = atkMon.atkPoints - atkTarget.atkPoints
+                except (UnboundLocalError, AttributeError):
+                    damage = atkMon.atkPoints
+
+            if damage > 0:
+
+                passivePlayer.loseLP(damage)
+
+                try:
+                    oppmonster = atkTarget
+                    if oppmonster.trigger.name == "destructionBat":
+                        result = oppmonster.effect.resolve(turnPlayer, passivePlayer, oppmonster, atkMon, passivePlayer.gy, turnPlayer.gy, turnPlayer)
+
+                        if result == 0:
+                            passivePlayer.destroyMonsterBat(atkTarget, passivePlayer, turnPlayer, oppmonster, atkMon, passivePlayer.gy, turnPlayer.gy, turnPlayer)
+                        else:
+                            pass
+                    else:
+                        passivePlayer.destroyMonsterBat(atkTarget, passivePlayer, turnPlayer, oppmonster, atkMon, passivePlayer.gy, turnPlayer.gy, turnPlayer)
+                except IndexError:
+                    pass
+                except AttributeError:
+                    pass
+                except UnboundLocalError:
+                    pass
+                time.sleep(1)
+
+            elif damage < 0:
+                turnPlayer.loseLP(damage * -1)
+
+                if atkTarget:
+                    pass
+                else:
+                    atkTarget = object
+
+                if atkMon.trigger.name == "destructionBat":
+                    result = atkMon.effect.resolve(turnPlayer, passivePlayer, atkMon, atkTarget, turnPlayer.gy, passivePlayer.gy, turnPlayer)
+
+                    if result == 0:
+                        turnPlayer.destroyMonsterBat(atkMon, turnPlayer, passivePlayer, atkMon, atkTarget, turnPlayer.gy, passivePlayer.gy, turnPlayer)
+                    else:
+                        pass
+                else:
+                    turnPlayer.destroyMonsterBat(atkMon, turnPlayer, passivePlayer, atkMon, atkTarget, turnPlayer.gy, passivePlayer.gy, turnPlayer)
+                time.sleep(1)
+
+            elif damage == 0:
+
+                print("No Damage")
+
+                # destroy both monsters if they exist
+                try:
+                    if atkMon and atkTarget:
+
+                        if atkTarget.trigger.name == "destructionBat":
+                            result = atkTarget.effect.resolve(turnPlayer, passivePlayer, atkTarget, atkMon, turnPlayer.gy, passivePlayer.gy, turnPlayer)
+
+                            if result == 0:
+                                passivePlayer.destroyMonsterBat(atkTarget, turnPlayer, passivePlayer, atkTarget, atkMon, turnPlayer.gy, passivePlayer.gy, turnPlayer)
+                            else:
+                                pass
+                        else:
+                            passivePlayer.destroyMonsterBat(atkTarget, turnPlayer, passivePlayer, atkTarget, atkMon, turnPlayer.gy, passivePlayer.gy, turnPlayer)
+
+                        if atkMon.trigger.name == "destructionBat":
+                            result = atkMon.effect.resolve(turnPlayer, passivePlayer, atkMon, atkTarget, turnPlayer.gy, passivePlayer.gy, turnPlayer)
+
+                            if result == 0:
+                                turnPlayer.destroyMonsterBat(atkMon, turnPlayer, passivePlayer, atkMon, atkTarget, turnPlayer.gy, passivePlayer.gy, turnPlayer)
+                            else:
+                                pass
+                        else:
+                            turnPlayer.destroyMonsterBat(atkMon, turnPlayer, passivePlayer, atkMon, atkTarget, turnPlayer.gy, passivePlayer.gy, turnPlayer)
+                except IndexError:
+                    pass
+                time.sleep(1)
+
+                pass
+    elif selection == 0:
+        return 1
+    elif selection == 2:
+        return 0
+    else:
+        raise NotImplementedError
+
+
+print("--------------------------------------")
+name = input("~~~Please Enter Your Name")
+
+# sets duelist and foe objects
+_player = duelist(name, 8000, [], [], [], [])
+
+_foe = duelist("Rokket", 8000, [], [], [], [])
+
+
+mainMenu()
