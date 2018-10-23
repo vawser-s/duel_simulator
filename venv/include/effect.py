@@ -275,6 +275,17 @@ class gainAttackDifference(effect):
         time.sleep(0.5)
 
 
+class grantAttack(effect):
+    def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
+        print("{}'s Effect Activates!".format(effectMon.name))
+        print("--------------------------------------")
+        time.sleep(1)
+
+        effplayer.grantAttack(self.extraParam, effectMon)
+
+        return
+
+
 class fieldToHand(effect):
     def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
         print("{}'s Effect Activates!".format(effectMon.name))
@@ -365,22 +376,46 @@ class specialSpecificHand(effect):
         effplayer.specialHandSpecific(self.extraParam, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer)
 
 
+class specialExactHand(effect):
+    def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
+        print("{}'s Effect Activates!".format(effectMon.name))
+        print("--------------------------------------")
+        time.sleep(1)
+
+        effplayer.specialHandExact(self.extraParam, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer)
+
+
 # Define the effects used
+
+# Drawing Effects
 PlayerDraw1 = playerDraw("Draw One Card", 1)
 PlayerDraw2 = playerDraw("Draw Two Cards", 2)
+
+# Disruptive Effects
 Destroy = effectDestroy("Destroy Your Opponents Monster", 0)
+bounceMonster = fieldToHand("Bounce an Opponents Monster", 0)
+
+# Restoration Effects
 Restore1000 = effectRestore("Restore Life Points by 1000", 1000)
 Restore2000 = effectRestore("Restore Life Points by 2000", 2000)
+
+# Damaging Effects
 Damage1000 = effectDamage("Damage Opponent by 1000", 1000)
 DamageSelf = effectDamageSelf("Damage Player by 1000", 1000)
 SiphonLife800 = siphonLife("Steal 800 Life points from opponent", 800)
 SiphonLife1500 = siphonLife("Steal 1500 Life points from opponent", 1500)
+
+# Discarding Effects
 playerDisc1 = effectPlayerDiscard("Player discards One Card", 1)
 oppDisc1 = effectOpponentDiscard("Opponent Discards One Card", 1)
 oppDisc2 = effectOpponentDiscard("Opponent Discards Two Cards", 2)
+
+# Battle Phase Specific Effects
 matchAttack = effectCrash("Copies Opponents Monsters Attack", 0)
 battleImmune = noBattleDestruction("Cannot be Destroyed by Battle", 0)
 effectImmune = noEffectDestruction("Cannot be Destroyed by Effects", 0)
+
+# Card Searching Effects
 effectSearch = searchDeck("Add a card from Deck to Hand", 0)
 effectCodeSearch = searchSpecificDeck("Add a 'Code' card from Deck to hand", "Code")
 effectVampSearch = searchSpecificDeck("Add a 'Vampire' card from Deck to hand", "Vampire")
@@ -389,16 +424,28 @@ effectAgentSearch = searchSpecificDeck("Add a 'Agent' card from Deck to hand", "
 effectGishkiSearch = searchSpecificDeck("Add a 'Gishki' card from Deck to hand", "Gishki")
 effectEvigishkiSearch = searchSpecificDeck("Add an 'Evigishki' card from Deck to hand", "Evigishki")
 effectGishkiMirrorSearch = searchSpecificDeck("Add a 'Gishki Aquamirror' card from Deck to hand", "Gishki Aquamirror")
-doubleSummon = extraNormalSummon("Gain an extra normal summon", 0)
+effectMagicianSearch = searchSpecificDeck("Add a 'Dark Magician' card from your deck to your hand", "Dark Magician")
+effectGirlSearch = searchSpecificDeck("Add a 'Magician Girl' from your Deck to your hand", "Magician Girl")
+
+# Attack Manipulation Effects
 gain500 = gainAttack("Gains 500 attack before battle. Loses attack upon destruction", 500)
 gain1000 = gainAttack("Gains 1000 attack before battle. Loses attack upon destruction", 1000)
-bounceMonster = fieldToHand("Bounce an Opponents Monster", 0)
-GYToHand = gyToHand("Return a card from your Graveyard to your Hand", 0)
-Trib_SS_GY = tributeTOSSGy("you can Tribute this card: Special Summon a monster from the Graveyard", 0)
+gainDifference = gainAttackDifference("Gain Atk Points equal to the difference between your lifepoints", 0)
+grant800 = grantAttack("Grant a monster on your field 500 Attack (not including this card)", 800)
+
+
+# Summon Manipulation Effects
+doubleSummon = extraNormalSummon("Gain an extra normal summon", 0)
 specialAgentHand = specialSpecificHand("Special Summon an 'Agent' Monster from your hand", "Agent")
 specialCyberseHand = specialSpecificHand("Special Summon a 'Cyberse' Monster from your hand", "Cyberse")
 specialVampireHand = specialSpecificHand("Special Summon a 'Vampire' Monster from your hand", "Vampire")
 specialGishkiHand = specialSpecificHand("Special Summon a 'Gishki' Monster from your hand", "Gishki")
-gainDifference = gainAttackDifference("Gain Atk Points equal to the difference between your lifepoints", 0)
+specialDarkMagicianHand = specialExactHand("Special Summon a Dark Magician from your hand", "Dark Magician")
 specialfromHand = specialHand("Special Summon a monster from your hand", 0)
+
+# Recursion Effects
+GYToHand = gyToHand("Return a card from your Graveyard to your Hand", 0)
+Trib_SS_GY = tributeTOSSGy("you can Tribute this card: Special Summon a monster from the Graveyard", 0)
+
+
 

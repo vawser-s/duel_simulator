@@ -194,7 +194,7 @@ class duelist:
             print("Field Empty")
             return
 
-    # print all monsters who have not attacked
+    # DIsplay all monsters who have not attacked
     def checkFieldAtk(self):
         # check the monster zone array
 
@@ -582,6 +582,7 @@ class duelist:
         else:
             pass
 
+    # Return Monster to Opponents Hand
     def bounce(self, target):
         location = self.checkArrayLoc(self.monfield, target)
 
@@ -611,6 +612,7 @@ class duelist:
 
         return len(max_len)
 
+    # Special Summon a Monster from your Hand
     def specialHandEffect(self, effplayer, opponent, sentMon, oppMon, effgy, oppgy, turnPlayer):
 
         if self.hand.__len__() == 0:
@@ -656,6 +658,7 @@ class duelist:
 
         del self.hand[selection]
 
+    # Special Summon a monster from your hand FITTING the given namespace
     def specialHandSpecific(self, name, effplayer, opponent, sentMon, oppMon, effgy, oppgy, turnPlayer):
         i = 0
         tempListNum = []
@@ -722,3 +725,143 @@ class duelist:
                     print("--------------------------------------")
         else:
             print("No Possible Targets")
+
+    # Special Summon a monster from your hand EXAXTLY MATCHING the given namespace
+    def specialHandExact(self, name, effplayer, opponent, sentMon, oppMon, effgy, oppgy, turnPlayer):
+        i = 0
+        tempListNum = []
+        print("{}s Hand:".format(self.name))
+
+        # Loop through the hand and display each card fitting the namespace
+        while True:
+            try:
+                currentCard = self.hand[i]
+            except IndexError:
+                if self.deck.__len__() == 0:
+                    print("Hand is Empty")
+                else:
+                    raise IndexError
+                break
+
+            if name == currentCard.name:
+                print("[{}] {} | ATK: {} | Effect: {}".format((i + 1), currentCard.name.ljust(25, ),
+                                                              str(currentCard.atkPoints).ljust(4, ),
+                                                              currentCard.effectText))
+                tempListNum.append(i)
+            else:
+                pass
+
+            i = i + 1
+
+            if i == self.hand.__len__():
+                break
+
+        if tempListNum:
+            while True:
+                # Get user Selection
+                selection = input("~~~Select the card to Add (Type the Number):")
+
+                try:
+                    selection = int(selection) - 1
+                except ValueError:
+                    pass
+
+                # Special Summon the Card
+                if selection in tempListNum:
+                    addedCard = self.hand[selection]
+
+                    self.monfield.append(addedCard)
+
+                    print("--------------------------------------")
+                    print("{} has been Special Summoned".format(addedCard.name))
+                    print("ATK: {} | Effect: {}".format(str(addedCard.atkPoints), addedCard.effectText))
+
+                    time.sleep(1)
+
+                    if addedCard.trigger.name == "summon":
+                        addedCard.effect.resolve(effplayer, opponent, addedCard, oppMon, effgy, oppgy, turnPlayer)
+                    else:
+                        pass
+
+                    del self.hand[selection]
+
+                    return
+
+                else:
+                    print("--------------------------------------")
+                    print("Invalid Selection")
+                    print("--------------------------------------")
+        else:
+            print("No Possible Targets")
+
+    # Grand a monster on your field a designated amount of attack, not including the played card
+    def grantAttack(self, attack, playedCard):
+
+        # Checking the second array point, because if the player monster is the only monster,
+        # there won't be a second monster on the field
+        try:
+            if self.monfield[1]:
+
+                # Print all other monsters on the field
+                i = 0
+                tempListNum = []
+
+                max_len = self.getMaxLength(self.hand)
+
+                for monster in self.monfield:
+                    if monster.name != playedCard.name:
+                        if i >= 9:
+                            print("[{}] {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1),
+                                                                                         monster.name.ljust(max_len, ),
+                                                                                         str(monster.atkPoints).ljust(
+                                                                                             4, ),
+                                                                                         monster.tribute,
+                                                                                         monster.effectText))
+                        else:
+                            print("[{}]  {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1),
+                                                                                          monster.name.ljust(max_len, ),
+                                                                                          str(monster.atkPoints).ljust(
+                                                                                              4, ), monster.tribute,
+                                                                                          monster.effectText))
+                        tempListNum.append(i)
+                    else:
+                        pass
+
+                    i = i + 1
+
+                if tempListNum:
+                    while True:
+
+                        # Get User Selection
+                        target = input("~~Select a target to give attack to:")
+
+                        try:
+                            target = int(target) - 1
+                        except ValueError:
+                            pass
+
+                        # Buff the card the Card
+                        if target in tempListNum:
+                            buffedCard = self.monfield[target]
+                            break
+                        else:
+                            print("--------------------------------------")
+                            print("Invalid Selection")
+                            print("--------------------------------------")
+
+                    buffedCard.atkPoints = buffedCard.atkPoints + attack
+
+                    print("{}'s Attack has been increased by {}".format(buffedCard.name, attack))
+
+                    return
+            else:
+                print("No Appropriate Targets on the field")
+                print("--------------------------------------")
+
+                return
+        except (IndexError, AttributeError):
+            print("No Appropriate Targets on the field")
+            print("--------------------------------------")
+
+            return
+

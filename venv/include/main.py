@@ -9,6 +9,7 @@ from enum import Enum
 from duelist import *
 from card import *
 from effect import *
+from copy import *
 
 
 # Method to setup the card database and runs decksetup()
@@ -130,8 +131,8 @@ def cardSetup():
     gishkiAquamirror2 = card("Gishki Aquamirror", 0, 0, doubleSummon, effTrigger.summon, doubleSummon.desc)
     gishkiShadow = card("Gishki Shadow", 1200, 0, battleImmune, effTrigger.destructionBat, battleImmune.desc)
     gishkiShadow2 = card("Gishki Shadow", 1200, 0, battleImmune, effTrigger.destructionBat, battleImmune.desc)
-    visionGishki = card("Vision Gishki ", 1000, 0, effectGishkiSearch, effTrigger.summon, effectGishkiSearch.desc)
-    visionGishki2 = card("Vision Gishki ", 1000, 0, effectGishkiSearch, effTrigger.summon, effectGishkiSearch.desc)
+    visionGishki = card("Vision Gishki ", 1800, 0, effectGishkiSearch, effTrigger.battle, effectGishkiSearch.desc + " (Battle)")
+    visionGishki2 = card("Vision Gishki ", 1800, 0, effectGishkiSearch, effTrigger.battle, effectGishkiSearch.desc + " (Battle)")
     gishkiAriel = card("Gishki Ariel", 1200, 0, bounceMonster, effTrigger.summon, bounceMonster.desc)
     gishkiAriel2 = card("Gishki Ariel", 1200, 0, bounceMonster, effTrigger.summon, bounceMonster.desc)
     evigishkiLevianima = card("Evigishki Levianima", 2200, 1, effectGishkiSearch, effTrigger.summon, effectGishkiSearch.desc)
@@ -216,6 +217,35 @@ def cardSetup():
     reAdder = card("Re-Adder", 1200, 0, GYToHand, effTrigger.summon, GYToHand.desc)
     graveyardGarry = card("Graveyard Garry", 2000, 1, PlayerDraw2, effTrigger.graveyard, PlayerDraw2.desc)
     lifeVitalizer = card("Life Vitalizer", 1800, 0, gainDifference, effTrigger.summon, gainDifference.desc)
+
+    global darkMagician
+    global darkMagician2
+    global darkGMagician
+    global darkGMagician2
+    global magicianRod
+    global magicianRod2
+    global magicianRobe
+    global magicianRobe2
+    global chocolateGirl
+    global chocolateGirl2
+    global appleGirl
+    global appleGirl2
+    global kiwiGirl
+    global kiwiGirl2
+    global ebonIllusion
+    global ebonIllusion2
+    global magicianChaos
+    global magicianChaos2
+    global darkPaladain
+    global darkPaladain2
+    darkMagician = card("Dark Magician", 2500, 1, effectImmune, effTrigger.destructionEff, effectImmune.desc)
+    darkMagician2 = card("Dark Magician", 2500, 1, effectImmune, effTrigger.destructionEff, effectImmune.desc)
+    darkGMagician = card("Dark Magician Girl", 2300, 1, specialDarkMagicianHand, effTrigger.summon, specialDarkMagicianHand.desc)
+    darkGMagician2 = card("Dark Magician Girl", 2300, 1, specialDarkMagicianHand, effTrigger.summon, specialDarkMagicianHand.desc)
+    magicianRod = card("Magician's Rod", 1600, 0, effectMagicianSearch, effTrigger.summon, effectMagicianSearch.desc)
+    magicianRod2 = card("Magician's Rod", 1600, 0, effectMagicianSearch, effTrigger.summon, effectMagicianSearch.desc)
+    magicianRobe = card("Magician's Robe", 1600, 0, grant800, effTrigger.summon, grant800.desc)
+    magicianRobe2 = card("Magician's Robe", 1600, 0, grant800, effTrigger.summon, grant800.desc)
 
 
 # Method to setup decks once the cards have been set
@@ -340,7 +370,7 @@ def decksetup():
         print("[2] Vampire Deck | Theme: Stealing Life / Graveyard Effects")
         print("[3] Gishki Deck  | Theme: Attack Boosts / Battling")
         print("[4] Herald Deck  | Theme: Life Point Gain / Special Summon From Hand")
-        # print("[5] Magician Deck | Theme: Graveyard Boosts / Destruction")
+        # print("[5] Magician Deck | Theme: Graveyard Boosts / Buffs")
         selection = input("~~Select a Deck to Use:")
         try:
             selection = int(selection)
@@ -586,7 +616,7 @@ def turnMenu(currentPlayer: object, passivePlayer: object):
         # -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
         # -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
         # -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
-        # _player.hand.append()
+        _player.hand.append(magicianRobe)
         # _foe.hand.append()
         # -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------
         # -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------
