@@ -194,7 +194,7 @@ class duelist:
             print("Field Empty")
             return
 
-    # DIsplay all monsters who have not attacked
+    # Display all monsters who have not attacked
     def checkFieldAtk(self):
         # check the monster zone array
 
@@ -732,29 +732,29 @@ class duelist:
         tempListNum = []
         print("{}s Hand:".format(self.name))
 
-        # Loop through the hand and display each card fitting the namespace
-        while True:
-            try:
-                currentCard = self.hand[i]
-            except IndexError:
-                if self.deck.__len__() == 0:
-                    print("Hand is Empty")
-                else:
-                    raise IndexError
-                break
+        max_len = self.getMaxLength(self.hand)
 
-            if name == currentCard.name:
-                print("[{}] {} | ATK: {} | Effect: {}".format((i + 1), currentCard.name.ljust(25, ),
-                                                              str(currentCard.atkPoints).ljust(4, ),
-                                                              currentCard.effectText))
+        # Loop through the hand and display each card fitting the namespace
+        for monster in self.hand:
+            if monster.name == name:
+                if i >= 9:
+                    print("[{}] {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1),
+                                                                                 monster.name.ljust(max_len, ),
+                                                                                 str(monster.atkPoints).ljust(
+                                                                                     4, ),
+                                                                                 monster.tribute,
+                                                                                 monster.effectText))
+                else:
+                    print("[{}]  {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1),
+                                                                                  monster.name.ljust(max_len, ),
+                                                                                  str(monster.atkPoints).ljust(
+                                                                                      4, ), monster.tribute,
+                                                                                  monster.effectText))
                 tempListNum.append(i)
             else:
                 pass
 
             i = i + 1
-
-            if i == self.hand.__len__():
-                break
 
         if tempListNum:
             while True:
@@ -800,65 +800,61 @@ class duelist:
         # Checking the second array point, because if the player monster is the only monster,
         # there won't be a second monster on the field
         try:
-            if self.monfield[1]:
+            # Print all other monsters on the field
+            i = 0
+            tempListNum = []
 
-                # Print all other monsters on the field
-                i = 0
-                tempListNum = []
+            max_len = self.getMaxLength(self.monfield)
 
-                max_len = self.getMaxLength(self.hand)
-
-                for monster in self.monfield:
-                    if monster.name != playedCard.name:
-                        if i >= 9:
-                            print("[{}] {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1),
-                                                                                         monster.name.ljust(max_len, ),
-                                                                                         str(monster.atkPoints).ljust(
-                                                                                             4, ),
-                                                                                         monster.tribute,
-                                                                                         monster.effectText))
-                        else:
-                            print("[{}]  {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1),
-                                                                                          monster.name.ljust(max_len, ),
-                                                                                          str(monster.atkPoints).ljust(
-                                                                                              4, ), monster.tribute,
-                                                                                          monster.effectText))
-                        tempListNum.append(i)
+            for monster in self.monfield:
+                if monster.name != playedCard.name:
+                    if i >= 9:
+                        print("[{}] {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1),
+                                                                                     monster.name.ljust(max_len, ),
+                                                                                     str(monster.atkPoints).ljust(
+                                                                                         4, ),
+                                                                                     monster.tribute,
+                                                                                     monster.effectText))
                     else:
+                        print("[{}]  {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1),
+                                                                                      monster.name.ljust(max_len, ),
+                                                                                      str(monster.atkPoints).ljust(
+                                                                                          4, ), monster.tribute,
+                                                                                      monster.effectText))
+                    tempListNum.append(i)
+                else:
+                    pass
+
+                i = i + 1
+
+            if tempListNum:
+                while True:
+
+                    # Get User Selection
+                    target = input("~~Select a target to give attack to:")
+
+                    try:
+                        target = int(target) - 1
+                    except ValueError:
                         pass
 
-                    i = i + 1
+                    # Buff the card the Card
+                    if target in tempListNum:
+                        buffedCard = self.monfield[target]
+                        break
+                    else:
+                        print("--------------------------------------")
+                        print("Invalid Selection")
+                        print("--------------------------------------")
 
-                if tempListNum:
-                    while True:
+                buffedCard.atkPoints = buffedCard.atkPoints + attack
 
-                        # Get User Selection
-                        target = input("~~Select a target to give attack to:")
+                print("{}'s Attack has been increased by {}".format(buffedCard.name, attack))
 
-                        try:
-                            target = int(target) - 1
-                        except ValueError:
-                            pass
-
-                        # Buff the card the Card
-                        if target in tempListNum:
-                            buffedCard = self.monfield[target]
-                            break
-                        else:
-                            print("--------------------------------------")
-                            print("Invalid Selection")
-                            print("--------------------------------------")
-
-                    buffedCard.atkPoints = buffedCard.atkPoints + attack
-
-                    print("{}'s Attack has been increased by {}".format(buffedCard.name, attack))
-
-                    return
+                return
             else:
                 print("No Appropriate Targets on the field")
                 print("--------------------------------------")
-
-                return
         except (IndexError, AttributeError):
             print("No Appropriate Targets on the field")
             print("--------------------------------------")

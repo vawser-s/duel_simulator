@@ -616,7 +616,7 @@ def turnMenu(currentPlayer: object, passivePlayer: object):
         # -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
         # -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
         # -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
-        _player.hand.append(magicianRobe)
+        # _player.hand.append()
         # _foe.hand.append()
         # -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------
         # -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------
