@@ -97,6 +97,7 @@ class duelist:
                 if selection in tempListNum:
                     addedCard = self.deck[selection]
                     self.hand.append(addedCard)
+                    print("--------------------------------------")
                     print("{} has searched the following card:".format(self.name))
                     print("Name: {} | ATK: {} | Effect: {}".format(addedCard.name, str(addedCard.atkPoints),
                                                                    addedCard.effectText))
@@ -147,6 +148,7 @@ class duelist:
             # Add Selection to hand and remove from deck
 
         self.hand.append(addedCard)
+        print("--------------------------------------")
         print("{} has searched the following card:".format(self.name))
         print("Name: {} | ATK: {} | Effect: {}".format(addedCard.name, str(addedCard.atkPoints), addedCard.effectText))
 
@@ -413,7 +415,7 @@ class duelist:
 
                     # Play the card from your hand
                     self.monfield.append(playedCard)
-                    self.removeCard(selection)
+                    self.gy.append(tribute)
                     changeNormalSummon()  # Normal Summon = 1
 
                     print("--------------------------------------")
@@ -600,6 +602,7 @@ class duelist:
         print("{} has been returnd to {}'s Hand".format(bouncedMonster.name, self.name))
 
     # Return largest string in an array (menu formatting)
+
     def getMaxLength(self, monarray):
 
         max_len = ""
@@ -784,6 +787,74 @@ class duelist:
                         pass
 
                     del self.hand[selection]
+
+                    return
+
+                else:
+                    print("--------------------------------------")
+                    print("Invalid Selection")
+                    print("--------------------------------------")
+        else:
+            print("No Possible Targets")
+
+    # Special Summon a monster from your deck EXACTLY MATCHING the given namespace
+    def specialDeckExact(self, name, effplayer, opponent, sentMon, oppMon, effgy, oppgy, turnPlayer):
+        i = 0
+        tempListNum = []
+        print("{}s Deck:".format(self.name))
+
+        max_len = self.getMaxLength(self.deck)
+
+        # Loop through the hand and display each card fitting the namespace
+        for monster in self.deck:
+            if monster.name == name:
+                if i >= 9:
+                    print("[{}] {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1),
+                                                                                 monster.name.ljust(max_len, ),
+                                                                                 str(monster.atkPoints).ljust(
+                                                                                     4, ),
+                                                                                 monster.tribute,
+                                                                                 monster.effectText))
+                else:
+                    print("[{}]  {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1),
+                                                                                  monster.name.ljust(max_len, ),
+                                                                                  str(monster.atkPoints).ljust(
+                                                                                      4, ), monster.tribute,
+                                                                                  monster.effectText))
+                tempListNum.append(i)
+            else:
+                pass
+
+            i = i + 1
+
+        if tempListNum:
+            while True:
+                # Get user Selection
+                selection = input("~~~Select the card to Summon (Type the Number):")
+
+                try:
+                    selection = int(selection) - 1
+                except ValueError:
+                    pass
+
+                # Special Summon the Card
+                if selection in tempListNum:
+                    addedCard = self.deck[selection]
+
+                    self.monfield.append(addedCard)
+
+                    print("--------------------------------------")
+                    print("{} has been Special Summoned".format(addedCard.name))
+                    print("ATK: {} | Effect: {}".format(str(addedCard.atkPoints), addedCard.effectText))
+
+                    time.sleep(1)
+
+                    if addedCard.trigger.name == "summon":
+                        addedCard.effect.resolve(effplayer, opponent, addedCard, oppMon, effgy, oppgy, turnPlayer)
+                    else:
+                        pass
+
+                    del self.deck[selection]
 
                     return
 

@@ -7,16 +7,19 @@ from settings import *
 class effTrigger(Enum):
     n_a = 1
     summon = 2
-    battle = 3
-    graveyard = 4
-    destructionBat = 5
-    destructionEff = 6
+    attack = 3
+    defend = 4
+    battle = 5
+    graveyard = 6
+    destructionBat = 7
+    destructionEff = 8
 
 
 class effect:
-    def __init__(self, desc, extraParam):
+    def __init__(self, desc, extraParam=None, extraParam2=None):
         self.desc = desc
         self.extraParam = extraParam
+        self.nextraParam = extraParam2
 
     def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
         raise NotImplementedError("Subclass must implement abstract method")
@@ -351,7 +354,7 @@ class tributeTOSSGy(effect):
 
                 print("--------------------------------------")
 
-                effplayer.sendToGrave(monster)
+                effplayer.sendToGrave(monster, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer)
 
                 return
             elif selection == "N" or selection == "n":
@@ -383,6 +386,120 @@ class specialExactHand(effect):
         time.sleep(1)
 
         effplayer.specialHandExact(self.extraParam, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer)
+
+
+class specialDeckExact(effect):
+    def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
+        print("{}'s Effect Activates!".format(effectMon.name))
+        print("--------------------------------------")
+        time.sleep(1)
+
+        effplayer.specialDeckExact(self.extraParam, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer)
+
+
+class gainAtkforInstance(effect):
+    def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
+        print("{}'s Effect Activates!".format(effectMon.name))
+        print("--------------------------------------")
+        time.sleep(1)
+
+        instanceName = self.extraParam
+        atkChange = self.nextraParam
+        fieldCount = 0
+        fieldATK = 0
+        gyATK = 0
+        gyCount = 0
+        totalATK = 0
+
+        for monster in effplayer.monfield:
+            if instanceName in monster.name and monster.name != effectMon.name:
+                fieldCount = fieldCount + 1
+
+        for monster in effplayer.gy:
+            if instanceName in monster.name and monster.name != effectMon.name:
+                gyCount = gyCount + 1
+
+        if fieldCount:
+            fieldATK = fieldCount * atkChange
+            print("{} {} monsters on field, so {} ATK gained".format(fieldCount, instanceName, fieldATK))
+
+        if gyCount:
+            gyATK = gyCount * atkChange
+            print("{} {} monsters in graveyard, so {} ATK gained".format(gyCount, instanceName, gyATK))
+
+        totalATK = fieldATK + gyATK
+
+        if totalATK:
+            effectMon.atkPoints = effectMon.atkPoints + totalATK
+            print("{}'s new Attack: {}".format(effectMon.name, effectMon.atkPoints))
+
+        else:
+            print("No Attack Gained")
+
+        # Check if a Battle Effect or not
+        if effectMon.effTrigger.name == "summon":
+            return
+        elif effectMon.effTrigger.name == "battle":
+            damage = effectMon.atkPoints - oppMon.atkPoints
+            return damage
+
+
+class halfAttackedDraw(effect):
+    def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
+        print("{}'s Effect Activates!".format(effectMon.name))
+        print("--------------------------------------")
+        time.sleep(1)
+
+        oppMon.atkPoints = oppMon.atkPoints / 2
+        print("{}'s ATK points have been halved to {}".format(oppMon, oppMon.atkPoints))
+
+        effplayer.draw(self.extraParam)
+
+
+class zeroAttack(effect):
+    def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
+        print("{}'s Effect Activates!".format(effectMon.name))
+        print("--------------------------------------")
+        time.sleep(1)
+
+        oppMon.atkPoints = 0
+        print("{}'s ATK points have been reduced to 0".format(oppMon.name))
+
+        time.sleep(1)
+
+
+class tributetoGrantAttack(effect):
+    def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
+        print("{}'s Effect Activates!".format(effectMon.name))
+        time.sleep(1)
+
+        while True:
+            print("--------------------------------------")
+            print("Effect: {}".format(effectMon.effectText))
+            selection = input("Activate {}'s Effect? (Y/N)".format(effectMon.name))
+            print("--------------------------------------")
+            selection = str(selection)
+
+            if selection == "Y" or selection == "y":
+
+                monster = effectMon
+
+                target = effplayer.checkArrayLoc(effplayer.monfield, monster)
+                del effplayer.monfield[target]
+
+                print("{} Has been tributed".format(effectMon.name))
+
+                print("--------------------------------------")
+
+                effplayer.grantAttack(monster.atkPoints, monster)
+
+                print("--------------------------------------")
+
+                effplayer.sendToGrave(monster, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer)
+
+                return
+            elif selection == "N" or selection == "n":
+                return
 
 
 # Define the effects used
@@ -424,15 +541,18 @@ effectAgentSearch = searchSpecificDeck("Add a 'Agent' card from Deck to hand", "
 effectGishkiSearch = searchSpecificDeck("Add a 'Gishki' card from Deck to hand", "Gishki")
 effectEvigishkiSearch = searchSpecificDeck("Add an 'Evigishki' card from Deck to hand", "Evigishki")
 effectGishkiMirrorSearch = searchSpecificDeck("Add a 'Gishki Aquamirror' card from Deck to hand", "Gishki Aquamirror")
-effectMagicianSearch = searchSpecificDeck("Add a 'Dark Magician' card from your deck to your hand", "Dark Magician")
+effectDarkMagicianSearch = searchSpecificDeck("Add a 'Dark Magician' card from your deck to your hand", "Dark Magician")
 effectGirlSearch = searchSpecificDeck("Add a 'Magician Girl' from your Deck to your hand", "Magician Girl")
 
 # Attack Manipulation Effects
 gain500 = gainAttack("Gains 500 attack before battle. Loses attack upon destruction", 500)
 gain1000 = gainAttack("Gains 1000 attack before battle. Loses attack upon destruction", 1000)
 gainDifference = gainAttackDifference("Gain Atk Points equal to the difference between your lifepoints", 0)
-grant800 = grantAttack("Grant a monster on your field 500 Attack (not including this card)", 800)
-
+grant800 = grantAttack("Grant a monster on your field 800 Attack (not including this card)", 800)
+darkMagicianGain500 = gainAtkforInstance("Gain 400 attack for each 'Dark Magician' monster on the field or in your Graveyard", "Dark Magician", 400)
+halfAtkDraw2 = halfAttackedDraw("Half the attacking monsters attack; Draw Two Card", 2)
+Atk0 = zeroAttack("Reduce target monster's attack to 0", 0)
+tribtoGrantAtk = tributetoGrantAttack("You can tribute this card: Grant another monster this monsters ATK points", 0)
 
 # Summon Manipulation Effects
 doubleSummon = extraNormalSummon("Gain an extra normal summon", 0)
@@ -441,11 +561,10 @@ specialCyberseHand = specialSpecificHand("Special Summon a 'Cyberse' Monster fro
 specialVampireHand = specialSpecificHand("Special Summon a 'Vampire' Monster from your hand", "Vampire")
 specialGishkiHand = specialSpecificHand("Special Summon a 'Gishki' Monster from your hand", "Gishki")
 specialDarkMagicianHand = specialExactHand("Special Summon a Dark Magician from your hand", "Dark Magician")
+specialMagicianGirlHand = specialSpecificHand("Special Summon a 'Magician Girl' Card from your hand", "Magician Girl")
 specialfromHand = specialHand("Special Summon a monster from your hand", 0)
+specialDarkMagicianDeck = specialDeckExact("Special Summon a Dark Magician from your Deck", "Dark Magician")
 
 # Recursion Effects
 GYToHand = gyToHand("Return a card from your Graveyard to your Hand", 0)
 Trib_SS_GY = tributeTOSSGy("you can Tribute this card: Special Summon a monster from the Graveyard", 0)
-
-
-
