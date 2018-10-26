@@ -1,1249 +1,1247 @@
-from settings import *
-import random
-import sys
-from typing import Type
-
-import time
-from enum import Enum
 # https://docs.python.org/3/library/enum.html <-- FOR ENUM INFO
-from duelist import *
-from card import *
-from effect import *
 from copy import *
+
+from card import *
+from duelist import *
+from effect import *
 
 
 # Method to setup the card database and runs decksetup()
 def cardSetup():
 
-    # The card template is as follows:
-    # card(Name, Atk Points, Effect Name, Effect Trigger Enum, Effect Derscription)
+	# The card template is as follows:
+	# card(Name, Atk Points, Effect Name, Effect Trigger Enum, Effect Derscription)
 
-    # Cyber Deck
-    global microCoder
-    global microCoder2
-    global codeGenerator
-    global codeGenerator2
-    global codeRadiator
-    global codeRadiator2
-    global ladyDebug
-    global ladyDebug2
-    global cyberseGadget
-    global cyberseGadget2
-    global dongleAcorn
-    global dongleAcorn2
-    global cyberseWhiteHat
-    global cyberseWhiteHat2
-    global cyberseClockDragon
-    global cyberseClockDragon2
-    global dualAssembwurm
-    global dualAssembwurm2
-    global segmentDriver
-    global segmentDriver2
-    microCoder = card("Micro Coder", 300, 0, PlayerDraw2, effTrigger.summon, effectDescBuilder(effTrigger.summon, PlayerDraw2.desc))
-    codeGenerator = card("Code Generator", 1300, 0, effectCodeSearch, effTrigger.summon, effectDescBuilder(effTrigger.summon, effectCodeSearch.desc))
-    codeRadiator = card("Code Radiator", 1600, 0, doubleSummon, effTrigger.summon, effectDescBuilder(effTrigger.summon, doubleSummon.desc))
-    ladyDebug = card("Lady Debug", 1000, 0, specialCyberseHand, effTrigger.summon, effectDescBuilder(effTrigger.summon, specialCyberseHand.desc))
-    cyberseGadget = card("Cyberse Gadget", 1400, 0, Destroy, effTrigger.summon, effectDescBuilder(effTrigger.summon, Destroy.desc))
-    dongleAcorn = card("Dongle Acorn", 0, 0, battleImmune, effTrigger.destructionBat, effectDescBuilder(effTrigger.destructionBat, battleImmune.desc))
-    cyberseWhiteHat = card("Cyberse White Hat", 2100, 1, effectSearch, effTrigger.summon, effectDescBuilder(effTrigger.summon, effectSearch.desc))
-    cyberseClockDragon = card("Cyberse Clock Dragon", 2500, 1, specialfromHand, effTrigger.destructionEff, effectDescBuilder(effTrigger.destructionEff, specialfromHand.desc))
-    dualAssembwurm = card("Dual Assembwurm", 2800, 1, oppDisc2, effTrigger.summon, effectDescBuilder(effTrigger.summon, oppDisc2.desc))
-    segmentDriver = card("Cyberse Driver", 2200, 1, oppDisc1, effTrigger.summon, effectDescBuilder(effTrigger.summon, oppDisc1.desc))
-    microCoder2 = deepcopy(microCoder)
-    codeGenerator2 = deepcopy(codeGenerator)
-    codeRadiator2 = deepcopy(codeRadiator)
-    ladyDebug2 = deepcopy(ladyDebug)
-    cyberseGadget2 = deepcopy(cyberseGadget)
-    dongleAcorn2 = deepcopy(dongleAcorn)
-    cyberseWhiteHat2 = deepcopy(cyberseWhiteHat)
-    cyberseClockDragon2 = deepcopy(cyberseClockDragon)
-    dualAssembwurm2 = deepcopy(dualAssembwurm)
-    segmentDriver2 = deepcopy(segmentDriver)
+	# Cyber Deck
+	global microCoder
+	global microCoder2
+	global codeGenerator
+	global codeGenerator2
+	global codeRadiator
+	global codeRadiator2
+	global ladyDebug
+	global ladyDebug2
+	global cyberseGadget
+	global cyberseGadget2
+	global dongleAcorn
+	global dongleAcorn2
+	global cyberseWhiteHat
+	global cyberseWhiteHat2
+	global cyberseClockDragon
+	global cyberseClockDragon2
+	global dualAssembwurm
+	global dualAssembwurm2
+	global segmentDriver
+	global segmentDriver2
+	microCoder = card("Micro Coder", 300, 0, effectCyberseSearch, effTrigger.summon, effectDescBuilder(effTrigger.summon, effectCyberseSearch.desc))
+	codeGenerator = card("Code Generator", 1300, 0, effectCodeSearch, effTrigger.summon, effectDescBuilder(effTrigger.summon, effectCodeSearch.desc))
+	codeRadiator = card("Code Radiator", 1600, 0, doubleSummon, effTrigger.summon, effectDescBuilder(effTrigger.summon, doubleSummon.desc))
+	ladyDebug = card("Lady Debug", 1000, 0, specialCyberseHand, effTrigger.summon, effectDescBuilder(effTrigger.summon, specialCyberseHand.desc))
+	cyberseGadget = card("Cyberse Gadget", 1400, 0, Destroy, effTrigger.summon, effectDescBuilder(effTrigger.summon, Destroy.desc))
+	dongleAcorn = card("Dongle Acorn", 500, 0, specialCodeHand, effTrigger.destructionBat, effectDescBuilder(effTrigger.destructionBat, specialCodeHand.desc))
+	cyberseWhiteHat = card("Cyberse White Hat", 2100, 1, effectSearch, effTrigger.summon, effectDescBuilder(effTrigger.summon, effectSearch.desc))
+	cyberseClockDragon = card("Cyberse Clock Dragon", 2500, 1, specialfromHand, effTrigger.destructionEff, effectDescBuilder(effTrigger.destructionEff, specialfromHand.desc))
+	dualAssembwurm = card("Dual Assembwurm", 2800, 1, oppDisc2, effTrigger.battle, effectDescBuilder(effTrigger.battle, oppDisc2.desc))
+	segmentDriver = card("Cyberse Driver", 2200, 1, bounceMonster, effTrigger.summon, effectDescBuilder(effTrigger.summon, bounceMonster.desc))
+	microCoder2 = deepcopy(microCoder)
+	codeGenerator2 = deepcopy(codeGenerator)
+	codeRadiator2 = deepcopy(codeRadiator)
+	ladyDebug2 = deepcopy(ladyDebug)
+	cyberseGadget2 = deepcopy(cyberseGadget)
+	dongleAcorn2 = deepcopy(dongleAcorn)
+	cyberseWhiteHat2 = deepcopy(cyberseWhiteHat)
+	cyberseClockDragon2 = deepcopy(cyberseClockDragon)
+	dualAssembwurm2 = deepcopy(dualAssembwurm)
+	segmentDriver2 = deepcopy(segmentDriver)
 
-    # Vampire Deck
-    global vampireFamiliar
-    global vampireFamiliar2
-    global vampireSucker
-    global vampireSucker2
-    global vampireFraulein
-    global vampireFraulein2
-    global vampireGrace
-    global vampireGrace2
-    global vampireGenesis
-    global vampireGenesis2
-    global mezuki
-    global mezuki2
-    global unizombie
-    global unizombie2
-    global shiranuiSolitare
-    global shiranuiSolitare2
-    global armageddonKnight
-    global armageddonKnight2
-    global zombieMaster
-    global zombieMaster2
-    vampireFamiliar = card("Vampire Familiar", 300, 0, effectVampSearch, effTrigger.summon, effectDescBuilder(effTrigger.summon, effectVampSearch.desc))
-    vampireFamiliar2 = deepcopy(vampireFamiliar)
-    vampireSucker = card("Vampire Sucker", 1600, 0, specialVampireHand, effTrigger.summon, effectDescBuilder(effTrigger.summon, specialVampireHand.desc))
-    vampireSucker2 = deepcopy(vampireSucker)
-    vampireFraulein = card("Vampire Fraulein", 800, 0, battleImmune, effTrigger.destructionBat, effectDescBuilder(effTrigger.destructionBat, battleImmune.desc))
-    vampireFraulein2 = deepcopy(vampireFraulein)
-    vampireGrace = card("Vampire Grace", 2200, 1, SiphonLife800, effTrigger.battle, effectDescBuilder(effTrigger.battle, SiphonLife800.desc))
-    vampireGrace2 = deepcopy(vampireGrace)
-    vampireGenesis = card("Vampire Genesis", 2800, 1, SiphonLife1500, effTrigger.battle, effectDescBuilder(effTrigger.battle, SiphonLife1500.desc))
-    vampireGenesis2 = deepcopy(vampireGenesis)
-    mezuki = card("Mezuki", 1600, 0, Destroy, effTrigger.summon, effectDescBuilder(effTrigger.summon, Destroy.desc))
-    mezuki2 = deepcopy(mezuki)
-    unizombie = card("Uni-Zombie", 1500, 0, PlayerDraw1, effTrigger.summon, effectDescBuilder(effTrigger.summon, PlayerDraw1.desc))
-    unizombie2 = deepcopy(unizombie)
-    shiranuiSolitare = card("Shiranui Solitare", 1300, 0, PlayerDraw2, effTrigger.summon, effectDescBuilder(effTrigger.summon, PlayerDraw2.desc))
-    shiranuiSolitare2 = deepcopy(shiranuiSolitare)
-    armageddonKnight = card("Armageddon Knight", 1400, 0, doubleSummon, effTrigger.summon, effectDescBuilder(effTrigger.summon, doubleSummon.desc))
-    armageddonKnight2 = deepcopy(armageddonKnight)
-    zombieMaster = card("Zombie Master", 1800, 0, oppDisc1, effTrigger.summon, effectDescBuilder(effTrigger.summon, oppDisc1.desc))
-    zombieMaster2 = deepcopy(zombieMaster)
+	# Vampire Deck
+	global vampireFamiliar
+	global vampireFamiliar2
+	global vampireSucker
+	global vampireSucker2
+	global vampireFraulein
+	global vampireFraulein2
+	global vampireGrace
+	global vampireGrace2
+	global vampireGenesis
+	global vampireGenesis2
+	global mezuki
+	global mezuki2
+	global unizombie
+	global unizombie2
+	global shiranuiSolitare
+	global shiranuiSolitare2
+	global armageddonKnight
+	global armageddonKnight2
+	global zombieMaster
+	global zombieMaster2
+	vampireFamiliar = card("Vampire Familiar", 300, 0, effectVampSearch, effTrigger.graveyard, effectDescBuilder(effTrigger.graveyard, effectVampSearch.desc))
+	vampireFamiliar2 = deepcopy(vampireFamiliar)
+	vampireSucker = card("Vampire Sucker", 1600, 0, discSpecVampHand, effTrigger.summon, effectDescBuilder(effTrigger.summon, discSpecVampHand.desc))
+	vampireSucker2 = deepcopy(vampireSucker)
+	vampireFraulein = card("Vampire Fraulein", 800, 0, battleImmune, effTrigger.destructionBat, effectDescBuilder(effTrigger.destructionBat, battleImmune.desc))
+	vampireFraulein2 = deepcopy(vampireFraulein)
+	vampireGrace = card("Vampire Grace", 2200, 1, SiphonLifeAndMill800, effTrigger.summon, effectDescBuilder(effTrigger.summon, SiphonLifeAndMill800.desc))
+	vampireGrace2 = deepcopy(vampireGrace)
+	vampireGenesis = card("Vampire Genesis", 2800, 1, SiphonLifeAndMill1500, effTrigger.battle, effectDescBuilder(effTrigger.battle, SiphonLifeAndMill1500.desc))
+	vampireGenesis2 = deepcopy(vampireGenesis)
+	mezuki = card("Mezuki", 1600, 0, Destroy, effTrigger.summon, effectDescBuilder(effTrigger.summon, Destroy.desc))
+	mezuki2 = deepcopy(mezuki)
+	unizombie = card("Uni-Zombie", 1500, 0, GYToHand, effTrigger.summon, effectDescBuilder(effTrigger.summon, GYToHand.desc))
+	unizombie2 = deepcopy(unizombie)
+	shiranuiSolitare = card("Shiranui Solitare", 1300, 0, PlayerDraw1, effTrigger.graveyard, effectDescBuilder(effTrigger.graveyard, PlayerDraw1.desc))
+	shiranuiSolitare2 = deepcopy(shiranuiSolitare)
+	armageddonKnight = card("Armageddon Knight", 1400, 0, doubleSummon, effTrigger.summon, effectDescBuilder(effTrigger.summon, doubleSummon.desc))
+	armageddonKnight2 = deepcopy(armageddonKnight)
+	zombieMaster = card("Zombie Master", 1800, 0, oppDisc1, effTrigger.summon, effectDescBuilder(effTrigger.summon, oppDisc1.desc))
+	zombieMaster2 = deepcopy(zombieMaster)
 
-    # Gishki Deck
-    global gishkiBeast
-    global gishkiBeast2
-    global gishkiAbyss
-    global gishkiAbyss2
-    global gishkiAquamirror
-    global gishkiAquamirror2
-    global gishkiShadow
-    global gishkiShadow2
-    global visionGishki
-    global visionGishki2
-    global gishkiAriel
-    global gishkiAriel2
-    global evigishkiLevianima
-    global evigishkiLevianima2
-    global evigishkiSoulOgre
-    global evigishkiSoulOgre2
-    global evigishkiGustKraken
-    global evigishkiGustKraken2
-    global evigishkiPsychlone
-    global evigishkiPsychlone2
-    gishkiBeast = card("Gishki Beast", 1500, 0, gain500, effTrigger.battle, effectDescBuilder(effTrigger.battle, gain500.desc))
-    gishkiBeast2 = deepcopy(gishkiBeast)
-    gishkiAbyss = card("Gishki Abyss", 800, 0, PlayerDraw2, effTrigger.battle, effectDescBuilder(effTrigger.battle, PlayerDraw2.desc))
-    gishkiAbyss2 = deepcopy(gishkiAbyss)
-    gishkiAquamirror = card("Gishki Aquamirror", 0, 0, doubleSummon, effTrigger.summon, effectDescBuilder(effTrigger.summon, doubleSummon.desc))
-    gishkiAquamirror2 = deepcopy(gishkiAquamirror)
-    gishkiShadow = card("Gishki Shadow", 1200, 0, battleImmune, effTrigger.destructionBat, effectDescBuilder(effTrigger.destructionBat, battleImmune.desc))
-    gishkiShadow2 = deepcopy(gishkiShadow)
-    visionGishki = card("Vision Gishki ", 1800, 0, effectGishkiSearch, effTrigger.battle, effectDescBuilder(effTrigger.battle, effectGishkiSearch.desc))
-    visionGishki2 = deepcopy(visionGishki)
-    gishkiAriel = card("Gishki Ariel", 1200, 0, bounceMonster, effTrigger.summon, effectDescBuilder(effTrigger.summon, bounceMonster.desc))
-    gishkiAriel2 = deepcopy(gishkiAriel)
-    evigishkiLevianima = card("Evigishki Levianima", 2200, 1, effectGishkiSearch, effTrigger.summon, effectDescBuilder(effTrigger.summon, effectGishkiSearch.desc))
-    evigishkiLevianima2 = deepcopy(evigishkiLevianima)
-    evigishkiSoulOgre = card("Evigishki Soul Ogre", 2800, 1, gain1000, effTrigger.battle, effectDescBuilder(effTrigger.battle, gain1000.desc))
-    evigishkiSoulOgre2 = deepcopy(evigishkiSoulOgre)
-    evigishkiGustKraken = card("Evigishki Gustkraken", 2500, 1, specialGishkiHand, effTrigger.battle, effectDescBuilder(effTrigger.battle, effectEvigishkiSearch.desc))
-    evigishkiGustKraken2 = deepcopy(evigishkiGustKraken)
-    evigishkiPsychlone = card("Evigishki Psychlone", 2000, 1, Destroy, effTrigger.battle, effectDescBuilder(effTrigger.battle, Destroy.desc))
-    evigishkiPsychlone2 = deepcopy(evigishkiPsychlone)
+	# Gishki Deck
+	global gishkiBeast
+	global gishkiBeast2
+	global gishkiAbyss
+	global gishkiAbyss2
+	global gishkiAquamirror
+	global gishkiAquamirror2
+	global gishkiShadow
+	global gishkiShadow2
+	global visionGishki
+	global visionGishki2
+	global gishkiAriel
+	global gishkiAriel2
+	global evigishkiLevianima
+	global evigishkiLevianima2
+	global evigishkiSoulOgre
+	global evigishkiSoulOgre2
+	global evigishkiGustKraken
+	global evigishkiGustKraken2
+	global evigishkiPsychlone
+	global evigishkiPsychlone2
+	gishkiBeast = card("Gishki Beast", 1500, 0, gain500, effTrigger.battle, effectDescBuilder(effTrigger.battle, gain500.desc))
+	gishkiBeast2 = deepcopy(gishkiBeast)
+	gishkiAbyss = card("Gishki Abyss", 800, 0, PlayerDraw2, effTrigger.battle, effectDescBuilder(effTrigger.battle, PlayerDraw2.desc))
+	gishkiAbyss2 = deepcopy(gishkiAbyss)
+	gishkiAquamirror = card("Gishki Aquamirror", 0, 0, doubleSummon, effTrigger.summon, effectDescBuilder(effTrigger.summon, doubleSummon.desc))
+	gishkiAquamirror2 = deepcopy(gishkiAquamirror)
+	gishkiShadow = card("Gishki Shadow", 1200, 0, battleImmune, effTrigger.destructionBat, effectDescBuilder(effTrigger.destructionBat, battleImmune.desc))
+	gishkiShadow2 = deepcopy(gishkiShadow)
+	visionGishki = card("Vision Gishki ", 1800, 0, effectGishkiSearch, effTrigger.battle, effectDescBuilder(effTrigger.battle, effectGishkiSearch.desc))
+	visionGishki2 = deepcopy(visionGishki)
+	gishkiAriel = card("Gishki Ariel", 1200, 0, bounceMonster, effTrigger.summon, effectDescBuilder(effTrigger.summon, bounceMonster.desc))
+	gishkiAriel2 = deepcopy(gishkiAriel)
+	evigishkiLevianima = card("Evigishki Levianima", 2200, 1, effectGishkiSearch, effTrigger.summon, effectDescBuilder(effTrigger.summon, effectGishkiSearch.desc))
+	evigishkiLevianima2 = deepcopy(evigishkiLevianima)
+	evigishkiSoulOgre = card("Evigishki Soul Ogre", 2800, 1, gain1000, effTrigger.battle, effectDescBuilder(effTrigger.battle, gain1000.desc))
+	evigishkiSoulOgre2 = deepcopy(evigishkiSoulOgre)
+	evigishkiGustKraken = card("Evigishki Gustkraken", 2500, 1, specialGishkiHand, effTrigger.battle, effectDescBuilder(effTrigger.battle, effectEvigishkiSearch.desc))
+	evigishkiGustKraken2 = deepcopy(evigishkiGustKraken)
+	evigishkiPsychlone = card("Evigishki Psychlone", 2000, 1, Destroy, effTrigger.battle, effectDescBuilder(effTrigger.battle, Destroy.desc))
+	evigishkiPsychlone2 = deepcopy(evigishkiPsychlone)
 
-    # Herald Deck
-    global orangeHerald
-    global orangeHerald2
-    global purpleHerald
-    global purpleHerald2
-    global arcHerald
-    global arcHerald2
-    global dawnHerald
-    global dawnHerald2
-    global agentEarth
-    global agentEarth2
-    global agentVenus
-    global agentVenus2
-    global agentMars
-    global agentMars2
-    global agentSaturn
-    global agentSaturn2
-    global heraldPerfection
-    global heraldPerfection2
-    global masterHyperion
-    global masterHyperion2
-    orangeHerald = card("Herald of Orange Light", 800, 0, effectHeraldSearch, effTrigger.summon, effectDescBuilder(effTrigger.summon, effectHeraldSearch.desc))
-    orangeHerald2 = deepcopy(orangeHerald)
-    purpleHerald = card("Herald of Purple Light", 800, 0, matchAttack, effTrigger.battle, effectDescBuilder(effTrigger.battle, matchAttack.desc))
-    purpleHerald2 = deepcopy(purpleHerald)
-    arcHerald = card("Herald of Arc Light", 800, 0, Restore2000, effTrigger.summon, effectDescBuilder(effTrigger.summon, Restore2000.desc))
-    arcHerald2 = deepcopy(arcHerald)
-    dawnHerald = card("Herald of the Dawn", 0, 0, doubleSummon, effTrigger.summon, effectDescBuilder(effTrigger.summon, doubleSummon.desc))
-    dawnHerald2 = deepcopy(dawnHerald)
-    agentEarth = card("Agent of Mystery: Earth", 1200, 0, effectAgentSearch, effTrigger.summon, effectDescBuilder(effTrigger.summon, effectAgentSearch.desc))
-    agentEarth2 = deepcopy(agentEarth)
-    agentVenus = card("Agent of Creation: Venus", 1600, 0, specialAgentHand, effTrigger.summon, effectDescBuilder(effTrigger.summon, specialAgentHand.desc))
-    agentVenus2 = deepcopy(agentVenus)
-    agentMars = card("Agent of Force: Mars", 0, 0, gainDifference, effTrigger.summon, effectDescBuilder(effTrigger.summon, gainDifference.desc))
-    agentMars2 = deepcopy(agentMars)
-    agentSaturn = card("Agent of Judgment: Saturn", 2400, 1, Restore2000, effTrigger.summon, effectDescBuilder(effTrigger.summon, Restore2000.desc))
-    agentSaturn2 = deepcopy(agentSaturn)
-    heraldPerfection = card("Herald of Perfection", 2800, 1, gainDifference, effTrigger.summon, effectDescBuilder(effTrigger.summon, gainDifference.desc))
-    heraldPerfection2 = deepcopy(heraldPerfection)
-    masterHyperion = card("Master Hyperion", 2800, 1, specialfromHand, effTrigger.summon, effectDescBuilder(effTrigger.summon, specialfromHand.desc))
-    masterHyperion2 = deepcopy(masterHyperion)
+	# Herald Deck
+	global orangeHerald
+	global orangeHerald2
+	global purpleHerald
+	global purpleHerald2
+	global arcHerald
+	global arcHerald2
+	global dawnHerald
+	global dawnHerald2
+	global agentEarth
+	global agentEarth2
+	global agentVenus
+	global agentVenus2
+	global agentMars
+	global agentMars2
+	global agentSaturn
+	global agentSaturn2
+	global heraldPerfection
+	global heraldPerfection2
+	global masterHyperion
+	global masterHyperion2
+	orangeHerald = card("Herald of Orange Light", 800, 0, effectHeraldSearch, effTrigger.summon, effectDescBuilder(effTrigger.summon, effectHeraldSearch.desc))
+	orangeHerald2 = deepcopy(orangeHerald)
+	purpleHerald = card("Herald of Purple Light", 800, 0, matchAttack, effTrigger.battle, effectDescBuilder(effTrigger.battle, matchAttack.desc))
+	purpleHerald2 = deepcopy(purpleHerald)
+	arcHerald = card("Herald of Arc Light", 800, 0, Restore2000, effTrigger.summon, effectDescBuilder(effTrigger.summon, Restore2000.desc))
+	arcHerald2 = deepcopy(arcHerald)
+	dawnHerald = card("Herald of the Dawn", 0, 0, doubleSummon, effTrigger.summon, effectDescBuilder(effTrigger.summon, doubleSummon.desc))
+	dawnHerald2 = deepcopy(dawnHerald)
+	agentEarth = card("Agent of Mystery: Earth", 1200, 0, effectAgentSearch, effTrigger.summon, effectDescBuilder(effTrigger.summon, effectAgentSearch.desc))
+	agentEarth2 = deepcopy(agentEarth)
+	agentVenus = card("Agent of Creation: Venus", 1600, 0, specialAgentHand, effTrigger.summon, effectDescBuilder(effTrigger.summon, specialAgentHand.desc))
+	agentVenus2 = deepcopy(agentVenus)
+	agentMars = card("Agent of Force: Mars", 0, 0, gainDifference, effTrigger.summon, effectDescBuilder(effTrigger.summon, gainDifference.desc))
+	agentMars2 = deepcopy(agentMars)
+	agentSaturn = card("Agent of Judgment: Saturn", 2400, 1, Restore2000, effTrigger.summon, effectDescBuilder(effTrigger.summon, Restore2000.desc))
+	agentSaturn2 = deepcopy(agentSaturn)
+	heraldPerfection = card("Herald of Perfection", 2800, 1, gainDifference, effTrigger.summon, effectDescBuilder(effTrigger.summon, gainDifference.desc))
+	heraldPerfection2 = deepcopy(heraldPerfection)
+	masterHyperion = card("Master Hyperion", 2800, 1, specialfromHand, effTrigger.summon, effectDescBuilder(effTrigger.summon, specialfromHand.desc))
+	masterHyperion2 = deepcopy(masterHyperion)
 
-    global darkMagician
-    global darkMagician2
-    global darkGMagician
-    global darkGMagician2
-    global magicianRod
-    global magicianRod2
-    global magicianRobe
-    global magicianRobe2
-    global chocolateGirl
-    global chocolateGirl2
-    global appleGirl
-    global appleGirl2
-    global kiwiGirl
-    global kiwiGirl2
-    global berryGirl
-    global berryGirl2
-    global ebonIllusion
-    global ebonIllusion2
-    global magiMagiGirl
-    global magiMagiGirl2
-    darkMagician = card("Dark Magician", 2500, 1, effectImmune, effTrigger.destructionEff, effectDescBuilder(effTrigger.destructionEff, effectImmune.desc))
-    darkMagician2 = deepcopy(darkMagician)
-    darkGMagician = card("Dark Magician Girl", 2300, 1, darkMagicianGain500, effTrigger.summon, effectDescBuilder(effTrigger.summon, darkMagicianGain500.desc))
-    darkGMagician2 = deepcopy(darkGMagician)
-    magicianRod = card("Magician's Rod", 1600, 0, effectDarkMagicianSearch, effTrigger.summon, effectDescBuilder(effTrigger.summon, effectDarkMagicianSearch.desc))
-    magicianRod2 = deepcopy(magicianRod)
-    magicianRobe = card("Magician's Robe", 800, 0, doubleSummon, effTrigger.summon, effectDescBuilder(effTrigger.summon, doubleSummon.desc))
-    magicianRobe2 = deepcopy(magicianRobe)
-    chocolateGirl = card("Chocolate Magician Girl", 1800, 0, specialMagicianGirlHand, effTrigger.summon, effectDescBuilder(effTrigger.summon, specialMagicianGirlHand.desc))
-    chocolateGirl2 = deepcopy(chocolateGirl)
-    appleGirl = card("Apple Magician Girl", 1000, 0, halfAtkDraw2, effTrigger.defend, effectDescBuilder(effTrigger.defend, halfAtkDraw2.desc))
-    appleGirl2 = deepcopy(appleGirl)
-    berryGirl = card("Berry Magician Girl", 1200, 0, tribtoGrantAtk, effTrigger.summon, effectDescBuilder(effTrigger.summon, tribtoGrantAtk.desc))
-    berryGirl2 = deepcopy(berryGirl)
-    kiwiGirl = card("Kiwi Magician Girl", 300, 0, bounceMonster, effTrigger.summon, effectDescBuilder(effTrigger.summon, bounceMonster.desc))
-    kiwiGirl2 = deepcopy(kiwiGirl)
-    ebonIllusion = card("Ebon Illusion Magician", 2400, 1, specialDarkMagicianDeck, effTrigger.summon, effectDescBuilder(effTrigger.summon, specialDarkMagicianDeck.desc))
-    ebonIllusion2 = deepcopy(ebonIllusion)
-    magiMagiGirl = card("Magi Magician Girl", 2600, 1, Atk0, effTrigger.defend, effectDescBuilder(effTrigger.defend, Atk0.desc))
-    magiMagiGirl2 = deepcopy(magiMagiGirl)
+	global darkMagician
+	global darkMagician2
+	global darkGMagician
+	global darkGMagician2
+	global magicianRod
+	global magicianRod2
+	global magicianRobe
+	global magicianRobe2
+	global chocolateGirl
+	global chocolateGirl2
+	global appleGirl
+	global appleGirl2
+	global kiwiGirl
+	global kiwiGirl2
+	global berryGirl
+	global berryGirl2
+	global ebonIllusion
+	global ebonIllusion2
+	global magiMagiGirl
+	global magiMagiGirl2
+	darkMagician = card("Dark Magician", 2500, 1, effectImmune, effTrigger.destructionEff, effectDescBuilder(effTrigger.destructionEff, effectImmune.desc))
+	darkMagician2 = deepcopy(darkMagician)
+	darkGMagician = card("Dark Magician Girl", 2300, 1, darkMagicianGain500, effTrigger.summon, effectDescBuilder(effTrigger.summon, darkMagicianGain500.desc))
+	darkGMagician2 = deepcopy(darkGMagician)
+	magicianRod = card("Magician's Rod", 1600, 0, effectDarkMagicianSearch, effTrigger.summon, effectDescBuilder(effTrigger.summon, effectDarkMagicianSearch.desc))
+	magicianRod2 = deepcopy(magicianRod)
+	magicianRobe = card("Magician's Robe", 800, 0, doubleSummon, effTrigger.summon, effectDescBuilder(effTrigger.summon, doubleSummon.desc))
+	magicianRobe2 = deepcopy(magicianRobe)
+	chocolateGirl = card("Chocolate Magician Girl", 1800, 0, specialMagicianGirlHand, effTrigger.summon, effectDescBuilder(effTrigger.summon, specialMagicianGirlHand.desc))
+	chocolateGirl2 = deepcopy(chocolateGirl)
+	appleGirl = card("Apple Magician Girl", 1000, 0, halfAtkDraw2, effTrigger.defend, effectDescBuilder(effTrigger.defend, halfAtkDraw2.desc))
+	appleGirl2 = deepcopy(appleGirl)
+	berryGirl = card("Berry Magician Girl", 1200, 0, tribtoGrantAtk, effTrigger.summon, effectDescBuilder(effTrigger.summon, tribtoGrantAtk.desc))
+	berryGirl2 = deepcopy(berryGirl)
+	kiwiGirl = card("Kiwi Magician Girl", 300, 0, bounceMonster, effTrigger.summon, effectDescBuilder(effTrigger.summon, bounceMonster.desc))
+	kiwiGirl2 = deepcopy(kiwiGirl)
+	ebonIllusion = card("Ebon Illusion Magician", 2400, 1, specialDarkMagicianDeck, effTrigger.summon, effectDescBuilder(effTrigger.summon, specialDarkMagicianDeck.desc))
+	ebonIllusion2 = deepcopy(ebonIllusion)
+	magiMagiGirl = card("Magi Magician Girl", 2600, 1, Atk0, effTrigger.defend, effectDescBuilder(effTrigger.defend, Atk0.desc))
+	magiMagiGirl2 = deepcopy(magiMagiGirl)
 
-    # TEST CARDS
+	# TEST CARDS
 
-    global copyMachine
-    copyMachine = card("Copy Machine", 0, 0, matchAttack, effTrigger.battle, matchAttack.desc)
+	global copyMachine
+	copyMachine = card("Copy Machine", 0, 0, matchAttack, effTrigger.battle, matchAttack.desc)
 
-    global discard1Guy
-    global deviousDiscard1Guy
-    global deviousDiscardDiva
-    global tributeMasterJerry
-    global battleImmuneIvan
-    global effectImmuneEdgar
-    global cyberDigger
-    global deckDigger
-    global doubleSummoner
-    global resurrector
-    global reAdder
-    global graveyardGarry
-    global lifeVitalizer
-    global defenderDan
-    discard1Guy = card("Discard Guy", 500, 0, playerDisc1, effTrigger.summon, playerDisc1.desc)
-    deviousDiscard1Guy = card("Devious Discard Guy", 0, 0, oppDisc1, effTrigger.summon, oppDisc1.desc)
-    deviousDiscardDiva = card("Devious Discard Diva", 2500, 0, playerDisc1, effTrigger.battle, playerDisc1.desc)
-    tributeMasterJerry = card("Tribute Master Jerry", 2500, 1)
-    battleImmuneIvan = card("Battle Immune Ivan", 0, 0, battleImmune, effTrigger.destructionBat, battleImmune.desc)
-    effectImmuneEdgar = card("Effect Immune Edgar", 1500, 0, effectImmune, effTrigger.destructionEff, effectImmune.desc)
-    cyberDigger = card("Cyber Digger", 1000, 0, effectCodeSearch, effTrigger.summon, effectCodeSearch.desc)
-    deckDigger = card("Deck Digger", 200, 0, effectSearch, effTrigger.summon, effectSearch.desc)
-    doubleSummoner = card("Double Summoner", 1500, 0, doubleSummon, effTrigger.summon, doubleSummon.desc)
-    resurrector = card("Resurrector", 0, 0, Trib_SS_GY, effTrigger.summon, Trib_SS_GY.desc)
-    reAdder = card("Re-Adder", 1200, 0, GYToHand, effTrigger.summon, GYToHand.desc)
-    graveyardGarry = card("Graveyard Garry", 2000, 1, PlayerDraw2, effTrigger.graveyard, PlayerDraw2.desc)
-    lifeVitalizer = card("Life Vitalizer", 1800, 0, gainDifference, effTrigger.summon, gainDifference.desc)
-    defenderDan = card("Defender Dan", 2000, 0, PlayerDraw1, effTrigger.defend, effectDescBuilder(effTrigger.defend, PlayerDraw1.desc))
+	global discard1Guy
+	global deviousDiscard1Guy
+	global deviousDiscardDiva
+	global battleImmuneIvan
+	global effectImmuneEdgar
+	global cyberDigger
+	global deckDigger
+	global doubleSummoner
+	global resurrector
+	global reAdder
+	global graveyardGarry
+	global lifeVitalizer
+	global defenderDan
+	discard1Guy = card("Discard Guy", 500, 0, playerDisc1, effTrigger.summon, playerDisc1.desc)
+	deviousDiscard1Guy = card("Devious Discard Guy", 0, 0, oppDisc1, effTrigger.summon, oppDisc1.desc)
+	deviousDiscardDiva = card("Devious Discard Diva", 2500, 0, playerDisc1, effTrigger.battle, playerDisc1.desc)
+	battleImmuneIvan = card("Battle Immune Ivan", 0, 0, battleImmune, effTrigger.destructionBat, battleImmune.desc)
+	effectImmuneEdgar = card("Effect Immune Edgar", 1500, 0, effectImmune, effTrigger.destructionEff, effectImmune.desc)
+	cyberDigger = card("Cyber Digger", 1000, 0, effectCodeSearch, effTrigger.summon, effectCodeSearch.desc)
+	deckDigger = card("Deck Digger", 200, 0, effectSearch, effTrigger.summon, effectSearch.desc)
+	doubleSummoner = card("Double Summoner", 1500, 0, doubleSummon, effTrigger.summon, doubleSummon.desc)
+	resurrector = card("Resurrector", 0, 0, Trib_SS_GY, effTrigger.summon, Trib_SS_GY.desc)
+	reAdder = card("Re-Adder", 1200, 0, GYToHand, effTrigger.summon, GYToHand.desc)
+	graveyardGarry = card("Graveyard Garry", 2000, 1, PlayerDraw2, effTrigger.graveyard, PlayerDraw2.desc)
+	lifeVitalizer = card("Life Vitalizer", 1800, 0, gainDifference, effTrigger.summon, gainDifference.desc)
+	defenderDan = card("Defender Dan", 2000, 0, PlayerDraw1, effTrigger.defend, effectDescBuilder(effTrigger.defend, PlayerDraw1.desc))
 
 
 def effectDescBuilder(effTrigger: Enum, Desc: str):
 
-    if effTrigger.name == "n_a":
-        effectDescription = Desc
-    elif effTrigger.name == "summon":
-        effectDescription = "When Summoned: " + Desc
-    elif effTrigger.name == "attack":
-        effectDescription = "When this card Attacks: " + Desc
-    elif effTrigger.name == "defend":
-        effectDescription = "When this card is Attacked: " + Desc
-    elif effTrigger.name == "battle":
-        effectDescription = "When this card Battles: " + Desc
-    elif effTrigger.name == "graveyard":
-        effectDescription = "When this card is sent to the Graveyard: " + Desc
-    elif effTrigger.name == "destructionBat":
-        effectDescription = "When this card would be destroyed by Battle: " + Desc
-    elif effTrigger.name == "destructionEff":
-        effectDescription = "When this card would be destroyed by a card effect: " + Desc
-    else:
-        raise TypeError
+	if effTrigger.name == "n_a":
+		effectDescription = Desc
+	elif effTrigger.name == "summon":
+		effectDescription = "When Summoned: " + Desc
+	elif effTrigger.name == "attack":
+		effectDescription = "When this card Attacks: " + Desc
+	elif effTrigger.name == "defend":
+		effectDescription = "When this card is Attacked: " + Desc
+	elif effTrigger.name == "battle":
+		effectDescription = "When this card Battles: " + Desc
+	elif effTrigger.name == "graveyard":
+		effectDescription = "When this card is sent to the Graveyard: " + Desc
+	elif effTrigger.name == "destructionBat":
+		effectDescription = "When this card would be destroyed by Battle: " + Desc
+	elif effTrigger.name == "destructionEff":
+		effectDescription = "When this card would be destroyed by a card effect: " + Desc
+	else:
+		raise TypeError
 
-    return effectDescription
+	return effectDescription
 
 
 def printDeckList(DeckList: list, title: str):
-    print("{}".format(title))
+	print("{}".format(title))
 
-    if DeckList.__len__() != 0:
-        i = 0
+	if DeckList.__len__() != 0:
+		i = 0
 
-        max_len = _player.getMaxLength(DeckList)
+		max_len = _player.getMaxLength(DeckList)
 
-        for monster in DeckList:
-            if i >= 9:
-                print("[{}] {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ),
-                                                                             str(monster.atkPoints).ljust(4, ),
-                                                                             monster.tribute, monster.effectText))
-            else:
-                print("[{}]  {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ),
-                                                                              str(monster.atkPoints).ljust(4, ),
-                                                                              monster.tribute, monster.effectText))
-            i = i + 1
+		for monster in DeckList:
+			if i >= 9:
+				print("[{}] {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ),
+																			 str(monster.atkPoints).ljust(4, ),
+																			 monster.tribute, monster.effectText))
+			else:
+				print("[{}]  {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ),
+																			  str(monster.atkPoints).ljust(4, ),
+																			  monster.tribute, monster.effectText))
+			i = i + 1
 
-    input("Press Enter to Continue...")
+	input("Press Enter to Continue...")
 
-    return
+	return
 
 
 # Method to setup decks once the cards have been set
 def decksetup():
-    CyberDeck = []
-    VampireDeck = []
-    GishkiDeck = []
-    HeraldDeck = []
-    MagicianDeck = []
-    DeckList = []
+	CyberDeck = []
+	VampireDeck = []
+	GishkiDeck = []
+	HeraldDeck = []
+	MagicianDeck = []
+	DeckList = []
 
-    pass
+	pass
 
-    CyberDeck.append(microCoder)
-    CyberDeck.append(microCoder2)
-    CyberDeck.append(codeGenerator)
-    CyberDeck.append(codeGenerator2)
-    CyberDeck.append(codeRadiator)
-    CyberDeck.append(codeRadiator2)
-    CyberDeck.append(ladyDebug)
-    CyberDeck.append(ladyDebug2)
-    CyberDeck.append(cyberseGadget)
-    CyberDeck.append(cyberseGadget2)
-    CyberDeck.append(dongleAcorn)
-    CyberDeck.append(dongleAcorn2)
-    CyberDeck.append(cyberseWhiteHat)
-    CyberDeck.append(cyberseWhiteHat2)
-    CyberDeck.append(cyberseClockDragon)
-    CyberDeck.append(cyberseClockDragon2)
-    CyberDeck.append(dualAssembwurm)
-    CyberDeck.append(segmentDriver)
-    CyberDeck.append(segmentDriver2)
+	CyberDeck.append(microCoder)
+	CyberDeck.append(microCoder2)
+	CyberDeck.append(codeGenerator)
+	CyberDeck.append(codeGenerator2)
+	CyberDeck.append(codeRadiator)
+	CyberDeck.append(codeRadiator2)
+	CyberDeck.append(ladyDebug)
+	CyberDeck.append(ladyDebug2)
+	CyberDeck.append(cyberseGadget)
+	CyberDeck.append(cyberseGadget2)
+	CyberDeck.append(dongleAcorn)
+	CyberDeck.append(dongleAcorn2)
+	CyberDeck.append(cyberseWhiteHat)
+	CyberDeck.append(cyberseWhiteHat2)
+	CyberDeck.append(cyberseClockDragon)
+	CyberDeck.append(cyberseClockDragon2)
+	CyberDeck.append(dualAssembwurm)
+	CyberDeck.append(segmentDriver)
+	CyberDeck.append(segmentDriver2)
 
-    VampireDeck.append(vampireFamiliar)
-    VampireDeck.append(vampireFamiliar2)
-    VampireDeck.append(vampireSucker)
-    VampireDeck.append(vampireSucker2)
-    VampireDeck.append(vampireFraulein)
-    VampireDeck.append(vampireFraulein2)
-    VampireDeck.append(vampireGrace)
-    VampireDeck.append(vampireGrace2)
-    VampireDeck.append(vampireGenesis)
-    VampireDeck.append(vampireGenesis2)
-    VampireDeck.append(mezuki)
-    VampireDeck.append(mezuki2)
-    VampireDeck.append(unizombie)
-    VampireDeck.append(unizombie2)
-    VampireDeck.append(shiranuiSolitare)
-    VampireDeck.append(shiranuiSolitare2)
-    VampireDeck.append(armageddonKnight)
-    VampireDeck.append(armageddonKnight2)
-    VampireDeck.append(zombieMaster)
-    VampireDeck.append(zombieMaster2)
+	VampireDeck.append(vampireFamiliar)
+	VampireDeck.append(vampireFamiliar2)
+	VampireDeck.append(vampireSucker)
+	VampireDeck.append(vampireSucker2)
+	VampireDeck.append(vampireFraulein)
+	VampireDeck.append(vampireFraulein2)
+	VampireDeck.append(vampireGrace)
+	VampireDeck.append(vampireGrace2)
+	VampireDeck.append(vampireGenesis)
+	VampireDeck.append(vampireGenesis2)
+	VampireDeck.append(mezuki)
+	VampireDeck.append(mezuki2)
+	VampireDeck.append(unizombie)
+	VampireDeck.append(unizombie2)
+	VampireDeck.append(shiranuiSolitare)
+	VampireDeck.append(shiranuiSolitare2)
+	VampireDeck.append(armageddonKnight)
+	VampireDeck.append(armageddonKnight2)
+	VampireDeck.append(zombieMaster)
+	VampireDeck.append(zombieMaster2)
 
-    GishkiDeck.append(gishkiBeast)
-    GishkiDeck.append(gishkiBeast2)
-    GishkiDeck.append(gishkiAbyss)
-    GishkiDeck.append(gishkiAbyss2)
-    GishkiDeck.append(gishkiAquamirror)
-    GishkiDeck.append(gishkiAquamirror2)
-    GishkiDeck.append(gishkiShadow)
-    GishkiDeck.append(gishkiShadow2)
-    GishkiDeck.append(visionGishki)
-    GishkiDeck.append(visionGishki2)
-    GishkiDeck.append(gishkiAriel)
-    GishkiDeck.append(gishkiAriel2)
-    GishkiDeck.append(evigishkiLevianima)
-    GishkiDeck.append(evigishkiLevianima2)
-    GishkiDeck.append(evigishkiSoulOgre)
-    GishkiDeck.append(evigishkiGustKraken)
-    GishkiDeck.append(evigishkiPsychlone)
-    GishkiDeck.append(evigishkiPsychlone2)
+	GishkiDeck.append(gishkiBeast)
+	GishkiDeck.append(gishkiBeast2)
+	GishkiDeck.append(gishkiAbyss)
+	GishkiDeck.append(gishkiAbyss2)
+	GishkiDeck.append(gishkiAquamirror)
+	GishkiDeck.append(gishkiAquamirror2)
+	GishkiDeck.append(gishkiShadow)
+	GishkiDeck.append(gishkiShadow2)
+	GishkiDeck.append(visionGishki)
+	GishkiDeck.append(visionGishki2)
+	GishkiDeck.append(gishkiAriel)
+	GishkiDeck.append(gishkiAriel2)
+	GishkiDeck.append(evigishkiLevianima)
+	GishkiDeck.append(evigishkiLevianima2)
+	GishkiDeck.append(evigishkiSoulOgre)
+	GishkiDeck.append(evigishkiGustKraken)
+	GishkiDeck.append(evigishkiPsychlone)
+	GishkiDeck.append(evigishkiPsychlone2)
 
-    HeraldDeck.append(orangeHerald)
-    HeraldDeck.append(orangeHerald2)
-    HeraldDeck.append(orangeHerald2)
-    HeraldDeck.append(purpleHerald)
-    HeraldDeck.append(purpleHerald2)
-    HeraldDeck.append(arcHerald)
-    HeraldDeck.append(arcHerald2)
-    HeraldDeck.append(dawnHerald)
-    HeraldDeck.append(dawnHerald2)
-    HeraldDeck.append(agentEarth)
-    HeraldDeck.append(agentEarth2)
-    HeraldDeck.append(agentVenus)
-    HeraldDeck.append(agentVenus2)
-    HeraldDeck.append(agentMars)
-    HeraldDeck.append(agentMars2)
-    HeraldDeck.append(agentSaturn)
-    HeraldDeck.append(agentSaturn2)
-    HeraldDeck.append(heraldPerfection)
-    HeraldDeck.append(heraldPerfection2)
-    HeraldDeck.append(masterHyperion)
+	HeraldDeck.append(orangeHerald)
+	HeraldDeck.append(orangeHerald2)
+	HeraldDeck.append(orangeHerald2)
+	HeraldDeck.append(purpleHerald)
+	HeraldDeck.append(purpleHerald2)
+	HeraldDeck.append(arcHerald)
+	HeraldDeck.append(arcHerald2)
+	HeraldDeck.append(dawnHerald)
+	HeraldDeck.append(dawnHerald2)
+	HeraldDeck.append(agentEarth)
+	HeraldDeck.append(agentEarth2)
+	HeraldDeck.append(agentVenus)
+	HeraldDeck.append(agentVenus2)
+	HeraldDeck.append(agentMars)
+	HeraldDeck.append(agentMars2)
+	HeraldDeck.append(agentSaturn)
+	HeraldDeck.append(agentSaturn2)
+	HeraldDeck.append(heraldPerfection)
+	HeraldDeck.append(heraldPerfection2)
+	HeraldDeck.append(masterHyperion)
 
-    MagicianDeck.append(darkMagician)
-    MagicianDeck.append(darkMagician2)
-    MagicianDeck.append(darkGMagician)
-    MagicianDeck.append(darkGMagician2)
-    MagicianDeck.append(magicianRod)
-    MagicianDeck.append(magicianRod2)
-    MagicianDeck.append(magicianRobe)
-    MagicianDeck.append(magicianRobe2)
-    MagicianDeck.append(chocolateGirl)
-    MagicianDeck.append(chocolateGirl2)
-    MagicianDeck.append(appleGirl)
-    MagicianDeck.append(appleGirl2)
-    MagicianDeck.append(berryGirl)
-    MagicianDeck.append(berryGirl2)
-    MagicianDeck.append(kiwiGirl)
-    MagicianDeck.append(kiwiGirl2)
-    MagicianDeck.append(ebonIllusion)
-    MagicianDeck.append(ebonIllusion2)
-    MagicianDeck.append(magiMagiGirl)
-    MagicianDeck.append(magiMagiGirl2)
+	MagicianDeck.append(darkMagician)
+	MagicianDeck.append(darkMagician2)
+	MagicianDeck.append(darkGMagician)
+	MagicianDeck.append(darkGMagician2)
+	MagicianDeck.append(magicianRod)
+	MagicianDeck.append(magicianRod2)
+	MagicianDeck.append(magicianRobe)
+	MagicianDeck.append(magicianRobe2)
+	MagicianDeck.append(chocolateGirl)
+	MagicianDeck.append(chocolateGirl2)
+	MagicianDeck.append(appleGirl)
+	MagicianDeck.append(appleGirl2)
+	MagicianDeck.append(berryGirl)
+	MagicianDeck.append(berryGirl2)
+	MagicianDeck.append(kiwiGirl)
+	MagicianDeck.append(kiwiGirl2)
+	MagicianDeck.append(ebonIllusion)
+	MagicianDeck.append(ebonIllusion2)
+	MagicianDeck.append(magiMagiGirl)
+	MagicianDeck.append(magiMagiGirl2)
 
-    random.shuffle(CyberDeck)
-    random.shuffle(VampireDeck)
-    random.shuffle(GishkiDeck)
-    random.shuffle(HeraldDeck)
-    random.shuffle(MagicianDeck)
+	random.shuffle(CyberDeck)
+	random.shuffle(VampireDeck)
+	random.shuffle(GishkiDeck)
+	random.shuffle(HeraldDeck)
+	random.shuffle(MagicianDeck)
 
-    DeckList.append(CyberDeck)
-    DeckList.append(VampireDeck)
-    DeckList.append(GishkiDeck)
-    DeckList.append(HeraldDeck)
-    DeckList.append(MagicianDeck)
+	DeckList.append(CyberDeck)
+	DeckList.append(VampireDeck)
+	DeckList.append(GishkiDeck)
+	DeckList.append(HeraldDeck)
+	DeckList.append(MagicianDeck)
 
-    for monster in CyberDeck:
-        monster.attacked = 0
+	for monster in CyberDeck:
+		monster.attacked = 0
 
-    for monster in VampireDeck:
-        monster.attacked = 0
+	for monster in VampireDeck:
+		monster.attacked = 0
 
-    for monster in GishkiDeck:
-        monster.attacked = 0
+	for monster in GishkiDeck:
+		monster.attacked = 0
 
-    for monster in HeraldDeck:
-        monster.attacked = 0
+	for monster in HeraldDeck:
+		monster.attacked = 0
 
-    for monster in MagicianDeck:
-        monster.attacked = 0
+	for monster in MagicianDeck:
+		monster.attacked = 0
 
-    # Get user deck selection
-    while True:
-        print("--------------------------------------")
-        print("Deck List:")
-        # Hardcode values for the Deck Selection here | Impliment a Deck object with a description element, like the
-        # effect description
-        print("[1] Cyber Deck    | Theme: Discarding / Tribute")
-        print("[2] Vampire Deck  | Theme: Stealing Life / Graveyard Effects")
-        print("[3] Gishki Deck   | Theme: Attack Boosts / Battling")
-        print("[4] Herald Deck   | Theme: Life Point Gain / Special Summon From Hand")
-        print("[5] Magician Deck | Theme: Defending / Summoning Dark Magician")
-        selection = input("~~Select a Deck to Use:")
-        try:
-            selection = int(selection)
+	# Get user deck selection
+	while True:
+		print("--------------------------------------")
+		print("Deck List:")
+		# Hardcode values for the Deck Selection here | Impliment a Deck object with a description element, like the
+		# effect description
+		print("[1] Cyber Deck    | Theme: Discarding / Tribute")
+		print("[2] Vampire Deck  | Theme: Stealing Life / Graveyard Effects")
+		print("[3] Gishki Deck   | Theme: Attack Boosts / Battling")
+		print("[4] Herald Deck   | Theme: Life Point Gain / Special Summon From Hand")
+		print("[5] Magician Deck | Theme: Defending / Summoning Dark Magician")
+		selection = input("~~Select a Deck to Use:")
+		try:
+			selection = int(selection)
 
-            try:
-                if selection == 1:
-                    print("--------------------------------------")
-                    print("You have selected the Cyber Deck")
+			try:
+				if selection == 1:
+					print("--------------------------------------")
+					print("You have selected the Cyber Deck")
 
-                    while True:
-                        print("--------------------------------------")
-                        print("[1] Play with Deck")
-                        print("[2] View Deck List")
-                        print("[0] Return")
+					while True:
+						print("--------------------------------------")
+						print("[1] Play with Deck")
+						print("[2] View Deck List")
+						print("[0] Return")
 
-                        selection = input("~~Select an option:")
-                        try:
-                            selection = int(selection)
+						selection = input("~~Select an option:")
+						try:
+							selection = int(selection)
 
-                            if selection == 1:
-                                _player.deck = CyberDeck
-                                break
-                            elif selection == 2:
-                                printDeckList(CyberDeck, "Cyber Deck:")
-                                pass
-                            elif selection == 0:
-                                break
-                        except ValueError:
-                            print("--------------------------------------")
-                            print("Invalid Selection")
-                elif selection == 2:
-                    print("--------------------------------------")
-                    print("You have selected the Vampire Deck")
+							if selection == 1:
+								_player.deck = CyberDeck
+								break
+							elif selection == 2:
+								printDeckList(CyberDeck, "Cyber Deck:")
+								pass
+							elif selection == 0:
+								break
+						except ValueError:
+							print("--------------------------------------")
+							print("Invalid Selection")
+				elif selection == 2:
+					print("--------------------------------------")
+					print("You have selected the Vampire Deck")
 
-                    while True:
-                        print("--------------------------------------")
-                        print("[1] Play with Deck")
-                        print("[2] View Deck List")
-                        print("[0] Return")
+					while True:
+						print("--------------------------------------")
+						print("[1] Play with Deck")
+						print("[2] View Deck List")
+						print("[0] Return")
 
-                        selection = input("~~Select an option:")
-                        try:
-                            selection = int(selection)
+						selection = input("~~Select an option:")
+						try:
+							selection = int(selection)
 
-                            if selection == 1:
-                                _player.deck = VampireDeck
-                                break
-                            elif selection == 2:
-                                printDeckList(VampireDeck, "Vampire Deck:")
-                                pass
-                            elif selection == 3:
-                                break
-                        except ValueError:
-                            print("--------------------------------------")
-                            print("Invalid Selection")
-                elif selection == 3:
-                    print("--------------------------------------")
-                    print("You have selected the Gishki Deck")
+							if selection == 1:
+								_player.deck = VampireDeck
+								break
+							elif selection == 2:
+								printDeckList(VampireDeck, "Vampire Deck:")
+								pass
+							elif selection == 0:
+								break
+						except ValueError:
+							print("--------------------------------------")
+							print("Invalid Selection")
+				elif selection == 3:
+					print("--------------------------------------")
+					print("You have selected the Gishki Deck")
 
-                    while True:
-                        print("--------------------------------------")
-                        print("[1] Play with Deck")
-                        print("[2] View Deck List")
-                        print("[0] Return")
+					while True:
+						print("--------------------------------------")
+						print("[1] Play with Deck")
+						print("[2] View Deck List")
+						print("[0] Return")
 
-                        selection = input("~~Select an option:")
-                        try:
-                            selection = int(selection)
+						selection = input("~~Select an option:")
+						try:
+							selection = int(selection)
 
-                            if selection == 1:
-                                _player.deck = GishkiDeck
-                                break
-                            elif selection == 2:
-                                printDeckList(GishkiDeck, "Gishki Deck:")
-                                pass
-                            elif selection == 3:
-                                break
-                        except ValueError:
-                            print("--------------------------------------")
-                            print("Invalid Selection")
-                elif selection == 4:
-                    print("--------------------------------------")
-                    print("You have selected the Herald Deck")
+							if selection == 1:
+								_player.deck = GishkiDeck
+								break
+							elif selection == 2:
+								printDeckList(GishkiDeck, "Gishki Deck:")
+								pass
+							elif selection == 0:
+								break
+						except ValueError:
+							print("--------------------------------------")
+							print("Invalid Selection")
+				elif selection == 4:
+					print("--------------------------------------")
+					print("You have selected the Herald Deck")
 
-                    while True:
-                        print("--------------------------------------")
-                        print("[1] Play with Deck")
-                        print("[2] View Deck List")
-                        print("[0] Return")
+					while True:
+						print("--------------------------------------")
+						print("[1] Play with Deck")
+						print("[2] View Deck List")
+						print("[0] Return")
 
-                        selection = input("~~Select an option:")
-                        try:
-                            selection = int(selection)
+						selection = input("~~Select an option:")
+						try:
+							selection = int(selection)
 
-                            if selection == 1:
-                                _player.deck = HeraldDeck
-                                break
-                            elif selection == 2:
-                                printDeckList(HeraldDeck, "Herald Deck:")
-                                pass
-                            elif selection == 3:
-                                break
-                        except ValueError:
-                            print("--------------------------------------")
-                            print("Invalid Selection")
-                elif selection == 5:
-                    print("--------------------------------------")
-                    print("You have selected the Magician Deck")
+							if selection == 1:
+								_player.deck = HeraldDeck
+								break
+							elif selection == 2:
+								printDeckList(HeraldDeck, "Herald Deck:")
+								pass
+							elif selection == 0:
+								break
+						except ValueError:
+							print("--------------------------------------")
+							print("Invalid Selection")
+				elif selection == 5:
+					print("--------------------------------------")
+					print("You have selected the Magician Deck")
 
-                    while True:
-                        print("--------------------------------------")
-                        print("[1] Play with Deck")
-                        print("[2] View Deck List")
-                        print("[0] Return")
+					while True:
+						print("--------------------------------------")
+						print("[1] Play with Deck")
+						print("[2] View Deck List")
+						print("[0] Return")
 
-                        selection = input("~~Select an option:")
-                        try:
-                            selection = int(selection)
+						selection = input("~~Select an option:")
+						try:
+							selection = int(selection)
 
-                            if selection == 1:
-                                _player.deck = MagicianDeck
-                                break
-                            elif selection == 2:
-                                printDeckList(MagicianDeck, "Magician Deck:")
-                                pass
-                            elif selection == 3:
-                                break
-                        except ValueError:
-                            print("--------------------------------------")
-                            print("Invalid Selection")
+							if selection == 1:
+								_player.deck = MagicianDeck
+								break
+							elif selection == 2:
+								printDeckList(MagicianDeck, "Magician Deck:")
+								pass
+							elif selection == 0:
+								break
+						except ValueError:
+							print("--------------------------------------")
+							print("Invalid Selection")
 
-                if _player.deck:
-                    break
-            except TypeError:
-                print("--------------------------------------")
-                print("Invalid Selection")
-        except ValueError:
-            print("--------------------------------------")
-            print("Invalid Selection")
+				if _player.deck:
+					break
+			except TypeError:
+				print("--------------------------------------")
+				print("Invalid Selection")
+		except ValueError:
+			print("--------------------------------------")
+			print("Invalid Selection")
 
-    time.sleep(1)
+	time.sleep(1)
 
-    # Random deck selection for the opponent
-    while True:
-        oppselection = random.randint(0, (DeckList.__len__() - 1))
-        _foe.deck = DeckList[oppselection]
+	# Random deck selection for the opponent
+	while True:
+		oppselection = random.randint(0, (DeckList.__len__() - 1))
+		_foe.deck = DeckList[oppselection]
 
-        # Print the opponent's random selection for the player
-        if oppselection == 0 and _player.deck != _foe.deck:
-            print("--------------------------------------")
-            print("{} has selected the Cyber Deck".format(_foe.name))
-            break
-        if oppselection == 1 and _player.deck != _foe.deck:
-            print("--------------------------------------")
-            print("{} has selected the Vampire Deck".format(_foe.name))
-            break
-        if oppselection == 2 and _player.deck != _foe.deck:
-            print("--------------------------------------")
-            print("{} has selected the Gishki Deck".format(_foe.name))
-            break
-        if oppselection == 3 and _player.deck != _foe.deck:
-            print("--------------------------------------")
-            print("{} has selected the Herald Deck".format(_foe.name))
-            break
-        if oppselection == 4 and _player.deck != _foe.deck:
-            print("--------------------------------------")
-            print("{} has selected the Magician Deck".format(_foe.name))
-            break
+		# Print the opponent's random selection for the player
+		if oppselection == 0 and _player.deck != _foe.deck:
+			print("--------------------------------------")
+			print("{} has selected the Cyber Deck".format(_foe.name))
+			break
+		if oppselection == 1 and _player.deck != _foe.deck:
+			print("--------------------------------------")
+			print("{} has selected the Vampire Deck".format(_foe.name))
+			break
+		if oppselection == 2 and _player.deck != _foe.deck:
+			print("--------------------------------------")
+			print("{} has selected the Gishki Deck".format(_foe.name))
+			break
+		if oppselection == 3 and _player.deck != _foe.deck:
+			print("--------------------------------------")
+			print("{} has selected the Herald Deck".format(_foe.name))
+			break
+		if oppselection == 4 and _player.deck != _foe.deck:
+			print("--------------------------------------")
+			print("{} has selected the Magician Deck".format(_foe.name))
+			break
 
-    print("--------------------------------------")
+	print("--------------------------------------")
 
-    time.sleep(1)
+	time.sleep(1)
 
-    print("\n" * 50)
+	print("\n" * 50)
 
 
 # Reset Gamestate
 def reset():
 
-    print("Resetting Gamestate: ")
-    _player.monfield = []
-    _foe.monfield = []
+	print("Resetting Gamestate: ")
+	_player.monfield = []
+	_foe.monfield = []
 
-    _player.hand = []
-    _foe.hand = []
+	_player.hand = []
+	_foe.hand = []
 
-    _player.lifepoints = 8000
-    _foe.lifepoints = 8000
+	_player.lifepoints = 8000
+	_foe.lifepoints = 8000
 
-    global turnCount
-    turnCount = 0
+	global turnCount
+	turnCount = 0
 
-    global firstTurn
-    firstTurn = 0
+	global firstTurn
+	firstTurn = 0
 
-    resetNormalSummon()
+	resetNormalSummon()
 
-    print("\n" * 50)
+	print("\n" * 50)
 
-    pass
+	pass
 
 
 # Method to contain the main menu and all its options
 def mainMenu():
 
-    # Loop through menu always, program should system.exit() before this gets broken
-    while True:
+	# Loop through menu always, program should system.exit() before this gets broken
+	while True:
 
-        # Print menu options
-        print("---------- Welcome to Duels ----------")
-        
-        print("[1] Play a Duel")
-        
-        print("[2] Exit")
+		# Print menu options
+		print("---------- Welcome to Duels ----------")
 
-        print("[3] Debug")
+		print("[1] Play a Duel")
 
-        # get the selection, and open the appropriate submenu
-        try:
-            selection = input("~~~Please select a menu option")
-            selection = int(selection)
-            if selection == 1:
-                i = 0
+		print("[2] Exit")
 
-                cardSetup()
+		print("[3] Debug")
 
-                decksetup()
+		# get the selection, and open the appropriate submenu
+		try:
+			selection = input("~~~Please select a menu option")
+			selection = int(selection)
+			if selection == 1:
+				i = 0
 
-                # -- Main loop from which the duels run --
-                while True:
-                    if i == 1:
-                        exitProg = turnMenu(_foe, _player)
-                        i = 0
-                    elif i == 0:
-                        exitProg = turnMenu(_player, _foe)
-                        i = 1
-                    else:
-                        print("Duel Machine Broke: Turn Error")
-                        exitProg = None
+				cardSetup()
 
-                    if exitProg == "true":
-                        break
-                    elif exitProg == "false":
-                        pass
-                    else:
-                        print("exitProg error")
-                        pass
+				decksetup()
 
-            elif selection == 2:
-                # Ends program with no errors
-                sys.exit(0)
+				# -- Main loop from which the duels run --
+				while True:
+					if i == 1:
+						exitProg = turnMenu(_foe, _player)
+						i = 0
+					elif i == 0:
+						exitProg = turnMenu(_player, _foe)
+						i = 1
+					else:
+						print("Duel Machine Broke: Turn Error")
+						exitProg = None
 
-            elif selection == 3:
-                # Sets yup debug mode and allows python console input by returning
-                print("--------------------------------------")
-                print("Debug Mode Enabled")
+					if exitProg == "true":
+						break
+					elif exitProg == "false":
+						pass
+					else:
+						print("exitProg error")
+						pass
 
-                cardSetup()
+			elif selection == 2:
+				# Ends program with no errors
+				sys.exit(0)
 
-                TestDeck = [discard1Guy, deviousDiscard1Guy, tributeMasterJerry, battleImmuneIvan, cyberDigger,
-                            deckDigger, doubleSummoner, resurrector, reAdder, graveyardGarry]
+			elif selection == 3:
+				# Sets yup debug mode and allows python console input by returning
+				print("--------------------------------------")
+				print("Debug Mode Enabled")
 
-                _player.hand.append(discard1Guy)
-                _player.hand.append(deviousDiscard1Guy)
-                _player.hand.append(tributeMasterJerry)
-                _player.hand.append(battleImmuneIvan)
-                _player.hand.append(cyberDigger)
-                _player.hand.append(deckDigger)
-                _player.hand.append(doubleSummoner)
-                _player.hand.append(resurrector)
-                _player.hand.append(reAdder)
-                _player.hand.append(graveyardGarry)
+				cardSetup()
 
-                _foe.hand.append(deviousDiscard1Guy)
-                _foe.hand.append(tributeMasterJerry)
-                _foe.hand.append(battleImmuneIvan)
+				TestDeck = [discard1Guy, deviousDiscard1Guy, battleImmuneIvan, cyberDigger, deckDigger, doubleSummoner, resurrector, reAdder, graveyardGarry]
 
-                _player.gy.append(discard1Guy)
-                _player.gy.append(deviousDiscard1Guy)
-                _player.gy.append(tributeMasterJerry)
-                _player.gy.append(battleImmuneIvan)
-                _player.gy.append(cyberDigger)
-                _player.gy.append(deckDigger)
-                _player.gy.append(doubleSummoner)
-                _player.gy.append(resurrector)
-                _player.gy.append(reAdder)
-                _player.gy.append(graveyardGarry)
+				_player.hand.append(discard1Guy)
+				_player.hand.append(deviousDiscard1Guy)
+				_player.hand.append(battleImmuneIvan)
+				_player.hand.append(cyberDigger)
+				_player.hand.append(deckDigger)
+				_player.hand.append(doubleSummoner)
+				_player.hand.append(resurrector)
+				_player.hand.append(reAdder)
+				_player.hand.append(graveyardGarry)
 
-                _player.deck = TestDeck
-                _foe.deck = TestDeck
+				_foe.hand.append(deviousDiscard1Guy)
+				_foe.hand.append(battleImmuneIvan)
 
-                return
-            else:
-                # Return Error
-                print("--------------------------------------")
-                print("Invalid Selection")
-        except ValueError:
-            # Return error
-            print("--------------------------------------")
-            print("Invalid Selection")
+				_player.gy.append(discard1Guy)
+				_player.gy.append(deviousDiscard1Guy)
+				_player.gy.append(battleImmuneIvan)
+				_player.gy.append(cyberDigger)
+				_player.gy.append(deckDigger)
+				_player.gy.append(doubleSummoner)
+				_player.gy.append(resurrector)
+				_player.gy.append(reAdder)
+				_player.gy.append(graveyardGarry)
+
+				_player.deck = TestDeck
+				_foe.deck = TestDeck
+
+				return
+			else:
+				# Return Error
+				print("--------------------------------------")
+				print("Invalid Selection")
+		except ValueError:
+			# Return error
+			print("--------------------------------------")
+			print("Invalid Selection")
 
 
 # Menu that contains a players turn menus
-def turnMenu(currentPlayer: object, passivePlayer: object):
+def turnMenu(currentPlayer: duelist, passivePlayer: duelist):
 
-    # resetting attacked values on Field
-    try:
-        for monster in currentPlayer.monfield:
-            monster.attacked = 0
-    except IndexError:
-        pass
-    try:
-        for monster in passivePlayer.monfield:
-            monster.attacked = 0
-    except IndexError:
-        pass
+	# resetting attacked values on Field
+	try:
+		for monster in currentPlayer.monfield:
+			monster.attacked = 0
+	except IndexError:
+		pass
+	try:
+		for monster in passivePlayer.monfield:
+			monster.attacked = 0
+	except IndexError:
+		pass
 
-    # resetting attacked values in graveyard
+	# resetting attacked values in graveyard
 
-    try:
-        for monster in currentPlayer.gy:
-            monster.attacked = 0
-    except IndexError:
-        pass
+	try:
+		for monster in currentPlayer.gy:
+			monster.attacked = 0
+	except IndexError:
+		pass
 
-    try:
-        for monster in passivePlayer.gy:
-            monster.attacked = 0
-    except IndexError:
-        pass
+	try:
+		for monster in passivePlayer.gy:
+			monster.attacked = 0
+	except IndexError:
+		pass
 
-    # Retrieve the global variables and set up rest of needed variables
-    global turnCount
-    global firstTurn
-    global destination
-    destination = ""
+	# Retrieve the global variables and set up rest of needed variables
+	global turnCount
+	global firstTurn
+	global destination
+	destination = ""
 
-    effectCheck = 0
+	effectCheck = 0
 
-    resetNormalSummon()
+	resetNormalSummon()
 
-    # Move the turn count and announce the turn
-    turnCount = turnCount + 1
-    print("--------------------------------------")
-    print("Turn {}: {}'s Turn".format(turnCount, currentPlayer.name))
+	# Move the turn count and announce the turn
+	turnCount = turnCount + 1
+	print("--------------------------------------")
+	print("Turn {}: {}'s Turn".format(turnCount, currentPlayer.name))
 
-    time.sleep(0.7)
+	time.sleep(0.7)
 
-    # Checks for first turn
+	# Checks for first turn
 
-    # DRAW PHASE
-    if firstTurn == 0:
-        _player.draw(0)
+	# DRAW PHASE
+	if firstTurn == 0:
+		_player.draw(5)
 
-        # -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
-        # -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
-        # -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
-        # -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
-        _player.hand.append(magicianRod)
-        _player.hand.append(magicianRobe)
-        _player.hand.append(chocolateGirl)
-        _player.hand.append(appleGirl)
-        _player.hand.append(berryGirl)
-        _player.hand.append(kiwiGirl)
-        _player.hand.append(magiMagiGirl)
-        _player.hand.append(ebonIllusion)
-        # _foe.hand.append()
-        # -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------
-        # -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------
-        # -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------
-        # -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------
+		# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
+		# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
+		# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
+		# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
+		# _player.hand.append()
+		_player.hand.append(evigishkiPsychlone)
+		# _foe.hand.append()
+		# -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------
+		# -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------
+		# -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------
+		# -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------
 
-        _foe.draw(5)
-        
-    else:
-        currentPlayer.draw(1)
+		_foe.draw(5)
 
-    # Print current field status
-    print("--------------------------------------")
-    currentPlayer.checkField()
+	else:
+		currentPlayer.draw(1)
 
-    # MAIN PHASE
-    while True:
+	# Print current field status
+	print("--------------------------------------")
+	currentPlayer.checkField()
 
-        while True:
-            print("--------------------------------------")
-            print("[1] Play a Card")
-            
-            print("[2] Check your Hand")
-            
-            print("[3] Check your Field")
-            
-            print("[4] Check your Graveyard")
+	# MAIN PHASE
+	while True:
 
-            print("[5] Check Player Life Points and Deck")
-            
-            print("[6] Go to Battle Phase (Ends turn after)")
-            
-            print("[7] End your Turn")
-            
-            print("[8] Return to Main Menu")
+		while True:
+			print("--------------------------------------")
+			print("[1] Play a Card")
 
-            # get user selection
-            try:
-                selection = input("~~~Select an Action")
-                selection = int(selection)
-                print("--------------------------------------")
-                break
-            except ValueError:
-                print("--------------------------------------")
-                print("Invalid Selection")
+			print("[2] Check your Hand")
 
-        # applies applicable action to selection
-        if selection == 1:  # [1] Play a Card
+			print("[3] Check your Field")
 
-            nSummon = int(returnNormalSummon())
+			print("[4] Check your Graveyard")
 
-            if nSummon == 0:
-                effectCheck = 0
+			print("[5] Check Player Life Points and Deck")
 
-            # Play the card, and return whether a card was actually played (can just return)
-            result = currentPlayer.playCard()
+			print("[6] Go to Battle Phase (Ends turn after)")
 
-            length = currentPlayer.monfield.__len__()
+			print("[7] End your Turn")
 
-            # checks if the user returned ®or actually played a card
-            if result == 0:
-                pass
-            else:
-                playedCard = currentPlayer.monfield[length - 1]
+			print("[8] Return to Main Menu")
 
-                # Check if the monster has an on-summon effect effect, and activate it if it hasn't used it yet
-                if effectCheck == 0:
-                    try:
-                        if playedCard.trigger.name == "summon":
-                            monster = playedCard
-                            if currentPlayer == _player:
-                                passivePlayer = _foe
-                            else:
-                                passivePlayer = _player
+			# get user selection
+			try:
+				selection = input("~~~Select an Action")
+				selection = int(selection)
+				print("--------------------------------------")
+				break
+			except ValueError:
+				print("--------------------------------------")
+				print("Invalid Selection")
 
-                            try:
-                                oppmonster = None
-                                monster.effect.resolve(currentPlayer, passivePlayer, monster,
-                                                       oppmonster, currentPlayer.gy, passivePlayer.gy, currentPlayer)
-                                effectCheck = 1
-                            except IndexError:
-                                oppmonster = None
-                                monster.effect.resolve(currentPlayer, passivePlayer, monster,
-                                                       oppmonster, currentPlayer.gy, passivePlayer.gy, currentPlayer)
-                                effectCheck = 1
-                    # except AttributeError:
-                        # effectCheck = 1
-                        # pass
-                    except IndexError:
-                        pass
+		# applies applicable action to selection
+		if selection == 1:  # [1] Play a Card
 
-                else:
-                    pass
+			nSummon = int(returnNormalSummon())
 
-        elif selection == 2:  # [2] Check Hand
-            currentPlayer.checkHand()
-            pass
+			if nSummon == 0:
+				effectCheck = 0
 
-        elif selection == 3:  # [3] Check Field
-            print("{}'s Field:".format(_player.name))
-            currentPlayer.checkField()
-            print("{}'s Field:".format(_foe.name))
-            passivePlayer.checkField()
+			# Play the card, and return whether a card was actually played (can just return)
+			result = currentPlayer.playCard()
 
-        elif selection == 4:  # [4] Check your Graveyard
-            currentPlayer.checkGraveyard()
-            passivePlayer.checkGraveyard()
+			length = currentPlayer.monfield.__len__()
 
-        elif selection == 5:  # [5] Check Life Points and Deck Size
-            currentPlayer.checkLP_Deck()
-            passivePlayer.checkLP_Deck()
+			# checks if the user returned ®or actually played a card
+			if result == 0:
+				pass
+			else:
+				playedCard = currentPlayer.monfield[length - 1]
 
-        # Destinations
-        elif selection == 6 and firstTurn == 1:  # [6] Battle Phase
-            destination = "battle"
-            if currentPlayer.name == _player.name:
-                exitBattle = battleMenu(_player, _foe)
+				# Check if the monster has an on-summon effect effect, and activate it if it hasn't used it yet
+				if effectCheck == 0:
+					try:
+						if playedCard.trigger.name == "summon":
+							monster = playedCard
+							if currentPlayer == _player:
+								passivePlayer = _foe
+							else:
+								passivePlayer = _player
 
-                if exitBattle == 1:
-                    pass
-                elif exitBattle == 0:
-                    break
-            elif currentPlayer.name == _foe.name:
-                exitBattle = battleMenu(_foe, _player)
+							try:
+								oppmonster = None
+								monster.effect.resolve(currentPlayer, passivePlayer, monster,
+													   oppmonster, currentPlayer.gy, passivePlayer.gy, currentPlayer)
+								effectCheck = 1
+							except IndexError:
+								oppmonster = None
+								monster.effect.resolve(currentPlayer, passivePlayer, monster,
+													   oppmonster, currentPlayer.gy, passivePlayer.gy, currentPlayer)
+								effectCheck = 1
+					# except AttributeError:
+						# effectCheck = 1
+						# pass
+					except IndexError:
+						pass
 
-                if exitBattle == 1:
-                    pass
-                elif exitBattle == 0:
-                    break
+				else:
+					pass
 
-        elif selection == 6 and firstTurn == 0:  # [6] Battle Phase
-            print("Cannot attack on first turn")
-            pass
+		elif selection == 2:  # [2] Check Hand
+			currentPlayer.checkHand()
+			pass
 
-        elif selection == 7:  # [7] End Turn
-            destination = "end"
-            break
+		elif selection == 3:  # [3] Check Field
+			print("{}'s Field:".format(_player.name))
+			currentPlayer.checkField()
+			print("{}'s Field:".format(_foe.name))
+			passivePlayer.checkField()
 
-        elif selection == 8:  # [8] Return to Main Menu
-            destination = "menu"
-            break
+		elif selection == 4:  # [4] Check your Graveyard
+			currentPlayer.checkGraveyard()
+			passivePlayer.checkGraveyard()
 
-        else:
-            print("--------------------------------------")
-            print("Invalid Selection")
+		elif selection == 5:  # [5] Check Life Points and Deck Size
+			currentPlayer.checkLP_Deck()
+			passivePlayer.checkLP_Deck()
 
-    # Checking Destinations here, to allow turn loop to end/reset and prevent nested loops
-    if destination == "end" or destination == "battle":
-        # move to next players turn
-        print("Turn End")
-        time.sleep(0.5)
+		# Destinations
+		elif selection == 6 and firstTurn == 1:  # [6] Battle Phase
+			destination = "battle"
+			if currentPlayer.name == _player.name:
+				exitBattle = battleMenu(_player, _foe)
 
-        print("\n" * 50)
+				if exitBattle == 1:
+					pass
+				elif exitBattle == 0:
+					break
+			elif currentPlayer.name == _foe.name:
+				exitBattle = battleMenu(_foe, _player)
 
-        if firstTurn == 0:
-            firstTurn = 1
+				if exitBattle == 1:
+					pass
+				elif exitBattle == 0:
+					break
 
-        exitProg = "false"
-        return exitProg
-    elif destination == "menu":
-        # Reset
-        reset()
+		elif selection == 6 and firstTurn == 0:  # [6] Battle Phase
+			print("Cannot attack on first turn")
+			pass
 
-        exitProg = "true"
+		elif selection == 7:  # [7] End Turn
+			destination = "end"
+			break
 
-        # exit method
-        print("\n" * 2)
+		elif selection == 8:  # [8] Return to Main Menu
+			destination = "menu"
+			break
 
-        # Return to Main Menu
-        return exitProg
+		else:
+			print("--------------------------------------")
+			print("Invalid Selection")
+
+	# Checking Destinations here, to allow turn loop to end/reset and prevent nested loops
+	if destination == "end" or destination == "battle":
+		# move to next players turn
+		print("Turn End")
+		time.sleep(0.5)
+
+		print("\n" * 50)
+
+		if firstTurn == 0:
+			firstTurn = 1
+
+		exitProg = "false"
+		return exitProg
+	elif destination == "menu":
+		# Reset
+		reset()
+
+		exitProg = "true"
+
+		# exit method
+		print("\n" * 2)
+
+		# Return to Main Menu
+		return exitProg
 
 
 # BATTLE PHASE
-def battleMenu(turnPlayer: object, passivePlayer: object):
-    print("Battle Phase Engaged")
+def battleMenu(turnPlayer: duelist, passivePlayer: duelist):
+	print("Battle Phase Engaged")
 
-    # Check Field
+	# Check Field
 
-    print("--------------------------------------")
-    print("Your Field:")
-    turnPlayer.checkField()
+	print("--------------------------------------")
+	print("Your Field:")
+	turnPlayer.checkField()
 
-    print("--------------------------------------")
-    print("{}'s Field".format(passivePlayer.name))
-    passivePlayer.checkField()
+	print("--------------------------------------")
+	print("{}'s Field".format(passivePlayer.name))
+	passivePlayer.checkField()
 
-    # Battle Phase Menu
+	# Battle Phase Menu
 
-    while True:
-        print("--------------------------------------")
-        print("[1] Attack with a Monster")
+	while True:
+		print("--------------------------------------")
+		print("[1] Attack with a Monster")
 
-        print("[2] End your Turn")
+		print("[2] End your Turn")
 
-        print("[0]  Return")
+		print("[0]  Return")
 
-        try:
-            selection = input("~~~Select an Action")
-            selection = int(selection)
+		try:
+			selection = input("~~~Select an Action")
+			selection = int(selection)
 
-            if selection > 2:
-                raise ValueError
+			if selection > 2:
+				raise ValueError
 
-            break
-        except ValueError:
-            print("--------------------------------------")
-            print("Invalid Selection")
+			break
+		except ValueError:
+			print("--------------------------------------")
+			print("Invalid Selection")
 
-    if selection == 1:
+	if selection == 1:
 
-        # loop through battle phase procedure
-        while True:
+		# loop through battle phase procedure
+		while True:
 
-            # Retrieve the user monster selection
-            while True:
+			# Retrieve the user monster selection
+			while True:
 
-                # check if all monsters have attacked
-                global allAttacked
-                allAttacked = 1
+				# check if all monsters have attacked
+				global allAttacked
+				allAttacked = 1
 
-                # Check if any monsters have not attacked yet
-                for monster in turnPlayer.monfield:
-                    if monster.attacked == 0:
-                        allAttacked = 0
+				# Check if any monsters have not attacked yet
+				for monster in turnPlayer.monfield:
+					if monster.attacked == 0:
+						allAttacked = 0
 
-                # If all monsters have attacked
-                if allAttacked == 1:
-                    print("All Monsters attacked, ending battle phase and turn...")
-                    time.sleep(1.5)
-                    return 0
+				# If all monsters have attacked
+				if allAttacked == 1:
+					print("All Monsters attacked, ending battle phase and turn...")
+					time.sleep(1.5)
+					return 0
 
-                # Print all monsters on your field
-                print("--------------------------------------")
-                turnPlayer.checkFieldAtk()
+				# Print all monsters on your field
+				print("--------------------------------------")
+				turnPlayer.checkFieldAtk()
 
-                print("[0]  Return")
-                print("--------------------------------------")
-                target = input("~~Please select a monster to attack with")
+				print("[0]  Return")
+				print("--------------------------------------")
+				target = input("~~Please select a monster to attack with")
 
-                try:
-                    target = int(target) - 1
-                except ValueError:
-                    pass
-                except TypeError:
-                    pass
+				try:
+					target = int(target) - 1
+				except ValueError:
+					pass
+				except TypeError:
+					pass
 
-                if target == -1:
-                    return 1
+				if target == -1:
+					return 1
 
-                try:
-                    if turnPlayer.monfield[target].attacked == 0:
-                        atkMon = turnPlayer.monfield[target]
-                        atkMon.attacked = 1
-                        break
-                    else:
-                        print("--------------------------------------")
-                        print("Invalid Selection")
-                except (ValueError, IndexError, TypeError):
-                    print("--------------------------------------")
-                    print("Invalid Selection")
-                    print("Group")
+				try:
+					if turnPlayer.monfield[target].attacked == 0:
+						atkMon = turnPlayer.monfield[target]
+						atkMon.attacked = 1
+						break
+					else:
+						print("--------------------------------------")
+						print("Invalid Selection")
+				except (ValueError, IndexError, TypeError):
+					print("--------------------------------------")
+					print("Invalid Selection")
+					print("Group")
 
-            # retrieve the user attack target
-            if passivePlayer.monfield:
-                while True:
+			# retrieve the user attack target
+			if passivePlayer.monfield:
+				while True:
 
-                    passivePlayer.checkField()
+					passivePlayer.checkField()
 
-                    print("--------------------------------------")
-                    target = input("~~Please select a monster to attack:")
+					print("--------------------------------------")
+					target = input("~~Please select a monster to attack:")
 
-                    try:
-                        target = int(target) - 1
-                    except (TypeError, IndexError, ValueError):
-                        pass
+					try:
+						target = int(target) - 1
+					except (TypeError, IndexError, ValueError):
+						pass
 
-                    try:
-                        atkTarget = passivePlayer.monfield[target]
-                        break
-                    except (IndexError, TypeError):
-                        print("--------------------------------------")
-                        print("Invalid Selection")
-                        print("--------------------------------------")
+					try:
+						atkTarget = passivePlayer.monfield[target]
+						break
+					except (IndexError, TypeError):
+						print("--------------------------------------")
+						print("Invalid Selection")
+						print("--------------------------------------")
 
-                damage = atkMon.atkPoints - atkTarget.atkPoints
-            else:
-                print("Direct Attack!")
-                damage = atkMon.atkPoints
-                atkTarget = None
+				damage = atkMon.atkPoints - atkTarget.atkPoints
+			else:
+				print("Direct Attack!")
+				damage = atkMon.atkPoints
+				atkTarget = None
 
-            # Monster Effect: Attacker (Returns Damage)
-            try:
-                if atkMon.trigger.name == "attack" or atkMon.trigger.name == "battle":
-                    monster = atkMon
-                    if atkTarget is not None:
-                        oppmonster = atkTarget
-                        damage = monster.effect.resolve(turnPlayer, passivePlayer, monster,
-                                                        oppmonster, turnPlayer.gy, passivePlayer.gy, turnPlayer)
-                    else:
-                        damage = monster.effect.resolve(turnPlayer, passivePlayer, monster,
-                                                        None, turnPlayer.gy, passivePlayer.gy, turnPlayer)
-            except AttributeError:
-                pass
-            except IndexError:
-                pass
+			# Monster Effect: Attacker (Returns Damage)
+			try:
+				if atkMon.trigger.name == "attack" or atkMon.trigger.name == "battle":
+					monster = atkMon
+					if atkTarget is not None:
+						oppmonster = atkTarget
+						damage = monster.effect.resolve(turnPlayer, passivePlayer, monster,
+														oppmonster, turnPlayer.gy, passivePlayer.gy, turnPlayer)
+					else:
+						damage = monster.effect.resolve(turnPlayer, passivePlayer, monster,
+														None, turnPlayer.gy, passivePlayer.gy, turnPlayer)
+			except AttributeError:
+				pass
+			except IndexError:
+				pass
 
-            # Monster Effect: Defender (Returns Damage)
-            try:
-                if atkTarget.trigger.name == "defend" or atkTarget.trigger.name == "battle":
-                    monster = atkTarget
-                    if atkTarget is not None:
-                        oppmonster = atkMon
-                        damage = monster.effect.resolve(passivePlayer, turnPlayer, monster,
-                                                        oppmonster, turnPlayer.gy, passivePlayer.gy, turnPlayer)
-                    else:
-                        damage = monster.effect.resolve(passivePlayer, turnPlayer, monster,
-                                                        None, turnPlayer.gy, passivePlayer.gy, turnPlayer)
-            except AttributeError:
-                pass
-            except IndexError:
-                pass
+			# Monster Effect: Defender (Returns Damage)
+			try:
+				if atkTarget.trigger.name == "defend" or atkTarget.trigger.name == "battle":
+					monster = atkTarget
+					if atkTarget is not None:
+						oppmonster = atkMon
+						damage = monster.effect.resolve(passivePlayer, turnPlayer, monster,
+														oppmonster, turnPlayer.gy, passivePlayer.gy, turnPlayer)
+					else:
+						damage = monster.effect.resolve(passivePlayer, turnPlayer, monster,
+														None, turnPlayer.gy, passivePlayer.gy, turnPlayer)
+			except AttributeError:
+				pass
+			except IndexError:
+				pass
 
-            if damage is None:  # This occurs for effect returns that don't impact damage
-                try:
-                    damage = atkMon.atkPoints - atkTarget.atkPoints
-                except (UnboundLocalError, AttributeError):
-                    damage = atkMon.atkPoints
+			if damage is None:  # This occurs for effect returns that don't impact damage
+				try:
+					damage = atkMon.atkPoints - atkTarget.atkPoints
+				except (UnboundLocalError, AttributeError):
+					damage = atkMon.atkPoints
 
-            if damage > 0:
+			if damage == -1:
+				try:
+					damage = atkMon.atkPoints
+				except (UnboundLocalError, ValueError):
+					damage = 0
 
-                passivePlayer.loseLP(damage)
+			if damage > 0:
 
-                try:
-                    oppmonster = atkTarget
-                    if oppmonster.trigger.name == "destructionBat":
-                        result = oppmonster.effect.resolve(turnPlayer, passivePlayer, oppmonster, atkMon, passivePlayer.gy, turnPlayer.gy, turnPlayer)
+				passivePlayer.loseLP(damage)
 
-                        if result == 0:
-                            passivePlayer.destroyMonsterBat(atkTarget, passivePlayer, turnPlayer, oppmonster, atkMon, passivePlayer.gy, turnPlayer.gy, turnPlayer)
-                        else:
-                            pass
-                    else:
-                        passivePlayer.destroyMonsterBat(atkTarget, passivePlayer, turnPlayer, oppmonster, atkMon, passivePlayer.gy, turnPlayer.gy, turnPlayer)
-                except IndexError:
-                    pass
-                except AttributeError:
-                    pass
-                except UnboundLocalError:
-                    pass
-                time.sleep(1)
+				try:
+					oppmonster = atkTarget
+					if oppmonster.trigger.name == "destructionBat":
+						result = oppmonster.effect.resolve(passivePlayer, turnPlayer, oppmonster, atkMon, passivePlayer.gy, turnPlayer.gy, turnPlayer)
+						if result:
+							pass
+						else:
+							result = 0
 
-            elif damage < 0:
-                turnPlayer.loseLP(damage * -1)
+						if result == 0:
+							passivePlayer.destroyMonsterBat(atkTarget, passivePlayer, turnPlayer, oppmonster, atkMon, passivePlayer.gy, turnPlayer.gy, turnPlayer)
+						else:
+							pass
+					else:
+						passivePlayer.destroyMonsterBat(atkTarget, passivePlayer, turnPlayer, oppmonster, atkMon, passivePlayer.gy, turnPlayer.gy, turnPlayer)
+				except IndexError:
+					pass
+				except AttributeError:
+					pass
+				except UnboundLocalError:
+					pass
+				time.sleep(1)
 
-                if atkTarget:
-                    pass
-                else:
-                    atkTarget = object
+			elif damage < 0:
+				turnPlayer.loseLP(damage * -1)
 
-                if atkMon.trigger.name == "destructionBat":
-                    result = atkMon.effect.resolve(turnPlayer, passivePlayer, atkMon, atkTarget, turnPlayer.gy, passivePlayer.gy, turnPlayer)
+				if atkTarget:
+					pass
+				else:
+					atkTarget = object
 
-                    if result == 0:
-                        turnPlayer.destroyMonsterBat(atkMon, turnPlayer, passivePlayer, atkMon, atkTarget, turnPlayer.gy, passivePlayer.gy, turnPlayer)
-                    else:
-                        pass
-                else:
-                    turnPlayer.destroyMonsterBat(atkMon, turnPlayer, passivePlayer, atkMon, atkTarget, turnPlayer.gy, passivePlayer.gy, turnPlayer)
-                time.sleep(1)
+				if atkMon.trigger.name == "destructionBat":
+					result = atkMon.effect.resolve(turnPlayer, passivePlayer, atkMon, atkTarget, turnPlayer.gy, passivePlayer.gy, turnPlayer)
 
-            elif damage == 0:
+					if result == 0:
+						turnPlayer.destroyMonsterBat(atkMon, turnPlayer, passivePlayer, atkMon, atkTarget, turnPlayer.gy, passivePlayer.gy, turnPlayer)
+					else:
+						pass
+				else:
+					turnPlayer.destroyMonsterBat(atkMon, turnPlayer, passivePlayer, atkMon, atkTarget, turnPlayer.gy, passivePlayer.gy, turnPlayer)
+				time.sleep(1)
 
-                print("No Damage")
+			elif damage == 0:
 
-                # destroy both monsters if they exist
-                try:
-                    if atkMon and atkTarget:
+				print("No Damage")
 
-                        if atkTarget.trigger.name == "destructionBat":
-                            result = atkTarget.effect.resolve(turnPlayer, passivePlayer, atkTarget, atkMon, turnPlayer.gy, passivePlayer.gy, turnPlayer)
+				# Check if the attack target is still on the field
+				if atkTarget in passivePlayer.monfield:
+					pass
+				else:
+					atkTarget = None
 
-                            if result == 0:
-                                passivePlayer.destroyMonsterBat(atkTarget, turnPlayer, passivePlayer, atkTarget, atkMon, turnPlayer.gy, passivePlayer.gy, turnPlayer)
-                            else:
-                                pass
-                        else:
-                            passivePlayer.destroyMonsterBat(atkTarget, turnPlayer, passivePlayer, atkTarget, atkMon, turnPlayer.gy, passivePlayer.gy, turnPlayer)
+				# destroy both monsters if they exist
+				try:
+					if atkMon and atkTarget:
 
-                        if atkMon.trigger.name == "destructionBat":
-                            result = atkMon.effect.resolve(turnPlayer, passivePlayer, atkMon, atkTarget, turnPlayer.gy, passivePlayer.gy, turnPlayer)
+						if atkTarget.trigger.name == "destructionBat":
+							result = atkTarget.effect.resolve(turnPlayer, passivePlayer, atkTarget, atkMon, turnPlayer.gy, passivePlayer.gy, turnPlayer)
 
-                            if result == 0:
-                                turnPlayer.destroyMonsterBat(atkMon, turnPlayer, passivePlayer, atkMon, atkTarget, turnPlayer.gy, passivePlayer.gy, turnPlayer)
-                            else:
-                                pass
-                        else:
-                            turnPlayer.destroyMonsterBat(atkMon, turnPlayer, passivePlayer, atkMon, atkTarget, turnPlayer.gy, passivePlayer.gy, turnPlayer)
-                except IndexError:
-                    pass
-                time.sleep(1)
+							if result == 0:
+								passivePlayer.destroyMonsterBat(atkTarget, turnPlayer, passivePlayer, atkTarget, atkMon, turnPlayer.gy, passivePlayer.gy, turnPlayer)
+							else:
+								pass
+						else:
+							passivePlayer.destroyMonsterBat(atkTarget, turnPlayer, passivePlayer, atkTarget, atkMon, turnPlayer.gy, passivePlayer.gy, turnPlayer)
 
-                pass
-    elif selection == 0:
-        return 1
-    elif selection == 2:
-        return 0
-    else:
-        raise NotImplementedError
+						if atkMon.trigger.name == "destructionBat":
+							result = atkMon.effect.resolve(turnPlayer, passivePlayer, atkMon, atkTarget, turnPlayer.gy, passivePlayer.gy, turnPlayer)
+
+							if result == 0:
+								turnPlayer.destroyMonsterBat(atkMon, turnPlayer, passivePlayer, atkMon, atkTarget, turnPlayer.gy, passivePlayer.gy, turnPlayer)
+							else:
+								pass
+						else:
+							turnPlayer.destroyMonsterBat(atkMon, turnPlayer, passivePlayer, atkMon, atkTarget, turnPlayer.gy, passivePlayer.gy, turnPlayer)
+				except IndexError:
+					pass
+				time.sleep(1)
+
+				pass
+	elif selection == 0:
+		return 1
+	elif selection == 2:
+		return 0
+	else:
+		raise NotImplementedError
 
 
 print("--------------------------------------")
 name = input("~~~Please Enter Your Name")
 
 # sets duelist and foe objects
-_player = duelist(name, 8000, [], [], [], [])
+_player = duelist(name, 8000, [], [], [], [])  # (name, lifepoints, hand, monfield, deck, graveyard)
 
-_foe = duelist("Rokket", 8000, [], [], [], [])
+_foe = duelist("Rokket", 8000, [], [], [], [])  # (name, lifepoints, hand, monfield, deck, graveyard)
 
 
 mainMenu()
