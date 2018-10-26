@@ -525,11 +525,23 @@ class tributetoGrantAttack(effect):
 
 				print("--------------------------------------")
 
-				effplayer.sendToGrave(monster, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer)
+				effplayer.sendToGrave(effplayer, opponent, monster, oppMon, effgy, oppgy, turnPlayer)
 
 				return
 			elif selection == "N" or selection == "n":
 				return
+
+
+class gainLPforHand(effect):
+	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
+		print("{}'s Effect Activates!".format(effectMon.name))
+		time.sleep(1)
+
+		handSize = effplayer.hand.__len__()
+
+		print("{} has {} Cards in his Hand...".format(effplayer.name, effplayer.hand.__len__()))
+
+		effplayer.gainLP(self.extraParam * handSize)
 
 
 # Define the effects used
@@ -545,6 +557,7 @@ bounceMonster = fieldToHand("Bounce an Opponents Monster", 0)
 # Restoration Effects
 Restore1000 = effectRestore("Restore Life Points by 1000", 1000)
 Restore2000 = effectRestore("Restore Life Points by 2000", 2000)
+RestoreLPForHand = gainLPforHand("Restore 1000 Life Points for Every card in your hand", 1000)
 
 # Damaging Effects
 Damage1000 = effectDamage("Damage Opponent by 1000", 1000)

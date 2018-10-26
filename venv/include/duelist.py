@@ -56,27 +56,20 @@ class duelist:
 		tempListNum = []
 		print("{}s Deck:".format(self.name))
 
-		# Loop through the deck and display each card fitting the namespace
-		while True:
-			try:
-				currentCard = self.deck[i]
-			except IndexError:
-				if self.deck.__len__() == 0:
-					print("Deck is Empty")
-				else:
-					raise IndexError
-				break
+		max_len = self.getMaxLength(self.deck)
 
-			if name in currentCard.name:
-				print("[{}] {} | ATK: {} | Effect: {}".format((i + 1), currentCard.name.ljust(25, ), str(currentCard.atkPoints).ljust(4, ), currentCard.effectText))
+		# Loop through the hand and display each card fitting the namespace
+		for monster in self.deck:
+			if name in monster.name:
+				if i >= 9:
+					print("[{}] {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute, monster.effectText))
+				else:
+					print("[{}]  {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute, monster.effectText))
 				tempListNum.append(i)
 			else:
 				pass
 
 			i = i + 1
-
-			if i == self.deck.__len__():
-				break
 
 		if tempListNum:
 			while True:
@@ -150,7 +143,7 @@ class duelist:
 		self.hand.append(addedCard)
 		print("--------------------------------------")
 		print("{} has searched the following card:".format(self.name))
-		print("Name: {} | ATK: {} | Effect: {}".format(addedCard.name, str(addedCard.atkPoints), addedCard.effectText))
+		print("Name: {} | ATK: {} | Tribute: {} | Effect: {}".format(addedCard.name, str(addedCard.atkPoints), str(addedCard.tribute), addedCard.effectText))
 
 		del self.deck[selection]
 
@@ -230,8 +223,7 @@ class duelist:
 				if i >= 9:
 					print("[{}] {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute, monster.effectText))
 				else:
-					print(
-						"[{}]  {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute, monster.effectText))
+					print("[{}]  {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute, monster.effectText))
 				i = i + 1
 		else:
 			print("Deck Empty")
@@ -396,7 +388,6 @@ class duelist:
 		self.shuffle()
 
 		self.sendToGrave(effplayer, opponent, milledCard, oppMon, effgy, oppgy, turnPlayer)
-
 
 	# Play Card from hand
 	def playCard(self):
@@ -1008,7 +999,7 @@ class duelist:
 
 		# Loop through the hand and display each card fitting the namespace
 		for monster in self.deck:
-			if monster.name == name:
+			if name in monster.name:
 				if i >= 9:
 					print("[{}] {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute, monster.effectText))
 				else:

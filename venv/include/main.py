@@ -159,11 +159,11 @@ def cardSetup():
 	global heraldPerfection2
 	global masterHyperion
 	global masterHyperion2
-	orangeHerald = card("Herald of Orange Light", 800, 0, effectHeraldSearch, effTrigger.summon, effectDescBuilder(effTrigger.summon, effectHeraldSearch.desc))
+	orangeHerald = card("Herald of Orange Light", 1000, 0, effectHeraldSearch, effTrigger.summon, effectDescBuilder(effTrigger.summon, effectHeraldSearch.desc))
 	orangeHerald2 = deepcopy(orangeHerald)
 	purpleHerald = card("Herald of Purple Light", 800, 0, matchAttack, effTrigger.battle, effectDescBuilder(effTrigger.battle, matchAttack.desc))
 	purpleHerald2 = deepcopy(purpleHerald)
-	arcHerald = card("Herald of Arc Light", 800, 0, Restore2000, effTrigger.summon, effectDescBuilder(effTrigger.summon, Restore2000.desc))
+	arcHerald = card("Herald of Arc Light", 1800, 0, Restore2000, effTrigger.summon, effectDescBuilder(effTrigger.summon, Restore2000.desc))
 	arcHerald2 = deepcopy(arcHerald)
 	dawnHerald = card("Herald of the Dawn", 0, 0, doubleSummon, effTrigger.summon, effectDescBuilder(effTrigger.summon, doubleSummon.desc))
 	dawnHerald2 = deepcopy(dawnHerald)
@@ -173,7 +173,7 @@ def cardSetup():
 	agentVenus2 = deepcopy(agentVenus)
 	agentMars = card("Agent of Force: Mars", 0, 0, gainDifference, effTrigger.summon, effectDescBuilder(effTrigger.summon, gainDifference.desc))
 	agentMars2 = deepcopy(agentMars)
-	agentSaturn = card("Agent of Judgment: Saturn", 2400, 1, Restore2000, effTrigger.summon, effectDescBuilder(effTrigger.summon, Restore2000.desc))
+	agentSaturn = card("Agent of Judgment: Saturn", 2400, 1, RestoreLPForHand, effTrigger.summon, effectDescBuilder(effTrigger.summon, RestoreLPForHand.desc))
 	agentSaturn2 = deepcopy(agentSaturn)
 	heraldPerfection = card("Herald of Perfection", 2800, 1, gainDifference, effTrigger.summon, effectDescBuilder(effTrigger.summon, gainDifference.desc))
 	heraldPerfection2 = deepcopy(heraldPerfection)
@@ -808,7 +808,6 @@ def turnMenu(currentPlayer: duelist, passivePlayer: duelist):
 		# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
 		# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
 		# _player.hand.append()
-		_player.hand.append(evigishkiPsychlone)
 		# _foe.hand.append()
 		# -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------
 		# -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------
