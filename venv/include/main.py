@@ -448,7 +448,7 @@ def decksetup():
 		print("Deck List:")
 		# Hardcode values for the Deck Selection here | Impliment a Deck object with a description element, like the
 		# effect description
-		print("[1] Cyber Deck    | Theme: Discarding / Tribute")
+		print("[1] Cyber Deck    | Theme: Discarding / SS Hand")
 		print("[2] Vampire Deck  | Theme: Stealing Life / Graveyard Effects")
 		print("[3] Gishki Deck   | Theme: Attack Boosts / Battling")
 		print("[4] Herald Deck   | Theme: Life Point Gain / Special Summon From Hand")
