@@ -56,27 +56,20 @@ class duelist:
 		tempListNum = []
 		print("{}s Deck:".format(self.name))
 
-		# Loop through the deck and display each card fitting the namespace
-		while True:
-			try:
-				currentCard = self.deck[i]
-			except IndexError:
-				if self.deck.__len__() == 0:
-					print("Deck is Empty")
-				else:
-					raise IndexError
-				break
+		max_len = self.getMaxLength(self.deck)
 
-			if name in currentCard.name:
-				print("[{}] {} | ATK: {} | Effect: {}".format((i + 1), currentCard.name.ljust(25, ), str(currentCard.atkPoints).ljust(4, ), currentCard.effectText))
+		# Loop through the hand and display each card fitting the namespace
+		for monster in self.deck:
+			if name in monster.name:
+				if i >= 9:
+					print("[{}] {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute, monster.effectText))
+				else:
+					print("[{}]  {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute, monster.effectText))
 				tempListNum.append(i)
 			else:
 				pass
 
 			i = i + 1
-
-			if i == self.deck.__len__():
-				break
 
 		if tempListNum:
 			while True:
@@ -150,12 +143,9 @@ class duelist:
 		self.hand.append(addedCard)
 		print("--------------------------------------")
 		print("{} has searched the following card:".format(self.name))
-		print("Name: {} | ATK: {} | Effect: {}".format(addedCard.name, str(addedCard.atkPoints), addedCard.effectText))
+		print("Name: {} | ATK: {} | Tribute: {} | Effect: {}".format(addedCard.name, str(addedCard.atkPoints), str(addedCard.tribute), addedCard.effectText))
 
 		del self.deck[selection]
-
-		self.shuffle()
-
 	# Display Player Hand
 	def checkHand(self):
 		if self.hand.__len__() != 0:
@@ -230,8 +220,7 @@ class duelist:
 				if i >= 9:
 					print("[{}] {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute, monster.effectText))
 				else:
-					print(
-						"[{}]  {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute, monster.effectText))
+					print("[{}]  {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute, monster.effectText))
 				i = i + 1
 		else:
 			print("Deck Empty")
@@ -396,7 +385,6 @@ class duelist:
 		self.shuffle()
 
 		self.sendToGrave(effplayer, opponent, milledCard, oppMon, effgy, oppgy, turnPlayer)
-
 
 	# Play Card from hand
 	def playCard(self):
@@ -588,6 +576,9 @@ class duelist:
 
 		pass
 
+		effplayer.gy.append(discardedCard)
+		del self.hand[selection]
+
 		time.sleep(1)
 
 		if discardedCard.trigger.name == "graveyard":
@@ -595,7 +586,7 @@ class duelist:
 		else:
 			pass
 
-		del self.hand[selection]
+
 
 	# Lose LifePoints
 	def loseLP(self, damage):
@@ -608,8 +599,8 @@ class duelist:
 
 		print("{} has taken {} points of damage, and is now on {} life points".format(self.name, damage, self.lifepoints))
 		if self.lifepoints == 0:
-			input("~~~{} has reached {} lifepoints, the game is over. Press the enter key to end".format(self.name, self.lifepoints))
-			sys.exit(0)
+			print("~~~{} has reached {} lifepoints, the game is over. Returning to Main Menu...".format(self.name, self.lifepoints))
+			time.sleep(2)
 
 	# Gain LifePoints
 	def gainLP(self, heal):
@@ -738,6 +729,7 @@ class duelist:
 		pass
 
 		self.monfield.append(specialedCard)
+		del self.hand[selection]
 		print("--------------------------------------")
 		print("{} has been Special Summoned".format(specialedCard.name))
 		print("ATK: {} | Effect: {}".format(str(specialedCard.atkPoints), specialedCard.effectText))
@@ -748,8 +740,6 @@ class duelist:
 			specialedCard.effect.resolve(effplayer, opponent, specialedCard, oppMon, effgy, oppgy, turnPlayer)
 		else:
 			pass
-
-		del self.hand[selection]
 
 	# Special Summon a monster from your hand FITTING the given namespace
 	def specialHandSpecific(self, name, effplayer, opponent, sentMon, oppMon, effgy, oppgy, turnPlayer):
@@ -796,6 +786,8 @@ class duelist:
 
 					self.monfield.append(addedCard)
 
+					del self.hand[selection]
+
 					print("--------------------------------------")
 					print("{} has been Special Summoned".format(addedCard.name))
 					print("ATK: {} | Effect: {}".format(str(addedCard.atkPoints), addedCard.effectText))
@@ -806,8 +798,6 @@ class duelist:
 						addedCard.effect.resolve(effplayer, opponent, addedCard, oppMon, effgy, oppgy, turnPlayer)
 					else:
 						pass
-
-					del self.hand[selection]
 
 					return
 
@@ -856,6 +846,8 @@ class duelist:
 
 					self.monfield.append(addedCard)
 
+					del self.hand[selection]
+
 					print("--------------------------------------")
 					print("{} has been Special Summoned".format(addedCard.name))
 					print("ATK: {} | Effect: {}".format(str(addedCard.atkPoints), addedCard.effectText))
@@ -867,7 +859,7 @@ class duelist:
 					else:
 						pass
 
-					del self.hand[selection]
+
 
 					return
 
@@ -1008,7 +1000,7 @@ class duelist:
 
 		# Loop through the hand and display each card fitting the namespace
 		for monster in self.deck:
-			if monster.name == name:
+			if name in monster.name:
 				if i >= 9:
 					print("[{}] {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute, monster.effectText))
 				else:
