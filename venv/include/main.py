@@ -5,6 +5,8 @@ from card import *
 from duelist import *
 from effect import *
 
+from settings import *
+
 
 # Method to setup the card database and runs player_deck_setup()
 def cardSetup():
@@ -91,7 +93,7 @@ def cardSetup():
 	unizombie2 = deepcopy(unizombie)
 	shiranuiSolitare = card("Shiranui Solitare", 1300, 0, PlayerDraw1, effTrigger.graveyard, effectDescBuilder(effTrigger.graveyard, PlayerDraw1.desc))
 	shiranuiSolitare2 = deepcopy(shiranuiSolitare)
-	armageddonKnight = card("Armageddon Knight", 1400, 0, doubleSummon, effTrigger.summon, effectDescBuilder(effTrigger.summon, doubleSummon.desc))
+	armageddonKnight = card("Armageddon Knight", 1400, 0, Mill, effTrigger.summon, effectDescBuilder(effTrigger.summon, Mill.desc))
 	armageddonKnight2 = deepcopy(armageddonKnight)
 	zombieMaster = card("Zombie Master", 1800, 0, oppDisc1, effTrigger.summon, effectDescBuilder(effTrigger.summon, oppDisc1.desc))
 	zombieMaster2 = deepcopy(zombieMaster)
@@ -263,24 +265,23 @@ def effectDescBuilder(effTrigger: Enum, Desc: str):
 	if effTrigger.name == "n_a":
 		effectDescription = Desc
 	elif effTrigger.name == "summon":
-		effectDescription = "When Summoned: " + Desc
+		effectDescription = "when Summoned: " + Desc
 	elif effTrigger.name == "attack":
-		effectDescription = "When this card Attacks: " + Desc
+		effectDescription = "when Attacking: " + Desc
 	elif effTrigger.name == "defend":
-		effectDescription = "When this card is Attacked: " + Desc
+		effectDescription = "when Attacked: " + Desc
 	elif effTrigger.name == "battle":
-		effectDescription = "When this card Battles: " + Desc
+		effectDescription = "when Battling: " + Desc
 	elif effTrigger.name == "graveyard":
-		effectDescription = "When this card is sent to the Graveyard: " + Desc
+		effectDescription = "when sent to Graveyard: " + Desc
 	elif effTrigger.name == "destructionBat":
-		effectDescription = "When this card would be destroyed by Battle: " + Desc
+		effectDescription = "when destroyed by Battle: " + Desc
 	elif effTrigger.name == "destructionEff":
-		effectDescription = "When this card would be destroyed by a card effect: " + Desc
+		effectDescription = "when destroyed by Card Effects: " + Desc
 	else:
 		raise TypeError
 
-	return effectDescription
-
+	return "Once per turn, " + effectDescription
 
 def printDeckList(DeckList: list):
 	print("Deck List:")
@@ -304,7 +305,6 @@ def printDeckList(DeckList: list):
 	input("Press Enter to Continue...")
 
 	return
-
 
 def findDictLength(dictionaryList: list, index: str):
 	max_len = ""
@@ -614,7 +614,6 @@ def player_deck_setup():
 
 	print("\n" * 50)
 
-
 # Reset Gamestate
 def reset():
 
@@ -639,7 +638,6 @@ def reset():
 	print("\n" * 50)
 
 	pass
-
 
 # Method to contain the main menu and all its options
 def mainMenu():
@@ -740,7 +738,6 @@ def mainMenu():
 			print("--------------------------------------")
 			print("Invalid Selection")
 
-
 # Menu that contains a players turn menus
 def turnMenu(currentPlayer: duelist, passivePlayer: duelist):
 
@@ -781,6 +778,8 @@ def turnMenu(currentPlayer: duelist, passivePlayer: duelist):
 
 	resetNormalSummon()
 
+	resetEffectChecker()
+
 	# Move the turn count and announce the turn
 	turnCount = turnCount + 1
 	print("--------------------------------------")
@@ -805,7 +804,7 @@ def turnMenu(currentPlayer: duelist, passivePlayer: duelist):
 		# -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------
 		# -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------
 
-		_foe.draw(5)
+		_foe.draw(4)
 
 	else:
 		currentPlayer.draw(1)
@@ -871,7 +870,7 @@ def turnMenu(currentPlayer: duelist, passivePlayer: duelist):
 				# Check if the monster has an on-summon effect effect, and activate it if it hasn't used it yet
 				if effectCheck == 0:
 					try:
-						if playedCard.trigger.name == "summon":
+						if playedCard.trigger.name == "summon" and returnEffectChecker(playedCard):
 							monster = playedCard
 							if currentPlayer == _player:
 								passivePlayer = _foe
@@ -1040,7 +1039,7 @@ def battleMenu(turnPlayer: duelist, passivePlayer: duelist):
 
 				# If all monsters have attacked
 				if allAttacked == 1:
-					print("All Monsters attacked, ending battle phase and turn...")
+					print("All Possible Monsters attacked, ending battle phase and turn...")
 					time.sleep(1.5)
 					return 0
 
@@ -1105,7 +1104,7 @@ def battleMenu(turnPlayer: duelist, passivePlayer: duelist):
 
 			# Monster Effect: Attacker (Returns Damage)
 			try:
-				if atkMon.trigger.name == "attack" or atkMon.trigger.name == "battle":
+				if atkMon.trigger.name == "attack" or atkMon.trigger.name == "battle" and returnEffectChecker(atkMon):
 					monster = atkMon
 					if atkTarget is not None:
 						oppmonster = atkTarget
@@ -1121,7 +1120,7 @@ def battleMenu(turnPlayer: duelist, passivePlayer: duelist):
 
 			# Monster Effect: Defender (Returns Damage)
 			try:
-				if atkTarget.trigger.name == "defend" or atkTarget.trigger.name == "battle":
+				if atkTarget.trigger.name == "defend" or atkTarget.trigger.name == "battle" and returnEffectChecker(atkTarget):
 					monster = atkTarget
 					if atkTarget is not None:
 						oppmonster = atkMon
@@ -1156,7 +1155,7 @@ def battleMenu(turnPlayer: duelist, passivePlayer: duelist):
 
 				try:
 					oppmonster = atkTarget
-					if oppmonster.trigger.name == "destructionBat":
+					if oppmonster.trigger.name == "destructionBat" and returnEffectChecker(oppmonster):
 						result = oppmonster.effect.resolve(passivePlayer, turnPlayer, oppmonster, atkMon, passivePlayer.gy, turnPlayer.gy, turnPlayer)
 						if result:
 							pass
@@ -1185,7 +1184,7 @@ def battleMenu(turnPlayer: duelist, passivePlayer: duelist):
 				else:
 					atkTarget = object
 
-				if atkMon.trigger.name == "destructionBat":
+				if atkMon.trigger.name == "destructionBat" and returnEffectChecker(atkMon):
 					result = atkMon.effect.resolve(turnPlayer, passivePlayer, atkMon, atkTarget, turnPlayer.gy, passivePlayer.gy, turnPlayer)
 
 					if result == 0:
@@ -1210,7 +1209,7 @@ def battleMenu(turnPlayer: duelist, passivePlayer: duelist):
 				try:
 					if atkMon and atkTarget:
 
-						if atkTarget.trigger.name == "destructionBat":
+						if atkTarget.trigger.name == "destructionBat" and returnEffectChecker(atkTarget):
 							result = atkTarget.effect.resolve(turnPlayer, passivePlayer, atkTarget, atkMon, turnPlayer.gy, passivePlayer.gy, turnPlayer)
 
 							if result == 0:
