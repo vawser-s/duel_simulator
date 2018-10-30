@@ -6,7 +6,7 @@ from duelist import *
 from effect import *
 
 
-# Method to setup the card database and runs decksetup()
+# Method to setup the card database and runs player_deck_setup()
 def cardSetup():
 
 	# The card template is as follows:
@@ -23,8 +23,8 @@ def cardSetup():
 	global ladyDebug2
 	global cyberseGadget
 	global cyberseGadget2
-	global dongleAcorn
-	global dongleAcorn2
+	global cyberseAccelerator
+	global cyberseAccelerator2
 	global cyberseWhiteHat
 	global cyberseWhiteHat2
 	global cyberseClockDragon
@@ -38,7 +38,7 @@ def cardSetup():
 	codeRadiator = card("Code Radiator", 1600, 0, doubleSummon, effTrigger.summon, effectDescBuilder(effTrigger.summon, doubleSummon.desc))
 	ladyDebug = card("Lady Debug", 1000, 0, specialCyberseHand, effTrigger.summon, effectDescBuilder(effTrigger.summon, specialCyberseHand.desc))
 	cyberseGadget = card("Cyberse Gadget", 1400, 0, Destroy, effTrigger.summon, effectDescBuilder(effTrigger.summon, Destroy.desc))
-	dongleAcorn = card("Dongle Acorn", 500, 0, specialCodeHand, effTrigger.destructionBat, effectDescBuilder(effTrigger.destructionBat, specialCodeHand.desc))
+	cyberseAccelerator = card("Cyberse Accelerator", 2000, 0, oppDisc1, effTrigger.summon, effectDescBuilder(effTrigger.summon, oppDisc1.desc))
 	cyberseWhiteHat = card("Cyberse White Hat", 2100, 1, effectSearch, effTrigger.summon, effectDescBuilder(effTrigger.summon, effectSearch.desc))
 	cyberseClockDragon = card("Cyberse Clock Dragon", 2500, 1, specialfromHand, effTrigger.destructionEff, effectDescBuilder(effTrigger.destructionEff, specialfromHand.desc))
 	dualAssembwurm = card("Dual Assembwurm", 2800, 1, oppDisc2, effTrigger.battle, effectDescBuilder(effTrigger.battle, oppDisc2.desc))
@@ -48,7 +48,7 @@ def cardSetup():
 	codeRadiator2 = deepcopy(codeRadiator)
 	ladyDebug2 = deepcopy(ladyDebug)
 	cyberseGadget2 = deepcopy(cyberseGadget)
-	dongleAcorn2 = deepcopy(dongleAcorn)
+	cyberseAccelerator2 = deepcopy(cyberseAccelerator)
 	cyberseWhiteHat2 = deepcopy(cyberseWhiteHat)
 	cyberseClockDragon2 = deepcopy(cyberseClockDragon)
 	dualAssembwurm2 = deepcopy(dualAssembwurm)
@@ -133,7 +133,7 @@ def cardSetup():
 	evigishkiLevianima2 = deepcopy(evigishkiLevianima)
 	evigishkiSoulOgre = card("Evigishki Soul Ogre", 2800, 1, gain1000, effTrigger.battle, effectDescBuilder(effTrigger.battle, gain1000.desc))
 	evigishkiSoulOgre2 = deepcopy(evigishkiSoulOgre)
-	evigishkiGustKraken = card("Evigishki Gustkraken", 2500, 1, specialGishkiHand, effTrigger.battle, effectDescBuilder(effTrigger.battle, effectEvigishkiSearch.desc))
+	evigishkiGustKraken = card("Evigishki Gustkraken", 2500, 1, specialGishkiHand, effTrigger.battle, effectDescBuilder(effTrigger.battle, specialGishkiHand.desc))
 	evigishkiGustKraken2 = deepcopy(evigishkiGustKraken)
 	evigishkiPsychlone = card("Evigishki Psychlone", 2000, 1, Destroy, effTrigger.battle, effectDescBuilder(effTrigger.battle, Destroy.desc))
 	evigishkiPsychlone2 = deepcopy(evigishkiPsychlone)
@@ -173,7 +173,7 @@ def cardSetup():
 	agentVenus2 = deepcopy(agentVenus)
 	agentMars = card("Agent of Force: Mars", 0, 0, gainDifference, effTrigger.summon, effectDescBuilder(effTrigger.summon, gainDifference.desc))
 	agentMars2 = deepcopy(agentMars)
-	agentSaturn = card("Agent of Judgment: Saturn", 2400, 1, RestoreLPForHand, effTrigger.summon, effectDescBuilder(effTrigger.summon, RestoreLPForHand.desc))
+	agentSaturn = card("Agent of Judgment: Saturn", 2400, 1, RestoreLPForHand1000, effTrigger.summon, effectDescBuilder(effTrigger.summon, RestoreLPForHand1000.desc))
 	agentSaturn2 = deepcopy(agentSaturn)
 	heraldPerfection = card("Herald of Perfection", 2800, 1, gainDifference, effTrigger.summon, effectDescBuilder(effTrigger.summon, gainDifference.desc))
 	heraldPerfection2 = deepcopy(heraldPerfection)
@@ -239,6 +239,8 @@ def cardSetup():
 	global graveyardGarry
 	global lifeVitalizer
 	global defenderDan
+	global gameEnder1
+	global gameEnder2
 	discard1Guy = card("Discard Guy", 500, 0, playerDisc1, effTrigger.summon, playerDisc1.desc)
 	deviousDiscard1Guy = card("Devious Discard Guy", 0, 0, oppDisc1, effTrigger.summon, oppDisc1.desc)
 	deviousDiscardDiva = card("Devious Discard Diva", 2500, 0, playerDisc1, effTrigger.battle, playerDisc1.desc)
@@ -252,6 +254,8 @@ def cardSetup():
 	graveyardGarry = card("Graveyard Garry", 2000, 1, PlayerDraw2, effTrigger.graveyard, PlayerDraw2.desc)
 	lifeVitalizer = card("Life Vitalizer", 1800, 0, gainDifference, effTrigger.summon, gainDifference.desc)
 	defenderDan = card("Defender Dan", 2000, 0, PlayerDraw1, effTrigger.defend, effectDescBuilder(effTrigger.defend, PlayerDraw1.desc))
+	gameEnder1 = card("Game Ender EFF", 0, 0, Damage8000, effTrigger.summon, effectDescBuilder(effTrigger.summon, Damage8000.desc))
+	gameEnder2 = card("Game Ender BTL", 0, 0, Damage8000, effTrigger.battle, effectDescBuilder(effTrigger.battle, Damage8000.desc))
 
 
 def effectDescBuilder(effTrigger: Enum, Desc: str):
@@ -278,8 +282,8 @@ def effectDescBuilder(effTrigger: Enum, Desc: str):
 	return effectDescription
 
 
-def printDeckList(DeckList: list, title: str):
-	print("{}".format(title))
+def printDeckList(DeckList: list):
+	print("Deck List:")
 
 	if DeckList.__len__() != 0:
 		i = 0
@@ -302,14 +306,27 @@ def printDeckList(DeckList: list, title: str):
 	return
 
 
+def findDictLength(dictionaryList: list, index: str):
+	max_len = ""
+
+	# Find the Longest list element
+	for item in dictionaryList:
+		if len(max_len) < len(item[index]):
+			max_len = item[index]
+		else:
+			pass
+
+	return len(max_len)
+
 # Method to setup decks once the cards have been set
-def decksetup():
+def player_deck_setup():
 	CyberDeck = []
 	VampireDeck = []
 	GishkiDeck = []
 	HeraldDeck = []
 	MagicianDeck = []
-	DeckList = []
+
+	PlayerList = []
 
 	pass
 
@@ -323,8 +340,8 @@ def decksetup():
 	CyberDeck.append(ladyDebug2)
 	CyberDeck.append(cyberseGadget)
 	CyberDeck.append(cyberseGadget2)
-	CyberDeck.append(dongleAcorn)
-	CyberDeck.append(dongleAcorn2)
+	CyberDeck.append(cyberseAccelerator)
+	CyberDeck.append(cyberseAccelerator2)
 	CyberDeck.append(cyberseWhiteHat)
 	CyberDeck.append(cyberseWhiteHat2)
 	CyberDeck.append(cyberseClockDragon)
@@ -342,7 +359,6 @@ def decksetup():
 	VampireDeck.append(vampireGrace)
 	VampireDeck.append(vampireGrace2)
 	VampireDeck.append(vampireGenesis)
-	VampireDeck.append(vampireGenesis2)
 	VampireDeck.append(mezuki)
 	VampireDeck.append(mezuki2)
 	VampireDeck.append(unizombie)
@@ -370,11 +386,11 @@ def decksetup():
 	GishkiDeck.append(evigishkiLevianima2)
 	GishkiDeck.append(evigishkiSoulOgre)
 	GishkiDeck.append(evigishkiGustKraken)
+	GishkiDeck.append(evigishkiGustKraken)
 	GishkiDeck.append(evigishkiPsychlone)
 	GishkiDeck.append(evigishkiPsychlone2)
 
 	HeraldDeck.append(orangeHerald)
-	HeraldDeck.append(orangeHerald2)
 	HeraldDeck.append(orangeHerald2)
 	HeraldDeck.append(purpleHerald)
 	HeraldDeck.append(purpleHerald2)
@@ -391,7 +407,7 @@ def decksetup():
 	HeraldDeck.append(agentSaturn)
 	HeraldDeck.append(agentSaturn2)
 	HeraldDeck.append(heraldPerfection)
-	HeraldDeck.append(heraldPerfection2)
+	HeraldDeck.append(masterHyperion)
 	HeraldDeck.append(masterHyperion)
 
 	MagicianDeck.append(darkMagician)
@@ -421,12 +437,6 @@ def decksetup():
 	random.shuffle(HeraldDeck)
 	random.shuffle(MagicianDeck)
 
-	DeckList.append(CyberDeck)
-	DeckList.append(VampireDeck)
-	DeckList.append(GishkiDeck)
-	DeckList.append(HeraldDeck)
-	DeckList.append(MagicianDeck)
-
 	for monster in CyberDeck:
 		monster.attacked = 0
 
@@ -442,189 +452,165 @@ def decksetup():
 	for monster in MagicianDeck:
 		monster.attacked = 0
 
-	# Get user deck selection
+	CyberPlayer = {
+		"name": "Playmaker",
+		"desc": "A tech-savvy kid, who knows his way around a computer. Plays to undermine his opponents strategy from the roots",
+		"deck": CyberDeck,
+		"deckName": "Cyberse",
+		"deckDesc": "Discarding / SS Hand",
+		"voicelines": []
+	}
+
+	VampirePlayer = {
+		"name": "Count Klaric",
+		"desc": "A skilled player with an obsession with vampire mythology. Focuses on sacrificing her own cards to drain his opponents' life dry",
+		"deck": VampireDeck,
+		"deckName": "Vampire",
+		"deckDesc": "Stealing Life / Graveyard Effects",
+		"voicelines": []
+	}
+
+	GishkiPlayer = {
+		"name": "Gishki Avance",
+		"desc": "A distant traveler who has seen all walks of life. His deck mercilessely attacks his opponent, growing stronger each battle",
+		"deck": GishkiDeck,
+		"deckName": "Gishki",
+		"deckDesc": "Attack Boosts / Battling",
+		"voicelines": []
+	}
+
+	HeraldPlayer = {
+		"name": "Arch Priest Xero",
+		"desc": "A high ranking official within a church he is devoted to. His deck aims to  restore his own life and gain power as he does so",
+		"deck": HeraldDeck,
+		"deckName": "Herald Agents",
+		"deckDesc": "Life Point Gain / Special Summon From Hand",
+		"voicelines": []
+	}
+
+	MagicianPlayer = {
+		"name": "Dennis",
+		"desc": "A sidewalk performer with a nack of delivering a spectacle. his deck focuses on defending himself until his best magician is ready",
+		"deck": MagicianDeck,
+		"deckName": "Magicians",
+		"deckDesc": "Defending / Summoning Dark Magician",
+		"voicelines": []
+
+	}
+
+	PlayerList.append(CyberPlayer)
+	PlayerList.append(VampirePlayer)
+	PlayerList.append(GishkiPlayer)
+	PlayerList.append(HeraldPlayer)
+	PlayerList.append(MagicianPlayer)
+
+	# Get the user's chosen Player
 	while True:
+
 		print("--------------------------------------")
-		print("Deck List:")
-		# Hardcode values for the Deck Selection here | Impliment a Deck object with a description element, like the
-		# effect description
-		print("[1] Cyber Deck    | Theme: Discarding / SS Hand")
-		print("[2] Vampire Deck  | Theme: Stealing Life / Graveyard Effects")
-		print("[3] Gishki Deck   | Theme: Attack Boosts / Battling")
-		print("[4] Herald Deck   | Theme: Life Point Gain / Special Summon From Hand")
-		print("[5] Magician Deck | Theme: Defending / Summoning Dark Magician")
-		selection = input("~~Select a Deck to Use:")
+		print("Player Select:")
+
+		maxPlayerName = findDictLength(PlayerList, "name")
+		maxDeckName = findDictLength(PlayerList, "deckName")
+
+		maxDeckDesc = findDictLength(PlayerList, "deckDesc")
+
+		i = 0
+		for player in PlayerList:
+			print("[{}] Name: {} | Deck: {} | Theme: {}".format(i + 1, player.get("name").ljust(maxPlayerName, ),  player.get("deckName").ljust(maxDeckName, ), player.get("deckDesc").ljust(maxDeckDesc, )))
+			i = i + 1
+
+		selection = input("~~Please Select a character:")
+
 		try:
-			selection = int(selection)
+			selection = int(selection) - 1
 
-			try:
-				if selection == 1:
-					print("--------------------------------------")
-					print("You have selected the Cyber Deck")
+			_player.name = PlayerList[selection].get("name")
+			_player.deck = PlayerList[selection].get("deck")
 
-					while True:
-						print("--------------------------------------")
-						print("[1] Play with Deck")
-						print("[2] View Deck List")
-						print("[0] Return")
+			print("--------------------------------------")
+			print("You have selected {} as your player character".format(_player.name))
 
-						selection = input("~~Select an option:")
-						try:
-							selection = int(selection)
-
-							if selection == 1:
-								_player.deck = CyberDeck
-								break
-							elif selection == 2:
-								printDeckList(CyberDeck, "Cyber Deck:")
-								pass
-							elif selection == 0:
-								break
-						except ValueError:
-							print("--------------------------------------")
-							print("Invalid Selection")
-				elif selection == 2:
-					print("--------------------------------------")
-					print("You have selected the Vampire Deck")
-
-					while True:
-						print("--------------------------------------")
-						print("[1] Play with Deck")
-						print("[2] View Deck List")
-						print("[0] Return")
-
-						selection = input("~~Select an option:")
-						try:
-							selection = int(selection)
-
-							if selection == 1:
-								_player.deck = VampireDeck
-								break
-							elif selection == 2:
-								printDeckList(VampireDeck, "Vampire Deck:")
-								pass
-							elif selection == 0:
-								break
-						except ValueError:
-							print("--------------------------------------")
-							print("Invalid Selection")
-				elif selection == 3:
-					print("--------------------------------------")
-					print("You have selected the Gishki Deck")
-
-					while True:
-						print("--------------------------------------")
-						print("[1] Play with Deck")
-						print("[2] View Deck List")
-						print("[0] Return")
-
-						selection = input("~~Select an option:")
-						try:
-							selection = int(selection)
-
-							if selection == 1:
-								_player.deck = GishkiDeck
-								break
-							elif selection == 2:
-								printDeckList(GishkiDeck, "Gishki Deck:")
-								pass
-							elif selection == 0:
-								break
-						except ValueError:
-							print("--------------------------------------")
-							print("Invalid Selection")
-				elif selection == 4:
-					print("--------------------------------------")
-					print("You have selected the Herald Deck")
-
-					while True:
-						print("--------------------------------------")
-						print("[1] Play with Deck")
-						print("[2] View Deck List")
-						print("[0] Return")
-
-						selection = input("~~Select an option:")
-						try:
-							selection = int(selection)
-
-							if selection == 1:
-								_player.deck = HeraldDeck
-								break
-							elif selection == 2:
-								printDeckList(HeraldDeck, "Herald Deck:")
-								pass
-							elif selection == 0:
-								break
-						except ValueError:
-							print("--------------------------------------")
-							print("Invalid Selection")
-				elif selection == 5:
-					print("--------------------------------------")
-					print("You have selected the Magician Deck")
-
-					while True:
-						print("--------------------------------------")
-						print("[1] Play with Deck")
-						print("[2] View Deck List")
-						print("[0] Return")
-
-						selection = input("~~Select an option:")
-						try:
-							selection = int(selection)
-
-							if selection == 1:
-								_player.deck = MagicianDeck
-								break
-							elif selection == 2:
-								printDeckList(MagicianDeck, "Magician Deck:")
-								pass
-							elif selection == 0:
-								break
-						except ValueError:
-							print("--------------------------------------")
-							print("Invalid Selection")
-
-				if _player.deck:
-					break
-			except TypeError:
+			while True:
 				print("--------------------------------------")
-				print("Invalid Selection")
-		except ValueError:
+				print("[1] Duel")
+				print("[2] View Deck List")
+				print("[0] Return")
+
+				selection = input("~~Select an option:")
+				try:
+					selection = int(selection)
+
+					if selection == 1:
+						# Remove the players deck from the possible list
+						i = 0
+						for player in PlayerList:
+							if player.get("deck") == _player.deck:
+								PlayerList.pop(i)
+							i = i + 1
+						break
+					elif selection == 2:
+						printDeckList(_player.deck)
+						pass
+					elif selection == 0:
+						_player.name = ""
+						_player.deck = []
+						break
+				except ValueError:
+					print("--------------------------------------")
+					print("Invalid Selection")
+
+			if _player.name and _player.deck:
+				break
+
+		except (ValueError, TypeError, AttributeError, IndexError):
 			print("--------------------------------------")
 			print("Invalid Selection")
 
-	time.sleep(1)
+	print("\n" * 50)
 
-	# Random deck selection for the opponent
+	# Get the user's chosen Opponent
 	while True:
-		oppselection = random.randint(0, (DeckList.__len__() - 1))
-		_foe.deck = DeckList[oppselection]
+		print("--------------------------------------")
+		print("Opponent Select:")
 
-		# Print the opponent's random selection for the player
-		if oppselection == 0 and _player.deck != _foe.deck:
+		maxPlayerName = findDictLength(PlayerList, "name")
+		maxDeckName = findDictLength(PlayerList, "deckName")
+
+		maxDeckDesc = findDictLength(PlayerList, "deckDesc")
+
+		i = 0
+		for opponent in PlayerList:
+			print("[{}] Name: {} | Deck: {} | Theme: {}".format(i + 1, opponent.get("name").ljust(maxPlayerName, ), opponent.get("deckName").ljust(maxDeckName, ), opponent.get("deckDesc").ljust(maxDeckDesc, )))
+			i = i + 1
+
+		selection = input("~~Please Select a character to play against:")
+
+		try:
+			selection = int(selection) - 1
+
+			_foe.name = PlayerList[selection].get("name")
+			_foe.deck = PlayerList[selection].get("deck")
+
 			print("--------------------------------------")
-			print("{} has selected the Cyber Deck".format(_foe.name))
-			break
-		if oppselection == 1 and _player.deck != _foe.deck:
+			print("You have selected {} as your oposition character".format(_foe.name))
+
 			print("--------------------------------------")
-			print("{} has selected the Vampire Deck".format(_foe.name))
-			break
-		if oppselection == 2 and _player.deck != _foe.deck:
+			selection = input("Confirm Selection (Y/N): ")
+
+			if selection == "Y" or selection == "y":
+				break
+
+			elif selection == "N" or selection == "n":
+				pass
+
+		except (ValueError, TypeError, AttributeError, IndexError):
 			print("--------------------------------------")
-			print("{} has selected the Gishki Deck".format(_foe.name))
-			break
-		if oppselection == 3 and _player.deck != _foe.deck:
-			print("--------------------------------------")
-			print("{} has selected the Herald Deck".format(_foe.name))
-			break
-		if oppselection == 4 and _player.deck != _foe.deck:
-			print("--------------------------------------")
-			print("{} has selected the Magician Deck".format(_foe.name))
-			break
+			print("Invalid Selection")
 
 	print("--------------------------------------")
 
-	time.sleep(1)
+	time.sleep(0.5)
 
 	print("\n" * 50)
 
@@ -679,7 +665,11 @@ def mainMenu():
 
 				cardSetup()
 
-				decksetup()
+				player_deck_setup()
+
+				print("--------------------------------------")
+				print("Duel Begin")
+				time.sleep(1)
 
 				# -- Main loop from which the duels run --
 				while True:
@@ -754,6 +744,7 @@ def mainMenu():
 # Menu that contains a players turn menus
 def turnMenu(currentPlayer: duelist, passivePlayer: duelist):
 
+
 	# resetting attacked values on Field
 	try:
 		for monster in currentPlayer.monfield:
@@ -827,6 +818,10 @@ def turnMenu(currentPlayer: duelist, passivePlayer: duelist):
 	while True:
 
 		while True:
+			if currentPlayer.lifepoints == 0 or passivePlayer.lifepoints == 0:
+				selection = 8
+				break
+
 			print("--------------------------------------")
 			print("[1] Play a Card")
 
@@ -997,6 +992,13 @@ def battleMenu(turnPlayer: duelist, passivePlayer: duelist):
 	# Battle Phase Menu
 
 	while True:
+		if turnPlayer.lifepoints == 0 or passivePlayer.lifepoints == 0:
+			selection = 2
+			global destination
+			destination = "menu"
+			break
+
+
 		print("--------------------------------------")
 		print("[1] Attack with a Monster")
 
@@ -1020,6 +1022,9 @@ def battleMenu(turnPlayer: duelist, passivePlayer: duelist):
 
 		# loop through battle phase procedure
 		while True:
+
+			if turnPlayer.lifepoints == 0 or passivePlayer.lifepoints == 0:
+				break
 
 			# Retrieve the user monster selection
 			while True:
@@ -1130,6 +1135,9 @@ def battleMenu(turnPlayer: duelist, passivePlayer: duelist):
 			except IndexError:
 				pass
 
+			if turnPlayer.lifepoints == 0 or passivePlayer.lifepoints == 0:
+				break
+
 			if damage is None:  # This occurs for effect returns that don't impact damage
 				try:
 					damage = atkMon.atkPoints - atkTarget.atkPoints
@@ -1234,13 +1242,10 @@ def battleMenu(turnPlayer: duelist, passivePlayer: duelist):
 		raise NotImplementedError
 
 
-print("--------------------------------------")
-name = input("~~~Please Enter Your Name")
-
 # sets duelist and foe objects
-_player = duelist(name, 8000, [], [], [], [])  # (name, lifepoints, hand, monfield, deck, graveyard)
+_player = duelist("", 8000, [], [], [], [])  # (name, lifepoints, hand, monfield, deck, graveyard)
 
-_foe = duelist("Rokket", 8000, [], [], [], [])  # (name, lifepoints, hand, monfield, deck, graveyard)
+_foe = duelist("", 8000, [], [], [], [])  # (name, lifepoints, hand, monfield, deck, graveyard)
 
 
 mainMenu()

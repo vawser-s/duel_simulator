@@ -146,9 +146,6 @@ class duelist:
 		print("Name: {} | ATK: {} | Tribute: {} | Effect: {}".format(addedCard.name, str(addedCard.atkPoints), str(addedCard.tribute), addedCard.effectText))
 
 		del self.deck[selection]
-
-		self.shuffle()
-
 	# Display Player Hand
 	def checkHand(self):
 		if self.hand.__len__() != 0:
@@ -579,6 +576,9 @@ class duelist:
 
 		pass
 
+		effplayer.gy.append(discardedCard)
+		del self.hand[selection]
+
 		time.sleep(1)
 
 		if discardedCard.trigger.name == "graveyard":
@@ -586,7 +586,7 @@ class duelist:
 		else:
 			pass
 
-		del self.hand[selection]
+
 
 	# Lose LifePoints
 	def loseLP(self, damage):
@@ -599,8 +599,8 @@ class duelist:
 
 		print("{} has taken {} points of damage, and is now on {} life points".format(self.name, damage, self.lifepoints))
 		if self.lifepoints == 0:
-			input("~~~{} has reached {} lifepoints, the game is over. Press the enter key to end".format(self.name, self.lifepoints))
-			sys.exit(0)
+			print("~~~{} has reached {} lifepoints, the game is over. Returning to Main Menu...".format(self.name, self.lifepoints))
+			time.sleep(2)
 
 	# Gain LifePoints
 	def gainLP(self, heal):
@@ -729,6 +729,7 @@ class duelist:
 		pass
 
 		self.monfield.append(specialedCard)
+		del self.hand[selection]
 		print("--------------------------------------")
 		print("{} has been Special Summoned".format(specialedCard.name))
 		print("ATK: {} | Effect: {}".format(str(specialedCard.atkPoints), specialedCard.effectText))
@@ -739,8 +740,6 @@ class duelist:
 			specialedCard.effect.resolve(effplayer, opponent, specialedCard, oppMon, effgy, oppgy, turnPlayer)
 		else:
 			pass
-
-		del self.hand[selection]
 
 	# Special Summon a monster from your hand FITTING the given namespace
 	def specialHandSpecific(self, name, effplayer, opponent, sentMon, oppMon, effgy, oppgy, turnPlayer):
@@ -787,6 +786,8 @@ class duelist:
 
 					self.monfield.append(addedCard)
 
+					del self.hand[selection]
+
 					print("--------------------------------------")
 					print("{} has been Special Summoned".format(addedCard.name))
 					print("ATK: {} | Effect: {}".format(str(addedCard.atkPoints), addedCard.effectText))
@@ -797,8 +798,6 @@ class duelist:
 						addedCard.effect.resolve(effplayer, opponent, addedCard, oppMon, effgy, oppgy, turnPlayer)
 					else:
 						pass
-
-					del self.hand[selection]
 
 					return
 
@@ -847,6 +846,8 @@ class duelist:
 
 					self.monfield.append(addedCard)
 
+					del self.hand[selection]
+
 					print("--------------------------------------")
 					print("{} has been Special Summoned".format(addedCard.name))
 					print("ATK: {} | Effect: {}".format(str(addedCard.atkPoints), addedCard.effectText))
@@ -858,7 +859,7 @@ class duelist:
 					else:
 						pass
 
-					del self.hand[selection]
+
 
 					return
 

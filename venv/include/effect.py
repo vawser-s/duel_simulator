@@ -331,7 +331,7 @@ class fieldToHand(effect):
 
 			opponent.bounce(oppMon)
 		else:
-				print("No Opponent monster to destroy")
+				print("No Opponent monster to return")
 				return
 		return 0
 
@@ -467,9 +467,9 @@ class gainAtkforInstance(effect):
 			print("No Attack Gained")
 
 		# Check if a Battle Effect or not
-		if effectMon.effTrigger.name == "summon":
+		if effectMon.trigger.name == "summon":
 			return
-		elif effectMon.effTrigger.name == "battle":
+		elif effectMon.trigger.name == "battle":
 			damage = effectMon.atkPoints - oppMon.atkPoints
 			return damage
 
@@ -480,7 +480,7 @@ class halfAttackedDraw(effect):
 		print("--------------------------------------")
 		time.sleep(1)
 
-		oppMon.atkPoints = oppMon.atkPoints / 2
+		oppMon.atkPoints = int(oppMon.atkPoints / 2)
 		print("{}'s ATK points have been halved to {}".format(oppMon.name, oppMon.atkPoints))
 
 		effplayer.draw(self.extraParam)
@@ -557,10 +557,11 @@ bounceMonster = fieldToHand("Bounce an Opponents Monster", 0)
 # Restoration Effects
 Restore1000 = effectRestore("Restore Life Points by 1000", 1000)
 Restore2000 = effectRestore("Restore Life Points by 2000", 2000)
-RestoreLPForHand = gainLPforHand("Restore 1000 Life Points for Every card in your hand", 1000)
+RestoreLPForHand1000 = gainLPforHand("Restore 1000 Life Points for Every card in your hand", 1000)
 
 # Damaging Effects
 Damage1000 = effectDamage("Damage Opponent by 1000", 1000)
+Damage8000 = effectDamage("Damage Opponent by 8000", 8000)
 DamageSelf = effectDamageSelf("Damage Player by 1000", 1000)
 SiphonLife800 = siphonLife("Steal 800 Life points from opponent", 800)
 SiphonLife1500 = siphonLife("Steal 1500 Life points from opponent", 1500)
@@ -596,7 +597,7 @@ gain1000 = gainAttack("Gains 1000 attack before battle. Loses attack upon destru
 gainDifference = gainAttackDifference("Gain Atk Points equal to the difference between your lifepoints", 0)
 grant800 = grantAttack("Grant a monster on your field 800 Attack (not including this card)", 800)
 darkMagicianGain500 = gainAtkforInstance("Gain 400 attack for each 'Dark Magician' monster on the field or in your Graveyard", "Dark Magician", 400)
-halfAtkDraw2 = halfAttackedDraw("Half the attacking monsters attack; Draw Two Card", 2)
+halfAtkDraw2 = halfAttackedDraw("Half the attacking monsters attack; Draw Two Cards", 2)
 Atk0 = zeroAttack("Reduce target monster's attack to 0", 0)
 tribtoGrantAtk = tributetoGrantAttack("You can tribute this card: Grant another monster this monsters ATK points", 0)
 
