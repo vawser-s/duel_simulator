@@ -467,9 +467,9 @@ class gainAtkforInstance(effect):
 			print("No Attack Gained")
 
 		# Check if a Battle Effect or not
-		if effectMon.effTrigger.name == "summon":
+		if effectMon.trigger.name == "summon":
 			return
-		elif effectMon.effTrigger.name == "battle":
+		elif effectMon.trigger.name == "battle":
 			damage = effectMon.atkPoints - oppMon.atkPoints
 			return damage
 
@@ -480,7 +480,7 @@ class halfAttackedDraw(effect):
 		print("--------------------------------------")
 		time.sleep(1)
 
-		oppMon.atkPoints = oppMon.atkPoints / 2
+		oppMon.atkPoints = int(oppMon.atkPoints / 2)
 		print("{}'s ATK points have been halved to {}".format(oppMon.name, oppMon.atkPoints))
 
 		effplayer.draw(self.extraParam)
@@ -561,6 +561,7 @@ RestoreLPForHand1000 = gainLPforHand("Restore 1000 Life Points for Every card in
 
 # Damaging Effects
 Damage1000 = effectDamage("Damage Opponent by 1000", 1000)
+Damage8000 = effectDamage("Damage Opponent by 8000", 8000)
 DamageSelf = effectDamageSelf("Damage Player by 1000", 1000)
 SiphonLife800 = siphonLife("Steal 800 Life points from opponent", 800)
 SiphonLife1500 = siphonLife("Steal 1500 Life points from opponent", 1500)

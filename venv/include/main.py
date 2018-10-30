@@ -239,6 +239,8 @@ def cardSetup():
 	global graveyardGarry
 	global lifeVitalizer
 	global defenderDan
+	global gameEnder1
+	global gameEnder2
 	discard1Guy = card("Discard Guy", 500, 0, playerDisc1, effTrigger.summon, playerDisc1.desc)
 	deviousDiscard1Guy = card("Devious Discard Guy", 0, 0, oppDisc1, effTrigger.summon, oppDisc1.desc)
 	deviousDiscardDiva = card("Devious Discard Diva", 2500, 0, playerDisc1, effTrigger.battle, playerDisc1.desc)
@@ -252,6 +254,8 @@ def cardSetup():
 	graveyardGarry = card("Graveyard Garry", 2000, 1, PlayerDraw2, effTrigger.graveyard, PlayerDraw2.desc)
 	lifeVitalizer = card("Life Vitalizer", 1800, 0, gainDifference, effTrigger.summon, gainDifference.desc)
 	defenderDan = card("Defender Dan", 2000, 0, PlayerDraw1, effTrigger.defend, effectDescBuilder(effTrigger.defend, PlayerDraw1.desc))
+	gameEnder1 = card("Game Ender EFF", 0, 0, Damage8000, effTrigger.summon, effectDescBuilder(effTrigger.summon, Damage8000.desc))
+	gameEnder2 = card("Game Ender BTL", 0, 0, Damage8000, effTrigger.battle, effectDescBuilder(effTrigger.battle, Damage8000.desc))
 
 
 def effectDescBuilder(effTrigger: Enum, Desc: str):
@@ -313,7 +317,6 @@ def findDictLength(dictionaryList: list, index: str):
 			pass
 
 	return len(max_len)
-
 
 # Method to setup decks once the cards have been set
 def player_deck_setup():
@@ -388,7 +391,6 @@ def player_deck_setup():
 	GishkiDeck.append(evigishkiPsychlone2)
 
 	HeraldDeck.append(orangeHerald)
-	HeraldDeck.append(orangeHerald2)
 	HeraldDeck.append(orangeHerald2)
 	HeraldDeck.append(purpleHerald)
 	HeraldDeck.append(purpleHerald2)
@@ -606,11 +608,9 @@ def player_deck_setup():
 			print("--------------------------------------")
 			print("Invalid Selection")
 
-	time.sleep(1)
-
 	print("--------------------------------------")
 
-	time.sleep(1)
+	time.sleep(0.5)
 
 	print("\n" * 50)
 
@@ -669,7 +669,7 @@ def mainMenu():
 
 				print("--------------------------------------")
 				print("Duel Begin")
-				print("--------------------------------------")
+				time.sleep(1)
 
 				# -- Main loop from which the duels run --
 				while True:
@@ -744,6 +744,7 @@ def mainMenu():
 # Menu that contains a players turn menus
 def turnMenu(currentPlayer: duelist, passivePlayer: duelist):
 
+
 	# resetting attacked values on Field
 	try:
 		for monster in currentPlayer.monfield:
@@ -817,6 +818,10 @@ def turnMenu(currentPlayer: duelist, passivePlayer: duelist):
 	while True:
 
 		while True:
+			if currentPlayer.lifepoints == 0 or passivePlayer.lifepoints == 0:
+				selection = 8
+				break
+
 			print("--------------------------------------")
 			print("[1] Play a Card")
 
@@ -987,6 +992,13 @@ def battleMenu(turnPlayer: duelist, passivePlayer: duelist):
 	# Battle Phase Menu
 
 	while True:
+		if turnPlayer.lifepoints == 0 or passivePlayer.lifepoints == 0:
+			selection = 2
+			global destination
+			destination = "menu"
+			break
+
+
 		print("--------------------------------------")
 		print("[1] Attack with a Monster")
 
@@ -1010,6 +1022,9 @@ def battleMenu(turnPlayer: duelist, passivePlayer: duelist):
 
 		# loop through battle phase procedure
 		while True:
+
+			if turnPlayer.lifepoints == 0 or passivePlayer.lifepoints == 0:
+				break
 
 			# Retrieve the user monster selection
 			while True:
@@ -1119,6 +1134,9 @@ def battleMenu(turnPlayer: duelist, passivePlayer: duelist):
 				pass
 			except IndexError:
 				pass
+
+			if turnPlayer.lifepoints == 0 or passivePlayer.lifepoints == 0:
+				break
 
 			if damage is None:  # This occurs for effect returns that don't impact damage
 				try:
