@@ -146,6 +146,7 @@ class duelist:
 		print("Name: {} | ATK: {} | Tribute: {} | Effect: {}".format(addedCard.name, str(addedCard.atkPoints), str(addedCard.tribute), addedCard.effectText))
 
 		del self.deck[selection]
+
 	# Display Player Hand
 	def checkHand(self):
 		if self.hand.__len__() != 0:
@@ -247,7 +248,8 @@ class duelist:
 			return
 
 	# Return a specific list location for a Card
-	def checkArrayLoc(self, array: list, monster: object):
+	@staticmethod
+	def checkArrayLoc(array: list, monster: object):
 		i = 0
 		for m in array:
 			if m == monster:
@@ -547,6 +549,8 @@ class duelist:
 				print("Card is not in Hand")
 
 	def effectdiscardCard(self, effplayer, opponent, effMon, oppMon, effgy, oppgy, turnPlayer):
+		del effMon
+
 		if self.hand.__len__() == 0:
 			print("Hand is empty")
 
@@ -586,8 +590,6 @@ class duelist:
 			discardedCard.effect.resolve(effplayer, opponent, discardedCard, oppMon, effgy, oppgy, turnPlayer)
 		else:
 			pass
-
-
 
 	# Lose LifePoints
 	def loseLP(self, damage):
@@ -682,7 +684,8 @@ class duelist:
 
 	# Return largest string in an array (menu formatting)
 
-	def getMaxLength(self, monarray):
+	@staticmethod
+	def getMaxLength(monarray):
 
 		max_len = ""
 		# Figure out longest string that exists

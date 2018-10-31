@@ -221,6 +221,8 @@ def cardSetup():
 	magiMagiGirl = card("Magi Magician Girl", 2600, 1, Atk0, effTrigger.defend, effectDescBuilder(effTrigger.defend, Atk0.desc))
 	magiMagiGirl2 = deepcopy(magiMagiGirl)
 
+
+
 	# TEST CARDS
 
 	global copyMachine
