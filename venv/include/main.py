@@ -868,6 +868,27 @@ def turnMenu(currentPlayer: duelist, passivePlayer: duelist):
 			else:
 				playedCard = currentPlayer.monfield[length - 1]
 
+				if playedCard.tribute == 1:
+					tributedCard = currentPlayer.gy[-1]
+
+					if tributedCard.trigger.name == "graveyard":
+						monster = tributedCard
+						if currentPlayer == _player:
+							passivePlayer = _foe
+						else:
+							passivePlayer = _player
+
+						try:
+							oppmonster = None
+							monster.effect.resolve(currentPlayer, passivePlayer, monster,
+							                       oppmonster, currentPlayer.gy, passivePlayer.gy, currentPlayer)
+							effectCheck = 1
+						except IndexError:
+							oppmonster = None
+							monster.effect.resolve(currentPlayer, passivePlayer, monster,
+							                       oppmonster, currentPlayer.gy, passivePlayer.gy, currentPlayer)
+							effectCheck = 1
+
 				# Check if the monster has an on-summon effect effect, and activate it if it hasn't used it yet
 				if effectCheck == 0:
 					try:
