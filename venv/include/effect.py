@@ -52,7 +52,7 @@ class effectDestroy(effect):
 					print("--------------------------------------")
 
 			if oppMon.trigger.name == "destructionEff":
-				eff = oppMon.effect.resolve(effplayer, opponent, oppMon, effectMon, effgy, oppgy, turnPlayer)
+				eff = oppMon.effect.resolve(opponent, effplayer, oppMon, effectMon, effgy, oppgy, turnPlayer)
 
 				if eff == 0:
 					opponent.destroyMonsterEff(oppMon, effplayer, opponent, oppMon, effectMon, effgy, oppgy, turnPlayer)
@@ -387,6 +387,8 @@ class specialHand(effect):
 		time.sleep(1)
 
 		effplayer.specialHandEffect(effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer)
+
+		return 0
 
 
 class specialSpecificHand(effect):
