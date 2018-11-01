@@ -1,5 +1,5 @@
 import sys
-
+import settings
 from effect import *
 
 
@@ -335,7 +335,7 @@ class duelist:
 
 		self.gy.append(sentMon)
 
-		if sentMon.trigger.name == "graveyard":
+		if sentMon.trigger.name == "graveyard"  and settings.returnEffectChecker(sentMon):
 			sentMon.effect.resolve(effplayer, opponent, sentMon, oppMon, effgy, oppgy, turnPlayer)
 		else:
 			return
@@ -420,7 +420,7 @@ class duelist:
 				print("Invalid Selection")
 				print("--------------------------------------")
 
-		nSummon = int(returnNormalSummon())
+		nSummon = int(settings.returnNormalSummon())
 
 		# If you have not normal summoned this turn
 		if nSummon == 0:
@@ -446,7 +446,9 @@ class duelist:
 
 					# Play the card from your hand
 					self.monfield.append(playedCard)
+					self.removeCard(selection)
 					self.gy.append(tribute)
+          
 					del self.hand[selection]
 					changeNormalSummon()  # Normal Summon = 1
 
@@ -464,7 +466,7 @@ class duelist:
 					# Play the card from your hand
 					self.monfield.append(playedCard)
 					self.removeCard(selection)
-					changeNormalSummon()  # Normal Summon = 1
+					settings.changeNormalSummon()  # Normal Summon = 1
 
 					print("--------------------------------------")
 
@@ -491,7 +493,7 @@ class duelist:
 					# Play the card from your hand
 					self.monfield.append(playedCard)
 					self.removeCard(selection)
-					changeNormalSummon()  # Normal Summon = 1
+					settings.changeNormalSummon()  # Normal Summon = 1
 
 					print("--------------------------------------")
 
@@ -586,7 +588,7 @@ class duelist:
 
 		time.sleep(1)
 
-		if discardedCard.trigger.name == "graveyard":
+		if discardedCard.trigger.name == "graveyard" and settings.returnEffectChecker(discardedCard):
 			discardedCard.effect.resolve(effplayer, opponent, discardedCard, oppMon, effgy, oppgy, turnPlayer)
 		else:
 			pass
@@ -635,7 +637,7 @@ class duelist:
 		self.gy.append(destroyedMonster)
 		print("{} has been destroyed and sent to the Graveyard".format(destroyedMonster.name))
 
-		if sentMon.trigger.name == "graveyard":
+		if sentMon.trigger.name == "graveyard" and settings.returnEffectChecker(sentMon):
 			sentMon.effect.resolve(effplayer, opponent, sentMon, oppMon, effgy, oppgy, turnPlayer)
 		else:
 			pass
@@ -660,7 +662,7 @@ class duelist:
 
 		time.sleep(0.5)
 
-		if sentMon.trigger.name == "graveyard":
+		if sentMon.trigger.name == "graveyard" and settings.returnEffectChecker(sentMon):
 			sentMon.effect.resolve(effplayer, opponent, sentMon, oppMon, effgy, oppgy, turnPlayer)
 		else:
 			pass
@@ -740,7 +742,7 @@ class duelist:
 
 		time.sleep(1)
 
-		if specialedCard.trigger.name == "summon":
+		if specialedCard.trigger.name == "summon" and settings.returnEffectChecker(specialedCard):
 			specialedCard.effect.resolve(effplayer, opponent, specialedCard, oppMon, effgy, oppgy, turnPlayer)
 		else:
 			pass
@@ -777,7 +779,7 @@ class duelist:
 		if tempListNum:
 			while True:
 				# Get user Selection
-				selection = input("~~~Select the card to Add (Type the Number):")
+				selection = input("~~~Select the card to SS (Type the Number):")
 
 				try:
 					selection = int(selection) - 1
@@ -798,7 +800,7 @@ class duelist:
 
 					time.sleep(1)
 
-					if addedCard.trigger.name == "summon":
+					if addedCard.trigger.name == "summon" and settings.returnEffectChecker(addedCard):
 						addedCard.effect.resolve(effplayer, opponent, addedCard, oppMon, effgy, oppgy, turnPlayer)
 					else:
 						pass
@@ -858,7 +860,7 @@ class duelist:
 
 					time.sleep(1)
 
-					if addedCard.trigger.name == "summon":
+					if addedCard.trigger.name == "summon" and settings.returnEffectChecker(addedCard):
 						addedCard.effect.resolve(effplayer, opponent, addedCard, oppMon, effgy, oppgy, turnPlayer)
 					else:
 						pass
@@ -918,7 +920,7 @@ class duelist:
 
 					time.sleep(1)
 
-					if addedCard.trigger.name == "summon":
+					if addedCard.trigger.name == "summon" and settings.returnEffectChecker(addedCard):
 						addedCard.effect.resolve(effplayer, opponent, addedCard, oppMon, effgy, oppgy, turnPlayer)
 					else:
 						pass
@@ -981,6 +983,8 @@ class duelist:
 
 				buffedCard.atkPoints = buffedCard.atkPoints + attack
 
+				print("--------------------------------------")
+
 				print("{}'s Attack has been increased by {}".format(buffedCard.name, attack))
 
 				return
@@ -1038,7 +1042,7 @@ class duelist:
 
 					time.sleep(1)
 
-					if addedCard.trigger.name == "summon":
+					if addedCard.trigger.name == "summon"  and settings.returnEffectChecker(addedCard):
 						addedCard.effect.resolve(effplayer, opponent, addedCard, oppMon, effgy, oppgy, turnPlayer)
 					else:
 						pass
