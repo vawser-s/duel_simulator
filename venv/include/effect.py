@@ -404,8 +404,7 @@ class specialHand(effect):
 		settings.addEffectChecker(effectMon)
 
 		effplayer.specialHandEffect(effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer)
-		
-    return 0
+		return 0
 
 class specialSpecificHand(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):

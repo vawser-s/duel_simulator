@@ -449,8 +449,7 @@ class duelist:
 					self.removeCard(selection)
 					self.gy.append(tribute)
           
-					del self.hand[selection]
-					changeNormalSummon()  # Normal Summon = 1
+					settings.changeNormalSummon()  # Normal Summon = 1
 
 					print("--------------------------------------")
 

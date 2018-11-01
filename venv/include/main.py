@@ -800,9 +800,6 @@ def turnMenu(currentPlayer: duelist, passivePlayer: duelist):
 		# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
 		# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
 		# _player.hand.append()
-		_player.hand.append(cyberseClockDragon)
-		_player.hand.append(codeRadiator)
-		_foe.hand.append(mezuki)
 		# _foe.hand.append()
 		# -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------
 		# -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------
