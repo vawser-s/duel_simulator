@@ -13,8 +13,3 @@ class card:
 		self.attacked = attacked
 		self.tribute = tribute
 		self.origAtk = atkPoints
-
-
-def loopEffects():
-	# Placeholder
-	pass

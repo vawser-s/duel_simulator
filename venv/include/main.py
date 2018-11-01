@@ -4,7 +4,6 @@ from copy import *
 from card import *
 from duelist import *
 from effect import *
-from cardTest import *
 
 from settings import *
 
@@ -225,9 +224,6 @@ def cardSetup():
 	magiMagiGirl2 = deepcopy(magiMagiGirl)
 
 	# TEST CARDS
-
-	global testMans
-	testMans = cardTest("Micro Coder", 300, 0, [cardEffect, cardEffect2])
 
 	global copyMachine
 	copyMachine = card("Copy Machine", 0, 0, matchAttack, effTrigger.battle, matchAttack.desc)
@@ -801,7 +797,7 @@ def turnMenu(currentPlayer: duelist, passivePlayer: duelist):
 		# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
 		# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
 		# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
-		_player.hand.append(testMans)
+		# _player.hand.append()
 		# _foe.hand.append()
 		# -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------
 		# -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------
