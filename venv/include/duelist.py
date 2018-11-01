@@ -444,8 +444,11 @@ class duelist:
 
 					# Play the card from your hand
 					self.monfield.append(playedCard)
+					self.removeCard(selection)
 					self.gy.append(tribute)
-					settings.changeNormalSummon()  # Normal Summon = 1
+          
+					del self.hand[selection]
+					changeNormalSummon()  # Normal Summon = 1
 
 					print("--------------------------------------")
 
