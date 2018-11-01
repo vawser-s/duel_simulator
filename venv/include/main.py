@@ -221,6 +221,21 @@ def cardSetup():
 	magiMagiGirl = card("Magi Magician Girl", 2600, 1, Atk0, effTrigger.defend, effectDescBuilder(effTrigger.defend, Atk0.desc))
 	magiMagiGirl2 = deepcopy(magiMagiGirl)
 
+	global stormRiderAllyson
+	global stormBirdZephris
+	global stormRiderHellion
+	global stormBirdHellDiver
+	global stormRiderCanto
+	global stormBirdSkylar
+	global stormRiderNess
+	global stormBirdGale
+	global stormMakerAlizeh
+	global stormDietyMonsoon
+	stormRiderAllyson = card("Stormrider Allyson", 800, 0, specialStormRiderHand, effTrigger.summon, effectDescBuilder(effTrigger.summon, specialStormRiderHand.desc))
+	stormBirdZephris = card("Stormbird Zephris", 1600, 0, controlStormriderDestroy, effTrigger.summon, effectDescBuilder(effTrigger.summon, controlStormriderDestroy.desc))
+	stormRiderHellion = card("Stormrider Hellion", 900, 0, specialStormRiderDeck, effTrigger.summon, effectDescBuilder(effTrigger.summon, specialStormRiderDeck.desc))
+	# stormBirdHellDiver = card("Stormbird Hell Diver")
+
 	# TEST CARDS
 
 	global copyMachine
@@ -258,23 +273,23 @@ def cardSetup():
 	gameEnder2 = card("Game Ender BTL", 0, 0, Damage8000, effTrigger.battle, effectDescBuilder(effTrigger.battle, Damage8000.desc))
 
 
-def effectDescBuilder(effTrigger: Enum, Desc: str):
+def effectDescBuilder(trigger: Enum, Desc: str):
 
-	if effTrigger.name == "n_a":
+	if trigger.name == "n_a":
 		effectDescription = Desc
-	elif effTrigger.name == "summon":
+	elif trigger.name == "summon":
 		effectDescription = "When Summoned: " + Desc
-	elif effTrigger.name == "attack":
+	elif trigger.name == "attack":
 		effectDescription = "When this card Attacks: " + Desc
-	elif effTrigger.name == "defend":
+	elif trigger.name == "defend":
 		effectDescription = "When this card is Attacked: " + Desc
-	elif effTrigger.name == "battle":
+	elif trigger.name == "battle":
 		effectDescription = "When this card Battles: " + Desc
-	elif effTrigger.name == "graveyard":
+	elif trigger.name == "graveyard":
 		effectDescription = "When this card is sent to the Graveyard: " + Desc
-	elif effTrigger.name == "destructionBat":
+	elif trigger.name == "destructionBat":
 		effectDescription = "When this card would be destroyed by Battle: " + Desc
-	elif effTrigger.name == "destructionEff":
+	elif trigger.name == "destructionEff":
 		effectDescription = "When this card would be destroyed by a card effect: " + Desc
 	else:
 		raise TypeError
@@ -799,9 +814,8 @@ def turnMenu(currentPlayer: duelist, passivePlayer: duelist):
 		# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
 		# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
 		# _player.hand.append()
-		_player.hand.append(cyberseClockDragon)
-		_player.hand.append(codeRadiator)
-		_foe.hand.append(mezuki)
+		_player.hand.append(stormBirdZephris)
+		_player.monfield.append(stormRiderAllyson)
 		# _foe.hand.append()
 		# -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------
 		# -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------

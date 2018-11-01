@@ -14,6 +14,15 @@ class effTrigger(Enum):
 	destructionBat = 7
 	destructionEff = 8
 
+def checkControlInstace(InstanceName: str, monfield: list):
+	# Check if you control the correct Monster
+	result = False
+
+	for monster in monfield:
+		if InstanceName in monster.name:
+			result = True
+
+	return result
 
 class effect:
 	def __init__(self, desc, extraParam=None, extraParam2=None):
@@ -64,6 +73,67 @@ class effectDestroy(effect):
 				print("No Opponent monster to destroy")
 				return
 		return -1
+
+
+class controlDestroy(effect):
+	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
+		print("{}'s Effect Activates!".format(effectMon.name))
+		print("--------------------------------------")
+		time.sleep(1)
+
+		result = checkControlInstace(self.extraParam, effplayer.monfield)
+
+		noOfRuns = self.nextraParam
+
+		x = 0
+
+
+		if result:
+			if opponent.monfield:
+				while x < noOfRuns:
+					# checks if any monsters left
+					if opponent.monfield:
+						pass
+					else:
+						print("No More Possible Targets...")
+						break
+
+					while True:
+						opponent.checkField()
+
+						print("--------------------------------------")
+						target = input("~~Select a monster to destroy:")
+
+						try:
+							target = int(target) - 1
+						except (TypeError, ValueError, IndexError):
+							pass
+
+						try:
+							oppMon = opponent.monfield[target]
+							break
+						except (IndexError, TypeError, AttributeError):
+							print("--------------------------------------")
+							print("Invalid Selection")
+							print("--------------------------------------")
+
+					if oppMon.trigger.name == "destructionEff":
+						eff = oppMon.effect.resolve(opponent, effplayer, oppMon, effectMon, effgy, oppgy, turnPlayer)
+
+						if eff == 0:
+							opponent.destroyMonsterEff(oppMon, effplayer, opponent, oppMon, effectMon, effgy, oppgy,
+							                           turnPlayer)
+						else:
+							pass
+					else:
+						opponent.destroyMonsterEff(oppMon, effplayer, opponent, oppMon, effectMon, effgy, oppgy,
+						                           turnPlayer)
+
+					x = x + 1
+			else:
+			print("No Possible Targets...")
+		else:
+			print("You need to control a {} monster to resolve {}'s effect".format(self.extraParam, effectMon.name))
 
 
 class effectDamage(effect):
@@ -430,6 +500,15 @@ class specialDeckExact(effect):
 		effplayer.specialDeckExact(self.extraParam, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer)
 
 
+class specialDeckSpecific(effect):
+	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
+		print("{}'s Effect Activates!".format(effectMon.name))
+		print("--------------------------------------")
+		time.sleep(1)
+
+		effplayer.specialDeckSpecific(self.extraParam, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer)
+
+
 class gainAtkforInstance(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name))
@@ -555,6 +634,7 @@ PlayerDraw2 = playerDraw("Draw Two Cards", 2)
 # Disruptive Effects
 Destroy = effectDestroy("Destroy Your Opponents Monster", 0)
 bounceMonster = fieldToHand("Bounce an Opponents Monster", 0)
+controlStormriderDestroy = controlDestroy("If you control a 'Stormrider' card, destroy up to 2 monsters your opponent controls", "Stormrider", 2)
 
 # Restoration Effects
 Restore1000 = effectRestore("Restore Life Points by 1000", 1000)
@@ -612,8 +692,10 @@ specialGishkiHand = specialSpecificHand("Special Summon a 'Gishki' Monster from 
 specialDarkMagicianHand = specialExactHand("Special Summon a Dark Magician from your hand", "Dark Magician")
 specialMagicianGirlHand = specialSpecificHand("Special Summon a 'Magician Girl' Card from your hand", "Magician Girl")
 specialfromHand = specialHand("Special Summon a monster from your hand", 0)
-specialDarkMagicianDeck = specialDeckExact("Special Summon a Dark Magician from your Deck", "Dark Magician")
 specialCodeHand = specialSpecificHand("Special Summon a 'Code' Monster from your hand", "Code")
+specialStormRiderHand = specialSpecificHand("Special Summon a 'Stormrider' Monster from your hand", "Stormrider")
+specialDarkMagicianDeck = specialDeckExact("Special Summon a Dark Magician from your Deck", "Dark Magician")
+specialStormRiderDeck = specialDeckSpecific("Special Summon a 'Stormrider' from your deck", "Stromrider")
 discSpecVampHand = discardToSpecialVampireHand("Discard one card, Special Summon a vampire from your Hand")
 
 

@@ -247,7 +247,8 @@ class duelist:
 			return
 
 	# Return a specific list location for a Card
-	def checkArrayLoc(self, array: list, monster: object):
+	@staticmethod
+	def checkArrayLoc(array: list, monster: object):
 		i = 0
 		for m in array:
 			if m == monster:
