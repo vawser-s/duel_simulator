@@ -224,20 +224,45 @@ def cardSetup():
 	magiMagiGirl2 = deepcopy(magiMagiGirl)
 
 	global stormRiderAllyson
+	global stormRiderAllyson2
 	global stormBirdZephris
+	global stormBirdZephris2
 	global stormRiderHellion
+	global stormRiderHellion2
 	global stormBirdHellDiver
+	global stormBirdHellDiver2
 	global stormRiderCanto
+	global stormRiderCanto2
 	global stormBirdSkylar
+	global stormBirdSkylar2
 	global stormRiderNess
+	global stormRiderNess2
 	global stormBirdGale
+	global stormBirdGale2
 	global stormMakerAlizeh
+	global stormMakerAlizeh2
 	global stormDietyMonsoon
-	stormRiderAllyson = card("Stormrider Allyson", 800, 0, specialStormRiderHand, effTrigger.summon, effectDescBuilder(effTrigger.summon, specialStormRiderHand.desc))
-	stormBirdZephris = card("Stormbird Zephris", 1600, 0, controlStormriderDestroy, effTrigger.summon, effectDescBuilder(effTrigger.summon, controlStormriderDestroy.desc))
+	global stormDietyMonsoon2
+	stormRiderAllyson = card("Stormrider Allyson", 800, 0, specialStormBirdHand, effTrigger.summon, effectDescBuilder(effTrigger.summon, specialStormBirdHand.desc))
+	stormRiderAllyson2 = deepcopy(stormRiderAllyson)
 	stormRiderHellion = card("Stormrider Hellion", 900, 0, specialStormRiderDeck, effTrigger.summon, effectDescBuilder(effTrigger.summon, specialStormRiderDeck.desc))
-	# stormBirdHellDiver = card("Stormbird Hell Diver")
-
+	stormRiderHellion2 = deepcopy(stormRiderHellion)
+	stormRiderCanto = card("Stormrider Canto", 500, 0, doubleSummon, effTrigger.summon, effectDescBuilder(effTrigger.summon, doubleSummon.desc))
+	stormRiderCanto2 = deepcopy(stormRiderCanto)
+	stormRiderNess = card("Stormrider Ness", 750, 0, discSpecStormGY, effTrigger.summon, effectDescBuilder(effTrigger.summon, discSpecStormGY.desc))
+	stormRiderNess2 = deepcopy(stormRiderNess)
+	stormBirdZephris = card("Stormbird Zephris", 1600, 0, controlStormriderDraw2, effTrigger.summon, effectDescBuilder(effTrigger.summon, controlStormriderDraw2.desc))
+	stormBirdZephris2 = deepcopy(stormBirdZephris)
+	stormBirdHellDiver = card("Stormbird Hell Diver", 1800, 0, controlStormriderDestroy, effTrigger.summon, effectDescBuilder(effTrigger.summon, controlStormriderDestroy.desc))
+	stormBirdHellDiver2 = deepcopy(stormBirdHellDiver)
+	stormBirdSkylar = card("Stormbird Skylar", 1000, 0, grantStormriderAttack, effTrigger.summon, effectDescBuilder(effTrigger.summon, grantStormriderAttack.desc))
+	stormBirdSkylar2 = deepcopy(stormBirdSkylar)
+	stormBirdGale = card("Stormbird Gale", 1500, 0, tribToSpecialStormBird, effTrigger.summon, effectDescBuilder(effTrigger.summon, tribToSpecialStormBird.desc))
+	stormBirdGale2 = deepcopy(stormBirdGale)
+	stormMakerAlizeh = card("Stormmaker Alizeh", 2500, 1, StormriderStealMonster, effTrigger.summon, effectDescBuilder(effTrigger.summon, StormriderStealMonster.desc))
+	stormMakerAlizeh2 = deepcopy(stormMakerAlizeh)
+	stormDietyMonsoon = card("Stormdiety Monsoon", 3000, 1, tributeStormtoSteal, effTrigger.summon, effectDescBuilder(effTrigger.summon, tributeStormtoSteal.desc))
+	stormDietyMonsoon2 = deepcopy(stormDietyMonsoon)
 
 	# TEST CARDS
 
@@ -275,7 +300,7 @@ def cardSetup():
 	gameEnder1 = card("Game Ender EFF", 0, 0, Damage8000, effTrigger.summon, effectDescBuilder(effTrigger.summon, Damage8000.desc))
 	gameEnder2 = card("Game Ender BTL", 0, 0, Damage8000, effTrigger.battle, effectDescBuilder(effTrigger.battle, Damage8000.desc))
 
-
+# Method to build the asppropriate effect descriptions for cards
 def effectDescBuilder(trigger: Enum, Desc: str):
 
 	if trigger.name == "n_a":
@@ -299,6 +324,7 @@ def effectDescBuilder(trigger: Enum, Desc: str):
 
 	return "Once per turn, " + effectDescription
 
+# Prints Deck List before they are assigned to a player
 def printDeckList(DeckList: list):
 	print("Deck List:")
 
@@ -322,6 +348,7 @@ def printDeckList(DeckList: list):
 
 	return
 
+# Finds the max length of the words in a list of dictionaries (Menu Formatting)
 def findDictLength(dictionaryList: list, index: str):
 	max_len = ""
 
@@ -341,6 +368,7 @@ def player_deck_setup():
 	GishkiDeck = []
 	HeraldDeck = []
 	MagicianDeck = []
+	StormDeck = []
 
 	PlayerList = []
 
@@ -447,11 +475,32 @@ def player_deck_setup():
 	MagicianDeck.append(magiMagiGirl)
 	MagicianDeck.append(magiMagiGirl2)
 
+	StormDeck.append(stormRiderAllyson)
+	StormDeck.append(stormRiderAllyson2)
+	StormDeck.append(stormRiderHellion)
+	StormDeck.append(stormRiderHellion2)
+	StormDeck.append(stormRiderCanto)
+	StormDeck.append(stormRiderCanto2)
+	StormDeck.append(stormRiderNess)
+	StormDeck.append(stormRiderNess2)
+	StormDeck.append(stormBirdZephris)
+	StormDeck.append(stormBirdZephris2)
+	StormDeck.append(stormBirdHellDiver)
+	StormDeck.append(stormBirdHellDiver2)
+	StormDeck.append(stormBirdSkylar)
+	StormDeck.append(stormBirdSkylar2)
+	StormDeck.append(stormBirdGale)
+	StormDeck.append(stormBirdGale2)
+	StormDeck.append(stormMakerAlizeh)
+	StormDeck.append(stormMakerAlizeh2)
+	StormDeck.append(stormDietyMonsoon)
+
 	random.shuffle(CyberDeck)
 	random.shuffle(VampireDeck)
 	random.shuffle(GishkiDeck)
 	random.shuffle(HeraldDeck)
 	random.shuffle(MagicianDeck)
+	random.shuffle(StormDeck)
 
 	for monster in CyberDeck:
 		monster.attacked = 0
@@ -466,6 +515,9 @@ def player_deck_setup():
 		monster.attacked = 0
 
 	for monster in MagicianDeck:
+		monster.attacked = 0
+
+	for monster in StormDeck:
 		monster.attacked = 0
 
 	CyberPlayer = {
@@ -514,11 +566,21 @@ def player_deck_setup():
 
 	}
 
+	StormPlayer = {
+		"name": "Ventus",
+		"desc": "A professional Speed Duelist who like to ride the wind on his hoverboard. His deck focuses on swarming Riders which power up his Stormbirds",
+		"deck": StormDeck,
+		"deckName": "Stormriders",
+		"deckDesc": "Swarming / Stealing Monsters",
+		"voicelines": []
+	}
+
 	PlayerList.append(CyberPlayer)
 	PlayerList.append(VampirePlayer)
 	PlayerList.append(GishkiPlayer)
 	PlayerList.append(HeraldPlayer)
 	PlayerList.append(MagicianPlayer)
+	PlayerList.append(StormPlayer)
 
 	# Get the user's chosen Player
 	while True:
@@ -716,6 +778,8 @@ def mainMenu():
 
 				cardSetup()
 
+				player_deck_setup()
+
 				TestDeck = [discard1Guy, deviousDiscard1Guy, battleImmuneIvan, cyberDigger, deckDigger, doubleSummoner, resurrector, reAdder, graveyardGarry]
 
 				_player.hand.append(discard1Guy)
@@ -813,9 +877,9 @@ def turnMenu(currentPlayer: duelist, passivePlayer: duelist):
 		# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
 		# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
 		# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
-		# _player.hand.append()
-		_player.hand.append(stormBirdZephris)
-		_player.monfield.append(stormRiderAllyson)
+		_player.hand.append(stormRiderNess)
+		_player.gy.append(stormRiderNess)
+		_player.gy.append(stormBirdZephris)
 		# _foe.hand.append()
 		# -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------
 		# -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------
@@ -1012,8 +1076,7 @@ def turnMenu(currentPlayer: duelist, passivePlayer: duelist):
 		# Return to Main Menu
 		return exitProg
 
-
-# BATTLE PHASE
+# Menu that contains the battle phase
 def battleMenu(turnPlayer: duelist, passivePlayer: duelist):
 	print("Battle Phase Engaged")
 
@@ -1278,7 +1341,6 @@ def battleMenu(turnPlayer: duelist, passivePlayer: duelist):
 		return 0
 	else:
 		raise NotImplementedError
-
 
 # sets duelist and foe objects
 _player = duelist("", 8000, [], [], [], [])  # (name, lifepoints, hand, monfield, deck, graveyard)
