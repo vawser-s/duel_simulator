@@ -1,5 +1,4 @@
-from card import *
-from duelist import *
+
 
 turnCount = 0
 

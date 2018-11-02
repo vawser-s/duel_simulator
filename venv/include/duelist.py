@@ -1,5 +1,4 @@
 import sys
-import settings
 from effect import *
 
 
@@ -46,7 +45,6 @@ class duelist:
 			# Increment
 			i = i + 1
 
-	# Add a specific card from deck to hand matching a namespace
 	def searchSpecificDeck(self, name):
 		if self.deck.__len__() == 0:
 			print("Deck is empty")
@@ -62,12 +60,43 @@ class duelist:
 		for monster in self.deck:
 			if name in monster.name:
 				if i >= 9:
-					print("[{}] {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute, monster.effectText))
+					print("[{}] {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ),
+					                                                             str(monster.atkPoints).ljust(4, ),
+					                                                             monster.tribute, monster.effectText))
 				else:
-					print("[{}]  {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute, monster.effectText))
+					print(
+						"[{}]  {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ),
+						                                                        str(monster.atkPoints).ljust(4, ),
+						                                                        monster.tribute, monster.effectText))
 				tempListNum.append(i)
 			else:
 				pass
+
+			i = i + 1
+
+	# Add a specific card from deck to hand matching a namespace
+	def searchSpecificDeckNamespace(self, *names):
+		if self.deck.__len__() == 0:
+			print("Deck is empty")
+			return
+
+		i = 0
+		tempListNum = []
+		print("{}s Deck:".format(self.name))
+
+		max_len = self.getMaxLength(self.deck)
+
+		# Loop through the hand and display each card fitting the namespace
+		for monster in self.deck:
+			for name in names:
+				if name in monster.name:
+					if i >= 9:
+						print("[{}] {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute, monster.effectText))
+					else:
+						print("[{}]  {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute, monster.effectText))
+					tempListNum.append(i)
+				else:
+					pass
 
 			i = i + 1
 
@@ -101,6 +130,35 @@ class duelist:
 		else:
 			print("No Cards to search")
 			return
+
+	def checkSpecificField(self, *names):
+		tempListNum = []
+
+		if self.monfield.__len__() > 0:
+
+			i = 0
+			print("{}s Field:".format(self.name))
+
+			max_len = self.getMaxLength(self.monfield)
+
+			# Loop through the hand and display each card fitting the namespace
+			for monster in self.monfield:
+				for name in names:
+					if name in monster.name:
+						if i >= 9:
+							print("[{}] {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute, monster.effectText))
+						else:
+							print("[{}]  {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute, monster.effectText))
+						tempListNum.append(i)
+					else:
+						pass
+
+				i = i + 1
+
+			return tempListNum
+		else:
+			print("No Other Monsters on your field")
+			return tempListNum
 
 	# Add a specific card from deck to hand
 	def searchDeck(self):
@@ -585,6 +643,8 @@ class duelist:
 		effplayer.gy.append(discardedCard)
 		del self.hand[selection]
 
+		print("{} has been discarded from {}'s hand".format(discardedCard.name, self.name))
+
 		time.sleep(1)
 
 		if discardedCard.trigger.name == "graveyard" and settings.returnEffectChecker(discardedCard):
@@ -1035,6 +1095,8 @@ class duelist:
 
 					self.monfield.append(addedCard)
 
+					del self.deck[selection]
+
 					print("--------------------------------------")
 					print("{} has been Special Summoned".format(addedCard.name))
 					print("ATK: {} | Effect: {}".format(str(addedCard.atkPoints), addedCard.effectText))
@@ -1046,7 +1108,6 @@ class duelist:
 					else:
 						pass
 
-					del self.deck[selection]
 
 					return
 
@@ -1056,3 +1117,66 @@ class duelist:
 					print("--------------------------------------")
 		else:
 			print("No Possible Targets")
+
+	def specialGraveyardSpecific(self, effplayer, opponent, sentMon, oppMon, effgy, oppgy, turnPlayer, *names):
+		i = 0
+		tempListNum = []
+		print("{}s GY:".format(self.name))
+		del sentMon
+
+		max_len = self.getMaxLength(self.gy)
+
+		# Loop through the hand and display each card fitting the namespace
+		for monster in self.gy:
+			for name in names:
+				if name in monster.name:
+					if i >= 9:
+						print("[{}] {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute, monster.effectText))
+					else:
+						print("[{}]  {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute, monster.effectText))
+
+					tempListNum.append(i)
+				else:
+					pass
+			i = i + 1
+
+		if tempListNum:
+			while True:
+				# Get user Selection
+				selection = input("~~~Select the card to Summon (Type the Number):")
+
+				try:
+					selection = int(selection) - 1
+				except ValueError:
+					pass
+
+				# Special Summon the Card
+				if selection in tempListNum:
+					addedCard = self.gy[selection]
+
+					self.monfield.append(addedCard)
+
+					del self.gy[selection]
+
+					print("--------------------------------------")
+					print("{} has been Special Summoned".format(addedCard.name))
+					print("ATK: {} | Effect: {}".format(str(addedCard.atkPoints), addedCard.effectText))
+
+					time.sleep(1)
+
+					if addedCard.trigger.name == "summon"  and settings.returnEffectChecker(addedCard):
+						addedCard.effect.resolve(effplayer, opponent, addedCard, oppMon, effgy, oppgy, turnPlayer)
+					else:
+						pass
+
+
+					return
+
+				else:
+					print("--------------------------------------")
+					print("Invalid Selection")
+					print("--------------------------------------")
+		else:
+			print("No Possible Targets")
+
+
