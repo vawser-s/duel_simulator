@@ -74,6 +74,38 @@ class duelist:
 
 			i = i + 1
 
+		if tempListNum:
+			while True:
+				# Get user Selection
+				selection = input("~~~Select the card to Add (Type the Number):")
+
+				try:
+					selection = int(selection) - 1
+				except ValueError:
+					pass
+
+				# Add the card to the hand
+				if selection in tempListNum:
+					addedCard = self.deck[selection]
+					self.hand.append(addedCard)
+					print("--------------------------------------")
+					print("{} has searched the following card:".format(self.name))
+					print("Name: {} | ATK: {} | Effect: {}".format(addedCard.name, str(addedCard.atkPoints),
+					                                               addedCard.effectText))
+
+					del self.deck[selection]
+
+					self.shuffle()
+
+					return
+				else:
+					print("--------------------------------------")
+					print("Invalid Selection")
+					print("--------------------------------------")
+		else:
+			print("No Cards to search")
+			return
+
 	# Add a specific card from deck to hand matching a namespace
 	def searchSpecificDeckNamespace(self, *names):
 		if self.deck.__len__() == 0:

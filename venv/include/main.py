@@ -7,7 +7,6 @@ from effect import *
 
 from settings import *
 
-
 # Method to setup the card database and runs player_deck_setup()
 def cardSetup():
 
@@ -877,9 +876,6 @@ def turnMenu(currentPlayer: duelist, passivePlayer: duelist):
 		# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
 		# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
 		# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
-		_player.hand.append(stormRiderNess)
-		_player.gy.append(stormRiderNess)
-		_player.gy.append(stormBirdZephris)
 		# _foe.hand.append()
 		# -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------
 		# -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------
@@ -1346,6 +1342,5 @@ def battleMenu(turnPlayer: duelist, passivePlayer: duelist):
 _player = duelist("", 8000, [], [], [], [])  # (name, lifepoints, hand, monfield, deck, graveyard)
 
 _foe = duelist("", 8000, [], [], [], [])  # (name, lifepoints, hand, monfield, deck, graveyard)
-
 
 mainMenu()

@@ -37,7 +37,6 @@ class effect:
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		raise NotImplementedError("Subclass must implement abstract method")
 
-
 class effectDestroy(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name))
@@ -357,6 +356,17 @@ class searchSpecificDeck(effect):
 		# extraParam = Namespace to Search
 		# nextraParam = Namespace to Search
 
+		effplayer.searchSpecificDeck(self.extraParam)
+
+class searchSpecificDeck2(effect):
+	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
+		print("{}'s Effect Activates!".format(effectMon.name))
+		print("--------------------------------------")
+		time.sleep(1)
+		settings.addEffectChecker(effectMon)
+		# extraParam = Namespace to Search
+		# nextraParam = Namespace to Search
+
 		effplayer.searchSpecificDeck(self.extraParam, self.nextraParam)
 
 class extraNormalSummon(effect):
@@ -444,7 +454,6 @@ class grantAttackNamespace(effect):
 		for monster in effplayer.monfield:
 			if self.extraParam in monster.name:
 				effplayer.grantAttack(total * self.nextraParam, effectMon)
-
 
 class fieldToHand(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
@@ -908,7 +917,7 @@ effectEvigishkiSearch = searchSpecificDeck("Add an 'Evigishki' card from Deck to
 effectGishkiMirrorSearch = searchSpecificDeck("Add a 'Gishki Aquamirror' card from Deck to hand", "Gishki Aquamirror")
 effectDarkMagicianSearch = searchSpecificDeck("Add a 'Dark Magician' card from your deck to your hand", "Dark Magician")
 effectGirlSearch = searchSpecificDeck("Add a 'Magician Girl' from your Deck to your hand", "Magician Girl")
-effectStormSearch = searchSpecificDeck("Add a 'Stormrider' or 'Stormbird' card from your deck to your hand", "Stormrider", "Stormbird")
+effectStormSearch = searchSpecificDeck2("Add a 'Stormrider' or 'Stormbird' card from your deck to your hand", "Stormrider", "Stormbird")
 
 # Attack Manipulation Effects
 gain500 = gainAttack("Gains 500 attack before battle. Loses attack upon destruction", 500)
@@ -919,7 +928,7 @@ darkMagicianGain500 = gainAtkforInstance("Gain 400 attack for each 'Dark Magicia
 halfAtkDraw2 = halfAttackedDraw("Half the attacking monsters attack; Draw Two Cards", 2)
 Atk0 = zeroAttack("Reduce target monster's attack to 0", 0)
 tribtoGrantAtk = tributetoGrantAttack("You can tribute this card: Grant another monster this monsters ATK points", 0)
-grantStormriderAttack = grantAttackNamespace("For each 'Stormrider' card on the field, grant a Card 200 ATK * No. of 'Stormrider' Card on the field", "Stormrider", 200)
+grantStormriderAttack = grantAttackNamespace("For each 'Stormrider' card on the field, grant a Card 300 ATK x No. of 'Stormrider' Card on the field", "Stormrider", 300)
 
 # Summon Manipulation Effects
 doubleSummon = extraNormalSummon("Gain an extra normal summon", 0)
@@ -932,8 +941,8 @@ specialMagicianGirlHand = specialSpecificHand("Special Summon a 'Magician Girl' 
 specialfromHand = specialHand("Special Summon a monster from your hand", 0)
 specialCodeHand = specialSpecificHand("Special Summon a 'Code' Monster from your hand", "Code")
 discSpecVampHand = discardToSpecialHand("Discard one card, Special Summon a vampire from your Hand", "Vampire")
-discSpecStormGY = discardToSpecialGY("Discard one Card, Special Summon a 'Stormbird'", "Stormrider", "Stormbird")
-specialStormBirdHand = specialSpecificHand("Special Summon a 'Stormrider' Monster from your hand", "Stormbird")
+discSpecStormGY = discardToSpecialGY("Discard one Card, Special Summon a 'Stormbird' or 'Stormrider' from your graveyard", "Stormrider", "Stormbird")
+specialStormBirdHand = specialSpecificHand("Special Summon a 'Stormbird' Monster from your hand", "Stormbird")
 specialDarkMagicianDeck = specialDeckExact("Special Summon a Dark Magician from your Deck", "Dark Magician")
 specialStormRiderDeck = specialDeckSpecific("Special Summon a 'Stormrider' from your deck", "Stormrider")
 tribToSpecialStormBird = tributeTOSSDeckSpecific("You can tribute this card; Special summon a 'Stormbird' card from your deck", "Stormbird")
