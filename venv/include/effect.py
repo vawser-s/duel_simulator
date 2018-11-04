@@ -822,9 +822,9 @@ class tributetoSteal(effect):
 				tempList = []
 
 				if self.nextraParam:
-					tempList = effplayer.checkSpecificFieldNamespace(self.extraParam, self.nextraParam)
+					tempList = effplayer.checkSpecificField(self.extraParam, self.nextraParam)
 				else:
-					tempList = effplayer.checkSpecificFieldNamespace(self.extraParam)
+					tempList = effplayer.checkSpecificField(self.extraParam)
 
 				if not tempList:
 					print("No targets to tribute...")

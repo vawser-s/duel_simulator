@@ -163,6 +163,7 @@ class duelist:
 			print("No Cards to search")
 			return
 
+    # Return a list of names on field specific to a namespace(s)
 	def checkSpecificField(self, *names):
 		tempListNum = []
 

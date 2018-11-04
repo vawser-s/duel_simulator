@@ -238,30 +238,30 @@ def cardSetup():
 	global stormRiderNess2
 	global stormBirdGale
 	global stormBirdGale2
-	global stormMakerAlizeh
-	global stormMakerAlizeh2
-	global stormDietyMonsoon
-	global stormDietyMonsoon2
-	stormRiderAllyson = card("Stormrider Allyson", 800, 0, specialStormBirdHand, effTrigger.summon, effectDescBuilder(effTrigger.summon, specialStormBirdHand.desc))
+	global stormBringerAlizeh
+	global stormBringerAlizeh2
+	global stormGodMonsoon
+	global stormGodMonsoon2
+	stormRiderAllyson = card("Allyson: Stormrider", 800, 0, specialStormBirdHand, effTrigger.summon, effectDescBuilder(effTrigger.summon, specialStormBirdHand.desc))
 	stormRiderAllyson2 = deepcopy(stormRiderAllyson)
-	stormRiderHellion = card("Stormrider Hellion", 900, 0, specialStormRiderDeck, effTrigger.summon, effectDescBuilder(effTrigger.summon, specialStormRiderDeck.desc))
+	stormRiderHellion = card("Hellion: Stormrider", 900, 0, specialStormRiderDeck, effTrigger.summon, effectDescBuilder(effTrigger.summon, specialStormRiderDeck.desc))
 	stormRiderHellion2 = deepcopy(stormRiderHellion)
-	stormRiderCanto = card("Stormrider Canto", 500, 0, doubleSummon, effTrigger.summon, effectDescBuilder(effTrigger.summon, doubleSummon.desc))
+	stormRiderCanto = card("Canto: Stormrider", 500, 0, doubleSummon, effTrigger.summon, effectDescBuilder(effTrigger.summon, doubleSummon.desc))
 	stormRiderCanto2 = deepcopy(stormRiderCanto)
-	stormRiderNess = card("Stormrider Ness", 750, 0, discSpecStormGY, effTrigger.summon, effectDescBuilder(effTrigger.summon, discSpecStormGY.desc))
+	stormRiderNess = card("Ness: Stormrider", 750, 0, discSpecStormGY, effTrigger.summon, effectDescBuilder(effTrigger.summon, discSpecStormGY.desc))
 	stormRiderNess2 = deepcopy(stormRiderNess)
-	stormBirdZephris = card("Stormbird Zephris", 1600, 0, controlStormriderDraw2, effTrigger.summon, effectDescBuilder(effTrigger.summon, controlStormriderDraw2.desc))
+	stormBirdZephris = card("Zephris: Stormbird", 1600, 0, controlStormriderDraw2, effTrigger.summon, effectDescBuilder(effTrigger.summon, controlStormriderDraw2.desc))
 	stormBirdZephris2 = deepcopy(stormBirdZephris)
-	stormBirdHellDiver = card("Stormbird Hell Diver", 1800, 0, controlStormriderDestroy, effTrigger.summon, effectDescBuilder(effTrigger.summon, controlStormriderDestroy.desc))
+	stormBirdHellDiver = card("Hell Diver: Stormbird", 1800, 0, controlStormriderDestroy, effTrigger.summon, effectDescBuilder(effTrigger.summon, controlStormriderDestroy.desc))
 	stormBirdHellDiver2 = deepcopy(stormBirdHellDiver)
-	stormBirdSkylar = card("Stormbird Skylar", 1000, 0, grantStormriderAttack, effTrigger.summon, effectDescBuilder(effTrigger.summon, grantStormriderAttack.desc))
+	stormBirdSkylar = card("Skylar: Stormbird", 1000, 0, grantStormriderAttack, effTrigger.summon, effectDescBuilder(effTrigger.summon, grantStormriderAttack.desc))
 	stormBirdSkylar2 = deepcopy(stormBirdSkylar)
-	stormBirdGale = card("Stormbird Gale", 1500, 0, tribToSpecialStormBird, effTrigger.summon, effectDescBuilder(effTrigger.summon, tribToSpecialStormBird.desc))
+	stormBirdGale = card("Gale: Stormbird", 1500, 0, tribToSpecialStormBird, effTrigger.summon, effectDescBuilder(effTrigger.summon, tribToSpecialStormBird.desc))
 	stormBirdGale2 = deepcopy(stormBirdGale)
-	stormMakerAlizeh = card("Stormmaker Alizeh", 2500, 1, StormriderStealMonster, effTrigger.summon, effectDescBuilder(effTrigger.summon, StormriderStealMonster.desc))
-	stormMakerAlizeh2 = deepcopy(stormMakerAlizeh)
-	stormDietyMonsoon = card("Stormdiety Monsoon", 3000, 1, tributeStormtoSteal, effTrigger.summon, effectDescBuilder(effTrigger.summon, tributeStormtoSteal.desc))
-	stormDietyMonsoon2 = deepcopy(stormDietyMonsoon)
+	stormBringerAlizeh = card("Alizeh: Stormbringer", 2500, 1, StormriderStealMonster, effTrigger.summon, effectDescBuilder(effTrigger.summon, StormriderStealMonster.desc))
+	stormBringerAlizeh2 = deepcopy(stormBringerAlizeh)
+	stormGodMonsoon = card("Monsoon: Stormgod", 3000, 1, tributeStormtoSteal, effTrigger.summon, effectDescBuilder(effTrigger.summon, tributeStormtoSteal.desc))
+	stormGodMonsoon2 = deepcopy(stormGodMonsoon)
 
 	# TEST CARDS
 
@@ -490,9 +490,9 @@ def player_deck_setup():
 	StormDeck.append(stormBirdSkylar2)
 	StormDeck.append(stormBirdGale)
 	StormDeck.append(stormBirdGale2)
-	StormDeck.append(stormMakerAlizeh)
-	StormDeck.append(stormMakerAlizeh2)
-	StormDeck.append(stormDietyMonsoon)
+	StormDeck.append(stormBringerAlizeh)
+	StormDeck.append(stormBringerAlizeh2)
+	StormDeck.append(stormGodMonsoon)
 
 	random.shuffle(CyberDeck)
 	random.shuffle(VampireDeck)
@@ -876,6 +876,7 @@ def turnMenu(currentPlayer: duelist, passivePlayer: duelist):
 		# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
 		# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
 		# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
+		# _player.hand.append()
 		# _foe.hand.append()
 		# -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------
 		# -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------
