@@ -86,7 +86,7 @@ def cardSetup():
 	vampireGrace2 = deepcopy(vampireGrace)
 	vampireGenesis = card("Vampire Genesis", 2800, 1, SiphonLifeAndMill1500, effTrigger.battle, effectDescBuilder(effTrigger.battle, SiphonLifeAndMill1500.desc))
 	vampireGenesis2 = deepcopy(vampireGenesis)
-	mezuki = card("Mezuki", 1600, 0, Destroy, effTrigger.summon, effectDescBuilder(effTrigger.summon, Destroy.desc))
+	mezuki = card("Mezuki", 1600, 0, ShuffleToSSGraveyard, effTrigger.graveyard, effectDescBuilder(effTrigger.graveyard, ShuffleToSSGraveyard.desc))
 	mezuki2 = deepcopy(mezuki)
 	unizombie = card("Uni-Zombie", 1500, 0, GYToHand, effTrigger.summon, effectDescBuilder(effTrigger.summon, GYToHand.desc))
 	unizombie2 = deepcopy(unizombie)
@@ -94,7 +94,7 @@ def cardSetup():
 	shiranuiSolitare2 = deepcopy(shiranuiSolitare)
 	armageddonKnight = card("Armageddon Knight", 1400, 0, Mill, effTrigger.summon, effectDescBuilder(effTrigger.summon, Mill.desc))
 	armageddonKnight2 = deepcopy(armageddonKnight)
-	zombieMaster = card("Zombie Master", 1800, 0, oppDisc1, effTrigger.summon, effectDescBuilder(effTrigger.summon, oppDisc1.desc))
+	zombieMaster = card("Zombie Master", 1800, 0, Destroy, effTrigger.graveyard, effectDescBuilder(effTrigger.graveyard, Destroy.desc))
 	zombieMaster2 = deepcopy(zombieMaster)
 
 	# Gishki Deck
@@ -172,7 +172,7 @@ def cardSetup():
 	agentEarth2 = deepcopy(agentEarth)
 	agentVenus = card("Agent of Creation: Venus", 1600, 0, specialAgentHand, effTrigger.summon, effectDescBuilder(effTrigger.summon, specialAgentHand.desc))
 	agentVenus2 = deepcopy(agentVenus)
-	agentMars = card("Agent of Force: Mars", 0, 0, gainDifference, effTrigger.summon, effectDescBuilder(effTrigger.summon, gainDifference.desc))
+	agentMars = card("Agent of Force: Mars", 0, 0, DifferenceDraw, effTrigger.summon, effectDescBuilder(effTrigger.summon, DifferenceDraw.desc))
 	agentMars2 = deepcopy(agentMars)
 	agentSaturn = card("Agent of Judgment: Saturn", 2400, 1, RestoreLPForHand1000, effTrigger.summon, effectDescBuilder(effTrigger.summon, RestoreLPForHand1000.desc))
 	agentSaturn2 = deepcopy(agentSaturn)
@@ -313,11 +313,11 @@ def effectDescBuilder(trigger: Enum, Desc: str):
 	elif trigger.name == "battle":
 		effectDescription = "When this card Battles: " + Desc
 	elif trigger.name == "graveyard":
-		effectDescription = "When this card is sent to the Graveyard: " + Desc
+		effectDescription = "When sent to Graveyard: " + Desc
 	elif trigger.name == "destructionBat":
-		effectDescription = "When this card would be destroyed by Battle: " + Desc
+		effectDescription = "When destroyed by Battle: " + Desc
 	elif trigger.name == "destructionEff":
-		effectDescription = "When this card would be destroyed by a card effect: " + Desc
+		effectDescription = "When destroyed by Card Effect: " + Desc
 	else:
 		raise TypeError
 

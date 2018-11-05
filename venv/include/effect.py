@@ -2,6 +2,7 @@ import time
 import random
 from enum import Enum
 import settings
+import math
 
 
 class effTrigger(Enum):
@@ -866,12 +867,47 @@ class tributetoSteal(effect):
 			elif selection == "N" or selection == "n":
 				return
 
+class shuffleToSSGraveyard(effect):
+	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
+		print("--------------------------------------")
+		print("{}'s Effect Activates!".format(effectMon.name))
+		time.sleep(1)
+		settings.addEffectChecker(effectMon)
+		# extraParam = No. of Cards to shuffle back
+
+		effplayer.shuffleHandIntoDeck(self.extraParam)
+
+		effplayer.ssGraveyard()
+
+class drawForDifference(effect):
+	def resolve(self, effplayer: object, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
+		print("--------------------------------------")
+		print("{}'s Effect Activates!".format(effectMon.name))
+		time.sleep(1)
+		settings.addEffectChecker(effectMon)
+
+		if effplayer.lifepoints > opponent.lifepoints:
+			difference = effplayer.lifepoints - opponent.lifepoints
+		else:
+			difference = opponent.lifepoints - effplayer.lifepoints
+
+		cardsDrawn = int(math.floor(difference / 1000))
+
+		if cardsDrawn == 0:
+			print("Difference is not greater than 1000, 0 cards drawn...")
+		else:
+			print("Difference is: {}".format(difference))
+			effplayer.draw(cardsDrawn)
+
+		time.sleep(1)
+
 # Define the effects used
 
 # Drawing Effects
 PlayerDraw1 = playerDraw("Draw One Card", 1)
 PlayerDraw2 = playerDraw("Draw Two Cards", 2)
 controlStormriderDraw2 = controlDraw("If you control a Stormrider; Draw 2 cards", "Stormrider", 2)
+DifferenceDraw = drawForDifference("Draw one card per 1000 point difference between both players lifepoints)", 0)
 
 # Disruptive Effects
 Destroy = effectDestroy("Destroy Your Opponents Monster", 0)
@@ -938,17 +974,20 @@ specialVampireHand = specialSpecificHand("Special Summon a 'Vampire' Monster fro
 specialGishkiHand = specialSpecificHand("Special Summon a 'Gishki' Monster from your hand", "Gishki")
 specialDarkMagicianHand = specialExactHand("Special Summon a Dark Magician from your hand", "Dark Magician")
 specialMagicianGirlHand = specialSpecificHand("Special Summon a 'Magician Girl' Card from your hand", "Magician Girl")
-specialfromHand = specialHand("Special Summon a monster from your hand", 0)
+specialStormBirdHand = specialSpecificHand("Special Summon a 'Stormbird' Monster from your hand", "Stormbird")
 specialCodeHand = specialSpecificHand("Special Summon a 'Code' Monster from your hand", "Code")
+specialfromHand = specialHand("Special Summon a monster from your hand", 0)
 discSpecVampHand = discardToSpecialHand("Discard one card, Special Summon a vampire from your Hand", "Vampire")
 discSpecStormGY = discardToSpecialGY("Discard one Card, Special Summon a 'Stormbird' or 'Stormrider' from your graveyard", "Stormrider", "Stormbird")
-specialStormBirdHand = specialSpecificHand("Special Summon a 'Stormbird' Monster from your hand", "Stormbird")
 specialDarkMagicianDeck = specialDeckExact("Special Summon a Dark Magician from your Deck", "Dark Magician")
 specialStormRiderDeck = specialDeckSpecific("Special Summon a 'Stormrider' from your deck", "Stormrider")
 tribToSpecialStormBird = tributeTOSSDeckSpecific("You can tribute this card; Special summon a 'Stormbird' card from your deck", "Stormbird")
+ShuffleToSSGraveyard = shuffleToSSGraveyard("Shuffle 1 card from your hand into the deck; Special summon a monster from your Graveyard", 1)
 
 # Recursion Effects
 GYToHand = gyToHand("Return a card from your Graveyard to your Hand", 0)
 Trib_SS_GY = tributeTOSSGy("you can Tribute this card: Special Summon a monster from the Graveyard", 0)
 Mill = mill("Send one card from your deck to the graveyard", 0)
+
+# Effect Manipulation Effects
 

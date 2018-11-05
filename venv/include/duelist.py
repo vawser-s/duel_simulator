@@ -61,13 +61,13 @@ class duelist:
 			if name in monster.name:
 				if i >= 9:
 					print("[{}] {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ),
-					                                                             str(monster.atkPoints).ljust(4, ),
-					                                                             monster.tribute, monster.effectText))
+																				 str(monster.atkPoints).ljust(4, ),
+																				 monster.tribute, monster.effectText))
 				else:
 					print(
 						"[{}]  {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ),
-						                                                        str(monster.atkPoints).ljust(4, ),
-						                                                        monster.tribute, monster.effectText))
+																				str(monster.atkPoints).ljust(4, ),
+																				monster.tribute, monster.effectText))
 				tempListNum.append(i)
 			else:
 				pass
@@ -91,7 +91,7 @@ class duelist:
 					print("--------------------------------------")
 					print("{} has searched the following card:".format(self.name))
 					print("Name: {} | ATK: {} | Effect: {}".format(addedCard.name, str(addedCard.atkPoints),
-					                                               addedCard.effectText))
+																   addedCard.effectText))
 
 					del self.deck[selection]
 
@@ -163,7 +163,7 @@ class duelist:
 			print("No Cards to search")
 			return
 
-    # Return a list of names on field specific to a namespace(s)
+	# Return a list of names on field specific to a namespace(s)
 	def checkSpecificField(self, *names):
 		tempListNum = []
 
@@ -539,7 +539,7 @@ class duelist:
 					self.monfield.append(playedCard)
 					self.removeCard(selection)
 					self.gy.append(tribute)
-          
+
 					settings.changeNormalSummon()  # Normal Summon = 1
 
 					print("--------------------------------------")
@@ -614,7 +614,6 @@ class duelist:
 		time.sleep(0.5)
 
 	# Remove Card from Hand (as destinct from Discarding)
-
 	def removeCard(self, selection):
 		try:
 			del self.hand[selection]
@@ -639,6 +638,44 @@ class duelist:
 				print("Hand is Empty")
 			else:
 				print("Card is not in Hand")
+
+	def shuffleHandIntoDeck(self, noOfCards):
+		x = 0
+
+		while x < noOfCards:
+			while True:
+				self.checkHand()
+
+				selection = input("~~Please select a monster to Shuffle:")
+
+				try:
+					selection = int(selection) - 1
+				except ValueError:
+					pass
+
+				try:
+					if self.hand.__len__() - 1 >= selection >= 0:
+						shuffledCard = self.hand[selection]
+						break
+					else:
+						print("--------------------------------------")
+						print("Invalid Selection")
+						print("--------------------------------------")
+				except TypeError:
+					print("--------------------------------------")
+					print("Invalid Selection")
+					print("--------------------------------------")
+
+			pass
+
+			self.deck.append(shuffledCard)
+			del self.hand[selection]
+
+			print("{} has been shuffled into the deck".format(shuffledCard.name))
+
+			x = x + 1
+
+		time.sleep(0.5)
 
 	def effectdiscardCard(self, effplayer, opponent, effMon, oppMon, effgy, oppgy, turnPlayer):
 		del effMon
