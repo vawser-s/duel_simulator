@@ -870,7 +870,7 @@ def turnMenu(currentPlayer: duelist, passivePlayer: duelist):
 
 	# DRAW PHASE
 	if firstTurn == 0:
-		_player.draw(8)
+		_player.draw(5)
 
 		# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
 		# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------

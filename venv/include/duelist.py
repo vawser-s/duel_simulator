@@ -14,6 +14,29 @@ class duelist:
 		self.deck = deck
 		self.gy = graveyard
 
+	# Return largest string in an array (menu formatting)
+	@staticmethod
+	def getMaxLength(monarray: list):
+
+		max_len = ""
+		# Figure out longest string that exists
+		for monster in monarray:
+			if len(max_len) < len(monster.name):
+				max_len = monster.name
+			else:
+				pass
+
+		return len(max_len)
+
+	# Return a specific list location for a Card
+	@staticmethod
+	def checkArrayLoc(array: list, monster: object):
+		i = 0
+		for m in array:
+			if m == monster:
+				return i
+			i = i + 1
+
 	# Add card(s) to Hand
 	def draw(self, noOfCards):
 
@@ -337,15 +360,6 @@ class duelist:
 		else:
 			print("Graveyard Empty")
 			return
-
-	# Return a specific list location for a Card
-	@staticmethod
-	def checkArrayLoc(array: list, monster: object):
-		i = 0
-		for m in array:
-			if m == monster:
-				return i
-			i = i + 1
 
 	# Special Summon from Graveyard
 	def ssGraveyard(self):
@@ -811,21 +825,6 @@ class duelist:
 		# Append to graveyard and print result
 		self.hand.append(bouncedMonster)
 		print("{} has been returnd to {}'s Hand".format(bouncedMonster.name, self.name))
-
-	# Return largest string in an array (menu formatting)
-
-	@staticmethod
-	def getMaxLength(monarray):
-
-		max_len = ""
-		# Figure out longest string that exists
-		for monster in monarray:
-			if len(max_len) < len(monster.name):
-				max_len = monster.name
-			else:
-				pass
-
-		return len(max_len)
 
 	# Special Summon a Monster from your Hand
 	def specialHandEffect(self, effplayer, opponent, sentMon, oppMon, effgy, oppgy, turnPlayer):
