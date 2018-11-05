@@ -14,6 +14,29 @@ class duelist:
 		self.deck = deck
 		self.gy = graveyard
 
+	# Return largest string in an array (menu formatting)
+	@staticmethod
+	def getMaxLength(monarray: list):
+
+		max_len = ""
+		# Figure out longest string that exists
+		for monster in monarray:
+			if len(max_len) < len(monster.name):
+				max_len = monster.name
+			else:
+				pass
+
+		return len(max_len)
+
+	# Return a specific list location for a Card
+	@staticmethod
+	def checkArrayLoc(array: list, monster: object):
+		i = 0
+		for m in array:
+			if m == monster:
+				return i
+			i = i + 1
+
 	# Add card(s) to Hand
 	def draw(self, noOfCards):
 
@@ -61,13 +84,13 @@ class duelist:
 			if name in monster.name:
 				if i >= 9:
 					print("[{}] {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ),
-					                                                             str(monster.atkPoints).ljust(4, ),
-					                                                             monster.tribute, monster.effectText))
+																				 str(monster.atkPoints).ljust(4, ),
+																				 monster.tribute, monster.effectText))
 				else:
 					print(
 						"[{}]  {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ),
-						                                                        str(monster.atkPoints).ljust(4, ),
-						                                                        monster.tribute, monster.effectText))
+																				str(monster.atkPoints).ljust(4, ),
+																				monster.tribute, monster.effectText))
 				tempListNum.append(i)
 			else:
 				pass
@@ -91,7 +114,7 @@ class duelist:
 					print("--------------------------------------")
 					print("{} has searched the following card:".format(self.name))
 					print("Name: {} | ATK: {} | Effect: {}".format(addedCard.name, str(addedCard.atkPoints),
-					                                               addedCard.effectText))
+																   addedCard.effectText))
 
 					del self.deck[selection]
 
@@ -163,6 +186,7 @@ class duelist:
 			print("No Cards to search")
 			return
 
+	# Return a list of names on field specific to a namespace(s)
 	def checkSpecificField(self, *names):
 		tempListNum = []
 
@@ -336,15 +360,6 @@ class duelist:
 		else:
 			print("Graveyard Empty")
 			return
-
-	# Return a specific list location for a Card
-	@staticmethod
-	def checkArrayLoc(array: list, monster: object):
-		i = 0
-		for m in array:
-			if m == monster:
-				return i
-			i = i + 1
 
 	# Special Summon from Graveyard
 	def ssGraveyard(self):
@@ -538,7 +553,7 @@ class duelist:
 					self.monfield.append(playedCard)
 					self.removeCard(selection)
 					self.gy.append(tribute)
-          
+
 					settings.changeNormalSummon()  # Normal Summon = 1
 
 					print("--------------------------------------")
@@ -613,7 +628,6 @@ class duelist:
 		time.sleep(0.5)
 
 	# Remove Card from Hand (as destinct from Discarding)
-
 	def removeCard(self, selection):
 		try:
 			del self.hand[selection]
@@ -638,6 +652,43 @@ class duelist:
 				print("Hand is Empty")
 			else:
 				print("Card is not in Hand")
+
+	def shuffleHandIntoDeck(self, noOfCards):
+		x = 0
+		while x < noOfCards:
+			while True:
+				self.checkHand()
+
+				selection = input("~~Please select a monster to Shuffle:")
+
+				try:
+					selection = int(selection) - 1
+				except ValueError:
+					pass
+
+				try:
+					if self.hand.__len__() - 1 >= selection >= 0:
+						shuffledCard = self.hand[selection]
+						break
+					else:
+						print("--------------------------------------")
+						print("Invalid Selection")
+						print("--------------------------------------")
+				except TypeError:
+					print("--------------------------------------")
+					print("Invalid Selection")
+					print("--------------------------------------")
+
+			pass
+
+			self.deck.append(shuffledCard)
+			del self.hand[selection]
+
+			print("{} has been shuffled into the deck".format(shuffledCard.name))
+
+			x = x + 1
+
+		time.sleep(0.5)
 
 	def effectdiscardCard(self, effplayer, opponent, effMon, oppMon, effgy, oppgy, turnPlayer):
 		del effMon
@@ -774,21 +825,6 @@ class duelist:
 		# Append to graveyard and print result
 		self.hand.append(bouncedMonster)
 		print("{} has been returnd to {}'s Hand".format(bouncedMonster.name, self.name))
-
-	# Return largest string in an array (menu formatting)
-
-	@staticmethod
-	def getMaxLength(monarray):
-
-		max_len = ""
-		# Figure out longest string that exists
-		for monster in monarray:
-			if len(max_len) < len(monster.name):
-				max_len = monster.name
-			else:
-				pass
-
-		return len(max_len)
 
 	# Special Summon a Monster from your Hand
 	def specialHandEffect(self, effplayer, opponent, sentMon, oppMon, effgy, oppgy, turnPlayer):

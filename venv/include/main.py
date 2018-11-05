@@ -32,28 +32,28 @@ def cardSetup():
 	global cyberseClockDragon2
 	global dualAssembwurm
 	global dualAssembwurm2
-	global segmentDriver
-	global segmentDriver2
-	microCoder = card("Micro Coder", 300, 0, effectCyberseSearch, effTrigger.summon, effectDescBuilder(effTrigger.summon, effectCyberseSearch.desc))
+	global codeDriver
+	global codeDriver2
+	microCoder = card("Micro Coder", 300, 0, specialCodeDeck, effTrigger.summon, effectDescBuilder(effTrigger.summon, specialCodeDeck.desc))
 	codeGenerator = card("Code Generator", 1300, 0, effectCodeSearch, effTrigger.summon, effectDescBuilder(effTrigger.summon, effectCodeSearch.desc))
 	codeRadiator = card("Code Radiator", 1600, 0, doubleSummon, effTrigger.summon, effectDescBuilder(effTrigger.summon, doubleSummon.desc))
+	codeDriver = card("Code Driver", 2200, 1, bounceMonster, effTrigger.summon, effectDescBuilder(effTrigger.summon, bounceMonster.desc))
 	ladyDebug = card("Lady Debug", 1000, 0, specialCyberseHand, effTrigger.summon, effectDescBuilder(effTrigger.summon, specialCyberseHand.desc))
 	cyberseGadget = card("Cyberse Gadget", 1400, 0, Destroy, effTrigger.summon, effectDescBuilder(effTrigger.summon, Destroy.desc))
 	cyberseAccelerator = card("Cyberse Accelerator", 2000, 0, oppDisc1, effTrigger.summon, effectDescBuilder(effTrigger.summon, oppDisc1.desc))
 	cyberseWhiteHat = card("Cyberse White Hat", 2100, 1, effectSearch, effTrigger.summon, effectDescBuilder(effTrigger.summon, effectSearch.desc))
 	cyberseClockDragon = card("Cyberse Clock Dragon", 2500, 1, specialfromHand, effTrigger.destructionEff, effectDescBuilder(effTrigger.destructionEff, specialfromHand.desc))
 	dualAssembwurm = card("Dual Assembwurm", 2800, 1, oppDisc2, effTrigger.battle, effectDescBuilder(effTrigger.battle, oppDisc2.desc))
-	segmentDriver = card("Cyberse Driver", 2200, 1, bounceMonster, effTrigger.summon, effectDescBuilder(effTrigger.summon, bounceMonster.desc))
 	microCoder2 = deepcopy(microCoder)
 	codeGenerator2 = deepcopy(codeGenerator)
 	codeRadiator2 = deepcopy(codeRadiator)
+	codeDriver2 = deepcopy(codeDriver)
 	ladyDebug2 = deepcopy(ladyDebug)
 	cyberseGadget2 = deepcopy(cyberseGadget)
 	cyberseAccelerator2 = deepcopy(cyberseAccelerator)
 	cyberseWhiteHat2 = deepcopy(cyberseWhiteHat)
 	cyberseClockDragon2 = deepcopy(cyberseClockDragon)
 	dualAssembwurm2 = deepcopy(dualAssembwurm)
-	segmentDriver2 = deepcopy(segmentDriver)
 
 	# Vampire Deck
 	global vampireFamiliar
@@ -80,13 +80,13 @@ def cardSetup():
 	vampireFamiliar2 = deepcopy(vampireFamiliar)
 	vampireSucker = card("Vampire Sucker", 1600, 0, discSpecVampHand, effTrigger.summon, effectDescBuilder(effTrigger.summon, discSpecVampHand.desc))
 	vampireSucker2 = deepcopy(vampireSucker)
-	vampireFraulein = card("Vampire Fraulein", 800, 0, battleImmune, effTrigger.destructionBat, effectDescBuilder(effTrigger.destructionBat, battleImmune.desc))
+	vampireFraulein = card("Vampire Fraulein", 800, 0, battleImmune, effTrigger.destructionBat, effectDescBuilder(effTrigger.destructionBat, battleImmune.desc, 0), 0)
 	vampireFraulein2 = deepcopy(vampireFraulein)
 	vampireGrace = card("Vampire Grace", 2200, 1, SiphonLifeAndMill800, effTrigger.summon, effectDescBuilder(effTrigger.summon, SiphonLifeAndMill800.desc))
 	vampireGrace2 = deepcopy(vampireGrace)
 	vampireGenesis = card("Vampire Genesis", 2800, 1, SiphonLifeAndMill1500, effTrigger.battle, effectDescBuilder(effTrigger.battle, SiphonLifeAndMill1500.desc))
 	vampireGenesis2 = deepcopy(vampireGenesis)
-	mezuki = card("Mezuki", 1600, 0, Destroy, effTrigger.summon, effectDescBuilder(effTrigger.summon, Destroy.desc))
+	mezuki = card("Mezuki", 1600, 0, ShuffleToSSGraveyard, effTrigger.graveyard, effectDescBuilder(effTrigger.graveyard, ShuffleToSSGraveyard.desc))
 	mezuki2 = deepcopy(mezuki)
 	unizombie = card("Uni-Zombie", 1500, 0, GYToHand, effTrigger.summon, effectDescBuilder(effTrigger.summon, GYToHand.desc))
 	unizombie2 = deepcopy(unizombie)
@@ -94,7 +94,7 @@ def cardSetup():
 	shiranuiSolitare2 = deepcopy(shiranuiSolitare)
 	armageddonKnight = card("Armageddon Knight", 1400, 0, Mill, effTrigger.summon, effectDescBuilder(effTrigger.summon, Mill.desc))
 	armageddonKnight2 = deepcopy(armageddonKnight)
-	zombieMaster = card("Zombie Master", 1800, 0, oppDisc1, effTrigger.summon, effectDescBuilder(effTrigger.summon, oppDisc1.desc))
+	zombieMaster = card("Zombie Master", 1800, 0, Destroy, effTrigger.graveyard, effectDescBuilder(effTrigger.graveyard, Destroy.desc))
 	zombieMaster2 = deepcopy(zombieMaster)
 
 	# Gishki Deck
@@ -172,7 +172,7 @@ def cardSetup():
 	agentEarth2 = deepcopy(agentEarth)
 	agentVenus = card("Agent of Creation: Venus", 1600, 0, specialAgentHand, effTrigger.summon, effectDescBuilder(effTrigger.summon, specialAgentHand.desc))
 	agentVenus2 = deepcopy(agentVenus)
-	agentMars = card("Agent of Force: Mars", 0, 0, gainDifference, effTrigger.summon, effectDescBuilder(effTrigger.summon, gainDifference.desc))
+	agentMars = card("Agent of Force: Mars", 1800, 0, DifferenceDraw, effTrigger.summon, effectDescBuilder(effTrigger.summon, DifferenceDraw.desc))
 	agentMars2 = deepcopy(agentMars)
 	agentSaturn = card("Agent of Judgment: Saturn", 2400, 1, RestoreLPForHand1000, effTrigger.summon, effectDescBuilder(effTrigger.summon, RestoreLPForHand1000.desc))
 	agentSaturn2 = deepcopy(agentSaturn)
@@ -238,30 +238,30 @@ def cardSetup():
 	global stormRiderNess2
 	global stormBirdGale
 	global stormBirdGale2
-	global stormMakerAlizeh
-	global stormMakerAlizeh2
-	global stormDietyMonsoon
-	global stormDietyMonsoon2
-	stormRiderAllyson = card("Stormrider Allyson", 800, 0, specialStormBirdHand, effTrigger.summon, effectDescBuilder(effTrigger.summon, specialStormBirdHand.desc))
+	global stormBringerAlizeh
+	global stormBringerAlizeh2
+	global stormGodMonsoon
+	global stormGodMonsoon2
+	stormRiderAllyson = card("Allyson: Stormrider", 800, 0, specialStormBirdHand, effTrigger.summon, effectDescBuilder(effTrigger.summon, specialStormBirdHand.desc))
 	stormRiderAllyson2 = deepcopy(stormRiderAllyson)
-	stormRiderHellion = card("Stormrider Hellion", 900, 0, specialStormRiderDeck, effTrigger.summon, effectDescBuilder(effTrigger.summon, specialStormRiderDeck.desc))
+	stormRiderHellion = card("Hellion: Stormrider", 900, 0, specialStormRiderDeck, effTrigger.summon, effectDescBuilder(effTrigger.summon, specialStormRiderDeck.desc))
 	stormRiderHellion2 = deepcopy(stormRiderHellion)
-	stormRiderCanto = card("Stormrider Canto", 500, 0, doubleSummon, effTrigger.summon, effectDescBuilder(effTrigger.summon, doubleSummon.desc))
+	stormRiderCanto = card("Canto: Stormrider", 500, 0, doubleSummon, effTrigger.summon, effectDescBuilder(effTrigger.summon, doubleSummon.desc))
 	stormRiderCanto2 = deepcopy(stormRiderCanto)
-	stormRiderNess = card("Stormrider Ness", 750, 0, discSpecStormGY, effTrigger.summon, effectDescBuilder(effTrigger.summon, discSpecStormGY.desc))
+	stormRiderNess = card("Ness: Stormrider", 750, 0, discSpecStormGY, effTrigger.summon, effectDescBuilder(effTrigger.summon, discSpecStormGY.desc))
 	stormRiderNess2 = deepcopy(stormRiderNess)
-	stormBirdZephris = card("Stormbird Zephris", 1600, 0, controlStormriderDraw2, effTrigger.summon, effectDescBuilder(effTrigger.summon, controlStormriderDraw2.desc))
+	stormBirdZephris = card("Zephris: Stormbird", 1600, 0, controlStormriderDraw2, effTrigger.summon, effectDescBuilder(effTrigger.summon, controlStormriderDraw2.desc))
 	stormBirdZephris2 = deepcopy(stormBirdZephris)
-	stormBirdHellDiver = card("Stormbird Hell Diver", 1800, 0, controlStormriderDestroy, effTrigger.summon, effectDescBuilder(effTrigger.summon, controlStormriderDestroy.desc))
+	stormBirdHellDiver = card("Hell Diver: Stormbird", 1800, 0, controlStormriderDestroy, effTrigger.summon, effectDescBuilder(effTrigger.summon, controlStormriderDestroy.desc))
 	stormBirdHellDiver2 = deepcopy(stormBirdHellDiver)
-	stormBirdSkylar = card("Stormbird Skylar", 1000, 0, grantStormriderAttack, effTrigger.summon, effectDescBuilder(effTrigger.summon, grantStormriderAttack.desc))
+	stormBirdSkylar = card("Skylar: Stormbird", 1000, 0, grantStormriderAttack, effTrigger.summon, effectDescBuilder(effTrigger.summon, grantStormriderAttack.desc))
 	stormBirdSkylar2 = deepcopy(stormBirdSkylar)
-	stormBirdGale = card("Stormbird Gale", 1500, 0, tribToSpecialStormBird, effTrigger.summon, effectDescBuilder(effTrigger.summon, tribToSpecialStormBird.desc))
+	stormBirdGale = card("Gale: Stormbird", 1500, 0, tribToSpecialStormBird, effTrigger.summon, effectDescBuilder(effTrigger.summon, tribToSpecialStormBird.desc))
 	stormBirdGale2 = deepcopy(stormBirdGale)
-	stormMakerAlizeh = card("Stormmaker Alizeh", 2500, 1, StormriderStealMonster, effTrigger.summon, effectDescBuilder(effTrigger.summon, StormriderStealMonster.desc))
-	stormMakerAlizeh2 = deepcopy(stormMakerAlizeh)
-	stormDietyMonsoon = card("Stormdiety Monsoon", 3000, 1, tributeStormtoSteal, effTrigger.summon, effectDescBuilder(effTrigger.summon, tributeStormtoSteal.desc))
-	stormDietyMonsoon2 = deepcopy(stormDietyMonsoon)
+	stormBringerAlizeh = card("Alizeh: Stormbringer", 2500, 1, StormriderStealMonster, effTrigger.summon, effectDescBuilder(effTrigger.summon, StormriderStealMonster.desc))
+	stormBringerAlizeh2 = deepcopy(stormBringerAlizeh)
+	stormGodMonsoon = card("Monsoon: Stormgod", 0, 1, tributeStormtoSteal, effTrigger.summon, effectDescBuilder(effTrigger.summon, tributeStormtoSteal.desc))
+	stormGodMonsoon2 = deepcopy(stormGodMonsoon)
 
 	# TEST CARDS
 
@@ -300,7 +300,7 @@ def cardSetup():
 	gameEnder2 = card("Game Ender BTL", 0, 0, Damage8000, effTrigger.battle, effectDescBuilder(effTrigger.battle, Damage8000.desc))
 
 # Method to build the asppropriate effect descriptions for cards
-def effectDescBuilder(trigger: Enum, Desc: str):
+def effectDescBuilder(trigger: Enum, Desc: str, opt: int = 1):
 
 	if trigger.name == "n_a":
 		effectDescription = Desc
@@ -313,15 +313,18 @@ def effectDescBuilder(trigger: Enum, Desc: str):
 	elif trigger.name == "battle":
 		effectDescription = "When this card Battles: " + Desc
 	elif trigger.name == "graveyard":
-		effectDescription = "When this card is sent to the Graveyard: " + Desc
+		effectDescription = "When sent to Graveyard: " + Desc
 	elif trigger.name == "destructionBat":
-		effectDescription = "When this card would be destroyed by Battle: " + Desc
+		effectDescription = "When destroyed by Battle: " + Desc
 	elif trigger.name == "destructionEff":
-		effectDescription = "When this card would be destroyed by a card effect: " + Desc
+		effectDescription = "When destroyed by Card Effect: " + Desc
 	else:
 		raise TypeError
 
-	return "Once per turn, " + effectDescription
+	if opt:
+		return "Once per turn, " + effectDescription
+	else:
+		return effectDescription
 
 # Prints Deck List before they are assigned to a player
 def printDeckList(DeckList: list):
@@ -379,6 +382,8 @@ def player_deck_setup():
 	CyberDeck.append(codeGenerator2)
 	CyberDeck.append(codeRadiator)
 	CyberDeck.append(codeRadiator2)
+	CyberDeck.append(codeDriver)
+	CyberDeck.append(codeDriver2)
 	CyberDeck.append(ladyDebug)
 	CyberDeck.append(ladyDebug2)
 	CyberDeck.append(cyberseGadget)
@@ -390,8 +395,6 @@ def player_deck_setup():
 	CyberDeck.append(cyberseClockDragon)
 	CyberDeck.append(cyberseClockDragon2)
 	CyberDeck.append(dualAssembwurm)
-	CyberDeck.append(segmentDriver)
-	CyberDeck.append(segmentDriver2)
 
 	VampireDeck.append(vampireFamiliar)
 	VampireDeck.append(vampireFamiliar2)
@@ -490,9 +493,9 @@ def player_deck_setup():
 	StormDeck.append(stormBirdSkylar2)
 	StormDeck.append(stormBirdGale)
 	StormDeck.append(stormBirdGale2)
-	StormDeck.append(stormMakerAlizeh)
-	StormDeck.append(stormMakerAlizeh2)
-	StormDeck.append(stormDietyMonsoon)
+	StormDeck.append(stormBringerAlizeh)
+	StormDeck.append(stormBringerAlizeh2)
+	StormDeck.append(stormGodMonsoon)
 
 	random.shuffle(CyberDeck)
 	random.shuffle(VampireDeck)
@@ -602,6 +605,11 @@ def player_deck_setup():
 		try:
 			selection = int(selection) - 1
 
+			if selection < 0:
+				print("--------------------------------------")
+				print("Invalid Selection")
+				continue
+
 			_player.name = PlayerList[selection].get("name")
 			_player.deck = PlayerList[selection].get("deck")
 
@@ -665,6 +673,11 @@ def player_deck_setup():
 
 		try:
 			selection = int(selection) - 1
+
+			if selection < 0:
+				print("--------------------------------------")
+				print("Invalid Selection")
+				continue
 
 			_foe.name = PlayerList[selection].get("name")
 			_foe.deck = PlayerList[selection].get("deck")
@@ -876,6 +889,7 @@ def turnMenu(currentPlayer: duelist, passivePlayer: duelist):
 		# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
 		# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
 		# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
+		# _player.hand.append()
 		# _foe.hand.append()
 		# -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------
 		# -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------
@@ -1053,12 +1067,21 @@ def turnMenu(currentPlayer: duelist, passivePlayer: duelist):
 		print("Turn End")
 		time.sleep(0.5)
 
-		print("\n" * 50)
-
 		if firstTurn == 0:
 			firstTurn = 1
 
 		exitProg = "false"
+
+		# Check hand size limit
+
+		if _player.hand.__len__() > 6:
+			while _player.hand.__len__() > 6:
+				print("--------------------------------------")
+				print("You have too many card in your hand ({}), the hand size limit is 6".format(_player.hand.__len__()))
+				_player.effectdiscardCard(currentPlayer, passivePlayer, None, None, currentPlayer.gy, passivePlayer.gy, currentPlayer)
+
+		print("\n" * 50)
+
 		return exitProg
 	elif destination == "menu":
 		# Reset
