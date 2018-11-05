@@ -172,7 +172,7 @@ def cardSetup():
 	agentEarth2 = deepcopy(agentEarth)
 	agentVenus = card("Agent of Creation: Venus", 1600, 0, specialAgentHand, effTrigger.summon, effectDescBuilder(effTrigger.summon, specialAgentHand.desc))
 	agentVenus2 = deepcopy(agentVenus)
-	agentMars = card("Agent of Force: Mars", 0, 0, DifferenceDraw, effTrigger.summon, effectDescBuilder(effTrigger.summon, DifferenceDraw.desc))
+	agentMars = card("Agent of Force: Mars", 1800, 0, DifferenceDraw, effTrigger.summon, effectDescBuilder(effTrigger.summon, DifferenceDraw.desc))
 	agentMars2 = deepcopy(agentMars)
 	agentSaturn = card("Agent of Judgment: Saturn", 2400, 1, RestoreLPForHand1000, effTrigger.summon, effectDescBuilder(effTrigger.summon, RestoreLPForHand1000.desc))
 	agentSaturn2 = deepcopy(agentSaturn)
@@ -260,7 +260,7 @@ def cardSetup():
 	stormBirdGale2 = deepcopy(stormBirdGale)
 	stormBringerAlizeh = card("Alizeh: Stormbringer", 2500, 1, StormriderStealMonster, effTrigger.summon, effectDescBuilder(effTrigger.summon, StormriderStealMonster.desc))
 	stormBringerAlizeh2 = deepcopy(stormBringerAlizeh)
-	stormGodMonsoon = card("Monsoon: Stormgod", 3000, 1, tributeStormtoSteal, effTrigger.summon, effectDescBuilder(effTrigger.summon, tributeStormtoSteal.desc))
+	stormGodMonsoon = card("Monsoon: Stormgod", 0, 1, tributeStormtoSteal, effTrigger.summon, effectDescBuilder(effTrigger.summon, tributeStormtoSteal.desc))
 	stormGodMonsoon2 = deepcopy(stormGodMonsoon)
 
 	# TEST CARDS
@@ -870,7 +870,7 @@ def turnMenu(currentPlayer: duelist, passivePlayer: duelist):
 
 	# DRAW PHASE
 	if firstTurn == 0:
-		_player.draw(5)
+		_player.draw(8)
 
 		# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
 		# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
@@ -1054,12 +1054,21 @@ def turnMenu(currentPlayer: duelist, passivePlayer: duelist):
 		print("Turn End")
 		time.sleep(0.5)
 
-		print("\n" * 50)
-
 		if firstTurn == 0:
 			firstTurn = 1
 
 		exitProg = "false"
+
+		# Check hand size limit
+
+		if _player.hand.__len__() > 6:
+			while _player.hand.__len__() > 6:
+				print("--------------------------------------")
+				print("You have too many card in your hand ({}), the hand size limit is 6".format(_player.hand.__len__()))
+				_player.effectdiscardCard(currentPlayer, passivePlayer, None, None, currentPlayer.gy, passivePlayer.gy, currentPlayer)
+
+		print("\n" * 50)
+
 		return exitProg
 	elif destination == "menu":
 		# Reset

@@ -820,8 +820,6 @@ class tributetoSteal(effect):
 			if selection == "Y" or selection == "y":
 				print("--------------------------------------")
 
-				tempList = []
-
 				if self.nextraParam:
 					tempList = effplayer.checkSpecificField(self.extraParam, self.nextraParam)
 				else:
@@ -880,7 +878,7 @@ class shuffleToSSGraveyard(effect):
 		effplayer.ssGraveyard()
 
 class drawForDifference(effect):
-	def resolve(self, effplayer: object, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
+	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("--------------------------------------")
 		print("{}'s Effect Activates!".format(effectMon.name))
 		time.sleep(1)

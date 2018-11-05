@@ -641,7 +641,6 @@ class duelist:
 
 	def shuffleHandIntoDeck(self, noOfCards):
 		x = 0
-
 		while x < noOfCards:
 			while True:
 				self.checkHand()
