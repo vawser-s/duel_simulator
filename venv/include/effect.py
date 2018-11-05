@@ -322,7 +322,6 @@ class noBattleDestruction(effect):
 		print("{}'s Effect Activates!".format(effectMon.name))
 		print("--------------------------------------")
 		time.sleep(1)
-		settings.addEffectChecker(effectMon)
 
 		print("{} cannot be destroyed by Battle".format(effectMon.name))
 
@@ -333,7 +332,6 @@ class noEffectDestruction(effect):
 		print("Counter Monster Effect Activate!")
 		print("--------------------------------------")
 		time.sleep(1)
-		settings.addEffectChecker(effectMon)
 
 		print("{} cannot be destroyed by Effects".format(effectMon.name))
 
@@ -979,6 +977,7 @@ discSpecVampHand = discardToSpecialHand("Discard one card, Special Summon a vamp
 discSpecStormGY = discardToSpecialGY("Discard one Card, Special Summon a 'Stormbird' or 'Stormrider' from your graveyard", "Stormrider", "Stormbird")
 specialDarkMagicianDeck = specialDeckExact("Special Summon a Dark Magician from your Deck", "Dark Magician")
 specialStormRiderDeck = specialDeckSpecific("Special Summon a 'Stormrider' from your deck", "Stormrider")
+specialCodeDeck = specialDeckSpecific("Special Summon a 'Code' monster from your deck", "Code")
 tribToSpecialStormBird = tributeTOSSDeckSpecific("You can tribute this card; Special summon a 'Stormbird' card from your deck", "Stormbird")
 ShuffleToSSGraveyard = shuffleToSSGraveyard("Shuffle 1 card from your hand into the deck; Special summon a monster from your Graveyard", 1)
 

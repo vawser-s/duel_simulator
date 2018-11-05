@@ -32,28 +32,28 @@ def cardSetup():
 	global cyberseClockDragon2
 	global dualAssembwurm
 	global dualAssembwurm2
-	global segmentDriver
-	global segmentDriver2
-	microCoder = card("Micro Coder", 300, 0, effectCyberseSearch, effTrigger.summon, effectDescBuilder(effTrigger.summon, effectCyberseSearch.desc))
+	global codeDriver
+	global codeDriver2
+	microCoder = card("Micro Coder", 300, 0, specialCodeDeck, effTrigger.summon, effectDescBuilder(effTrigger.summon, specialCodeDeck.desc))
 	codeGenerator = card("Code Generator", 1300, 0, effectCodeSearch, effTrigger.summon, effectDescBuilder(effTrigger.summon, effectCodeSearch.desc))
 	codeRadiator = card("Code Radiator", 1600, 0, doubleSummon, effTrigger.summon, effectDescBuilder(effTrigger.summon, doubleSummon.desc))
+	codeDriver = card("Code Driver", 2200, 1, bounceMonster, effTrigger.summon, effectDescBuilder(effTrigger.summon, bounceMonster.desc))
 	ladyDebug = card("Lady Debug", 1000, 0, specialCyberseHand, effTrigger.summon, effectDescBuilder(effTrigger.summon, specialCyberseHand.desc))
 	cyberseGadget = card("Cyberse Gadget", 1400, 0, Destroy, effTrigger.summon, effectDescBuilder(effTrigger.summon, Destroy.desc))
 	cyberseAccelerator = card("Cyberse Accelerator", 2000, 0, oppDisc1, effTrigger.summon, effectDescBuilder(effTrigger.summon, oppDisc1.desc))
 	cyberseWhiteHat = card("Cyberse White Hat", 2100, 1, effectSearch, effTrigger.summon, effectDescBuilder(effTrigger.summon, effectSearch.desc))
 	cyberseClockDragon = card("Cyberse Clock Dragon", 2500, 1, specialfromHand, effTrigger.destructionEff, effectDescBuilder(effTrigger.destructionEff, specialfromHand.desc))
 	dualAssembwurm = card("Dual Assembwurm", 2800, 1, oppDisc2, effTrigger.battle, effectDescBuilder(effTrigger.battle, oppDisc2.desc))
-	segmentDriver = card("Cyberse Driver", 2200, 1, bounceMonster, effTrigger.summon, effectDescBuilder(effTrigger.summon, bounceMonster.desc))
 	microCoder2 = deepcopy(microCoder)
 	codeGenerator2 = deepcopy(codeGenerator)
 	codeRadiator2 = deepcopy(codeRadiator)
+	codeDriver2 = deepcopy(codeDriver)
 	ladyDebug2 = deepcopy(ladyDebug)
 	cyberseGadget2 = deepcopy(cyberseGadget)
 	cyberseAccelerator2 = deepcopy(cyberseAccelerator)
 	cyberseWhiteHat2 = deepcopy(cyberseWhiteHat)
 	cyberseClockDragon2 = deepcopy(cyberseClockDragon)
 	dualAssembwurm2 = deepcopy(dualAssembwurm)
-	segmentDriver2 = deepcopy(segmentDriver)
 
 	# Vampire Deck
 	global vampireFamiliar
@@ -80,7 +80,7 @@ def cardSetup():
 	vampireFamiliar2 = deepcopy(vampireFamiliar)
 	vampireSucker = card("Vampire Sucker", 1600, 0, discSpecVampHand, effTrigger.summon, effectDescBuilder(effTrigger.summon, discSpecVampHand.desc))
 	vampireSucker2 = deepcopy(vampireSucker)
-	vampireFraulein = card("Vampire Fraulein", 800, 0, battleImmune, effTrigger.destructionBat, effectDescBuilder(effTrigger.destructionBat, battleImmune.desc))
+	vampireFraulein = card("Vampire Fraulein", 800, 0, battleImmune, effTrigger.destructionBat, effectDescBuilder(effTrigger.destructionBat, battleImmune.desc, 0), 0)
 	vampireFraulein2 = deepcopy(vampireFraulein)
 	vampireGrace = card("Vampire Grace", 2200, 1, SiphonLifeAndMill800, effTrigger.summon, effectDescBuilder(effTrigger.summon, SiphonLifeAndMill800.desc))
 	vampireGrace2 = deepcopy(vampireGrace)
@@ -300,7 +300,7 @@ def cardSetup():
 	gameEnder2 = card("Game Ender BTL", 0, 0, Damage8000, effTrigger.battle, effectDescBuilder(effTrigger.battle, Damage8000.desc))
 
 # Method to build the asppropriate effect descriptions for cards
-def effectDescBuilder(trigger: Enum, Desc: str):
+def effectDescBuilder(trigger: Enum, Desc: str, opt: int = 1):
 
 	if trigger.name == "n_a":
 		effectDescription = Desc
@@ -321,7 +321,10 @@ def effectDescBuilder(trigger: Enum, Desc: str):
 	else:
 		raise TypeError
 
-	return "Once per turn, " + effectDescription
+	if opt:
+		return "Once per turn, " + effectDescription
+	else:
+		return effectDescription
 
 # Prints Deck List before they are assigned to a player
 def printDeckList(DeckList: list):
@@ -379,6 +382,8 @@ def player_deck_setup():
 	CyberDeck.append(codeGenerator2)
 	CyberDeck.append(codeRadiator)
 	CyberDeck.append(codeRadiator2)
+	CyberDeck.append(codeDriver)
+	CyberDeck.append(codeDriver2)
 	CyberDeck.append(ladyDebug)
 	CyberDeck.append(ladyDebug2)
 	CyberDeck.append(cyberseGadget)
@@ -390,8 +395,6 @@ def player_deck_setup():
 	CyberDeck.append(cyberseClockDragon)
 	CyberDeck.append(cyberseClockDragon2)
 	CyberDeck.append(dualAssembwurm)
-	CyberDeck.append(segmentDriver)
-	CyberDeck.append(segmentDriver2)
 
 	VampireDeck.append(vampireFamiliar)
 	VampireDeck.append(vampireFamiliar2)
@@ -602,6 +605,11 @@ def player_deck_setup():
 		try:
 			selection = int(selection) - 1
 
+			if selection < 0:
+				print("--------------------------------------")
+				print("Invalid Selection")
+				continue
+
 			_player.name = PlayerList[selection].get("name")
 			_player.deck = PlayerList[selection].get("deck")
 
@@ -665,6 +673,11 @@ def player_deck_setup():
 
 		try:
 			selection = int(selection) - 1
+
+			if selection < 0:
+				print("--------------------------------------")
+				print("Invalid Selection")
+				continue
 
 			_foe.name = PlayerList[selection].get("name")
 			_foe.deck = PlayerList[selection].get("deck")
