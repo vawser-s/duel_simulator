@@ -194,7 +194,7 @@ class playerDraw(effect):
 
 		effplayer.draw(self.extraParam)
 
-class controlDraw(effect):
+class controlDiscardDraw(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name))
 		print("--------------------------------------")
@@ -205,10 +205,15 @@ class controlDraw(effect):
 
 		result = checkControlInstance(self.extraParam, effplayer.monfield, 1)
 
-		if result:
-			effplayer.draw(self.nextraParam)
+		if effplayer.hand:
+			if result:
+				effplayer.effectdiscardCard(effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer)
+				effplayer.draw(self.nextraParam)
+			else:
+				print("You need to control a {} monster to resolve {}'s effect".format(self.extraParam, effectMon.name))
 		else:
-			print("You need to control a {} monster to resolve {}'s effect".format(self.extraParam, effectMon.name))
+			print("--------------------------------------")
+			print("You must be able to discard a card for cost")
 
 class siphonLife(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
@@ -773,7 +778,8 @@ class stealMonster(effect):
 
 			monster = opponent.monfield[selection]
 
-			effplayer.monfield.append(monster)
+			self.summon(monster)
+			monster.attacked = 1
 			del opponent.monfield[selection]
 
 			print("--------------------------------------")
@@ -902,7 +908,7 @@ class drawForDifference(effect):
 # Drawing Effects
 PlayerDraw1 = playerDraw("Draw One Card", 1)
 PlayerDraw2 = playerDraw("Draw Two Cards", 2)
-controlStormriderDraw1 = controlDraw("If you control a Stormrider; Draw 1 cards", "Stormrider", 1)
+controlStormriderDraw2 = controlDiscardDraw("If you control a Stormrider; Discard 1 card; Draw 2 cards", "Stormrider", 2)
 DifferenceDraw = drawForDifference("Draw one card per 1000 point difference between both players lifepoints)", 0)
 
 # Disruptive Effects

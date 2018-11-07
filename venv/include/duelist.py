@@ -1,5 +1,6 @@
 import sys
 from effect import *
+from card import *
 
 
 class duelist:
@@ -435,6 +436,14 @@ class duelist:
 		print("{} has been added to {}'s Hand".format(addedCard.name, self.name))
 		print("ATK: {} | Effect: {}".format(str(addedCard.atkPoints), addedCard.effectText))
 
+	def summon(self, monster: card):
+		if self.monfield.__len__() == 5:
+			print("Monster Field is Full, cannot Summon")
+			return 0
+		else:
+			self.monfield.append(monster)
+			return 1
+
 	# Send card to Grave
 	def sendToGrave(self, effplayer, opponent, sentMon, oppMon, effgy, oppgy, turnPlayer):
 
@@ -861,7 +870,7 @@ class duelist:
 
 		pass
 
-		self.monfield.append(specialedCard)
+		self.summon(specialedCard)
 		del self.hand[selection]
 		print("--------------------------------------")
 		print("{} has been Special Summoned".format(specialedCard.name))
@@ -915,20 +924,20 @@ class duelist:
 
 				# Special Summon the Card
 				if selection in tempListNum:
-					addedCard = self.hand[selection]
+					specialedCard = self.hand[selection]
 
-					self.monfield.append(addedCard)
+					self.summon(specialedCard)
 
 					del self.hand[selection]
 
 					print("--------------------------------------")
-					print("{} has been Special Summoned".format(addedCard.name))
-					print("ATK: {} | Effect: {}".format(str(addedCard.atkPoints), addedCard.effectText))
+					print("{} has been Special Summoned".format(specialedCard.name))
+					print("ATK: {} | Effect: {}".format(str(specialedCard.atkPoints), specialedCard.effectText))
 
 					time.sleep(1)
 
-					if addedCard.trigger.name == "summon" and settings.returnEffectChecker(addedCard):
-						addedCard.effect.resolve(effplayer, opponent, addedCard, oppMon, effgy, oppgy, turnPlayer)
+					if specialedCard.trigger.name == "summon" and settings.returnEffectChecker(specialedCard):
+						specialedCard.effect.resolve(effplayer, opponent, specialedCard, oppMon, effgy, oppgy, turnPlayer)
 					else:
 						pass
 
@@ -977,7 +986,7 @@ class duelist:
 				if selection in tempListNum:
 					addedCard = self.hand[selection]
 
-					self.monfield.append(addedCard)
+					self.summon(addedCard)
 
 					del self.hand[selection]
 
@@ -1039,7 +1048,7 @@ class duelist:
 				if selection in tempListNum:
 					addedCard = self.deck[selection]
 
-					self.monfield.append(addedCard)
+					self.summon(addedCard)
 
 					print("--------------------------------------")
 					print("{} has been Special Summoned".format(addedCard.name))
@@ -1161,7 +1170,7 @@ class duelist:
 				if selection in tempListNum:
 					addedCard = self.deck[selection]
 
-					self.monfield.append(addedCard)
+					self.summon(addedCard)
 
 					del self.deck[selection]
 
@@ -1222,7 +1231,7 @@ class duelist:
 				if selection in tempListNum:
 					addedCard = self.gy[selection]
 
-					self.monfield.append(addedCard)
+					self.summon(addedCard)
 
 					del self.gy[selection]
 
