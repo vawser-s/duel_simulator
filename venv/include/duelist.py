@@ -503,7 +503,7 @@ class duelist:
 
 			# Get user selection
 			print("[0]  Return")
-			selection = input("~~~Select the card to Play (Type the Number):")
+			selection = input("~~~Select A Card to play: ")
 
 			try:
 				selection = int(selection) - 1

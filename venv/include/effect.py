@@ -128,12 +128,12 @@ class controlDestroy(effect):
 
 						if eff == 0:
 							opponent.destroyMonsterEff(oppMon, effplayer, opponent, oppMon, effectMon, effgy, oppgy,
-							                           turnPlayer)
+													   turnPlayer)
 						else:
 							pass
 					else:
 						opponent.destroyMonsterEff(oppMon, effplayer, opponent, oppMon, effectMon, effgy, oppgy,
-						                           turnPlayer)
+												   turnPlayer)
 
 					x = x + 1
 			else:
@@ -978,6 +978,9 @@ discSpecStormGY = discardToSpecialGY("Discard one Card, Special Summon a 'Stormb
 specialDarkMagicianDeck = specialDeckExact("Special Summon a Dark Magician from your Deck", "Dark Magician")
 specialStormRiderDeck = specialDeckSpecific("Special Summon a 'Stormrider' from your deck", "Stormrider")
 specialCodeDeck = specialDeckSpecific("Special Summon a 'Code' monster from your deck", "Code")
+specialGishkiDeck = specialDeckSpecific("Special Summon a 'Gishki' monster from your deck", "Gishki")
+specialAgentDeck = specialDeckSpecific("Special Summon a 'Agent' monster from your deck", "Agent")
+specialHeraldDeck = specialDeckSpecific("Special Summon a 'Herald' monster from your deck", "Herald")
 tribToSpecialStormBird = tributeTOSSDeckSpecific("You can tribute this card; Special summon a 'Stormbird' card from your deck", "Stormbird")
 ShuffleToSSGraveyard = shuffleToSSGraveyard("Shuffle 1 card from your hand into the deck; Special summon a monster from your Graveyard", 1)
 

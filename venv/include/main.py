@@ -126,7 +126,7 @@ def cardSetup():
 	gishkiAquamirror2 = deepcopy(gishkiAquamirror)
 	gishkiShadow = card("Gishki Shadow", 1200, 0, battleImmune, effTrigger.destructionBat, effectDescBuilder(effTrigger.destructionBat, battleImmune.desc))
 	gishkiShadow2 = deepcopy(gishkiShadow)
-	visionGishki = card("Vision Gishki ", 1800, 0, effectGishkiSearch, effTrigger.battle, effectDescBuilder(effTrigger.battle, effectGishkiSearch.desc))
+	visionGishki = card("Vision Gishki ", 1800, 0, specialGishkiDeck, effTrigger.battle, effectDescBuilder(effTrigger.battle, specialGishkiDeck.desc))
 	visionGishki2 = deepcopy(visionGishki)
 	gishkiAriel = card("Gishki Ariel", 1200, 0, bounceMonster, effTrigger.summon, effectDescBuilder(effTrigger.summon, bounceMonster.desc))
 	gishkiAriel2 = deepcopy(gishkiAriel)
@@ -160,7 +160,7 @@ def cardSetup():
 	global heraldPerfection2
 	global masterHyperion
 	global masterHyperion2
-	orangeHerald = card("Herald of Orange Light", 1000, 0, effectHeraldSearch, effTrigger.summon, effectDescBuilder(effTrigger.summon, effectHeraldSearch.desc))
+	orangeHerald = card("Herald of Orange Light", 1000, 0, specialHeraldDeck, effTrigger.summon, effectDescBuilder(effTrigger.summon, specialHeraldDeck.desc))
 	orangeHerald2 = deepcopy(orangeHerald)
 	purpleHerald = card("Herald of Purple Light", 800, 0, matchAttack, effTrigger.battle, effectDescBuilder(effTrigger.battle, matchAttack.desc))
 	purpleHerald2 = deepcopy(purpleHerald)
@@ -170,7 +170,7 @@ def cardSetup():
 	dawnHerald2 = deepcopy(dawnHerald)
 	agentEarth = card("Agent of Mystery: Earth", 1200, 0, effectAgentSearch, effTrigger.summon, effectDescBuilder(effTrigger.summon, effectAgentSearch.desc))
 	agentEarth2 = deepcopy(agentEarth)
-	agentVenus = card("Agent of Creation: Venus", 1600, 0, specialAgentHand, effTrigger.summon, effectDescBuilder(effTrigger.summon, specialAgentHand.desc))
+	agentVenus = card("Agent of Creation: Venus", 1600, 0, specialAgentDeck, effTrigger.summon, effectDescBuilder(effTrigger.summon, specialAgentDeck.desc))
 	agentVenus2 = deepcopy(agentVenus)
 	agentMars = card("Agent of Force: Mars", 1800, 0, DifferenceDraw, effTrigger.summon, effectDescBuilder(effTrigger.summon, DifferenceDraw.desc))
 	agentMars2 = deepcopy(agentMars)
@@ -322,7 +322,7 @@ def effectDescBuilder(trigger: Enum, Desc: str, opt: int = 1):
 		raise TypeError
 
 	if opt:
-		return "Once per turn, " + effectDescription
+		return "(OPT) : " + effectDescription
 	else:
 		return effectDescription
 
@@ -953,11 +953,19 @@ def turnMenu(currentPlayer: duelist, passivePlayer: duelist):
 
 			length = currentPlayer.monfield.__len__()
 
+			playedCard = currentPlayer.monfield[length - 1]
+
 			# checks if the user returned ®or actually played a card
 			if result == 0:
 				pass
+			elif result == 2:  # Hand Effect
+				oppmonster = None
+				if playedCard.trigger.name == "handSummon":
+					playedCard.effect.resolve(currentPlayer, passivePlayer, playedCard,
+							                       oppmonster, currentPlayer.gy, passivePlayer.gy, currentPlayer)
+				elif playedCard.trigger.name == "handDisc":
+					pass
 			else:
-				playedCard = currentPlayer.monfield[length - 1]
 
 				if playedCard.tribute == 1:
 					tributedCard = currentPlayer.gy[-1]
