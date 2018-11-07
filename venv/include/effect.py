@@ -902,7 +902,7 @@ class drawForDifference(effect):
 # Drawing Effects
 PlayerDraw1 = playerDraw("Draw One Card", 1)
 PlayerDraw2 = playerDraw("Draw Two Cards", 2)
-controlStormriderDraw2 = controlDraw("If you control a Stormrider; Draw 2 cards", "Stormrider", 2)
+controlStormriderDraw1 = controlDraw("If you control a Stormrider; Draw 1 cards", "Stormrider", 1)
 DifferenceDraw = drawForDifference("Draw one card per 1000 point difference between both players lifepoints)", 0)
 
 # Disruptive Effects

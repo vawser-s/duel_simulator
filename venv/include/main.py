@@ -250,7 +250,7 @@ def cardSetup():
 	stormRiderCanto2 = deepcopy(stormRiderCanto)
 	stormRiderNess = card("Ness: Stormrider", 750, 0, discSpecStormGY, effTrigger.summon, effectDescBuilder(effTrigger.summon, discSpecStormGY.desc))
 	stormRiderNess2 = deepcopy(stormRiderNess)
-	stormBirdZephris = card("Zephris: Stormbird", 1600, 0, controlStormriderDraw2, effTrigger.summon, effectDescBuilder(effTrigger.summon, controlStormriderDraw2.desc))
+	stormBirdZephris = card("Zephris: Stormbird", 1600, 0, controlStormriderDraw1, effTrigger.summon, effectDescBuilder(effTrigger.summon, controlStormriderDraw1.desc))
 	stormBirdZephris2 = deepcopy(stormBirdZephris)
 	stormBirdHellDiver = card("Hell Diver: Stormbird", 1800, 0, controlStormriderDestroy, effTrigger.summon, effectDescBuilder(effTrigger.summon, controlStormriderDestroy.desc))
 	stormBirdHellDiver2 = deepcopy(stormBirdHellDiver)
@@ -258,7 +258,7 @@ def cardSetup():
 	stormBirdSkylar2 = deepcopy(stormBirdSkylar)
 	stormBirdGale = card("Gale: Stormbird", 1500, 0, tribToSpecialStormBird, effTrigger.summon, effectDescBuilder(effTrigger.summon, tribToSpecialStormBird.desc))
 	stormBirdGale2 = deepcopy(stormBirdGale)
-	stormBringerAlizeh = card("Alizeh: Stormbringer", 2500, 1, StormriderStealMonster, effTrigger.summon, effectDescBuilder(effTrigger.summon, StormriderStealMonster.desc))
+	stormBringerAlizeh = card("Alizeh: Stormbringer", 2200, 1, battleImmune, effTrigger.summon, effectDescBuilder(effTrigger.summon, battleImmune.desc, 0), 0)
 	stormBringerAlizeh2 = deepcopy(stormBringerAlizeh)
 	stormGodMonsoon = card("Monsoon: Stormgod", 0, 1, tributeStormtoSteal, effTrigger.summon, effectDescBuilder(effTrigger.summon, tributeStormtoSteal.desc))
 	stormGodMonsoon2 = deepcopy(stormGodMonsoon)
@@ -953,19 +953,11 @@ def turnMenu(currentPlayer: duelist, passivePlayer: duelist):
 
 			length = currentPlayer.monfield.__len__()
 
-			playedCard = currentPlayer.monfield[length - 1]
-
 			# checks if the user returned ®or actually played a card
 			if result == 0:
 				pass
-			elif result == 2:  # Hand Effect
-				oppmonster = None
-				if playedCard.trigger.name == "handSummon":
-					playedCard.effect.resolve(currentPlayer, passivePlayer, playedCard,
-							                       oppmonster, currentPlayer.gy, passivePlayer.gy, currentPlayer)
-				elif playedCard.trigger.name == "handDisc":
-					pass
 			else:
+				playedCard = currentPlayer.monfield[length - 1]
 
 				if playedCard.tribute == 1:
 					tributedCard = currentPlayer.gy[-1]
