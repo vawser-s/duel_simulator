@@ -124,7 +124,7 @@ def cardSetup():
 	gishkiAbyss2 = deepcopy(gishkiAbyss)
 	gishkiAquamirror = card("Gishki Aquamirror", 0, 0, doubleSummon, effTrigger.summon, effectDescBuilder(effTrigger.summon, doubleSummon.desc))
 	gishkiAquamirror2 = deepcopy(gishkiAquamirror)
-	gishkiShadow = card("Gishki Shadow", 1200, 0, battleImmune, effTrigger.destructionBat, effectDescBuilder(effTrigger.destructionBat, battleImmune.desc))
+	gishkiShadow = card("Gishki Shadow", 1200, 0, tribtoGrantAtk, effTrigger.summon, effectDescBuilder(effTrigger.summon, tribtoGrantAtk.desc))
 	gishkiShadow2 = deepcopy(gishkiShadow)
 	visionGishki = card("Vision Gishki ", 1800, 0, specialGishkiDeck, effTrigger.battle, effectDescBuilder(effTrigger.battle, specialGishkiDeck.desc))
 	visionGishki2 = deepcopy(visionGishki)
@@ -205,7 +205,7 @@ def cardSetup():
 	darkMagician2 = deepcopy(darkMagician)
 	darkGMagician = card("Dark Magician Girl", 2300, 1, darkMagicianGain500, effTrigger.summon, effectDescBuilder(effTrigger.summon, darkMagicianGain500.desc))
 	darkGMagician2 = deepcopy(darkGMagician)
-	magicianRod = card("Magician's Rod", 1600, 0, effectDarkMagicianSearch, effTrigger.summon, effectDescBuilder(effTrigger.summon, effectDarkMagicianSearch.desc))
+	magicianRod = card("Magician's Rod", 1600, 0, specialDarkMagicianHand, effTrigger.summon, effectDescBuilder(effTrigger.summon, specialDarkMagicianHand.desc))
 	magicianRod2 = deepcopy(magicianRod)
 	magicianRobe = card("Magician's Robe", 800, 0, doubleSummon, effTrigger.summon, effectDescBuilder(effTrigger.summon, doubleSummon.desc))
 	magicianRobe2 = deepcopy(magicianRobe)
@@ -213,7 +213,7 @@ def cardSetup():
 	chocolateGirl2 = deepcopy(chocolateGirl)
 	appleGirl = card("Apple Magician Girl", 1000, 0, halfAtkDraw2, effTrigger.defend, effectDescBuilder(effTrigger.defend, halfAtkDraw2.desc))
 	appleGirl2 = deepcopy(appleGirl)
-	berryGirl = card("Berry Magician Girl", 1200, 0, tribtoGrantAtk, effTrigger.summon, effectDescBuilder(effTrigger.summon, tribtoGrantAtk.desc))
+	berryGirl = card("Berry Magician Girl", 1200, 0, specialGirlLess2000, effTrigger.summon, effectDescBuilder(effTrigger.summon, specialGirlLess2000.desc))
 	berryGirl2 = deepcopy(berryGirl)
 	kiwiGirl = card("Kiwi Magician Girl", 300, 0, bounceMonster, effTrigger.summon, effectDescBuilder(effTrigger.summon, bounceMonster.desc))
 	kiwiGirl2 = deepcopy(kiwiGirl)
@@ -749,11 +749,85 @@ def mainMenu():
 			selection = input("~~~Please select a menu option")
 			selection = int(selection)
 			if selection == 1:
-				i = 0
+				turnOrder = 0
 
 				cardSetup()
 
 				player_deck_setup()
+
+				# Die Roll Loop
+				while True:
+					# Decide who is going first
+					foe_roll = random.randint(1,6)
+
+					input("Press enter to roll the dice to see who goes first:")
+
+					print("\n" * 50)
+					print("Rolling.")
+					time.sleep(0.75)
+					print("\n" * 50)
+					print("Rolling..")
+					time.sleep(0.75)
+					print("\n" * 50)
+					print("Rolling...")
+					time.sleep(0.75)
+					print("\n" * 50)
+
+					player_roll = random.randint(1,6)
+
+					print("{}'s Roll: {}".format(_foe.name, foe_roll))
+					print("Your Roll: {}".format(player_roll))
+					print("--------------------------------------")
+
+					if player_roll > foe_roll:
+						while True:
+							print("[1] First")
+							print("[2] Second")
+							selection = input("~~You won the die roll, will you go first or second: ")
+
+							try:
+								selection = int(selection)
+							except TypeError:
+								pass
+
+							try:
+								if selection == 1:
+									print("You chose to go First")
+									turnOrder = 1  # Sets the turn counter to make the player go first
+									break
+								elif selection == 2:
+									print("You chose to go Second")
+									turnOrder = 2 # Sets the turn counter to make the opponent go first
+									break
+								else:
+									print("--------------------------------------")
+									print("Invalid Selection")
+									continue
+							except (TypeError, ValueError):
+								print("--------------------------------------")
+								print("Invalid Selection")
+								continue
+					elif player_roll < foe_roll:
+
+						foe_roll = random.randint(1,2)
+						if foe_roll == 1:
+							print("You lost the die roll, the opponent will go first")
+							turnOrder = 2
+							break
+						elif foe_roll == 2:
+							print("You lost the die roll, the opponent will go second")
+							turnOrder = 1
+							break
+					elif player_roll == foe_roll:
+						print("Tie result, roll again")
+						continue
+
+					if turnOrder:
+						break
+
+				time.sleep(1)
+
+				print("\n" * 50)
 
 				print("--------------------------------------")
 				print("Duel Begin")
@@ -761,12 +835,12 @@ def mainMenu():
 
 				# -- Main loop from which the duels run --
 				while True:
-					if i == 1:
+					if turnOrder == 2:
 						exitProg = turnMenu(_foe, _player)
-						i = 0
-					elif i == 0:
+						turnOrder = 1
+					elif turnOrder == 1:
 						exitProg = turnMenu(_player, _foe)
-						i = 1
+						turnOrder = 2
 					else:
 						print("Duel Machine Broke: Turn Error")
 						exitProg = None

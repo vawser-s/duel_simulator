@@ -643,6 +643,15 @@ class specialDeckSpecific(effect):
 
 		effplayer.specialDeckSpecific(self.extraParam, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer)
 
+class specialDeckSpecificLessAttack(effect):
+	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
+		print("{}'s Effect Activates!".format(effectMon.name))
+		print("--------------------------------------")
+		time.sleep(1)
+		# extraParam = Namespace to special/search
+
+		effplayer.specialDeckSpecificLessAttack(self.extraParam, self.nextraParam, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer)
+
 class gainAtkforInstance(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name))
@@ -778,7 +787,7 @@ class stealMonster(effect):
 
 			monster = opponent.monfield[selection]
 
-			self.summon(monster)
+			effplayer.summon(monster)
 			monster.attacked = 1
 			del opponent.monfield[selection]
 
@@ -974,7 +983,7 @@ specialAgentHand = specialSpecificHand("Special Summon an 'Agent' Monster from y
 specialCyberseHand = specialSpecificHand("Special Summon a 'Cyberse' Monster from your hand", "Cyberse")
 specialVampireHand = specialSpecificHand("Special Summon a 'Vampire' Monster from your hand", "Vampire")
 specialGishkiHand = specialSpecificHand("Special Summon a 'Gishki' Monster from your hand", "Gishki")
-specialDarkMagicianHand = specialExactHand("Special Summon a Dark Magician from your hand", "Dark Magician")
+specialDarkMagicianHand = specialExactHand("Special Summon a 'Dark Magician' from your hand", "Dark Magician")
 specialMagicianGirlHand = specialSpecificHand("Special Summon a 'Magician Girl' Card from your hand", "Magician Girl")
 specialStormBirdHand = specialSpecificHand("Special Summon a 'Stormbird' Monster from your hand", "Stormbird")
 specialCodeHand = specialSpecificHand("Special Summon a 'Code' Monster from your hand", "Code")
@@ -987,6 +996,7 @@ specialCodeDeck = specialDeckSpecific("Special Summon a 'Code' monster from your
 specialGishkiDeck = specialDeckSpecific("Special Summon a 'Gishki' monster from your deck", "Gishki")
 specialAgentDeck = specialDeckSpecific("Special Summon a 'Agent' monster from your deck", "Agent")
 specialHeraldDeck = specialDeckSpecific("Special Summon a 'Herald' monster from your deck", "Herald")
+specialGirlLess2000 = specialDeckSpecificLessAttack("Special Summon a 'Magician Girl' monster from your deck with less than 2000 attack", "Magician Girl", 2000)
 tribToSpecialStormBird = tributeTOSSDeckSpecific("You can tribute this card; Special summon a 'Stormbird' card from your deck", "Stormbird")
 ShuffleToSSGraveyard = shuffleToSSGraveyard("Shuffle 1 card from your hand into the deck; Special summon a monster from your Graveyard", 1)
 
