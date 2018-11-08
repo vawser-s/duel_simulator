@@ -1,7 +1,6 @@
 # https://docs.python.org/3/library/enum.html <-- FOR ENUM INFO
 from copy import *
 
-from card import *
 from duelist import *
 from effect import *
 
@@ -998,7 +997,7 @@ def turnMenu(currentPlayer: duelist, passivePlayer: duelist):
 
 			print("[5] Check Player Life Points and Deck")
 
-			print("[6] Go to Battle Phase (Ends turn after)")
+			print("[6] Attack with a Monster")
 
 			print("[7] End your Turn")
 
@@ -1259,7 +1258,6 @@ def battleMenu(turnPlayer: duelist, passivePlayer: duelist):
 				try:
 					if turnPlayer.monfield[target].attacked == 0:
 						atkMon = turnPlayer.monfield[target]
-						atkMon.attacked = 1
 						break
 					else:
 						print("--------------------------------------")
@@ -1275,8 +1273,10 @@ def battleMenu(turnPlayer: duelist, passivePlayer: duelist):
 
 					passivePlayer.checkField()
 
+					print("[0] Return")
 					print("--------------------------------------")
 					target = input("~~Please select a monster to attack:")
+
 
 					try:
 						target = int(target) - 1
@@ -1284,6 +1284,9 @@ def battleMenu(turnPlayer: duelist, passivePlayer: duelist):
 						pass
 
 					try:
+						if target == -1:
+							return 1
+
 						atkTarget = passivePlayer.monfield[target]
 						break
 					except (IndexError, TypeError):
@@ -1333,18 +1336,23 @@ def battleMenu(turnPlayer: duelist, passivePlayer: duelist):
 				break
 
 			if damage is None:  # This occurs for effect returns that don't impact damage
+				atkMon.attacked = 1
+
 				try:
 					damage = atkMon.atkPoints - atkTarget.atkPoints
 				except (UnboundLocalError, AttributeError):
 					damage = atkMon.atkPoints
 
 			if damage == -1:
+				atkMon.attacked = 1
+
 				try:
 					damage = atkMon.atkPoints
 				except (UnboundLocalError, ValueError):
 					damage = 0
 
 			if damage > 0:
+				atkMon.attacked = 1
 
 				passivePlayer.loseLP(damage)
 
