@@ -1,6 +1,6 @@
 import sys
-import settings
 from effect import *
+from card import *
 
 
 class duelist:
@@ -14,6 +14,29 @@ class duelist:
 		self.monfield = monfield
 		self.deck = deck
 		self.gy = graveyard
+
+	# Return largest string in an array (menu formatting)
+	@staticmethod
+	def getMaxLength(monarray: list):
+
+		max_len = ""
+		# Figure out longest string that exists
+		for monster in monarray:
+			if len(max_len) < len(monster.name):
+				max_len = monster.name
+			else:
+				pass
+
+		return len(max_len)
+
+	# Return a specific list location for a Card
+	@staticmethod
+	def checkArrayLoc(array: list, monster: object):
+		i = 0
+		for m in array:
+			if m == monster:
+				return i
+			i = i + 1
 
 	# Add card(s) to Hand
 	def draw(self, noOfCards):
@@ -46,7 +69,6 @@ class duelist:
 			# Increment
 			i = i + 1
 
-	# Add a specific card from deck to hand matching a namespace
 	def searchSpecificDeck(self, name):
 		if self.deck.__len__() == 0:
 			print("Deck is empty")
@@ -62,12 +84,75 @@ class duelist:
 		for monster in self.deck:
 			if name in monster.name:
 				if i >= 9:
-					print("[{}] {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute, monster.effectText))
+					print("[{}] {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ),
+																				 str(monster.atkPoints).ljust(4, ),
+																				 monster.tribute, monster.effectText))
 				else:
-					print("[{}]  {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute, monster.effectText))
+					print(
+						"[{}]  {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ),
+																				str(monster.atkPoints).ljust(4, ),
+																				monster.tribute, monster.effectText))
 				tempListNum.append(i)
 			else:
 				pass
+
+			i = i + 1
+
+		if tempListNum:
+			while True:
+				# Get user Selection
+				selection = input("~~~Select the card to Add (Type the Number):")
+
+				try:
+					selection = int(selection) - 1
+				except ValueError:
+					pass
+
+				# Add the card to the hand
+				if selection in tempListNum:
+					addedCard = self.deck[selection]
+					self.hand.append(addedCard)
+					print("--------------------------------------")
+					print("{} has searched the following card:".format(self.name))
+					print("Name: {} | ATK: {} | Effect: {}".format(addedCard.name, str(addedCard.atkPoints),
+																   addedCard.effectText))
+
+					del self.deck[selection]
+
+					self.shuffle()
+
+					return
+				else:
+					print("--------------------------------------")
+					print("Invalid Selection")
+					print("--------------------------------------")
+		else:
+			print("No Cards to search")
+			return
+
+	# Add a specific card from deck to hand matching a namespace
+	def searchSpecificDeckNamespace(self, *names):
+		if self.deck.__len__() == 0:
+			print("Deck is empty")
+			return
+
+		i = 0
+		tempListNum = []
+		print("{}s Deck:".format(self.name))
+
+		max_len = self.getMaxLength(self.deck)
+
+		# Loop through the hand and display each card fitting the namespace
+		for monster in self.deck:
+			for name in names:
+				if name in monster.name:
+					if i >= 9:
+						print("[{}] {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute, monster.effectText))
+					else:
+						print("[{}]  {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute, monster.effectText))
+					tempListNum.append(i)
+				else:
+					pass
 
 			i = i + 1
 
@@ -101,6 +186,36 @@ class duelist:
 		else:
 			print("No Cards to search")
 			return
+
+	# Return a list of names on field specific to a namespace(s)
+	def checkSpecificField(self, *names):
+		tempListNum = []
+
+		if self.monfield.__len__() > 0:
+
+			i = 0
+			print("{}s Field:".format(self.name))
+
+			max_len = self.getMaxLength(self.monfield)
+
+			# Loop through the hand and display each card fitting the namespace
+			for monster in self.monfield:
+				for name in names:
+					if name in monster.name:
+						if i >= 9:
+							print("[{}] {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute, monster.effectText))
+						else:
+							print("[{}]  {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute, monster.effectText))
+						tempListNum.append(i)
+					else:
+						pass
+
+				i = i + 1
+
+			return tempListNum
+		else:
+			print("No Other Monsters on your field")
+			return tempListNum
 
 	# Add a specific card from deck to hand
 	def searchDeck(self):
@@ -146,6 +261,7 @@ class duelist:
 		print("Name: {} | ATK: {} | Tribute: {} | Effect: {}".format(addedCard.name, str(addedCard.atkPoints), str(addedCard.tribute), addedCard.effectText))
 
 		del self.deck[selection]
+
 	# Display Player Hand
 	def checkHand(self):
 		if self.hand.__len__() != 0:
@@ -246,14 +362,6 @@ class duelist:
 			print("Graveyard Empty")
 			return
 
-	# Return a specific list location for a Card
-	def checkArrayLoc(self, array: list, monster: object):
-		i = 0
-		for m in array:
-			if m == monster:
-				return i
-			i = i + 1
-
 	# Special Summon from Graveyard
 	def ssGraveyard(self):
 
@@ -328,6 +436,14 @@ class duelist:
 		print("{} has been added to {}'s Hand".format(addedCard.name, self.name))
 		print("ATK: {} | Effect: {}".format(str(addedCard.atkPoints), addedCard.effectText))
 
+	def summon(self, monster: card):
+		if self.monfield.__len__() == 5:
+			print("Monster Field is Full, cannot Summon")
+			return 0
+		else:
+			self.monfield.append(monster)
+			return 1
+
 	# Send card to Grave
 	def sendToGrave(self, effplayer, opponent, sentMon, oppMon, effgy, oppgy, turnPlayer):
 
@@ -396,7 +512,7 @@ class duelist:
 
 			# Get user selection
 			print("[0]  Return")
-			selection = input("~~~Select the card to Play (Type the Number):")
+			selection = input("~~~Select A Card to play: ")
 
 			try:
 				selection = int(selection) - 1
@@ -444,7 +560,9 @@ class duelist:
 
 					# Play the card from your hand
 					self.monfield.append(playedCard)
+					self.removeCard(selection)
 					self.gy.append(tribute)
+
 					settings.changeNormalSummon()  # Normal Summon = 1
 
 					print("--------------------------------------")
@@ -519,7 +637,6 @@ class duelist:
 		time.sleep(0.5)
 
 	# Remove Card from Hand (as destinct from Discarding)
-
 	def removeCard(self, selection):
 		try:
 			del self.hand[selection]
@@ -545,7 +662,46 @@ class duelist:
 			else:
 				print("Card is not in Hand")
 
+	def shuffleHandIntoDeck(self, noOfCards):
+		x = 0
+		while x < noOfCards:
+			while True:
+				self.checkHand()
+
+				selection = input("~~Please select a monster to Shuffle:")
+
+				try:
+					selection = int(selection) - 1
+				except ValueError:
+					pass
+
+				try:
+					if self.hand.__len__() - 1 >= selection >= 0:
+						shuffledCard = self.hand[selection]
+						break
+					else:
+						print("--------------------------------------")
+						print("Invalid Selection")
+						print("--------------------------------------")
+				except TypeError:
+					print("--------------------------------------")
+					print("Invalid Selection")
+					print("--------------------------------------")
+
+			pass
+
+			self.deck.append(shuffledCard)
+			del self.hand[selection]
+
+			print("{} has been shuffled into the deck".format(shuffledCard.name))
+
+			x = x + 1
+
+		time.sleep(0.5)
+
 	def effectdiscardCard(self, effplayer, opponent, effMon, oppMon, effgy, oppgy, turnPlayer):
+		del effMon
+
 		if self.hand.__len__() == 0:
 			print("Hand is empty")
 
@@ -579,14 +735,14 @@ class duelist:
 		effplayer.gy.append(discardedCard)
 		del self.hand[selection]
 
+		print("{} has been discarded from {}'s hand".format(discardedCard.name, self.name))
+
 		time.sleep(1)
 
 		if discardedCard.trigger.name == "graveyard" and settings.returnEffectChecker(discardedCard):
 			discardedCard.effect.resolve(effplayer, opponent, discardedCard, oppMon, effgy, oppgy, turnPlayer)
 		else:
 			pass
-
-
 
 	# Lose LifePoints
 	def loseLP(self, damage):
@@ -679,20 +835,6 @@ class duelist:
 		self.hand.append(bouncedMonster)
 		print("{} has been returnd to {}'s Hand".format(bouncedMonster.name, self.name))
 
-	# Return largest string in an array (menu formatting)
-
-	def getMaxLength(self, monarray):
-
-		max_len = ""
-		# Figure out longest string that exists
-		for monster in monarray:
-			if len(max_len) < len(monster.name):
-				max_len = monster.name
-			else:
-				pass
-
-		return len(max_len)
-
 	# Special Summon a Monster from your Hand
 	def specialHandEffect(self, effplayer, opponent, sentMon, oppMon, effgy, oppgy, turnPlayer):
 
@@ -728,7 +870,7 @@ class duelist:
 
 		pass
 
-		self.monfield.append(specialedCard)
+		self.summon(specialedCard)
 		del self.hand[selection]
 		print("--------------------------------------")
 		print("{} has been Special Summoned".format(specialedCard.name))
@@ -782,20 +924,20 @@ class duelist:
 
 				# Special Summon the Card
 				if selection in tempListNum:
-					addedCard = self.hand[selection]
+					specialedCard = self.hand[selection]
 
-					self.monfield.append(addedCard)
+					self.summon(specialedCard)
 
 					del self.hand[selection]
 
 					print("--------------------------------------")
-					print("{} has been Special Summoned".format(addedCard.name))
-					print("ATK: {} | Effect: {}".format(str(addedCard.atkPoints), addedCard.effectText))
+					print("{} has been Special Summoned".format(specialedCard.name))
+					print("ATK: {} | Effect: {}".format(str(specialedCard.atkPoints), specialedCard.effectText))
 
 					time.sleep(1)
 
-					if addedCard.trigger.name == "summon" and settings.returnEffectChecker(addedCard):
-						addedCard.effect.resolve(effplayer, opponent, addedCard, oppMon, effgy, oppgy, turnPlayer)
+					if specialedCard.trigger.name == "summon" and settings.returnEffectChecker(specialedCard):
+						specialedCard.effect.resolve(effplayer, opponent, specialedCard, oppMon, effgy, oppgy, turnPlayer)
 					else:
 						pass
 
@@ -844,7 +986,7 @@ class duelist:
 				if selection in tempListNum:
 					addedCard = self.hand[selection]
 
-					self.monfield.append(addedCard)
+					self.summon(addedCard)
 
 					del self.hand[selection]
 
@@ -906,7 +1048,7 @@ class duelist:
 				if selection in tempListNum:
 					addedCard = self.deck[selection]
 
-					self.monfield.append(addedCard)
+					self.summon(addedCard)
 
 					print("--------------------------------------")
 					print("{} has been Special Summoned".format(addedCard.name))
@@ -1028,7 +1170,9 @@ class duelist:
 				if selection in tempListNum:
 					addedCard = self.deck[selection]
 
-					self.monfield.append(addedCard)
+					self.summon(addedCard)
+
+					del self.deck[selection]
 
 					print("--------------------------------------")
 					print("{} has been Special Summoned".format(addedCard.name))
@@ -1041,7 +1185,6 @@ class duelist:
 					else:
 						pass
 
-					del self.deck[selection]
 
 					return
 
@@ -1051,3 +1194,128 @@ class duelist:
 					print("--------------------------------------")
 		else:
 			print("No Possible Targets")
+
+	def specialDeckSpecificLessAttack(self, name, atk, effplayer, opponent, sentMon, oppMon, effgy, oppgy, turnPlayer):
+		i = 0
+		tempListNum = []
+		print("{}s Deck:".format(self.name))
+		del sentMon
+
+		max_len = self.getMaxLength(self.deck)
+
+		# Loop through the hand and display each card fitting the namespace
+		for monster in self.deck:
+			if name in monster.name and monster.atkPoints < atk:
+				if i >= 9:
+					print("[{}] {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute, monster.effectText))
+				else:
+					print("[{}]  {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute, monster.effectText))
+
+				tempListNum.append(i)
+			else:
+				pass
+
+			i = i + 1
+
+		if tempListNum:
+			while True:
+				# Get user Selection
+				selection = input("~~~Select the card to Summon (Type the Number):")
+
+				try:
+					selection = int(selection) - 1
+				except ValueError:
+					pass
+
+				# Special Summon the Card
+				if selection in tempListNum:
+					addedCard = self.deck[selection]
+
+					self.summon(addedCard)
+
+					del self.deck[selection]
+
+					print("--------------------------------------")
+					print("{} has been Special Summoned".format(addedCard.name))
+					print("ATK: {} | Effect: {}".format(str(addedCard.atkPoints), addedCard.effectText))
+
+					time.sleep(1)
+
+					if addedCard.trigger.name == "summon"  and settings.returnEffectChecker(addedCard):
+						addedCard.effect.resolve(effplayer, opponent, addedCard, oppMon, effgy, oppgy, turnPlayer)
+					else:
+						pass
+
+
+					return
+
+				else:
+					print("--------------------------------------")
+					print("Invalid Selection")
+					print("--------------------------------------")
+		else:
+			print("No Possible Targets")
+
+
+	def specialGraveyardSpecific(self, effplayer, opponent, sentMon, oppMon, effgy, oppgy, turnPlayer, *names):
+		i = 0
+		tempListNum = []
+		print("{}s GY:".format(self.name))
+		del sentMon
+
+		max_len = self.getMaxLength(self.gy)
+
+		# Loop through the hand and display each card fitting the namespace
+		for monster in self.gy:
+			for name in names:
+				if name in monster.name:
+					if i >= 9:
+						print("[{}] {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute, monster.effectText))
+					else:
+						print("[{}]  {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute, monster.effectText))
+
+					tempListNum.append(i)
+				else:
+					pass
+			i = i + 1
+
+		if tempListNum:
+			while True:
+				# Get user Selection
+				selection = input("~~~Select the card to Summon (Type the Number):")
+
+				try:
+					selection = int(selection) - 1
+				except ValueError:
+					pass
+
+				# Special Summon the Card
+				if selection in tempListNum:
+					addedCard = self.gy[selection]
+
+					self.summon(addedCard)
+
+					del self.gy[selection]
+
+					print("--------------------------------------")
+					print("{} has been Special Summoned".format(addedCard.name))
+					print("ATK: {} | Effect: {}".format(str(addedCard.atkPoints), addedCard.effectText))
+
+					time.sleep(1)
+
+					if addedCard.trigger.name == "summon"  and settings.returnEffectChecker(addedCard):
+						addedCard.effect.resolve(effplayer, opponent, addedCard, oppMon, effgy, oppgy, turnPlayer)
+					else:
+						pass
+
+
+					return
+
+				else:
+					print("--------------------------------------")
+					print("Invalid Selection")
+					print("--------------------------------------")
+		else:
+			print("No Possible Targets")
+
+
