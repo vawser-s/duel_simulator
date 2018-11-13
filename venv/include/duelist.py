@@ -363,7 +363,7 @@ class duelist:
 			return
 
 	# Special Summon from Graveyard
-	def ssGraveyard(self):
+	def ssGraveyard(self, monster):
 
 		if self.gy.__len__() == 0:
 			print("Graveyard is Empty")
@@ -394,7 +394,7 @@ class duelist:
 
 		pass
 
-		self.monfield.append(playedCard)
+		self.summon(playedCard)
 		print("--------------------------------------")
 		print("{} has been Special Summoned".format(playedCard.name))
 		print("ATK: {} | Effect: {}".format(str(playedCard.atkPoints), playedCard.effectText))
@@ -433,6 +433,7 @@ class duelist:
 
 		del self.gy[selection]
 
+		print("--------------------------------------")
 		print("{} has been added to {}'s Hand".format(addedCard.name, self.name))
 		print("ATK: {} | Effect: {}".format(str(addedCard.atkPoints), addedCard.effectText))
 
@@ -449,10 +450,7 @@ class duelist:
 
 		self.gy.append(sentMon)
 
-		if sentMon.trigger.name == "graveyard"  and settings.returnEffectChecker(sentMon):
-			sentMon.effect.resolve(effplayer, opponent, sentMon, oppMon, effgy, oppgy, turnPlayer)
-		else:
-			return
+		sentMon.ResolveEffect(effTrigger.graveyard, effplayer, opponent, sentMon, oppMon, effgy, oppgy, turnPlayer)
 
 		self.shuffle()
 
@@ -739,10 +737,8 @@ class duelist:
 
 		time.sleep(1)
 
-		if discardedCard.trigger.name == "graveyard" and settings.returnEffectChecker(discardedCard):
-			discardedCard.effect.resolve(effplayer, opponent, discardedCard, oppMon, effgy, oppgy, turnPlayer)
-		else:
-			pass
+
+		discardedCard.ResolveEffect(effTrigger.graveyard, effplayer, opponent, discardedCard, oppMon, effgy, oppgy, turnPlayer)
 
 	# Lose LifePoints
 	def loseLP(self, damage):
@@ -767,6 +763,7 @@ class duelist:
 
 	# Destroy Monster (Battle)
 	def destroyMonsterBat(self, target, effplayer, opponent, sentMon, oppMon, effgy, oppgy, turnPlayer):
+		del sentMon
 
 		location = self.checkArrayLoc(self.monfield, target)
 
@@ -788,13 +785,12 @@ class duelist:
 		self.gy.append(destroyedMonster)
 		print("{} has been destroyed and sent to the Graveyard".format(destroyedMonster.name))
 
-		if sentMon.trigger.name == "graveyard" and settings.returnEffectChecker(sentMon):
-			sentMon.effect.resolve(effplayer, opponent, sentMon, oppMon, effgy, oppgy, turnPlayer)
-		else:
-			pass
+		destroyedMonster.ResolveEffect(effTrigger.graveyard, effplayer, opponent, destroyedMonster, oppMon, effgy, oppgy, turnPlayer)
+
 
 	# Destroy Monster (Effect)
 	def destroyMonsterEff(self, target, effplayer, opponent, sentMon, oppMon, effgy, oppgy, turnPlayer):
+		del sentMon
 
 		location = self.checkArrayLoc(self.monfield, target)
 
@@ -813,10 +809,7 @@ class duelist:
 
 		time.sleep(0.5)
 
-		if sentMon.trigger.name == "graveyard" and settings.returnEffectChecker(sentMon):
-			sentMon.effect.resolve(effplayer, opponent, sentMon, oppMon, effgy, oppgy, turnPlayer)
-		else:
-			pass
+		destroyedMonster.ResolveEffect(effTrigger.graveyard, effplayer, opponent, destroyedMonster, oppMon, effgy, oppgy, turnPlayer)
 
 	# Return Monster to Opponents Hand
 	def bounce(self, target):
@@ -878,10 +871,8 @@ class duelist:
 
 		time.sleep(1)
 
-		if specialedCard.trigger.name == "summon" and settings.returnEffectChecker(specialedCard):
-			specialedCard.effect.resolve(effplayer, opponent, specialedCard, oppMon, effgy, oppgy, turnPlayer)
-		else:
-			pass
+
+		specialedCard.ResolveEffect(effTrigger.summon, effplayer, opponent, specialedCard, oppMon, effgy, oppgy, turnPlayer)
 
 	# Special Summon a monster from your hand FITTING the given namespace
 	def specialHandSpecific(self, name, effplayer, opponent, sentMon, oppMon, effgy, oppgy, turnPlayer):
@@ -936,10 +927,8 @@ class duelist:
 
 					time.sleep(1)
 
-					if specialedCard.trigger.name == "summon" and settings.returnEffectChecker(specialedCard):
-						specialedCard.effect.resolve(effplayer, opponent, specialedCard, oppMon, effgy, oppgy, turnPlayer)
-					else:
-						pass
+					specialedCard.ResolveEffect(effTrigger.summon, effplayer, opponent, specialedCard, oppMon, effgy,
+					                            oppgy, turnPlayer)
 
 					return
 
@@ -975,7 +964,7 @@ class duelist:
 		if tempListNum:
 			while True:
 				# Get user Selection
-				selection = input("~~~Select the card to Add (Type the Number):")
+				selection = input("~~~Select the card to Summon (Type the Number):")
 
 				try:
 					selection = int(selection) - 1
@@ -984,24 +973,20 @@ class duelist:
 
 				# Special Summon the Card
 				if selection in tempListNum:
-					addedCard = self.hand[selection]
+					specialedCard = self.hand[selection]
 
-					self.summon(addedCard)
+					self.summon(specialedCard)
 
 					del self.hand[selection]
 
 					print("--------------------------------------")
-					print("{} has been Special Summoned".format(addedCard.name))
-					print("ATK: {} | Effect: {}".format(str(addedCard.atkPoints), addedCard.effectText))
+					print("{} has been Special Summoned".format(specialedCard.name))
+					print("ATK: {} | Effect: {}".format(str(specialedCard.atkPoints), specialedCard.effectText))
 
 					time.sleep(1)
 
-					if addedCard.trigger.name == "summon" and settings.returnEffectChecker(addedCard):
-						addedCard.effect.resolve(effplayer, opponent, addedCard, oppMon, effgy, oppgy, turnPlayer)
-					else:
-						pass
-
-
+					specialedCard.ResolveEffect(effTrigger.summon, effplayer, opponent, specialedCard, oppMon, effgy,
+					                            oppgy, turnPlayer)
 
 					return
 
@@ -1046,20 +1031,18 @@ class duelist:
 
 				# Special Summon the Card
 				if selection in tempListNum:
-					addedCard = self.deck[selection]
+					specialedCard = self.deck[selection]
 
-					self.summon(addedCard)
+					self.summon(specialedCard)
 
 					print("--------------------------------------")
-					print("{} has been Special Summoned".format(addedCard.name))
-					print("ATK: {} | Effect: {}".format(str(addedCard.atkPoints), addedCard.effectText))
+					print("{} has been Special Summoned".format(specialedCard.name))
+					print("ATK: {} | Effect: {}".format(str(specialedCard.atkPoints), specialedCard.effectText))
 
 					time.sleep(1)
 
-					if addedCard.trigger.name == "summon" and settings.returnEffectChecker(addedCard):
-						addedCard.effect.resolve(effplayer, opponent, addedCard, oppMon, effgy, oppgy, turnPlayer)
-					else:
-						pass
+					specialedCard.ResolveEffect(effTrigger.summon, effplayer, opponent, specialedCard, oppMon, effgy,
+					                            oppgy, turnPlayer)
 
 					del self.deck[selection]
 
@@ -1168,23 +1151,20 @@ class duelist:
 
 				# Special Summon the Card
 				if selection in tempListNum:
-					addedCard = self.deck[selection]
+					specialedCard = self.deck[selection]
 
-					self.summon(addedCard)
+					self.summon(specialedCard)
 
 					del self.deck[selection]
 
 					print("--------------------------------------")
-					print("{} has been Special Summoned".format(addedCard.name))
-					print("ATK: {} | Effect: {}".format(str(addedCard.atkPoints), addedCard.effectText))
+					print("{} has been Special Summoned".format(specialedCard.name))
+					print("ATK: {} | Effect: {}".format(str(specialedCard.atkPoints), specialedCard.effectText))
 
 					time.sleep(1)
 
-					if addedCard.trigger.name == "summon"  and settings.returnEffectChecker(addedCard):
-						addedCard.effect.resolve(effplayer, opponent, addedCard, oppMon, effgy, oppgy, turnPlayer)
-					else:
-						pass
-
+					specialedCard.ResolveEffect(effTrigger.summon, effplayer, opponent, specialedCard, oppMon, effgy,
+					                            oppgy, turnPlayer)
 
 					return
 
@@ -1229,23 +1209,20 @@ class duelist:
 
 				# Special Summon the Card
 				if selection in tempListNum:
-					addedCard = self.deck[selection]
+					specialedCard = self.deck[selection]
 
-					self.summon(addedCard)
+					self.summon(specialedCard)
 
 					del self.deck[selection]
 
 					print("--------------------------------------")
-					print("{} has been Special Summoned".format(addedCard.name))
-					print("ATK: {} | Effect: {}".format(str(addedCard.atkPoints), addedCard.effectText))
+					print("{} has been Special Summoned".format(specialedCard.name))
+					print("ATK: {} | Effect: {}".format(str(specialedCard.atkPoints), specialedCard.effectText))
 
 					time.sleep(1)
 
-					if addedCard.trigger.name == "summon"  and settings.returnEffectChecker(addedCard):
-						addedCard.effect.resolve(effplayer, opponent, addedCard, oppMon, effgy, oppgy, turnPlayer)
-					else:
-						pass
-
+					specialedCard.ResolveEffect(effTrigger.summon, effplayer, opponent, specialedCard, oppMon, effgy,
+					                            oppgy, turnPlayer)
 
 					return
 
@@ -1255,7 +1232,6 @@ class duelist:
 					print("--------------------------------------")
 		else:
 			print("No Possible Targets")
-
 
 	def specialGraveyardSpecific(self, effplayer, opponent, sentMon, oppMon, effgy, oppgy, turnPlayer, *names):
 		i = 0
@@ -1291,23 +1267,20 @@ class duelist:
 
 				# Special Summon the Card
 				if selection in tempListNum:
-					addedCard = self.gy[selection]
+					specialedCard = self.gy[selection]
 
-					self.summon(addedCard)
+					self.summon(specialedCard)
 
 					del self.gy[selection]
 
 					print("--------------------------------------")
-					print("{} has been Special Summoned".format(addedCard.name))
-					print("ATK: {} | Effect: {}".format(str(addedCard.atkPoints), addedCard.effectText))
+					print("{} has been Special Summoned".format(specialedCard.name))
+					print("ATK: {} | Effect: {}".format(str(specialedCard.atkPoints), specialedCard.effectText))
 
 					time.sleep(1)
 
-					if addedCard.trigger.name == "summon"  and settings.returnEffectChecker(addedCard):
-						addedCard.effect.resolve(effplayer, opponent, addedCard, oppMon, effgy, oppgy, turnPlayer)
-					else:
-						pass
-
+					specialedCard.ResolveEffect(effTrigger.summon, effplayer, opponent, specialedCard, oppMon, effgy,
+					                            oppgy, turnPlayer)
 
 					return
 

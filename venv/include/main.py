@@ -2,7 +2,7 @@
 from copy import *
 
 from duelist import *
-from effect import *
+from cardTest import *
 
 from settings import *
 
@@ -11,6 +11,31 @@ def cardSetup():
 
 	# The card template is as follows:
 	# card(Name, Atk Points, Effect Name, Effect Trigger Enum, Effect Derscription)
+
+	DoubleSummon = {"effect"       : doubleSummon,
+	                "effectTrigger": effTrigger.summon}
+	EffectCyberseSearch = {"effect"       : effectCyberseSearch,
+	                       "effectTrigger": effTrigger.summon}
+	PlayerDraw1Grav = {"effect"       : PlayerDraw1,
+	                   "effectTrigger": effTrigger.graveyard}
+	EffectCodeSearch = {"effect"       : effectCodeSearch,
+	                    "effectTrigger": effTrigger.summon}
+	SpecialCyberseHand = {"effect"       : specialCyberseHand,
+	                      "effectTrigger": effTrigger.summon}
+	DestroySum = {"effect"       : Destroy,
+	              "effectTrigger": effTrigger.summon}
+	OppDisc1 = {"effect"       : oppDisc1,
+	            "effectTrigger": effTrigger.summon}
+	OppDisc2 = {"effect"       : oppDisc2,
+	            "effectTrigger": effTrigger.battle}
+	SelfDisc1 = {"effect"       : playerDisc1,
+	             "effectTrigger": effTrigger.graveyard}
+	EffectSearch = {"effect"       : effectSearch,
+	                "effectTrigger": effTrigger.summon}
+	SpecialFromHand = {"effect"       : specialfromHand,
+	                   "effectTrigger": effTrigger.destructionEff}
+	MonsterBounce = {"effect"       : bounceMonster,
+	                 "effectTrigger": effTrigger.summon}
 
 	# Cyber Deck
 	global microCoder
@@ -33,16 +58,16 @@ def cardSetup():
 	global dualAssembwurm2
 	global codeDriver
 	global codeDriver2
-	microCoder = card("Micro Coder", 300, 0, specialCodeDeck, effTrigger.summon, effectDescBuilder(effTrigger.summon, specialCodeDeck.desc))
-	codeGenerator = card("Code Generator", 1300, 0, effectCodeSearch, effTrigger.summon, effectDescBuilder(effTrigger.summon, effectCodeSearch.desc))
-	codeRadiator = card("Code Radiator", 1600, 0, doubleSummon, effTrigger.summon, effectDescBuilder(effTrigger.summon, doubleSummon.desc))
-	codeDriver = card("Code Driver", 2200, 1, bounceMonster, effTrigger.summon, effectDescBuilder(effTrigger.summon, bounceMonster.desc))
-	ladyDebug = card("Lady Debug", 1000, 0, specialCyberseHand, effTrigger.summon, effectDescBuilder(effTrigger.summon, specialCyberseHand.desc))
-	cyberseGadget = card("Cyberse Gadget", 1400, 0, Destroy, effTrigger.summon, effectDescBuilder(effTrigger.summon, Destroy.desc))
-	cyberseAccelerator = card("Cyberse Accelerator", 2000, 0, oppDisc1, effTrigger.summon, effectDescBuilder(effTrigger.summon, oppDisc1.desc))
-	cyberseWhiteHat = card("Cyberse White Hat", 2100, 1, effectSearch, effTrigger.summon, effectDescBuilder(effTrigger.summon, effectSearch.desc))
-	cyberseClockDragon = card("Cyberse Clock Dragon", 2500, 1, specialfromHand, effTrigger.destructionEff, effectDescBuilder(effTrigger.destructionEff, specialfromHand.desc))
-	dualAssembwurm = card("Dual Assembwurm", 2800, 1, oppDisc2, effTrigger.battle, effectDescBuilder(effTrigger.battle, oppDisc2.desc))
+	microCoder = cardTest("Micro Coder", 300, 0, [EffectCyberseSearch, PlayerDraw1Grav])
+	codeGenerator = cardTest("Code Generator", 1300, 0, [EffectCodeSearch])
+	codeRadiator = cardTest("Code Radiator", 1600, 0, [DoubleSummon])
+	ladyDebug = cardTest("Lady Debug", 1000, 0, [SpecialCyberseHand])
+	cyberseGadget = cardTest("Cyberse Gadget", 1400, 0, [DestroySum])
+	cyberseAccelerator = cardTest("Cyberse Accelerator", 2000, 0, [OppDisc1, SelfDisc1])
+	cyberseWhiteHat = cardTest("Cyberse White Hat", 2100, 1, [EffectSearch])
+	cyberseClockDragon = cardTest("Cyberse Clock Dragon", 2500, 1, [SpecialFromHand])
+	dualAssembwurm = cardTest("Dual Assembwurm", 2800, 1, [OppDisc2])
+	codeDriver = cardTest("Cyberse Driver", 2200, 1, [MonsterBounce])
 	microCoder2 = deepcopy(microCoder)
 	codeGenerator2 = deepcopy(codeGenerator)
 	codeRadiator2 = deepcopy(codeRadiator)
@@ -53,6 +78,29 @@ def cardSetup():
 	cyberseWhiteHat2 = deepcopy(cyberseWhiteHat)
 	cyberseClockDragon2 = deepcopy(cyberseClockDragon)
 	dualAssembwurm2 = deepcopy(dualAssembwurm)
+
+	EffectVampSearch = {"effect"       : effectVampSearch,
+	                "effectTrigger": effTrigger.graveyard}
+	DiscSpecVampHand = {"effect"       : discSpecVampHand,
+	                "effectTrigger": effTrigger.summon}
+	BattleImmune = {"effect"       : battleImmune,
+	                "effectTrigger": effTrigger.destructionBat}
+	SiphonLifeAndMill800 = {"effect"       : siphonLifeAndMill800,
+	                "effectTrigger": effTrigger.summon}
+	SiphonLifeAndMill1500 = {"effect"       : siphonLifeAndMill1500,
+	                "effectTrigger": effTrigger.battle}
+	ShuffleToSSGraveyard = {"effect": shuffleToSSGraveyard,
+	                        "effectTrigger": effTrigger.graveyard}
+	GYToHand = {"effect"       : gyToHand,
+	                    "effectTrigger": effTrigger.summon}
+	Siphon800 = {"effect"       : siphonLife800,
+	            "effectTrigger": effTrigger.summon}
+	Grant800 = {"effect"       : grant800,
+	          "effectTrigger": effTrigger.summon}
+	Millie = {"effect"       : Mill,
+	            "effectTrigger": effTrigger.summon}
+
+
 
 	# Vampire Deck
 	global vampireFamiliar
@@ -75,25 +123,25 @@ def cardSetup():
 	global armageddonKnight2
 	global zombieMaster
 	global zombieMaster2
-	vampireFamiliar = card("Vampire Familiar", 300, 0, effectVampSearch, effTrigger.graveyard, effectDescBuilder(effTrigger.graveyard, effectVampSearch.desc))
+	vampireFamiliar = cardTest("Vampire Familiar", 300, 0, [EffectVampSearch, Siphon800])
 	vampireFamiliar2 = deepcopy(vampireFamiliar)
-	vampireSucker = card("Vampire Sucker", 1600, 0, discSpecVampHand, effTrigger.summon, effectDescBuilder(effTrigger.summon, discSpecVampHand.desc))
+	vampireSucker = cardTest("Vampire Sucker", 1600, 0, [DiscSpecVampHand])
 	vampireSucker2 = deepcopy(vampireSucker)
-	vampireFraulein = card("Vampire Fraulein", 800, 0, battleImmune, effTrigger.destructionBat, effectDescBuilder(effTrigger.destructionBat, battleImmune.desc, 0), 0)
+	vampireFraulein = cardTest("Vampire Fraulein", 800, 0, [BattleImmune, Grant800])
 	vampireFraulein2 = deepcopy(vampireFraulein)
-	vampireGrace = card("Vampire Grace", 2200, 1, SiphonLifeAndMill800, effTrigger.summon, effectDescBuilder(effTrigger.summon, SiphonLifeAndMill800.desc))
+	vampireGrace = cardTest("Vampire Grace", 2200, 1, [SiphonLifeAndMill800])
 	vampireGrace2 = deepcopy(vampireGrace)
-	vampireGenesis = card("Vampire Genesis", 2800, 1, SiphonLifeAndMill1500, effTrigger.battle, effectDescBuilder(effTrigger.battle, SiphonLifeAndMill1500.desc))
+	vampireGenesis = cardTest("Vampire Genesis", 2800, 1, [SiphonLifeAndMill1500])
 	vampireGenesis2 = deepcopy(vampireGenesis)
-	mezuki = card("Mezuki", 1600, 0, ShuffleToSSGraveyard, effTrigger.graveyard, effectDescBuilder(effTrigger.graveyard, ShuffleToSSGraveyard.desc))
+	mezuki = cardTest("Mezuki", 1600, 0, [ShuffleToSSGraveyard])
 	mezuki2 = deepcopy(mezuki)
-	unizombie = card("Uni-Zombie", 1500, 0, GYToHand, effTrigger.summon, effectDescBuilder(effTrigger.summon, GYToHand.desc))
+	unizombie = cardTest("Uni-Zombie", 1500, 0, [GYToHand])
 	unizombie2 = deepcopy(unizombie)
-	shiranuiSolitare = card("Shiranui Solitare", 1300, 0, PlayerDraw1, effTrigger.graveyard, effectDescBuilder(effTrigger.graveyard, PlayerDraw1.desc))
+	shiranuiSolitare = cardTest("Shiranui Solitare", 1300, 0, [PlayerDraw1Grav, Siphon800])
 	shiranuiSolitare2 = deepcopy(shiranuiSolitare)
-	armageddonKnight = card("Armageddon Knight", 1400, 0, Mill, effTrigger.summon, effectDescBuilder(effTrigger.summon, Mill.desc))
+	armageddonKnight = cardTest("Armageddon Knight", 1400, 0, [Millie])
 	armageddonKnight2 = deepcopy(armageddonKnight)
-	zombieMaster = card("Zombie Master", 1800, 0, Destroy, effTrigger.graveyard, effectDescBuilder(effTrigger.graveyard, Destroy.desc))
+	zombieMaster = cardTest("Zombie Master", 1800, 0, [DestroySum])
 	zombieMaster2 = deepcopy(zombieMaster)
 
 	# Gishki Deck
@@ -267,6 +315,7 @@ def cardSetup():
 	global copyMachine
 	copyMachine = card("Copy Machine", 0, 0, matchAttack, effTrigger.battle, matchAttack.desc)
 
+	'''
 	global discard1Guy
 	global deviousDiscard1Guy
 	global deviousDiscardDiva
@@ -296,7 +345,7 @@ def cardSetup():
 	lifeVitalizer = card("Life Vitalizer", 1800, 0, gainDifference, effTrigger.summon, gainDifference.desc)
 	defenderDan = card("Defender Dan", 2000, 0, PlayerDraw1, effTrigger.defend, effectDescBuilder(effTrigger.defend, PlayerDraw1.desc))
 	gameEnder1 = card("Game Ender EFF", 0, 0, Damage8000, effTrigger.summon, effectDescBuilder(effTrigger.summon, Damage8000.desc))
-	gameEnder2 = card("Game Ender BTL", 0, 0, Damage8000, effTrigger.battle, effectDescBuilder(effTrigger.battle, Damage8000.desc))
+	gameEnder2 = card("Game Ender BTL", 0, 0, Damage8000, effTrigger.battle, effectDescBuilder(effTrigger.battle, Damage8000.desc))'''
 
 # Method to build the asppropriate effect descriptions for cards
 def effectDescBuilder(trigger: Enum, Desc: str, opt: int = 1):
@@ -759,7 +808,10 @@ def mainMenu():
 					# Decide who is going first
 					foe_roll = random.randint(1,6)
 
-					input("Press enter to roll the dice to see who goes first:")
+					override = input("Press enter to roll the dice to see who goes first:")
+					if override == "f":
+						turnOrder = 1
+						break
 
 					print("\n" * 50)
 					print("Rolling.")
@@ -865,34 +917,6 @@ def mainMenu():
 
 				player_deck_setup()
 
-				TestDeck = [discard1Guy, deviousDiscard1Guy, battleImmuneIvan, cyberDigger, deckDigger, doubleSummoner, resurrector, reAdder, graveyardGarry]
-
-				_player.hand.append(discard1Guy)
-				_player.hand.append(deviousDiscard1Guy)
-				_player.hand.append(battleImmuneIvan)
-				_player.hand.append(cyberDigger)
-				_player.hand.append(deckDigger)
-				_player.hand.append(doubleSummoner)
-				_player.hand.append(resurrector)
-				_player.hand.append(reAdder)
-				_player.hand.append(graveyardGarry)
-
-				_foe.hand.append(deviousDiscard1Guy)
-				_foe.hand.append(battleImmuneIvan)
-
-				_player.gy.append(discard1Guy)
-				_player.gy.append(deviousDiscard1Guy)
-				_player.gy.append(battleImmuneIvan)
-				_player.gy.append(cyberDigger)
-				_player.gy.append(deckDigger)
-				_player.gy.append(doubleSummoner)
-				_player.gy.append(resurrector)
-				_player.gy.append(reAdder)
-				_player.gy.append(graveyardGarry)
-
-				_player.deck = TestDeck
-				_foe.deck = TestDeck
-
 				return
 			else:
 				# Return Error
@@ -939,8 +963,6 @@ def turnMenu(currentPlayer: duelist, passivePlayer: duelist):
 	global destination
 	destination = ""
 
-	effectCheck = 0
-
 	resetNormalSummon()
 
 	resetEffectChecker()
@@ -956,14 +978,20 @@ def turnMenu(currentPlayer: duelist, passivePlayer: duelist):
 
 	# DRAW PHASE
 	if firstTurn == 0:
-		_player.draw(5)
+		_player.draw(0)
 
 		# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
 		# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
 		# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
 		# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
-		# _player.hand.append()
-		# _foe.hand.append()
+		_player.hand.append(vampireFamiliar)
+		_player.hand.append(vampireSucker)
+		_player.hand.append(vampireFraulein)
+		_player.hand.append(vampireGrace)
+		_player.hand.append(vampireGenesis)
+		_player.hand.append(mezuki)
+		_player.hand.append(unizombie)
+		_foe.hand.append(zombieMaster)
 		# -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------
 		# -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------
 		# -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------
@@ -1018,9 +1046,6 @@ def turnMenu(currentPlayer: duelist, passivePlayer: duelist):
 
 			nSummon = int(returnNormalSummon())
 
-			if nSummon == 0:
-				effectCheck = 0
-
 			# Play the card, and return whether a card was actually played (can just return)
 			result = currentPlayer.playCard()
 
@@ -1035,61 +1060,21 @@ def turnMenu(currentPlayer: duelist, passivePlayer: duelist):
 				if playedCard.tribute == 1:
 					tributedCard = currentPlayer.gy[-1]
 
-					if tributedCard.trigger.name == "graveyard":
-						monster = tributedCard
-						if currentPlayer == _player:
-							passivePlayer = _foe
-						else:
-							passivePlayer = _player
-
-						try:
-							oppmonster = None
-							monster.effect.resolve(currentPlayer, passivePlayer, monster,
-							                       oppmonster, currentPlayer.gy, passivePlayer.gy, currentPlayer)
-							effectCheck = 1
-						except IndexError:
-							oppmonster = None
-							monster.effect.resolve(currentPlayer, passivePlayer, monster,
-							                       oppmonster, currentPlayer.gy, passivePlayer.gy, currentPlayer)
-							effectCheck = 1
+					tributedCard.ResolveEffect(effTrigger.graveyard, currentPlayer, passivePlayer, tributedCard,
+							                    None, currentPlayer.gy, passivePlayer.gy, currentPlayer)
 
 				# Check if the monster has an on-summon effect effect, and activate it if it hasn't used it yet
-				if effectCheck == 0:
-					try:
-						if playedCard.trigger.name == "summon" and returnEffectChecker(playedCard):
-							monster = playedCard
-							if currentPlayer == _player:
-								passivePlayer = _foe
-							else:
-								passivePlayer = _player
-
-							try:
-								oppmonster = None
-								monster.effect.resolve(currentPlayer, passivePlayer, monster,
-													   oppmonster, currentPlayer.gy, passivePlayer.gy, currentPlayer)
-								effectCheck = 1
-							except IndexError:
-								oppmonster = None
-								monster.effect.resolve(currentPlayer, passivePlayer, monster,
-													   oppmonster, currentPlayer.gy, passivePlayer.gy, currentPlayer)
-								effectCheck = 1
-					# except AttributeError:
-						# effectCheck = 1
-						# pass
-					except IndexError:
-						pass
-
-				else:
-					pass
+				playedCard.ResolveEffect(effTrigger.summon, currentPlayer, passivePlayer, playedCard,
+				                           None, currentPlayer.gy, passivePlayer.gy, currentPlayer)
 
 		elif selection == 2:  # [2] Check Hand
 			currentPlayer.checkHand()
 			pass
 
 		elif selection == 3:  # [3] Check Field
-			print("{}'s Field:".format(_player.name))
+			print("{}'s Field:".format(currentPlayer.name))
 			currentPlayer.checkField()
-			print("{}'s Field:".format(_foe.name))
+			print("{}'s Field:".format(passivePlayer.name))
 			passivePlayer.checkField()
 
 		elif selection == 4:  # [4] Check your Graveyard
@@ -1147,11 +1132,11 @@ def turnMenu(currentPlayer: duelist, passivePlayer: duelist):
 
 		# Check hand size limit
 
-		if _player.hand.__len__() > 6:
-			while _player.hand.__len__() > 6:
+		if currentPlayer.hand.__len__() > 6:
+			while currentPlayer.hand.__len__() > 6:
 				print("--------------------------------------")
-				print("You have too many card in your hand ({}), the hand size limit is 6".format(_player.hand.__len__()))
-				_player.effectdiscardCard(currentPlayer, passivePlayer, None, None, currentPlayer.gy, passivePlayer.gy, currentPlayer)
+				print("You have too many card in your hand ({}), the hand size limit is 6".format(currentPlayer.hand.__len__()))
+				currentPlayer.effectdiscardCard(currentPlayer, passivePlayer, None, None, currentPlayer.gy, passivePlayer.gy, currentPlayer)
 
 		print("\n" * 50)
 
@@ -1300,36 +1285,23 @@ def battleMenu(turnPlayer: duelist, passivePlayer: duelist):
 				damage = atkMon.atkPoints
 				atkTarget = None
 
+			##TODO Fix logic here for damage calculatiuon
 			# Monster Effect: Attacker (Returns Damage)
-			try:
-				if atkMon.trigger.name == "attack" or atkMon.trigger.name == "battle" and returnEffectChecker(atkMon):
-					monster = atkMon
-					if atkTarget is not None:
-						oppmonster = atkTarget
-						damage = monster.effect.resolve(turnPlayer, passivePlayer, monster,
-														oppmonster, turnPlayer.gy, passivePlayer.gy, turnPlayer)
-					else:
-						damage = monster.effect.resolve(turnPlayer, passivePlayer, monster,
-														None, turnPlayer.gy, passivePlayer.gy, turnPlayer)
-			except AttributeError:
-				pass
-			except IndexError:
-				pass
+			if atkMon.checkResolve(effTrigger.attack) and returnEffectChecker(atkMon, effTrigger.destructionBat):
+				damage = atkMon.ResolveEffect(effTrigger.attack, turnPlayer, passivePlayer, atkMon, atkTarget, turnPlayer.gy, passivePlayer.gy, turnPlayer)
+
+			if atkMon.checkResolve(effTrigger.battle) and returnEffectChecker(atkMon, effTrigger.destructionBat):
+				damage = atkMon.ResolveEffect(effTrigger.battle, turnPlayer, passivePlayer, atkMon, atkTarget, turnPlayer.gy, passivePlayer.gy, turnPlayer)
+
 
 			# Monster Effect: Defender (Returns Damage)
 			try:
-				if atkTarget.trigger.name == "defend" or atkTarget.trigger.name == "battle" and returnEffectChecker(atkTarget):
-					monster = atkTarget
-					if atkTarget is not None:
-						oppmonster = atkMon
-						damage = monster.effect.resolve(passivePlayer, turnPlayer, monster,
-														oppmonster, turnPlayer.gy, passivePlayer.gy, turnPlayer)
-					else:
-						damage = monster.effect.resolve(passivePlayer, turnPlayer, monster,
-														None, turnPlayer.gy, passivePlayer.gy, turnPlayer)
-			except AttributeError:
-				pass
-			except IndexError:
+				if atkTarget.checkResolve(effTrigger.defend) and returnEffectChecker(atkTarget, effTrigger.destructionBat):
+					damage = atkTarget.ResolveEffect(effTrigger.defend, passivePlayer, turnPlayer, atkTarget, atkMon, passivePlayer.gy, turnPlayer.gy, turnPlayer)
+
+				if atkTarget.checkResolve(effTrigger.battle) and returnEffectChecker(atkTarget, effTrigger.destructionBat):
+					damage = atkTarget.ResolveEffect(effTrigger.battle, passivePlayer, turnPlayer, atkTarget, atkMon, passivePlayer.gy, turnPlayer.gy, turnPlayer)
+			except (AttributeError, TypeError, UnboundLocalError):
 				pass
 
 			if turnPlayer.lifepoints == 0 or passivePlayer.lifepoints == 0:
@@ -1358,8 +1330,8 @@ def battleMenu(turnPlayer: duelist, passivePlayer: duelist):
 
 				try:
 					oppmonster = atkTarget
-					if oppmonster.trigger.name == "destructionBat" and returnEffectChecker(oppmonster):
-						result = oppmonster.effect.resolve(passivePlayer, turnPlayer, oppmonster, atkMon, passivePlayer.gy, turnPlayer.gy, turnPlayer)
+					if oppmonster.checkResolve(effTrigger.destructionBat) and returnEffectChecker(oppmonster, effTrigger.destructionBat):
+						result = oppmonster.ResolveEffect(effTrigger.destructionBat, passivePlayer, turnPlayer, atkTarget, atkMon, passivePlayer.gy, turnPlayer.gy, turnPlayer)
 						if result:
 							pass
 						else:
@@ -1387,8 +1359,8 @@ def battleMenu(turnPlayer: duelist, passivePlayer: duelist):
 				else:
 					atkTarget = object
 
-				if atkMon.trigger.name == "destructionBat" and returnEffectChecker(atkMon):
-					result = atkMon.effect.resolve(turnPlayer, passivePlayer, atkMon, atkTarget, turnPlayer.gy, passivePlayer.gy, turnPlayer)
+				if atkMon.checkResolve(effTrigger.destructionBat) and returnEffectChecker(atkMon, effTrigger.destructionBat):
+					result = atkMon.ResolveEffect(effTrigger.destructionBat, turnPlayer, passivePlayer, atkMon, atkTarget, turnPlayer.gy, passivePlayer.gy, turnPlayer)
 
 					if result == 0:
 						turnPlayer.destroyMonsterBat(atkMon, turnPlayer, passivePlayer, atkMon, atkTarget, turnPlayer.gy, passivePlayer.gy, turnPlayer)
@@ -1412,8 +1384,8 @@ def battleMenu(turnPlayer: duelist, passivePlayer: duelist):
 				try:
 					if atkMon and atkTarget:
 
-						if atkTarget.trigger.name == "destructionBat" and returnEffectChecker(atkTarget):
-							result = atkTarget.effect.resolve(turnPlayer, passivePlayer, atkTarget, atkMon, turnPlayer.gy, passivePlayer.gy, turnPlayer)
+						if atkTarget.checkResolve(effTrigger.destructionBat) and returnEffectChecker(atkTarget, effTrigger.destructionBat):
+							result = atkTarget.ResolveEffect(effTrigger.destructionBat, passivePlayer, turnPlayer, atkTarget, atkMon, passivePlayer.gy, turnPlayer.gy, turnPlayer)
 
 							if result == 0:
 								passivePlayer.destroyMonsterBat(atkTarget, turnPlayer, passivePlayer, atkTarget, atkMon, turnPlayer.gy, passivePlayer.gy, turnPlayer)
@@ -1422,8 +1394,8 @@ def battleMenu(turnPlayer: duelist, passivePlayer: duelist):
 						else:
 							passivePlayer.destroyMonsterBat(atkTarget, turnPlayer, passivePlayer, atkTarget, atkMon, turnPlayer.gy, passivePlayer.gy, turnPlayer)
 
-						if atkMon.trigger.name == "destructionBat":
-							result = atkMon.effect.resolve(turnPlayer, passivePlayer, atkMon, atkTarget, turnPlayer.gy, passivePlayer.gy, turnPlayer)
+						if atkMon.checkResolve(effTrigger.destructionBat) and returnEffectChecker(atkMon, effTrigger.destructionBat):
+							result = atkMon.ResolveEffect(effTrigger.destructionBat, turnPlayer, passivePlayer, atkMon, atkTarget, turnPlayer.gy, passivePlayer.gy, turnPlayer)
 
 							if result == 0:
 								turnPlayer.destroyMonsterBat(atkMon, turnPlayer, passivePlayer, atkMon, atkTarget, turnPlayer.gy, passivePlayer.gy, turnPlayer)
