@@ -203,6 +203,28 @@ def cardSetup():
 	evigishkiPsychlone = cardTest("Evigishki Psychlone", 2000, 1, [DestroyBat])
 	evigishkiPsychlone2 = deepcopy(evigishkiPsychlone)
 
+	SpecialHeraldDeck = {"effect": specialHeraldDeck,
+	                     "effectTrigger": effTrigger.summon}
+	SearchHeraldDeck = {"effect": effectHeraldSearch,
+	                    "effectTrigger": effTrigger.summon}
+	SearchAgentDeck = {"effect": effectAgentSearch ,
+	                   "effectTrigger": effTrigger.summon}
+	SpecialAgentDeck = {"effect": specialAgentDeck,
+	                    "effectTrigger": effTrigger.graveyard}
+	Restore2000 = {"effect": restore2000,
+	               "effectTrigger": effTrigger.graveyard}
+	HeraldGain400 = {"effect": heraldGain400,
+	                 "effectTrigger": effTrigger.summon}
+	DrawForDiff = {"effect": DifferenceDraw,
+	               "effectTrigger": effTrigger.summon}
+	Gain1000forHand = {"effect": RestoreLPForHand1000,
+	                 "effectTrigger": effTrigger.summon}
+	GainDifference = {"effect": gainDifference,
+	                  "effectTrigger": effTrigger.summon}
+	SpecialHand = {"effect": specialfromHand,
+	               "effectTrigger": effTrigger.summon}
+
+
 	# Herald Deck
 	global orangeHerald
 	global orangeHerald2
@@ -224,25 +246,25 @@ def cardSetup():
 	global heraldPerfection2
 	global masterHyperion
 	global masterHyperion2
-	orangeHerald = card("Herald of Orange Light", 1000, 0, specialHeraldDeck, effTrigger.summon, effectDescBuilder(effTrigger.summon, specialHeraldDeck.desc))
+	orangeHerald = cardTest("Herald of Orange Light", 1000, 0, [SpecialHeraldDeck])
 	orangeHerald2 = deepcopy(orangeHerald)
-	purpleHerald = card("Herald of Purple Light", 800, 0, matchAttack, effTrigger.battle, effectDescBuilder(effTrigger.battle, matchAttack.desc))
+	purpleHerald = cardTest("Herald of Purple Light", 1800, 0, [HeraldGain400, PlayerDraw1Grav])
 	purpleHerald2 = deepcopy(purpleHerald)
-	arcHerald = card("Herald of Arc Light", 1800, 0, Restore2000, effTrigger.summon, effectDescBuilder(effTrigger.summon, Restore2000.desc))
+	arcHerald = cardTest("Herald of Arc Light", 800, 0, [SearchAgentDeck, Restore2000])
 	arcHerald2 = deepcopy(arcHerald)
-	dawnHerald = card("Herald of the Dawn", 0, 0, doubleSummon, effTrigger.summon, effectDescBuilder(effTrigger.summon, doubleSummon.desc))
+	dawnHerald = cardTest("Herald of the Dawn", 0, 0, [DoubleSummon])
 	dawnHerald2 = deepcopy(dawnHerald)
-	agentEarth = card("Agent of Mystery: Earth", 1200, 0, effectAgentSearch, effTrigger.summon, effectDescBuilder(effTrigger.summon, effectAgentSearch.desc))
+	agentEarth = cardTest("Agent of Mystery: Earth", 1200, 0, [SearchHeraldDeck, SpecialAgentDeck])
 	agentEarth2 = deepcopy(agentEarth)
-	agentVenus = card("Agent of Creation: Venus", 1600, 0, specialAgentDeck, effTrigger.summon, effectDescBuilder(effTrigger.summon, specialAgentDeck.desc))
+	agentVenus = cardTest("Agent of Creation: Venus", 1600, 0, [DrawForDiff])
 	agentVenus2 = deepcopy(agentVenus)
-	agentMars = card("Agent of Force: Mars", 1800, 0, DifferenceDraw, effTrigger.summon, effectDescBuilder(effTrigger.summon, DifferenceDraw.desc))
+	agentMars = cardTest("Agent of Force: Mars", 1800, 0, [DestroySum])
 	agentMars2 = deepcopy(agentMars)
-	agentSaturn = card("Agent of Judgment: Saturn", 2400, 1, RestoreLPForHand1000, effTrigger.summon, effectDescBuilder(effTrigger.summon, RestoreLPForHand1000.desc))
+	agentSaturn = cardTest("Agent of Judgment: Saturn", 2400, 1, [Gain1000forHand])
 	agentSaturn2 = deepcopy(agentSaturn)
-	heraldPerfection = card("Herald of Perfection", 2800, 1, gainDifference, effTrigger.summon, effectDescBuilder(effTrigger.summon, gainDifference.desc))
+	heraldPerfection = cardTest("Herald of Perfection", 2800, 1, [GainDifference])
 	heraldPerfection2 = deepcopy(heraldPerfection)
-	masterHyperion = card("Master Hyperion", 2800, 1, specialfromHand, effTrigger.summon, effectDescBuilder(effTrigger.summon, specialfromHand.desc))
+	masterHyperion = cardTest("Master Hyperion", 2800, 1, [SpecialHand])
 	masterHyperion2 = deepcopy(masterHyperion)
 
 	global darkMagician

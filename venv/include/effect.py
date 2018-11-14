@@ -931,8 +931,8 @@ StormriderStealMonster = controlStealMonster("If you control 2 'Stormrider' card
 tributeStormtoSteal = tributetoSteal("You can tribute any number of 'Stormrider' or 'Stormbird' Cards; Switch player control of the identical amount of opponents monsters", "Stormrider", "Stormbird")
 
 # Restoration Effects
-Restore1000 = effectRestore("Restore Life Points by 1000", 1000)
-Restore2000 = effectRestore("Restore Life Points by 2000", 2000)
+restore1000 = effectRestore("Restore Life Points by 1000", 1000)
+restore2000 = effectRestore("Restore Life Points by 2000", 2000)
 RestoreLPForHand1000 = gainLPforHand("Restore 1000 Life Points for Every card in your hand", 1000)
 
 # Damaging Effects
@@ -975,6 +975,7 @@ gainDifference = gainAttackDifference("Gain Atk Points equal to the difference b
 grant800 = grantAttack("Grant a monster on your field 800 Attack (not including this card)", 800)
 darkMagicianGain500 = gainAtkforInstance("Gain 400 attack for each 'Dark Magician' monster on the field or in your Graveyard", "Dark Magician", 400)
 evigishkiGain400 = gainAtkforInstance("Gain 400 attack for each 'Evigishki' monster on the field or in the graveyard", "Evigishki", 400)
+heraldGain400 = gainAtkforInstance("Gain 400 attack for each 'Herald' monster on the field or in the graveyard", "Herald", 400)
 halfAtkDraw2 = halfAttackedDraw("Half the attacking monsters attack; Draw Two Cards", 2)
 Atk0 = zeroAttack("Reduce target monster's attack to 0", 0)
 tribtoGrantAtk = tributetoGrantAttack("You can tribute this card: Grant another monster this monsters ATK points", 0)
