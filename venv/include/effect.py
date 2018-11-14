@@ -177,13 +177,14 @@ class effectCrash(effect):
 		print("--------------------------------------")
 		time.sleep(1)
 
-		effectMon.atkPoints = oppMon.atkPoints
+		try:
+			effectMon.atkPoints = oppMon.atkPoints
+			print("{} Copies the opponents attack!".format(effectMon.name))
+			time.sleep(0.5)
+			return 0
+		except (AttributeError, UnboundLocalError):
+			pass
 
-		print("{} Copies the opponents attack!".format(effectMon.name))
-
-		time.sleep(0.5)
-
-		return 0
 
 class playerDraw(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
@@ -695,9 +696,9 @@ class gainAtkforInstance(effect):
 			print("No Attack Gained")
 
 		# Check if a Battle Effect or not
-		if effectMon.trigger.name == "summon":
+		if effectMon.checkResolve(effTrigger.summon):
 			return
-		elif effectMon.trigger.name == "battle":
+		if effectMon.checkResolve(effTrigger.battle):
 			damage = effectMon.atkPoints - oppMon.atkPoints
 			return damage
 
@@ -916,8 +917,8 @@ class drawForDifference(effect):
 # Define the effects used
 
 # Drawing Effects
-PlayerDraw1 = playerDraw("Draw One Card", 1)
-PlayerDraw2 = playerDraw("Draw Two Cards", 2)
+playerDraw1 = playerDraw("Draw One Card", 1)
+playerDraw2 = playerDraw("Draw Two Cards", 2)
 controlStormriderDraw2 = controlDiscardDraw("If you control a Stormrider; Discard 1 card; Draw 2 cards", "Stormrider", 2)
 DifferenceDraw = drawForDifference("Draw one card per 1000 point difference between both players lifepoints)", 0)
 
@@ -950,8 +951,8 @@ oppDisc2 = effectOpponentDiscard("Opponent Discards Two Cards", 2)
 
 # Battle Phase Specific Effects
 matchAttack = effectCrash("Copies Opponents Monsters Attack", 0)
-battleImmune = noBattleDestruction("Is Not Destroyed", 0)
-effectImmune = noEffectDestruction("Is Not Destroyed", 0)
+battleImmune = noBattleDestruction("Is Not Destroyed by that battle", 0)
+effectImmune = noEffectDestruction("Is Not Destroyed by that effect", 0)
 
 # Card Searching Effects
 effectSearch = searchDeck("Add a card from Deck to Hand", 0)
@@ -973,6 +974,7 @@ gain1000 = gainAttack("Gains 1000 attack before battle. Loses attack upon destru
 gainDifference = gainAttackDifference("Gain Atk Points equal to the difference between your lifepoints", 0)
 grant800 = grantAttack("Grant a monster on your field 800 Attack (not including this card)", 800)
 darkMagicianGain500 = gainAtkforInstance("Gain 400 attack for each 'Dark Magician' monster on the field or in your Graveyard", "Dark Magician", 400)
+evigishkiGain400 = gainAtkforInstance("Gain 400 attack for each 'Evigishki' monster on the field or in the graveyard", "Evigishki", 400)
 halfAtkDraw2 = halfAttackedDraw("Half the attacking monsters attack; Draw Two Cards", 2)
 Atk0 = zeroAttack("Reduce target monster's attack to 0", 0)
 tribtoGrantAtk = tributetoGrantAttack("You can tribute this card: Grant another monster this monsters ATK points", 0)

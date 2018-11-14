@@ -363,7 +363,7 @@ class duelist:
 			return
 
 	# Special Summon from Graveyard
-	def ssGraveyard(self, monster):
+	def ssGraveyard(self):
 
 		if self.gy.__len__() == 0:
 			print("Graveyard is Empty")

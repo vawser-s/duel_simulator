@@ -16,7 +16,7 @@ def cardSetup():
 	                "effectTrigger": effTrigger.summon}
 	EffectCyberseSearch = {"effect"       : effectCyberseSearch,
 	                       "effectTrigger": effTrigger.summon}
-	PlayerDraw1Grav = {"effect"       : PlayerDraw1,
+	PlayerDraw1Grav = {"effect"       : playerDraw1,
 	                   "effectTrigger": effTrigger.graveyard}
 	EffectCodeSearch = {"effect"       : effectCodeSearch,
 	                    "effectTrigger": effTrigger.summon}
@@ -100,8 +100,6 @@ def cardSetup():
 	Millie = {"effect"       : Mill,
 	            "effectTrigger": effTrigger.summon}
 
-
-
 	# Vampire Deck
 	global vampireFamiliar
 	global vampireFamiliar2
@@ -144,6 +142,25 @@ def cardSetup():
 	zombieMaster = cardTest("Zombie Master", 1800, 0, [DestroySum])
 	zombieMaster2 = deepcopy(zombieMaster)
 
+	Battle500 = {"effect"       : gain500,
+	                    "effectTrigger": effTrigger.battle}
+	PlayerDraw2Battle = {"effect"       : playerDraw2,
+	                    "effectTrigger": effTrigger.battle}
+	EvigishkiSearch = {"effect": effectEvigishkiSearch,
+	                "effectTrigger": effTrigger.summon}
+	MatchAttack = {"effect": matchAttack,
+	               "effectTrigger": effTrigger.battle}
+	SpecialGishkiDeck = {"effect"       : specialGishkiDeck,
+	                    "effectTrigger": effTrigger.battle}
+	SearchGishkiAquamirror = {"effect": effectGishkiMirrorSearch,
+	                          "effectTrigger": effTrigger.summon}
+	Battle1000 = {"effect"       : gain1000,
+	             "effectTrigger": effTrigger.battle}
+	EvigishkiGain400 = {"effect": evigishkiGain400,
+	                    "effectTrigger": effTrigger.summon}
+	DestroyBat = {"effect": Destroy,
+	              "effectTrigger": effTrigger.battle}
+
 	# Gishki Deck
 	global gishkiBeast
 	global gishkiBeast2
@@ -165,25 +182,25 @@ def cardSetup():
 	global evigishkiGustKraken2
 	global evigishkiPsychlone
 	global evigishkiPsychlone2
-	gishkiBeast = card("Gishki Beast", 1500, 0, gain500, effTrigger.battle, effectDescBuilder(effTrigger.battle, gain500.desc))
+	gishkiBeast = cardTest("Gishki Beast", 1500, 0, [Battle500])
 	gishkiBeast2 = deepcopy(gishkiBeast)
-	gishkiAbyss = card("Gishki Abyss", 800, 0, PlayerDraw2, effTrigger.battle, effectDescBuilder(effTrigger.battle, PlayerDraw2.desc))
+	gishkiAbyss = cardTest("Gishki Abyss", 800, 0, [PlayerDraw2Battle])
 	gishkiAbyss2 = deepcopy(gishkiAbyss)
-	gishkiAquamirror = card("Gishki Aquamirror", 0, 0, doubleSummon, effTrigger.summon, effectDescBuilder(effTrigger.summon, doubleSummon.desc))
+	gishkiAquamirror = cardTest("Gishki Aquamirror", 0, 0, [DoubleSummon])
 	gishkiAquamirror2 = deepcopy(gishkiAquamirror)
-	gishkiShadow = card("Gishki Shadow", 1200, 0, tribtoGrantAtk, effTrigger.summon, effectDescBuilder(effTrigger.summon, tribtoGrantAtk.desc))
+	gishkiShadow = cardTest("Gishki Shadow", 1200, 0, [EvigishkiSearch, MatchAttack])
 	gishkiShadow2 = deepcopy(gishkiShadow)
-	visionGishki = card("Vision Gishki ", 1800, 0, specialGishkiDeck, effTrigger.battle, effectDescBuilder(effTrigger.battle, specialGishkiDeck.desc))
+	visionGishki = cardTest("Vision Gishki ", 1800, 0, [SpecialGishkiDeck])
 	visionGishki2 = deepcopy(visionGishki)
-	gishkiAriel = card("Gishki Ariel", 1200, 0, bounceMonster, effTrigger.summon, effectDescBuilder(effTrigger.summon, bounceMonster.desc))
+	gishkiAriel = cardTest("Gishki Ariel", 1200, 0, [MonsterBounce])
 	gishkiAriel2 = deepcopy(gishkiAriel)
-	evigishkiLevianima = card("Evigishki Levianima", 2200, 1, effectGishkiSearch, effTrigger.summon, effectDescBuilder(effTrigger.summon, effectGishkiSearch.desc))
+	evigishkiLevianima = cardTest("Evigishki Levianima", 2200, 1, [SearchGishkiAquamirror, Battle500])
 	evigishkiLevianima2 = deepcopy(evigishkiLevianima)
-	evigishkiSoulOgre = card("Evigishki Soul Ogre", 2800, 1, gain1000, effTrigger.battle, effectDescBuilder(effTrigger.battle, gain1000.desc))
+	evigishkiSoulOgre = cardTest("Evigishki Soul Ogre", 2800, 1, [Battle1000])
 	evigishkiSoulOgre2 = deepcopy(evigishkiSoulOgre)
-	evigishkiGustKraken = card("Evigishki Gustkraken", 2500, 1, specialGishkiHand, effTrigger.battle, effectDescBuilder(effTrigger.battle, specialGishkiHand.desc))
+	evigishkiGustKraken = cardTest("Evigishki Gustkraken", 2500, 1, [EvigishkiGain400])
 	evigishkiGustKraken2 = deepcopy(evigishkiGustKraken)
-	evigishkiPsychlone = card("Evigishki Psychlone", 2000, 1, Destroy, effTrigger.battle, effectDescBuilder(effTrigger.battle, Destroy.desc))
+	evigishkiPsychlone = cardTest("Evigishki Psychlone", 2000, 1, [DestroyBat])
 	evigishkiPsychlone2 = deepcopy(evigishkiPsychlone)
 
 	# Herald Deck
@@ -978,26 +995,21 @@ def turnMenu(currentPlayer: duelist, passivePlayer: duelist):
 
 	# DRAW PHASE
 	if firstTurn == 0:
-		_player.draw(0)
+		_player.draw(4)
+		# _player.draw(0)
 
 		# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
 		# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
 		# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
 		# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
-		_player.hand.append(vampireFamiliar)
-		_player.hand.append(vampireSucker)
-		_player.hand.append(vampireFraulein)
-		_player.hand.append(vampireGrace)
-		_player.hand.append(vampireGenesis)
-		_player.hand.append(mezuki)
-		_player.hand.append(unizombie)
-		_foe.hand.append(zombieMaster)
+		# _player.hand.append()
+		# _foe.hand.append()
 		# -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------
 		# -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------
 		# -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------
 		# -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------
 
-		_foe.draw(4)
+		_foe.draw(3)
 
 	else:
 		currentPlayer.draw(1)
@@ -1043,8 +1055,6 @@ def turnMenu(currentPlayer: duelist, passivePlayer: duelist):
 
 		# applies applicable action to selection
 		if selection == 1:  # [1] Play a Card
-
-			nSummon = int(returnNormalSummon())
 
 			# Play the card, and return whether a card was actually played (can just return)
 			result = currentPlayer.playCard()
@@ -1318,10 +1328,7 @@ def battleMenu(turnPlayer: duelist, passivePlayer: duelist):
 			if damage == -1:
 				atkMon.attacked = 1
 
-				try:
-					damage = atkMon.atkPoints
-				except (UnboundLocalError, ValueError):
-					damage = 0
+				damage = 0
 
 			if damage > 0:
 				atkMon.attacked = 1
@@ -1379,6 +1386,12 @@ def battleMenu(turnPlayer: duelist, passivePlayer: duelist):
 					pass
 				else:
 					atkTarget = None
+
+				# Check if the attacker is on the field
+				if atkMon in passivePlayer.monfield:
+					pass
+				else:
+					atkMon = None
 
 				# destroy both monsters if they exist
 				try:
