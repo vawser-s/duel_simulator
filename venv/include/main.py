@@ -348,7 +348,6 @@ def cardSetup():
 	StormRiderGain400 = {"effect": stormRiderGain400,
 	                        "effectTrigger": effTrigger.summon}
 
-
 	# Storm Deck
 	global stormRiderAllyson
 	global stormRiderAllyson2
@@ -390,6 +389,31 @@ def cardSetup():
 	stormBirdGale2 = deepcopy(stormBirdGale)
 	stormBirdAce = card("Ace: Storm Bird", 2000, 1, [StormBirdGain400])
 	stormBirdAce2 = deepcopy(stormBirdAce)
+
+	global fireKingArvata
+	global fireKingYaksha
+	global fireKingGarunix
+	global fireKingBarong
+	global fireFistBear
+	global fireFistHawk
+	global fireFistKarin
+	global fireFistGorilla
+	global fireformationTensu
+	global fireFormationTenki
+	global fireformationGyokkou
+	global fireformationSeito
+	fireKingArvata = card("Fire King Arvata", 1800, 0, [])  # Special monster from Grave | Draw Card
+	fireKingYaksha = card("Fire King Yaksha", 1600, 0, [])  # Special Summons itself from hand | Destroys a card
+	fireKingGarunix = card("Fire King High Avatar Garunix", 2700, 1, [])  # Destroys all monsters on board, summons next turn
+	fireKingBarong = card("Fire King Barong", 1800, 0, [])  # Special Summons itself from hand | Searches
+	fireFistBear = card("Fire Fist Bear", 1800, 0, [])  # Special Summons a Formation
+	fireFistHawk = card("Fire Fist Hawk", 200, 0, [])  # Grants all Fire monsters 500 Atk | Draw
+	fireFistGorilla = card("Fire Fist Gorilla", 1800, 0, [])  # When destroy monster by battle, Special Fire Fist from deck
+	fireFistKarin = card("Fire Fist Karin", 1800, 1, [])  # When destroy monster by battle, grant all Fire monsters on field 500 Atk
+	fireformationTensu = card("Fire Formation Tensu", 0, 0, [DoubleSummon])
+	fireFormationTenki = card("Fire-Formation Tenki", 0, 0, []) # Search a fire Fist | Grant ATK in grave
+	fireformationGyokkou = card("Fire-Formation Gyokkou", 0, 0, []) # tribute to ... | Grant ATK in grave
+	fireformationSeito = card("Fire-Formation Seito", 0, 0, [])  # if 4 fire different fire fist monsters in grave, Special summon 4 fire fists for Tribute | Grant ATK in grave
 
 # Prints Deck List before they are assigned to a player
 def printDeckList(DeckList: list):
