@@ -14,11 +14,11 @@ def cardSetup():
 
 	DoubleSummon = {"effect"       : doubleSummon,
 	                "effectTrigger": effTrigger.summon}
-	EffectCyberseSearch = {"effect"       : effectCyberseSearch,
+	SpecialCodeDeck = {"effect"       : specialCodeDeck,
 	                       "effectTrigger": effTrigger.summon}
 	PlayerDraw1Grav = {"effect"       : playerDraw1,
 	                   "effectTrigger": effTrigger.graveyard}
-	EffectCodeSearch = {"effect"       : effectCodeSearch,
+	EffectCyberseSearch = {"effect"       : effectCyberseSearch,
 	                    "effectTrigger": effTrigger.summon}
 	SpecialCyberseHand = {"effect"       : specialCyberseHand,
 	                      "effectTrigger": effTrigger.summon}
@@ -58,8 +58,8 @@ def cardSetup():
 	global dualAssembwurm2
 	global codeDriver
 	global codeDriver2
-	microCoder = cardTest("Micro Coder", 300, 0, [EffectCyberseSearch, PlayerDraw1Grav])
-	codeGenerator = cardTest("Code Generator", 1300, 0, [EffectCodeSearch])
+	microCoder = cardTest("Micro Coder", 300, 0, [SpecialCodeDeck, PlayerDraw1Grav])
+	codeGenerator = cardTest("Code Generator", 1300, 0, [EffectCyberseSearch])
 	codeRadiator = cardTest("Code Radiator", 1600, 0, [DoubleSummon])
 	ladyDebug = cardTest("Lady Debug", 1000, 0, [SpecialCyberseHand])
 	cyberseGadget = cardTest("Cyberse Gadget", 1400, 0, [DestroySum])
@@ -224,7 +224,6 @@ def cardSetup():
 	SpecialHand = {"effect": specialfromHand,
 	               "effectTrigger": effTrigger.summon}
 
-
 	# Herald Deck
 	global orangeHerald
 	global orangeHerald2
@@ -267,12 +266,34 @@ def cardSetup():
 	masterHyperion = cardTest("Master Hyperion", 2800, 1, [SpecialHand])
 	masterHyperion2 = deepcopy(masterHyperion)
 
+	EffectImmune = {"effect": effectImmune,
+	                "effectTrigger": effTrigger.destructionEff}
+	DarkMagicianGain400 = {"effect": darkMagicianGain400,
+	                "effectTrigger": effTrigger.summon}
+	SpecialDarkMagicianHand = {"effect": specialDarkMagicianHand,
+	                "effectTrigger": effTrigger.summon}
+	SpecialMagicianGirlHand = {"effect": specialMagicianGirlHand,
+	                "effectTrigger": effTrigger.summon}
+	HalfAtk = {"effect": halfAtk,
+	                "effectTrigger": effTrigger.defend}
+	HalfAtkMsg = {"effect": halfAtkMsg,
+	                "effectTrigger": effTrigger.defend}
+	PlayerDraw2Defend = {"effect": playerDraw2,
+	                "effectTrigger": effTrigger.defend}
+	SpecialGirlLess2000 = {"effect": specialGirlLess2000,
+	                "effectTrigger": effTrigger.summon}
+	SpecialDarkMagicianDeck = {"effect": specialDarkMagicianDeck,
+	                "effectTrigger": effTrigger.summon}
+	Atk0 = {"effect": atk0,
+	        "effectTrigger": effTrigger.summon}
+
+	# Magician Deck
 	global darkMagician
 	global darkMagician2
 	global darkGMagician
 	global darkGMagician2
-	global magicianRod
-	global magicianRod2
+	global lemonGirl
+	global lemonGirl2
 	global magicianRobe
 	global magicianRobe2
 	global chocolateGirl
@@ -287,27 +308,48 @@ def cardSetup():
 	global ebonIllusion2
 	global magiMagiGirl
 	global magiMagiGirl2
-	darkMagician = card("Dark Magician", 2500, 1, effectImmune, effTrigger.destructionEff, effectDescBuilder(effTrigger.destructionEff, effectImmune.desc))
+	darkMagician = cardTest("Dark Magician", 2500, 1, [EffectImmune])
 	darkMagician2 = deepcopy(darkMagician)
-	darkGMagician = card("Dark Magician Girl", 2300, 1, darkMagicianGain500, effTrigger.summon, effectDescBuilder(effTrigger.summon, darkMagicianGain500.desc))
+	darkGMagician = cardTest("Dark Magician Girl", 2300, 1, [DarkMagicianGain400])
 	darkGMagician2 = deepcopy(darkGMagician)
-	magicianRod = card("Magician's Rod", 1600, 0, specialDarkMagicianHand, effTrigger.summon, effectDescBuilder(effTrigger.summon, specialDarkMagicianHand.desc))
-	magicianRod2 = deepcopy(magicianRod)
-	magicianRobe = card("Magician's Robe", 800, 0, doubleSummon, effTrigger.summon, effectDescBuilder(effTrigger.summon, doubleSummon.desc))
+	lemonGirl = cardTest("Lemon Magician Girl", 1600, 0, [SpecialMagicianGirlHand])
+	lemonGirl2 = deepcopy(lemonGirl)
+	magicianRobe = cardTest("Magician's Robe", 800, 0, [DoubleSummon])
 	magicianRobe2 = deepcopy(magicianRobe)
-	chocolateGirl = card("Chocolate Magician Girl", 1800, 0, specialMagicianGirlHand, effTrigger.summon, effectDescBuilder(effTrigger.summon, specialMagicianGirlHand.desc))
+	chocolateGirl = cardTest("Chocolate Magician Girl", 1800, 0, [SpecialDarkMagicianHand])
 	chocolateGirl2 = deepcopy(chocolateGirl)
-	appleGirl = card("Apple Magician Girl", 1000, 0, halfAtkDraw2, effTrigger.defend, effectDescBuilder(effTrigger.defend, halfAtkDraw2.desc))
+	appleGirl = cardTest("Apple Magician Girl", 600, 0, [PlayerDraw2Defend, HalfAtk])
 	appleGirl2 = deepcopy(appleGirl)
-	berryGirl = card("Berry Magician Girl", 1200, 0, specialGirlLess2000, effTrigger.summon, effectDescBuilder(effTrigger.summon, specialGirlLess2000.desc))
+	berryGirl = cardTest("Berry Magician Girl", 1200, 0, [SpecialGirlLess2000])
 	berryGirl2 = deepcopy(berryGirl)
-	kiwiGirl = card("Kiwi Magician Girl", 300, 0, bounceMonster, effTrigger.summon, effectDescBuilder(effTrigger.summon, bounceMonster.desc))
+	kiwiGirl = cardTest("Kiwi Magician Girl", 300, 0, [DestroySum, HalfAtkMsg])
 	kiwiGirl2 = deepcopy(kiwiGirl)
-	ebonIllusion = card("Ebon Illusion Magician", 2400, 1, specialDarkMagicianDeck, effTrigger.summon, effectDescBuilder(effTrigger.summon, specialDarkMagicianDeck.desc))
+	ebonIllusion = cardTest("Ebon Illusion Magician", 2000, 1, [SpecialDarkMagicianDeck])
 	ebonIllusion2 = deepcopy(ebonIllusion)
-	magiMagiGirl = card("Magi Magician Girl", 2600, 1, Atk0, effTrigger.defend, effectDescBuilder(effTrigger.defend, Atk0.desc))
+	magiMagiGirl = cardTest("Magi Magician Girl", 2600, 1, [Atk0])
 	magiMagiGirl2 = deepcopy(magiMagiGirl)
 
+	SpecialStormBirdHand = {"effect": specialStormBirdHand,
+	                        "effectTrigger": effTrigger.summon}
+	SpecialStormRiderDeck = {"effect": specialStormRiderDeck,
+	                        "effectTrigger": effTrigger.summon}
+	DiscSpecStormGY = {"effect": discSpecStormGY,
+	                        "effectTrigger": effTrigger.summon}
+	ControlStormriderDraw2 = {"effect": controlStormriderDraw2,
+	                        "effectTrigger": effTrigger.summon}
+	ControlStormriderDestroy = {"effect": controlStormriderDestroy,
+	                        "effectTrigger": effTrigger.summon}
+	GrantStormriderAttack = {"effect": grantStormriderAttack,
+	                        "effectTrigger": effTrigger.summon}
+	TribToSpecialStormBird = {"effect": tribToSpecialStormBird,
+	                        "effectTrigger": effTrigger.summon}
+	StormBirdGain400 = {"effect": stormBirdGain400,
+	                        "effectTrigger": effTrigger.summon}
+	StormRiderGain400 = {"effect": stormRiderGain400,
+	                        "effectTrigger": effTrigger.summon}
+
+
+	# Storm Deck
 	global stormRiderAllyson
 	global stormRiderAllyson2
 	global stormBirdZephris
@@ -324,94 +366,30 @@ def cardSetup():
 	global stormRiderNess2
 	global stormBirdGale
 	global stormBirdGale2
-	global stormBringerAlizeh
-	global stormBringerAlizeh2
-	global stormGodMonsoon
-	global stormGodMonsoon2
-	stormRiderAllyson = card("Allyson: Stormrider", 800, 0, specialStormBirdHand, effTrigger.summon, effectDescBuilder(effTrigger.summon, specialStormBirdHand.desc))
+	global stormRiderMason
+	global stormRiderMason2
+	global stormBirdAce
+	global stormBirdAce2
+	stormRiderAllyson = cardTest("Allyson: Storm Rider", 800, 0, [SpecialStormBirdHand])
 	stormRiderAllyson2 = deepcopy(stormRiderAllyson)
-	stormRiderHellion = card("Hellion: Stormrider", 900, 0, specialStormRiderDeck, effTrigger.summon, effectDescBuilder(effTrigger.summon, specialStormRiderDeck.desc))
+	stormRiderHellion = cardTest("Hellion: Storm Rider", 900, 0, [SpecialStormRiderDeck])
 	stormRiderHellion2 = deepcopy(stormRiderHellion)
-	stormRiderCanto = card("Canto: Stormrider", 500, 0, doubleSummon, effTrigger.summon, effectDescBuilder(effTrigger.summon, doubleSummon.desc))
+	stormRiderCanto = cardTest("Canto: Storm Rider", 500, 0, [DoubleSummon])
 	stormRiderCanto2 = deepcopy(stormRiderCanto)
-	stormRiderNess = card("Ness: Stormrider", 750, 0, discSpecStormGY, effTrigger.summon, effectDescBuilder(effTrigger.summon, discSpecStormGY.desc))
+	stormRiderNess = cardTest("Ness: Storm Rider", 750, 0, [DiscSpecStormGY])
 	stormRiderNess2 = deepcopy(stormRiderNess)
-	stormBirdZephris = card("Zephris: Stormbird", 1600, 0, controlStormriderDraw2, effTrigger.summon, effectDescBuilder(effTrigger.summon, controlStormriderDraw2.desc))
+	stormRiderMason = cardTest("Mason: Storm Rider", 2000, 1, [StormRiderGain400])
+	stormRiderMason2 = deepcopy(stormRiderMason)
+	stormBirdZephris = cardTest("Zephris: Storm Bird", 1600, 0, [ControlStormriderDraw2])
 	stormBirdZephris2 = deepcopy(stormBirdZephris)
-	stormBirdHellDiver = card("Hell Diver: Stormbird", 1800, 0, controlStormriderDestroy, effTrigger.summon, effectDescBuilder(effTrigger.summon, controlStormriderDestroy.desc))
+	stormBirdHellDiver = cardTest("Hell Diver: Storm Bird", 1800, 0, [ControlStormriderDestroy])
 	stormBirdHellDiver2 = deepcopy(stormBirdHellDiver)
-	stormBirdSkylar = card("Skylar: Stormbird", 1000, 0, grantStormriderAttack, effTrigger.summon, effectDescBuilder(effTrigger.summon, grantStormriderAttack.desc))
+	stormBirdSkylar = cardTest("Skylar: Storm Bird", 1000, 0, [GrantStormriderAttack])
 	stormBirdSkylar2 = deepcopy(stormBirdSkylar)
-	stormBirdGale = card("Gale: Stormbird", 1500, 0, tribToSpecialStormBird, effTrigger.summon, effectDescBuilder(effTrigger.summon, tribToSpecialStormBird.desc))
+	stormBirdGale = cardTest("Gale: Storm bird", 1500, 0, [TribToSpecialStormBird])
 	stormBirdGale2 = deepcopy(stormBirdGale)
-	stormBringerAlizeh = card("Alizeh: Stormbringer", 2400, 1, battleImmune, effTrigger.destructionBat, effectDescBuilder(effTrigger.destructionBat, battleImmune.desc, 0), 0)
-	stormBringerAlizeh2 = deepcopy(stormBringerAlizeh)
-	stormGodMonsoon = card("Monsoon: Stormgod", 0, 1, tributeStormtoSteal, effTrigger.summon, effectDescBuilder(effTrigger.summon, tributeStormtoSteal.desc))
-	stormGodMonsoon2 = deepcopy(stormGodMonsoon)
-
-	# TEST CARDS
-
-	global copyMachine
-	copyMachine = card("Copy Machine", 0, 0, matchAttack, effTrigger.battle, matchAttack.desc)
-
-	'''
-	global discard1Guy
-	global deviousDiscard1Guy
-	global deviousDiscardDiva
-	global battleImmuneIvan
-	global effectImmuneEdgar
-	global cyberDigger
-	global deckDigger
-	global doubleSummoner
-	global resurrector
-	global reAdder
-	global graveyardGarry
-	global lifeVitalizer
-	global defenderDan
-	global gameEnder1
-	global gameEnder2
-	discard1Guy = card("Discard Guy", 500, 0, playerDisc1, effTrigger.summon, playerDisc1.desc)
-	deviousDiscard1Guy = card("Devious Discard Guy", 0, 0, oppDisc1, effTrigger.summon, oppDisc1.desc)
-	deviousDiscardDiva = card("Devious Discard Diva", 2500, 0, playerDisc1, effTrigger.battle, playerDisc1.desc)
-	battleImmuneIvan = card("Battle Immune Ivan", 0, 0, battleImmune, effTrigger.destructionBat, battleImmune.desc)
-	effectImmuneEdgar = card("Effect Immune Edgar", 1500, 0, effectImmune, effTrigger.destructionEff, effectImmune.desc)
-	cyberDigger = card("Cyber Digger", 1000, 0, effectCodeSearch, effTrigger.summon, effectCodeSearch.desc)
-	deckDigger = card("Deck Digger", 200, 0, effectSearch, effTrigger.summon, effectSearch.desc)
-	doubleSummoner = card("Double Summoner", 1500, 0, doubleSummon, effTrigger.summon, doubleSummon.desc)
-	resurrector = card("Resurrector", 0, 0, Trib_SS_GY, effTrigger.summon, Trib_SS_GY.desc)
-	reAdder = card("Re-Adder", 1200, 0, GYToHand, effTrigger.summon, GYToHand.desc)
-	graveyardGarry = card("Graveyard Garry", 2000, 1, PlayerDraw2, effTrigger.graveyard, PlayerDraw2.desc)
-	lifeVitalizer = card("Life Vitalizer", 1800, 0, gainDifference, effTrigger.summon, gainDifference.desc)
-	defenderDan = card("Defender Dan", 2000, 0, PlayerDraw1, effTrigger.defend, effectDescBuilder(effTrigger.defend, PlayerDraw1.desc))
-	gameEnder1 = card("Game Ender EFF", 0, 0, Damage8000, effTrigger.summon, effectDescBuilder(effTrigger.summon, Damage8000.desc))
-	gameEnder2 = card("Game Ender BTL", 0, 0, Damage8000, effTrigger.battle, effectDescBuilder(effTrigger.battle, Damage8000.desc))'''
-
-# Method to build the asppropriate effect descriptions for cards
-def effectDescBuilder(trigger: Enum, Desc: str, opt: int = 1):
-
-	if trigger.name == "n_a":
-		effectDescription = Desc
-	elif trigger.name == "summon":
-		effectDescription = "When Summoned: " + Desc
-	elif trigger.name == "attack":
-		effectDescription = "When this card Attacks: " + Desc
-	elif trigger.name == "defend":
-		effectDescription = "When this card is Attacked: " + Desc
-	elif trigger.name == "battle":
-		effectDescription = "When this card Battles: " + Desc
-	elif trigger.name == "graveyard":
-		effectDescription = "When sent to Graveyard: " + Desc
-	elif trigger.name == "destructionBat":
-		effectDescription = "When destroyed by Battle: " + Desc
-	elif trigger.name == "destructionEff":
-		effectDescription = "When destroyed by Card Effect: " + Desc
-	else:
-		raise TypeError
-
-	if opt:
-		return "(OPT) : " + effectDescription
-	else:
-		return effectDescription
+	stormBirdAce = cardTest("Ace: Storm Bird", 2000, 1, [StormBirdGain400])
+	stormBirdAce2 = deepcopy(stormBirdAce)
 
 # Prints Deck List before they are assigned to a player
 def printDeckList(DeckList: list):
@@ -547,8 +525,8 @@ def player_deck_setup():
 	MagicianDeck.append(darkMagician2)
 	MagicianDeck.append(darkGMagician)
 	MagicianDeck.append(darkGMagician2)
-	MagicianDeck.append(magicianRod)
-	MagicianDeck.append(magicianRod2)
+	MagicianDeck.append(lemonGirl)
+	MagicianDeck.append(lemonGirl2)
 	MagicianDeck.append(magicianRobe)
 	MagicianDeck.append(magicianRobe2)
 	MagicianDeck.append(chocolateGirl)
@@ -580,9 +558,10 @@ def player_deck_setup():
 	StormDeck.append(stormBirdSkylar2)
 	StormDeck.append(stormBirdGale)
 	StormDeck.append(stormBirdGale2)
-	StormDeck.append(stormBringerAlizeh)
-	StormDeck.append(stormBringerAlizeh2)
-	StormDeck.append(stormGodMonsoon)
+	StormDeck.append(stormRiderMason)
+	StormDeck.append(stormRiderMason2)
+	StormDeck.append(stormBirdAce)
+	StormDeck.append(stormBirdAce2)
 
 	random.shuffle(CyberDeck)
 	random.shuffle(VampireDeck)
@@ -1017,8 +996,7 @@ def turnMenu(currentPlayer: duelist, passivePlayer: duelist):
 
 	# DRAW PHASE
 	if firstTurn == 0:
-		_player.draw(4)
-		# _player.draw(0)
+		currentPlayer.draw(4)
 
 		# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
 		# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
@@ -1031,7 +1009,7 @@ def turnMenu(currentPlayer: duelist, passivePlayer: duelist):
 		# -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------
 		# -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------
 
-		_foe.draw(3)
+		passivePlayer.draw(3)
 
 	else:
 		currentPlayer.draw(1)
@@ -1400,6 +1378,7 @@ def battleMenu(turnPlayer: duelist, passivePlayer: duelist):
 				time.sleep(1)
 
 			elif damage == 0:
+				atkMon.attacked = 1
 
 				print("No Damage")
 
@@ -1410,7 +1389,7 @@ def battleMenu(turnPlayer: duelist, passivePlayer: duelist):
 					atkTarget = None
 
 				# Check if the attacker is on the field
-				if atkMon in passivePlayer.monfield:
+				if atkMon in turnPlayer.monfield:
 					pass
 				else:
 					atkMon = None

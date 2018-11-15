@@ -123,7 +123,7 @@ class controlDestroy(effect):
 							print("Invalid Selection")
 							print("--------------------------------------")
 
-					if oppMon.trigger.name == "destructionEff":
+					if oppMon.checkResolve(effTrigger.destructionEff):
 						eff = oppMon.ResolveEffect(effTrigger.destructionEff, opponent, effplayer, oppMon, effectMon, effgy, oppgy, turnPlayer)
 
 						if eff == 0:
@@ -702,18 +702,24 @@ class gainAtkforInstance(effect):
 			damage = effectMon.atkPoints - oppMon.atkPoints
 			return damage
 
-class halfAttackedDraw(effect):
+# NOT DESIGNED TO BE USED SOLELY BY ITSELF | ALWAYS PUT BEHIND OTHER DEFENDING OR ATTACKING EFFECTS
+class halfAttacked(effect):
+	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
+		print("--------------------------------------")
+
+		oppMon.atkPoints = int(oppMon.atkPoints / 2)
+		print("{}'s ATK points have been halved to {}".format(oppMon.name, oppMon.atkPoints))
+		time.sleep(1)
+
+# Same as above but can be used alone
+class halfAttackedMessage(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name))
 		print("--------------------------------------")
 		time.sleep(1)
-		
-		# extraParam = No of Cards to draw
 
 		oppMon.atkPoints = int(oppMon.atkPoints / 2)
 		print("{}'s ATK points have been halved to {}".format(oppMon.name, oppMon.atkPoints))
-
-		effplayer.draw(self.extraParam)
 
 class zeroAttack(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
@@ -919,16 +925,16 @@ class drawForDifference(effect):
 # Drawing Effects
 playerDraw1 = playerDraw("Draw One Card", 1)
 playerDraw2 = playerDraw("Draw Two Cards", 2)
-controlStormriderDraw2 = controlDiscardDraw("If you control a Stormrider; Discard 1 card; Draw 2 cards", "Stormrider", 2)
+controlStormriderDraw2 = controlDiscardDraw("If you control a Storm Rider; Discard 1 card; Draw 2 cards", "Storm Rider", 2)
 DifferenceDraw = drawForDifference("Draw one card per 1000 point difference between both players lifepoints)", 0)
 
 # Disruptive Effects
 Destroy = effectDestroy("Destroy Your Opponents Monster", 0)
 bounceMonster = fieldToHand("Bounce an Opponents Monster", 0)
-controlStormriderDestroy = controlDestroy("If you control a 'Stormrider' card, destroy up to 2 monsters your opponent controls", "Stormrider", 2)
+controlStormriderDestroy = controlDestroy("If you control a 'Storm Rider' card, destroy up to 2 monsters your opponent controls", "Storm Rider", 2)
 StealMonster = stealMonster("Steal an Opponents Monster", 0)
-StormriderStealMonster = controlStealMonster("If you control 2 'Stormrider' card; Switch player control of one opponents monster", "Stormrider")
-tributeStormtoSteal = tributetoSteal("You can tribute any number of 'Stormrider' or 'Stormbird' Cards; Switch player control of the identical amount of opponents monsters", "Stormrider", "Stormbird")
+StormriderStealMonster = controlStealMonster("If you control 2 'Storm Rider' card; Switch player control of one opponents monster", "Storm Rider")
+tributeStormtoSteal = tributetoSteal("You can tribute any number of 'Storm Rider' or 'Storm Bird' Cards; Switch player control of the identical amount of opponents monsters", "Storm Rider", "Storm Bird")
 
 # Restoration Effects
 restore1000 = effectRestore("Restore Life Points by 1000", 1000)
@@ -966,20 +972,23 @@ effectEvigishkiSearch = searchSpecificDeck("Add an 'Evigishki' card from Deck to
 effectGishkiMirrorSearch = searchSpecificDeck("Add a 'Gishki Aquamirror' card from Deck to hand", "Gishki Aquamirror")
 effectDarkMagicianSearch = searchSpecificDeck("Add a 'Dark Magician' card from your deck to your hand", "Dark Magician")
 effectGirlSearch = searchSpecificDeck("Add a 'Magician Girl' from your Deck to your hand", "Magician Girl")
-effectStormSearch = searchSpecificDeck2("Add a 'Stormrider' or 'Stormbird' card from your deck to your hand", "Stormrider", "Stormbird")
+effectStormSearch = searchSpecificDeck2("Add a 'Storm Rider' or 'Storm Bird' card from your deck to your hand", "Storm Rider", "Storm Bird")
 
 # Attack Manipulation Effects
 gain500 = gainAttack("Gains 500 attack before battle. Loses attack upon destruction", 500)
 gain1000 = gainAttack("Gains 1000 attack before battle. Loses attack upon destruction", 1000)
 gainDifference = gainAttackDifference("Gain Atk Points equal to the difference between your lifepoints", 0)
 grant800 = grantAttack("Grant a monster on your field 800 Attack (not including this card)", 800)
-darkMagicianGain500 = gainAtkforInstance("Gain 400 attack for each 'Dark Magician' monster on the field or in your Graveyard", "Dark Magician", 400)
+darkMagicianGain400 = gainAtkforInstance("Gain 400 attack for each 'Dark Magician' monster on the field or in your Graveyard", "Dark Magician", 400)
 evigishkiGain400 = gainAtkforInstance("Gain 400 attack for each 'Evigishki' monster on the field or in the graveyard", "Evigishki", 400)
 heraldGain400 = gainAtkforInstance("Gain 400 attack for each 'Herald' monster on the field or in the graveyard", "Herald", 400)
-halfAtkDraw2 = halfAttackedDraw("Half the attacking monsters attack; Draw Two Cards", 2)
-Atk0 = zeroAttack("Reduce target monster's attack to 0", 0)
+stormBirdGain400 = gainAtkforInstance("Gain 400 attack for each 'Storm Bird' monster on the field or in the graveyard", "Storm Bird", 400)
+stormRiderGain400 = gainAtkforInstance("Gain 400 attack for each 'Storm Rider' monster on the field or in the graveyard", "Storm Rider", 400)
+halfAtk = halfAttacked("Half the attacking monsters attack; Draw Two Cards", 2)
+halfAtkMsg = halfAttackedMessage("Half the attacking monsters attack", 2)
+atk0 = zeroAttack("Reduce target monster's attack to 0", 0)
 tribtoGrantAtk = tributetoGrantAttack("You can tribute this card: Grant another monster this monsters ATK points", 0)
-grantStormriderAttack = grantAttackNamespace("For each 'Stormrider' card on the field, grant a Card 300 ATK x No. of 'Stormrider' Card on the field", "Stormrider", 300)
+grantStormriderAttack = grantAttackNamespace("For each 'Storm Rider' card on the field, grant a Card 300 ATK x No. of 'Storm Rider' Card on the field", "Storm Rider", 300)
 
 # Summon Manipulation Effects
 doubleSummon = extraNormalSummon("Gain an extra normal summon", 0)
@@ -989,19 +998,19 @@ specialVampireHand = specialSpecificHand("Special Summon a 'Vampire' Monster fro
 specialGishkiHand = specialSpecificHand("Special Summon a 'Gishki' Monster from your hand", "Gishki")
 specialDarkMagicianHand = specialExactHand("Special Summon a 'Dark Magician' from your hand", "Dark Magician")
 specialMagicianGirlHand = specialSpecificHand("Special Summon a 'Magician Girl' Card from your hand", "Magician Girl")
-specialStormBirdHand = specialSpecificHand("Special Summon a 'Stormbird' Monster from your hand", "Stormbird")
+specialStormBirdHand = specialSpecificHand("Special Summon a 'Storm Bird' Monster from your hand", "Storm Bird")
 specialCodeHand = specialSpecificHand("Special Summon a 'Code' Monster from your hand", "Code")
 specialfromHand = specialHand("Special Summon a monster from your hand", 0)
 discSpecVampHand = discardToSpecialHand("Discard one card, Special Summon a vampire from your Hand", "Vampire")
-discSpecStormGY = discardToSpecialGY("Discard one Card, Special Summon a 'Stormbird' or 'Stormrider' from your graveyard", "Stormrider", "Stormbird")
+discSpecStormGY = discardToSpecialGY("Discard one Card, Special Summon a 'Storm Bird' or 'Storm Rider' from your graveyard", "Storm Rider", "Storm Bird")
 specialDarkMagicianDeck = specialDeckExact("Special Summon a Dark Magician from your Deck", "Dark Magician")
-specialStormRiderDeck = specialDeckSpecific("Special Summon a 'Stormrider' from your deck", "Stormrider")
+specialStormRiderDeck = specialDeckSpecific("Special Summon a 'Storm Rider' from your deck", "Storm Rider")
 specialCodeDeck = specialDeckSpecific("Special Summon a 'Code' monster from your deck", "Code")
 specialGishkiDeck = specialDeckSpecific("Special Summon a 'Gishki' monster from your deck", "Gishki")
 specialAgentDeck = specialDeckSpecific("Special Summon a 'Agent' monster from your deck", "Agent")
 specialHeraldDeck = specialDeckSpecific("Special Summon a 'Herald' monster from your deck", "Herald")
 specialGirlLess2000 = specialDeckSpecificLessAttack("Special Summon a 'Magician Girl' monster from your deck with less than 2000 attack", "Magician Girl", 2000)
-tribToSpecialStormBird = tributeTOSSDeckSpecific("You can tribute this card; Special summon a 'Stormbird' card from your deck", "Stormbird")
+tribToSpecialStormBird = tributeTOSSDeckSpecific("You can tribute this card; Special summon a 'Storm Bird' card from your deck", "Storm Bird")
 shuffleToSSGraveyard = shuffleToSSGraveyard("Shuffle 1 card from your hand into the deck; Special summon a monster from your Graveyard", 1)
 
 # Recursion Effects

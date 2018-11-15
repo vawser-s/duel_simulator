@@ -21,7 +21,7 @@ def effectDescBuilder(trigger: Enum, Desc: str):
 	else:
 		raise TypeError
 
-	return "Once per turn, " + effectDescription
+	return "(OPT) " + effectDescription
 
 class cardTest:
 	def __init__(self, name: object, atkPoints: object, tribute: object, cardEffectList: list, attacked: int = 0):
