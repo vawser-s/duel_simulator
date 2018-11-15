@@ -2,7 +2,7 @@
 from copy import *
 
 from duelist import *
-from cardTest import *
+from card import *
 
 from settings import *
 
@@ -58,16 +58,16 @@ def cardSetup():
 	global dualAssembwurm2
 	global codeDriver
 	global codeDriver2
-	microCoder = cardTest("Micro Coder", 300, 0, [SpecialCodeDeck, PlayerDraw1Grav])
-	codeGenerator = cardTest("Code Generator", 1300, 0, [EffectCyberseSearch])
-	codeRadiator = cardTest("Code Radiator", 1600, 0, [DoubleSummon])
-	ladyDebug = cardTest("Lady Debug", 1000, 0, [SpecialCyberseHand])
-	cyberseGadget = cardTest("Cyberse Gadget", 1400, 0, [DestroySum])
-	cyberseAccelerator = cardTest("Cyberse Accelerator", 2000, 0, [OppDisc1, SelfDisc1])
-	cyberseWhiteHat = cardTest("Cyberse White Hat", 2100, 1, [EffectSearch])
-	cyberseClockDragon = cardTest("Cyberse Clock Dragon", 2500, 1, [SpecialFromHand])
-	dualAssembwurm = cardTest("Dual Assembwurm", 2800, 1, [OppDisc2])
-	codeDriver = cardTest("Cyberse Driver", 2200, 1, [MonsterBounce])
+	microCoder = card("Micro Coder", 300, 0, [SpecialCodeDeck, PlayerDraw1Grav])
+	codeGenerator = card("Code Generator", 1300, 0, [EffectCyberseSearch])
+	codeRadiator = card("Code Radiator", 1600, 0, [DoubleSummon])
+	ladyDebug = card("Lady Debug", 1000, 0, [SpecialCyberseHand])
+	cyberseGadget = card("Cyberse Gadget", 1400, 0, [DestroySum])
+	cyberseAccelerator = card("Cyberse Accelerator", 2000, 0, [OppDisc1, SelfDisc1])
+	cyberseWhiteHat = card("Cyberse White Hat", 2100, 1, [EffectSearch])
+	cyberseClockDragon = card("Cyberse Clock Dragon", 2500, 1, [SpecialFromHand])
+	dualAssembwurm = card("Dual Assembwurm", 2800, 1, [OppDisc2])
+	codeDriver = card("Cyberse Driver", 2200, 1, [MonsterBounce])
 	microCoder2 = deepcopy(microCoder)
 	codeGenerator2 = deepcopy(codeGenerator)
 	codeRadiator2 = deepcopy(codeRadiator)
@@ -121,25 +121,25 @@ def cardSetup():
 	global armageddonKnight2
 	global zombieMaster
 	global zombieMaster2
-	vampireFamiliar = cardTest("Vampire Familiar", 300, 0, [EffectVampSearch, Siphon800])
+	vampireFamiliar = card("Vampire Familiar", 300, 0, [EffectVampSearch, Siphon800])
 	vampireFamiliar2 = deepcopy(vampireFamiliar)
-	vampireSucker = cardTest("Vampire Sucker", 1600, 0, [DiscSpecVampHand])
+	vampireSucker = card("Vampire Sucker", 1600, 0, [DiscSpecVampHand])
 	vampireSucker2 = deepcopy(vampireSucker)
-	vampireFraulein = cardTest("Vampire Fraulein", 800, 0, [BattleImmune, Grant800])
+	vampireFraulein = card("Vampire Fraulein", 800, 0, [BattleImmune, Grant800])
 	vampireFraulein2 = deepcopy(vampireFraulein)
-	vampireGrace = cardTest("Vampire Grace", 2200, 1, [SiphonLifeAndMill800])
+	vampireGrace = card("Vampire Grace", 2200, 1, [SiphonLifeAndMill800])
 	vampireGrace2 = deepcopy(vampireGrace)
-	vampireGenesis = cardTest("Vampire Genesis", 2800, 1, [SiphonLifeAndMill1500])
+	vampireGenesis = card("Vampire Genesis", 2800, 1, [SiphonLifeAndMill1500])
 	vampireGenesis2 = deepcopy(vampireGenesis)
-	mezuki = cardTest("Mezuki", 1600, 0, [ShuffleToSSGraveyard])
+	mezuki = card("Mezuki", 1600, 0, [ShuffleToSSGraveyard])
 	mezuki2 = deepcopy(mezuki)
-	unizombie = cardTest("Uni-Zombie", 1500, 0, [GYToHand])
+	unizombie = card("Uni-Zombie", 1500, 0, [GYToHand])
 	unizombie2 = deepcopy(unizombie)
-	shiranuiSolitare = cardTest("Shiranui Solitare", 1300, 0, [PlayerDraw1Grav, Siphon800])
+	shiranuiSolitare = card("Shiranui Solitare", 1300, 0, [PlayerDraw1Grav, Siphon800])
 	shiranuiSolitare2 = deepcopy(shiranuiSolitare)
-	armageddonKnight = cardTest("Armageddon Knight", 1400, 0, [Millie])
+	armageddonKnight = card("Armageddon Knight", 1400, 0, [Millie])
 	armageddonKnight2 = deepcopy(armageddonKnight)
-	zombieMaster = cardTest("Zombie Master", 1800, 0, [DestroySum])
+	zombieMaster = card("Zombie Master", 1800, 0, [DestroySum])
 	zombieMaster2 = deepcopy(zombieMaster)
 
 	Battle500 = {"effect"       : gain500,
@@ -182,25 +182,25 @@ def cardSetup():
 	global evigishkiGustKraken2
 	global evigishkiPsychlone
 	global evigishkiPsychlone2
-	gishkiBeast = cardTest("Gishki Beast", 1500, 0, [Battle500])
+	gishkiBeast = card("Gishki Beast", 1500, 0, [Battle500])
 	gishkiBeast2 = deepcopy(gishkiBeast)
-	gishkiAbyss = cardTest("Gishki Abyss", 800, 0, [PlayerDraw2Battle])
+	gishkiAbyss = card("Gishki Abyss", 800, 0, [PlayerDraw2Battle])
 	gishkiAbyss2 = deepcopy(gishkiAbyss)
-	gishkiAquamirror = cardTest("Gishki Aquamirror", 0, 0, [DoubleSummon])
+	gishkiAquamirror = card("Gishki Aquamirror", 0, 0, [DoubleSummon])
 	gishkiAquamirror2 = deepcopy(gishkiAquamirror)
-	gishkiShadow = cardTest("Gishki Shadow", 1200, 0, [EvigishkiSearch, MatchAttack])
+	gishkiShadow = card("Gishki Shadow", 1200, 0, [EvigishkiSearch, MatchAttack])
 	gishkiShadow2 = deepcopy(gishkiShadow)
-	visionGishki = cardTest("Vision Gishki ", 1800, 0, [SpecialGishkiDeck])
+	visionGishki = card("Vision Gishki ", 1800, 0, [SpecialGishkiDeck])
 	visionGishki2 = deepcopy(visionGishki)
-	gishkiAriel = cardTest("Gishki Ariel", 1200, 0, [MonsterBounce])
+	gishkiAriel = card("Gishki Ariel", 1200, 0, [MonsterBounce])
 	gishkiAriel2 = deepcopy(gishkiAriel)
-	evigishkiLevianima = cardTest("Evigishki Levianima", 2200, 1, [SearchGishkiAquamirror, Battle500])
+	evigishkiLevianima = card("Evigishki Levianima", 2200, 1, [SearchGishkiAquamirror, Battle500])
 	evigishkiLevianima2 = deepcopy(evigishkiLevianima)
-	evigishkiSoulOgre = cardTest("Evigishki Soul Ogre", 2800, 1, [Battle1000])
+	evigishkiSoulOgre = card("Evigishki Soul Ogre", 2800, 1, [Battle1000])
 	evigishkiSoulOgre2 = deepcopy(evigishkiSoulOgre)
-	evigishkiGustKraken = cardTest("Evigishki Gustkraken", 2500, 1, [EvigishkiGain400])
+	evigishkiGustKraken = card("Evigishki Gustkraken", 2500, 1, [EvigishkiGain400])
 	evigishkiGustKraken2 = deepcopy(evigishkiGustKraken)
-	evigishkiPsychlone = cardTest("Evigishki Psychlone", 2000, 1, [DestroyBat])
+	evigishkiPsychlone = card("Evigishki Psychlone", 2000, 1, [DestroyBat])
 	evigishkiPsychlone2 = deepcopy(evigishkiPsychlone)
 
 	SpecialHeraldDeck = {"effect": specialHeraldDeck,
@@ -245,25 +245,25 @@ def cardSetup():
 	global heraldPerfection2
 	global masterHyperion
 	global masterHyperion2
-	orangeHerald = cardTest("Herald of Orange Light", 1000, 0, [SpecialHeraldDeck])
+	orangeHerald = card("Herald of Orange Light", 1000, 0, [SpecialHeraldDeck])
 	orangeHerald2 = deepcopy(orangeHerald)
-	purpleHerald = cardTest("Herald of Purple Light", 1800, 0, [HeraldGain400, PlayerDraw1Grav])
+	purpleHerald = card("Herald of Purple Light", 1800, 0, [HeraldGain400, PlayerDraw1Grav])
 	purpleHerald2 = deepcopy(purpleHerald)
-	arcHerald = cardTest("Herald of Arc Light", 800, 0, [SearchAgentDeck, Restore2000])
+	arcHerald = card("Herald of Arc Light", 800, 0, [SearchAgentDeck, Restore2000])
 	arcHerald2 = deepcopy(arcHerald)
-	dawnHerald = cardTest("Herald of the Dawn", 0, 0, [DoubleSummon])
+	dawnHerald = card("Herald of the Dawn", 0, 0, [DoubleSummon])
 	dawnHerald2 = deepcopy(dawnHerald)
-	agentEarth = cardTest("Agent of Mystery: Earth", 1200, 0, [SearchHeraldDeck, SpecialAgentDeck])
+	agentEarth = card("Agent of Mystery: Earth", 1200, 0, [SearchHeraldDeck, SpecialAgentDeck])
 	agentEarth2 = deepcopy(agentEarth)
-	agentVenus = cardTest("Agent of Creation: Venus", 1600, 0, [DrawForDiff])
+	agentVenus = card("Agent of Creation: Venus", 1600, 0, [DrawForDiff])
 	agentVenus2 = deepcopy(agentVenus)
-	agentMars = cardTest("Agent of Force: Mars", 1800, 0, [DestroySum])
+	agentMars = card("Agent of Force: Mars", 1800, 0, [DestroySum])
 	agentMars2 = deepcopy(agentMars)
-	agentSaturn = cardTest("Agent of Judgment: Saturn", 2400, 1, [Gain1000forHand])
+	agentSaturn = card("Agent of Judgment: Saturn", 2400, 1, [Gain1000forHand])
 	agentSaturn2 = deepcopy(agentSaturn)
-	heraldPerfection = cardTest("Herald of Perfection", 2800, 1, [GainDifference])
+	heraldPerfection = card("Herald of Perfection", 2800, 1, [GainDifference])
 	heraldPerfection2 = deepcopy(heraldPerfection)
-	masterHyperion = cardTest("Master Hyperion", 2800, 1, [SpecialHand])
+	masterHyperion = card("Master Hyperion", 2800, 1, [SpecialHand])
 	masterHyperion2 = deepcopy(masterHyperion)
 
 	EffectImmune = {"effect": effectImmune,
@@ -308,25 +308,25 @@ def cardSetup():
 	global ebonIllusion2
 	global magiMagiGirl
 	global magiMagiGirl2
-	darkMagician = cardTest("Dark Magician", 2500, 1, [EffectImmune])
+	darkMagician = card("Dark Magician", 2500, 1, [EffectImmune])
 	darkMagician2 = deepcopy(darkMagician)
-	darkGMagician = cardTest("Dark Magician Girl", 2300, 1, [DarkMagicianGain400])
+	darkGMagician = card("Dark Magician Girl", 2300, 1, [DarkMagicianGain400])
 	darkGMagician2 = deepcopy(darkGMagician)
-	lemonGirl = cardTest("Lemon Magician Girl", 1600, 0, [SpecialMagicianGirlHand])
+	lemonGirl = card("Lemon Magician Girl", 1600, 0, [SpecialMagicianGirlHand])
 	lemonGirl2 = deepcopy(lemonGirl)
-	magicianRobe = cardTest("Magician's Robe", 800, 0, [DoubleSummon])
+	magicianRobe = card("Magician's Robe", 800, 0, [DoubleSummon])
 	magicianRobe2 = deepcopy(magicianRobe)
-	chocolateGirl = cardTest("Chocolate Magician Girl", 1800, 0, [SpecialDarkMagicianHand])
+	chocolateGirl = card("Chocolate Magician Girl", 1800, 0, [SpecialDarkMagicianHand])
 	chocolateGirl2 = deepcopy(chocolateGirl)
-	appleGirl = cardTest("Apple Magician Girl", 600, 0, [PlayerDraw2Defend, HalfAtk])
+	appleGirl = card("Apple Magician Girl", 600, 0, [PlayerDraw2Defend, HalfAtk])
 	appleGirl2 = deepcopy(appleGirl)
-	berryGirl = cardTest("Berry Magician Girl", 1200, 0, [SpecialGirlLess2000])
+	berryGirl = card("Berry Magician Girl", 1200, 0, [SpecialGirlLess2000])
 	berryGirl2 = deepcopy(berryGirl)
-	kiwiGirl = cardTest("Kiwi Magician Girl", 300, 0, [DestroySum, HalfAtkMsg])
+	kiwiGirl = card("Kiwi Magician Girl", 300, 0, [DestroySum, HalfAtkMsg])
 	kiwiGirl2 = deepcopy(kiwiGirl)
-	ebonIllusion = cardTest("Ebon Illusion Magician", 2000, 1, [SpecialDarkMagicianDeck])
+	ebonIllusion = card("Ebon Illusion Magician", 2000, 1, [SpecialDarkMagicianDeck])
 	ebonIllusion2 = deepcopy(ebonIllusion)
-	magiMagiGirl = cardTest("Magi Magician Girl", 2600, 1, [Atk0])
+	magiMagiGirl = card("Magi Magician Girl", 2600, 1, [Atk0])
 	magiMagiGirl2 = deepcopy(magiMagiGirl)
 
 	SpecialStormBirdHand = {"effect": specialStormBirdHand,
@@ -370,25 +370,25 @@ def cardSetup():
 	global stormRiderMason2
 	global stormBirdAce
 	global stormBirdAce2
-	stormRiderAllyson = cardTest("Allyson: Storm Rider", 800, 0, [SpecialStormBirdHand])
+	stormRiderAllyson = card("Allyson: Storm Rider", 800, 0, [SpecialStormBirdHand])
 	stormRiderAllyson2 = deepcopy(stormRiderAllyson)
-	stormRiderHellion = cardTest("Hellion: Storm Rider", 900, 0, [SpecialStormRiderDeck])
+	stormRiderHellion = card("Hellion: Storm Rider", 900, 0, [SpecialStormRiderDeck])
 	stormRiderHellion2 = deepcopy(stormRiderHellion)
-	stormRiderCanto = cardTest("Canto: Storm Rider", 500, 0, [DoubleSummon])
+	stormRiderCanto = card("Canto: Storm Rider", 500, 0, [DoubleSummon])
 	stormRiderCanto2 = deepcopy(stormRiderCanto)
-	stormRiderNess = cardTest("Ness: Storm Rider", 750, 0, [DiscSpecStormGY])
+	stormRiderNess = card("Ness: Storm Rider", 750, 0, [DiscSpecStormGY])
 	stormRiderNess2 = deepcopy(stormRiderNess)
-	stormRiderMason = cardTest("Mason: Storm Rider", 2000, 1, [StormRiderGain400])
+	stormRiderMason = card("Mason: Storm Rider", 2000, 1, [StormRiderGain400])
 	stormRiderMason2 = deepcopy(stormRiderMason)
-	stormBirdZephris = cardTest("Zephris: Storm Bird", 1600, 0, [ControlStormriderDraw2])
+	stormBirdZephris = card("Zephris: Storm Bird", 1600, 0, [ControlStormriderDraw2])
 	stormBirdZephris2 = deepcopy(stormBirdZephris)
-	stormBirdHellDiver = cardTest("Hell Diver: Storm Bird", 1800, 0, [ControlStormriderDestroy])
+	stormBirdHellDiver = card("Hell Diver: Storm Bird", 1800, 0, [ControlStormriderDestroy])
 	stormBirdHellDiver2 = deepcopy(stormBirdHellDiver)
-	stormBirdSkylar = cardTest("Skylar: Storm Bird", 1000, 0, [GrantStormriderAttack])
+	stormBirdSkylar = card("Skylar: Storm Bird", 1000, 0, [GrantStormriderAttack])
 	stormBirdSkylar2 = deepcopy(stormBirdSkylar)
-	stormBirdGale = cardTest("Gale: Storm bird", 1500, 0, [TribToSpecialStormBird])
+	stormBirdGale = card("Gale: Storm bird", 1500, 0, [TribToSpecialStormBird])
 	stormBirdGale2 = deepcopy(stormBirdGale)
-	stormBirdAce = cardTest("Ace: Storm Bird", 2000, 1, [StormBirdGain400])
+	stormBirdAce = card("Ace: Storm Bird", 2000, 1, [StormBirdGain400])
 	stormBirdAce2 = deepcopy(stormBirdAce)
 
 # Prints Deck List before they are assigned to a player
