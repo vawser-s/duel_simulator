@@ -1,5 +1,3 @@
-
-
 turnCount = 0
 
 firstTurn = 0
@@ -27,29 +25,19 @@ def returnNormalSummon():
 	global normalSummoned
 	return normalSummoned
 
-def returnEffectChecker(monster):
 
-	for effectMonster in effectList:
-		if monster.name == effectMonster.name:
-			print("--------------------------------------")
-			print("{}'s effect is One Per Turn only".format(monster.name))
+def addEffectChecker(monster, effect):
+	effectList.append([monster, effect])
 
-			return False
 
+def returnEffectChecker(monster, trigger):  # format: [monster, trigger]
+	for entry in effectList:
+		if monster == entry[0]:
+			if trigger == entry[1]:
+				return False
 	return True
+
 
 def resetEffectChecker():
 	global effectList
 	effectList = []
-
-def addEffectChecker(monster):
-	global effectList
-	effectList.append(monster)
-
-def removeEffectChecker(monster):
-	global effectList
-	i = 0
-	for effectMonster in effectList:
-		if monster.name == effectMonster.name:
-			del effectList[i]
-		i = i + 1

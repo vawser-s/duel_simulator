@@ -43,7 +43,7 @@ class effectDestroy(effect):
 		print("{}'s Effect Activates!".format(effectMon.name))
 		print("--------------------------------------")
 		time.sleep(1)
-		settings.addEffectChecker(effectMon)
+		
 
 		if opponent.monfield:
 			while True:
@@ -65,8 +65,8 @@ class effectDestroy(effect):
 					print("Invalid Selection")
 					print("--------------------------------------")
 
-			if oppMon.trigger.name == "destructionEff":
-				eff = oppMon.effect.resolve(opponent, effplayer, oppMon, effectMon, effgy, oppgy, turnPlayer)
+			if oppMon.checkResolve(effTrigger.destructionEff):
+				eff = oppMon.ResolveEffect(effTrigger.destructionEff, opponent, effplayer, oppMon, effectMon, effgy, oppgy, turnPlayer)
 
 				if eff == 0:
 					opponent.destroyMonsterEff(oppMon, effplayer, opponent, oppMon, effectMon, effgy, oppgy, turnPlayer)
@@ -123,8 +123,8 @@ class controlDestroy(effect):
 							print("Invalid Selection")
 							print("--------------------------------------")
 
-					if oppMon.trigger.name == "destructionEff":
-						eff = oppMon.effect.resolve(opponent, effplayer, oppMon, effectMon, effgy, oppgy, turnPlayer)
+					if oppMon.checkResolve(effTrigger.destructionEff):
+						eff = oppMon.ResolveEffect(effTrigger.destructionEff, opponent, effplayer, oppMon, effectMon, effgy, oppgy, turnPlayer)
 
 						if eff == 0:
 							opponent.destroyMonsterEff(oppMon, effplayer, opponent, oppMon, effectMon, effgy, oppgy,
@@ -146,7 +146,7 @@ class effectDamage(effect):
 		print("{}'s Effect Activates!".format(effectMon.name))
 		print("--------------------------------------")
 		time.sleep(1)
-		settings.addEffectChecker(effectMon)
+		
 		# extraParam = Life Point loss
 
 		opponent.loseLP(self.extraParam)
@@ -156,7 +156,7 @@ class effectDamageSelf(effect):
 		print("{}'s Effect Activates!".format(effectMon.name))
 		print("--------------------------------------")
 		time.sleep(1)
-		settings.addEffectChecker(effectMon)
+		
 		# extra = Life Point Loss
 
 		effplayer.loseLP(self.extraParam)
@@ -166,7 +166,7 @@ class effectRestore(effect):
 		print("{}'s Effect Activates!".format(effectMon.name))
 		print("--------------------------------------")
 		time.sleep(1)
-		settings.addEffectChecker(effectMon)
+		
 		# extraParam = Life Point Gain
 
 		effplayer.gainLP(self.extraParam)
@@ -176,20 +176,22 @@ class effectCrash(effect):
 		print("{}'s Effect Activates!".format(effectMon.name))
 		print("--------------------------------------")
 		time.sleep(1)
-		settings.addEffectChecker(effectMon)
 
-		print("{} Copies the opponents attack!".format(effectMon.name))
+		try:
+			effectMon.atkPoints = oppMon.atkPoints
+			print("{} Copies the opponents attack!".format(effectMon.name))
+			time.sleep(0.5)
+			return 0
+		except (AttributeError, UnboundLocalError):
+			pass
 
-		time.sleep(0.5)
-
-		return 0
 
 class playerDraw(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name))
 		print("--------------------------------------")
 		time.sleep(1)
-		settings.addEffectChecker(effectMon)
+		
 		# extraParam = No of Cards to Draw
 
 		effplayer.draw(self.extraParam)
@@ -199,7 +201,7 @@ class controlDiscardDraw(effect):
 		print("{}'s Effect Activates!".format(effectMon.name))
 		print("--------------------------------------")
 		time.sleep(1)
-		settings.addEffectChecker(effectMon)
+		
 		# extraParam = Namespace to check for
 		# extraParam = No of Cards to draw
 
@@ -220,7 +222,7 @@ class siphonLife(effect):
 		print("{}'s Effect Activates!".format(effectMon.name))
 		print("--------------------------------------")
 		time.sleep(1)
-		settings.addEffectChecker(effectMon)
+		
 		# extraParam = Life Point Siphon Amount
 
 		opponent.loseLP(self.extraParam)
@@ -231,7 +233,7 @@ class mill(effect):
 		print("{}'s Effect Activates!".format(effectMon.name))
 		print("--------------------------------------")
 		time.sleep(1)
-		settings.addEffectChecker(effectMon)
+		
 
 		effplayer.mill(effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer)
 
@@ -244,7 +246,7 @@ class siphonLifeAndMill(effect):
 		print("{}'s Effect Activates!".format(effectMon.name))
 		print("--------------------------------------")
 		time.sleep(1)
-		settings.addEffectChecker(effectMon)
+		
 		# extraParam = Life Point Siphon Amount
 
 		opponent.loseLP(self.extraParam)
@@ -265,7 +267,7 @@ class effectPlayerRandDiscard(effect):
 		print("{}'s Effect Activates!".format(effectMon.name))
 		print("--------------------------------------")
 		time.sleep(1)
-		settings.addEffectChecker(effectMon)
+		
 		# extraParam = No Of Cards to Discard
 
 		x = 0
@@ -296,7 +298,7 @@ class effectOpponentDiscard(effect):
 		print("{}'s Effect Activates!".format(effectMon.name))
 		print("--------------------------------------")
 		time.sleep(1)
-		settings.addEffectChecker(effectMon)
+		
 		# extraParam = No Of Cards to Discard
 
 		x = 0
@@ -347,7 +349,7 @@ class searchDeck(effect):
 		print("{}'s Effect Activates!".format(effectMon.name))
 		print("--------------------------------------")
 		time.sleep(1)
-		settings.addEffectChecker(effectMon)
+		
 
 		effplayer.searchDeck()
 
@@ -356,7 +358,7 @@ class searchSpecificDeck(effect):
 		print("{}'s Effect Activates!".format(effectMon.name))
 		print("--------------------------------------")
 		time.sleep(1)
-		settings.addEffectChecker(effectMon)
+		
 		# extraParam = Namespace to Search
 		# nextraParam = Namespace to Search
 
@@ -367,7 +369,7 @@ class searchSpecificDeck2(effect):
 		print("{}'s Effect Activates!".format(effectMon.name))
 		print("--------------------------------------")
 		time.sleep(1)
-		settings.addEffectChecker(effectMon)
+		
 		# extraParam = Namespace to Search
 		# nextraParam = Namespace to Search
 
@@ -378,7 +380,7 @@ class extraNormalSummon(effect):
 		print("{}'s Effect Activates!".format(effectMon.name))
 		print("--------------------------------------")
 		time.sleep(1)
-		settings.addEffectChecker(effectMon)
+		
 
 		print("You get one extra normal summon")
 
@@ -389,7 +391,7 @@ class gainAttack(effect):
 		print("{}'s Effect Activates!".format(effectMon.name))
 		print("--------------------------------------")
 		time.sleep(1)
-		settings.addEffectChecker(effectMon)
+		
 		# extraParam = Attack Point Gain
 
 		effectMon.atkPoints = effectMon.atkPoints + self.extraParam
@@ -411,7 +413,7 @@ class gainAttackDifference(effect):
 		print("{}'s Effect Activates!".format(effectMon.name))
 		print("--------------------------------------")
 		time.sleep(1)
-		settings.addEffectChecker(effectMon)
+		
 
 		difference = effplayer.lifepoints - opponent.lifepoints
 
@@ -433,7 +435,7 @@ class grantAttack(effect):
 		print("{}'s Effect Activates!".format(effectMon.name))
 		print("--------------------------------------")
 		time.sleep(1)
-		settings.addEffectChecker(effectMon)
+		
 		# extraParam = Attack Point Gain
 
 		effplayer.grantAttack(self.extraParam, effectMon)
@@ -445,7 +447,7 @@ class grantAttackNamespace(effect):
 		print("{}'s Effect Activates!".format(effectMon.name))
 		print("--------------------------------------")
 		time.sleep(1)
-		settings.addEffectChecker(effectMon)
+		
 		# extraParam = Namespace to grant attack to
 		# nextraParam = Amount of Attack per instance
 
@@ -464,7 +466,7 @@ class fieldToHand(effect):
 		print("{}'s Effect Activates!".format(effectMon.name))
 		print("--------------------------------------")
 		time.sleep(1)
-		settings.addEffectChecker(effectMon)
+		
 
 		if opponent.monfield:
 			while True:
@@ -493,7 +495,7 @@ class gyToHand(effect):
 		print("{}'s Effect Activates!".format(effectMon.name))
 		print("--------------------------------------")
 		time.sleep(1)
-		settings.addEffectChecker(effectMon)
+		
 
 		effplayer.graveyardToHand()
 
@@ -502,7 +504,7 @@ class tributeTOSSGy(effect):
 		print("{}'s Effect Activates!".format(effectMon.name))
 		print("--------------------------------------")
 		time.sleep(1)
-		settings.addEffectChecker(effectMon)
+		
 
 		while True:
 			print("--------------------------------------")
@@ -536,7 +538,7 @@ class tributeTOSSDeckSpecific(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name))
 		time.sleep(1)
-		settings.addEffectChecker(effectMon)
+		
 		# extraParam = Namespace to summon from
 
 		while True:
@@ -572,7 +574,7 @@ class specialHand(effect):
 		print("{}'s Effect Activates!".format(effectMon.name))
 		print("--------------------------------------")
 		time.sleep(1)
-		settings.addEffectChecker(effectMon)
+		
 
 		effplayer.specialHandEffect(effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer)
 		return 0
@@ -582,7 +584,7 @@ class specialSpecificHand(effect):
 		print("{}'s Effect Activates!".format(effectMon.name))
 		print("--------------------------------------")
 		time.sleep(1)
-		settings.addEffectChecker(effectMon)
+		
 		# extraParam = Namespace to special/search
 
 		effplayer.specialHandSpecific(self.extraParam, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer)
@@ -592,7 +594,7 @@ class discardToSpecialHand(effect):
 		print("{}'s Effect Activates!".format(effectMon.name))
 		print("--------------------------------------")
 		time.sleep(1)
-		settings.addEffectChecker(effectMon)
+		
 		# extraParam = Namespace to special/search
 
 		effplayer.effectdiscardCard(effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer)
@@ -604,7 +606,7 @@ class discardToSpecialGY(effect):
 		print("{}'s Effect Activates!".format(effectMon.name))
 		print("--------------------------------------")
 		time.sleep(1)
-		settings.addEffectChecker(effectMon)
+		
 		# extraParam = Namespace to special/search
 
 		effplayer.effectdiscardCard(effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer)
@@ -619,7 +621,7 @@ class specialExactHand(effect):
 		print("{}'s Effect Activates!".format(effectMon.name))
 		print("--------------------------------------")
 		time.sleep(1)
-		settings.addEffectChecker(effectMon)
+		
 		# extraParam = Namespace to special/search
 
 		effplayer.specialHandExact(self.extraParam, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer)
@@ -629,7 +631,7 @@ class specialDeckExact(effect):
 		print("{}'s Effect Activates!".format(effectMon.name))
 		print("--------------------------------------")
 		time.sleep(1)
-		settings.addEffectChecker(effectMon)
+		
 		# extraParam = Namespace to special/search
 
 		effplayer.specialDeckExact(self.extraParam, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer)
@@ -657,7 +659,7 @@ class gainAtkforInstance(effect):
 		print("{}'s Effect Activates!".format(effectMon.name))
 		print("--------------------------------------")
 		time.sleep(1)
-		settings.addEffectChecker(effectMon)
+		
 		# extraParam = Namespace to gain attack from
 		# nextraPAram = Attack Point Increase
 
@@ -694,31 +696,37 @@ class gainAtkforInstance(effect):
 			print("No Attack Gained")
 
 		# Check if a Battle Effect or not
-		if effectMon.trigger.name == "summon":
+		if effectMon.checkResolve(effTrigger.summon):
 			return
-		elif effectMon.trigger.name == "battle":
+		if effectMon.checkResolve(effTrigger.battle):
 			damage = effectMon.atkPoints - oppMon.atkPoints
 			return damage
 
-class halfAttackedDraw(effect):
+# NOT DESIGNED TO BE USED SOLELY BY ITSELF | ALWAYS PUT BEHIND OTHER DEFENDING OR ATTACKING EFFECTS
+class halfAttacked(effect):
+	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
+		print("--------------------------------------")
+
+		oppMon.atkPoints = int(oppMon.atkPoints / 2)
+		print("{}'s ATK points have been halved to {}".format(oppMon.name, oppMon.atkPoints))
+		time.sleep(1)
+
+# Same as above but can be used alone
+class halfAttackedMessage(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name))
 		print("--------------------------------------")
 		time.sleep(1)
-		settings.addEffectChecker(effectMon)
-		# extraParam = No of Cards to draw
 
 		oppMon.atkPoints = int(oppMon.atkPoints / 2)
 		print("{}'s ATK points have been halved to {}".format(oppMon.name, oppMon.atkPoints))
-
-		effplayer.draw(self.extraParam)
 
 class zeroAttack(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name))
 		print("--------------------------------------")
 		time.sleep(1)
-		settings.addEffectChecker(effectMon)
+		
 
 		oppMon.atkPoints = 0
 		print("{}'s ATK points have been reduced to 0".format(oppMon.name))
@@ -729,7 +737,7 @@ class tributetoGrantAttack(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name))
 		time.sleep(1)
-		settings.addEffectChecker(effectMon)
+		
 
 		while True:
 			print("--------------------------------------")
@@ -761,7 +769,7 @@ class gainLPforHand(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name))
 		time.sleep(1)
-		settings.addEffectChecker(effectMon)
+		
 		# extraParam = Life Point Gain per Card in Hand
 
 		handSize = effplayer.hand.__len__()
@@ -800,7 +808,7 @@ class controlStealMonster(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name))
 		time.sleep(1)
-		settings.addEffectChecker(effectMon)
+		
 		# self.extraParam = Namespace to check for
 
 		result = checkControlInstance(self.extraParam, effplayer.monfield, 2)
@@ -816,7 +824,7 @@ class tributetoSteal(effect):
 		print("--------------------------------------")
 		print("{}'s Effect Activates!".format(effectMon.name))
 		time.sleep(1)
-		settings.addEffectChecker(effectMon)
+		
 		# self.extraParam = Namespace to check for
 
 		if effectMon not in effplayer.monfield:
@@ -883,7 +891,7 @@ class shuffleToSSGraveyard(effect):
 		print("--------------------------------------")
 		print("{}'s Effect Activates!".format(effectMon.name))
 		time.sleep(1)
-		settings.addEffectChecker(effectMon)
+		
 		# extraParam = No. of Cards to shuffle back
 
 		effplayer.shuffleHandIntoDeck(self.extraParam)
@@ -895,7 +903,7 @@ class drawForDifference(effect):
 		print("--------------------------------------")
 		print("{}'s Effect Activates!".format(effectMon.name))
 		time.sleep(1)
-		settings.addEffectChecker(effectMon)
+		
 
 		if effplayer.lifepoints > opponent.lifepoints:
 			difference = effplayer.lifepoints - opponent.lifepoints
@@ -915,32 +923,32 @@ class drawForDifference(effect):
 # Define the effects used
 
 # Drawing Effects
-PlayerDraw1 = playerDraw("Draw One Card", 1)
-PlayerDraw2 = playerDraw("Draw Two Cards", 2)
-controlStormriderDraw2 = controlDiscardDraw("If you control a Stormrider; Discard 1 card; Draw 2 cards", "Stormrider", 2)
+playerDraw1 = playerDraw("Draw One Card", 1)
+playerDraw2 = playerDraw("Draw Two Cards", 2)
+controlStormriderDraw2 = controlDiscardDraw("If you control a Storm Rider; Discard 1 card; Draw 2 cards", "Storm Rider", 2)
 DifferenceDraw = drawForDifference("Draw one card per 1000 point difference between both players lifepoints)", 0)
 
 # Disruptive Effects
 Destroy = effectDestroy("Destroy Your Opponents Monster", 0)
 bounceMonster = fieldToHand("Bounce an Opponents Monster", 0)
-controlStormriderDestroy = controlDestroy("If you control a 'Stormrider' card, destroy up to 2 monsters your opponent controls", "Stormrider", 2)
+controlStormriderDestroy = controlDestroy("If you control a 'Storm Rider' card, destroy up to 2 monsters your opponent controls", "Storm Rider", 2)
 StealMonster = stealMonster("Steal an Opponents Monster", 0)
-StormriderStealMonster = controlStealMonster("If you control 2 'Stormrider' card; Switch player control of one opponents monster", "Stormrider")
-tributeStormtoSteal = tributetoSteal("You can tribute any number of 'Stormrider' or 'Stormbird' Cards; Switch player control of the identical amount of opponents monsters", "Stormrider", "Stormbird")
+StormriderStealMonster = controlStealMonster("If you control 2 'Storm Rider' card; Switch player control of one opponents monster", "Storm Rider")
+tributeStormtoSteal = tributetoSteal("You can tribute any number of 'Storm Rider' or 'Storm Bird' Cards; Switch player control of the identical amount of opponents monsters", "Storm Rider", "Storm Bird")
 
 # Restoration Effects
-Restore1000 = effectRestore("Restore Life Points by 1000", 1000)
-Restore2000 = effectRestore("Restore Life Points by 2000", 2000)
+restore1000 = effectRestore("Restore Life Points by 1000", 1000)
+restore2000 = effectRestore("Restore Life Points by 2000", 2000)
 RestoreLPForHand1000 = gainLPforHand("Restore 1000 Life Points for Every card in your hand", 1000)
 
 # Damaging Effects
 Damage1000 = effectDamage("Damage Opponent by 1000", 1000)
 Damage8000 = effectDamage("Damage Opponent by 8000", 8000)
 DamageSelf = effectDamageSelf("Damage Player by 1000", 1000)
-SiphonLife800 = siphonLife("Steal 800 Life points from opponent", 800)
-SiphonLife1500 = siphonLife("Steal 1500 Life points from opponent", 1500)
-SiphonLifeAndMill1500 = siphonLifeAndMill("Steal 1500 and mill a card", 1500)
-SiphonLifeAndMill800 = siphonLifeAndMill("Steal 800 and mill a card", 800)
+siphonLife800 = siphonLife("Steal 800 Life points from opponent", 800)
+siphonLife1500 = siphonLife("Steal 1500 Life points from opponent", 1500)
+siphonLifeAndMill1500 = siphonLifeAndMill("Steal 1500 and mill a card", 1500)
+siphonLifeAndMill800 = siphonLifeAndMill("Steal 800 and mill a card", 800)
 
 # Discarding Effects
 playerDisc1 = effectPlayerRandDiscard("Player discards One Card", 1)
@@ -949,8 +957,8 @@ oppDisc2 = effectOpponentDiscard("Opponent Discards Two Cards", 2)
 
 # Battle Phase Specific Effects
 matchAttack = effectCrash("Copies Opponents Monsters Attack", 0)
-battleImmune = noBattleDestruction("Is Not Destroyed", 0)
-effectImmune = noEffectDestruction("Is Not Destroyed", 0)
+battleImmune = noBattleDestruction("Is Not Destroyed by that battle", 0)
+effectImmune = noEffectDestruction("Is Not Destroyed by that effect", 0)
 
 # Card Searching Effects
 effectSearch = searchDeck("Add a card from Deck to Hand", 0)
@@ -964,18 +972,23 @@ effectEvigishkiSearch = searchSpecificDeck("Add an 'Evigishki' card from Deck to
 effectGishkiMirrorSearch = searchSpecificDeck("Add a 'Gishki Aquamirror' card from Deck to hand", "Gishki Aquamirror")
 effectDarkMagicianSearch = searchSpecificDeck("Add a 'Dark Magician' card from your deck to your hand", "Dark Magician")
 effectGirlSearch = searchSpecificDeck("Add a 'Magician Girl' from your Deck to your hand", "Magician Girl")
-effectStormSearch = searchSpecificDeck2("Add a 'Stormrider' or 'Stormbird' card from your deck to your hand", "Stormrider", "Stormbird")
+effectStormSearch = searchSpecificDeck2("Add a 'Storm Rider' or 'Storm Bird' card from your deck to your hand", "Storm Rider", "Storm Bird")
 
 # Attack Manipulation Effects
 gain500 = gainAttack("Gains 500 attack before battle. Loses attack upon destruction", 500)
 gain1000 = gainAttack("Gains 1000 attack before battle. Loses attack upon destruction", 1000)
 gainDifference = gainAttackDifference("Gain Atk Points equal to the difference between your lifepoints", 0)
 grant800 = grantAttack("Grant a monster on your field 800 Attack (not including this card)", 800)
-darkMagicianGain500 = gainAtkforInstance("Gain 400 attack for each 'Dark Magician' monster on the field or in your Graveyard", "Dark Magician", 400)
-halfAtkDraw2 = halfAttackedDraw("Half the attacking monsters attack; Draw Two Cards", 2)
-Atk0 = zeroAttack("Reduce target monster's attack to 0", 0)
+darkMagicianGain400 = gainAtkforInstance("Gain 400 attack for each 'Dark Magician' monster on the field or in your Graveyard", "Dark Magician", 400)
+evigishkiGain400 = gainAtkforInstance("Gain 400 attack for each 'Evigishki' monster on the field or in the graveyard", "Evigishki", 400)
+heraldGain400 = gainAtkforInstance("Gain 400 attack for each 'Herald' monster on the field or in the graveyard", "Herald", 400)
+stormBirdGain400 = gainAtkforInstance("Gain 400 attack for each 'Storm Bird' monster on the field or in the graveyard", "Storm Bird", 400)
+stormRiderGain400 = gainAtkforInstance("Gain 400 attack for each 'Storm Rider' monster on the field or in the graveyard", "Storm Rider", 400)
+halfAtk = halfAttacked("Half the attacking monsters attack; Draw Two Cards", 2)
+halfAtkMsg = halfAttackedMessage("Half the attacking monsters attack", 2)
+atk0 = zeroAttack("Reduce target monster's attack to 0", 0)
 tribtoGrantAtk = tributetoGrantAttack("You can tribute this card: Grant another monster this monsters ATK points", 0)
-grantStormriderAttack = grantAttackNamespace("For each 'Stormrider' card on the field, grant a Card 300 ATK x No. of 'Stormrider' Card on the field", "Stormrider", 300)
+grantStormriderAttack = grantAttackNamespace("For each 'Storm Rider' card on the field, grant a Card 300 ATK x No. of 'Storm Rider' Card on the field", "Storm Rider", 300)
 
 # Summon Manipulation Effects
 doubleSummon = extraNormalSummon("Gain an extra normal summon", 0)
@@ -985,23 +998,23 @@ specialVampireHand = specialSpecificHand("Special Summon a 'Vampire' Monster fro
 specialGishkiHand = specialSpecificHand("Special Summon a 'Gishki' Monster from your hand", "Gishki")
 specialDarkMagicianHand = specialExactHand("Special Summon a 'Dark Magician' from your hand", "Dark Magician")
 specialMagicianGirlHand = specialSpecificHand("Special Summon a 'Magician Girl' Card from your hand", "Magician Girl")
-specialStormBirdHand = specialSpecificHand("Special Summon a 'Stormbird' Monster from your hand", "Stormbird")
+specialStormBirdHand = specialSpecificHand("Special Summon a 'Storm Bird' Monster from your hand", "Storm Bird")
 specialCodeHand = specialSpecificHand("Special Summon a 'Code' Monster from your hand", "Code")
 specialfromHand = specialHand("Special Summon a monster from your hand", 0)
 discSpecVampHand = discardToSpecialHand("Discard one card, Special Summon a vampire from your Hand", "Vampire")
-discSpecStormGY = discardToSpecialGY("Discard one Card, Special Summon a 'Stormbird' or 'Stormrider' from your graveyard", "Stormrider", "Stormbird")
+discSpecStormGY = discardToSpecialGY("Discard one Card, Special Summon a 'Storm Bird' or 'Storm Rider' from your graveyard", "Storm Rider", "Storm Bird")
 specialDarkMagicianDeck = specialDeckExact("Special Summon a Dark Magician from your Deck", "Dark Magician")
-specialStormRiderDeck = specialDeckSpecific("Special Summon a 'Stormrider' from your deck", "Stormrider")
+specialStormRiderDeck = specialDeckSpecific("Special Summon a 'Storm Rider' from your deck", "Storm Rider")
 specialCodeDeck = specialDeckSpecific("Special Summon a 'Code' monster from your deck", "Code")
 specialGishkiDeck = specialDeckSpecific("Special Summon a 'Gishki' monster from your deck", "Gishki")
 specialAgentDeck = specialDeckSpecific("Special Summon a 'Agent' monster from your deck", "Agent")
 specialHeraldDeck = specialDeckSpecific("Special Summon a 'Herald' monster from your deck", "Herald")
 specialGirlLess2000 = specialDeckSpecificLessAttack("Special Summon a 'Magician Girl' monster from your deck with less than 2000 attack", "Magician Girl", 2000)
-tribToSpecialStormBird = tributeTOSSDeckSpecific("You can tribute this card; Special summon a 'Stormbird' card from your deck", "Stormbird")
-ShuffleToSSGraveyard = shuffleToSSGraveyard("Shuffle 1 card from your hand into the deck; Special summon a monster from your Graveyard", 1)
+tribToSpecialStormBird = tributeTOSSDeckSpecific("You can tribute this card; Special summon a 'Storm Bird' card from your deck", "Storm Bird")
+shuffleToSSGraveyard = shuffleToSSGraveyard("Shuffle 1 card from your hand into the deck; Special summon a monster from your Graveyard", 1)
 
 # Recursion Effects
-GYToHand = gyToHand("Return a card from your Graveyard to your Hand", 0)
+gyToHand = gyToHand("Return a card from your Graveyard to your Hand", 0)
 Trib_SS_GY = tributeTOSSGy("you can Tribute this card: Special Summon a monster from the Graveyard", 0)
 Mill = mill("Send one card from your deck to the graveyard", 0)
 
