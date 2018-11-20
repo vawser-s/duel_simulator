@@ -44,7 +44,7 @@ class effectDestroy(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
 		print("--------------------------------------")
-		time.sleep(2)
+		time.sleep(1.3)
 		
 
 		if opponent.monfield:
@@ -85,7 +85,7 @@ class effectDestroyBoth(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
 		print("--------------------------------------")
-		time.sleep(2)
+		time.sleep(1.3)
 
 		print("{}'s Field:".format(effplayer.name))
 		effplayer.checkField()
@@ -146,7 +146,7 @@ class controlDestroy(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
 		print("--------------------------------------")
-		time.sleep(2)
+		time.sleep(1.3)
 		# extraParam = Namespace to check for
 		# extraParam = No of cards to destroy
 
@@ -208,7 +208,7 @@ class destroyHand(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
 		print("--------------------------------------")
-		time.sleep(2)
+		time.sleep(1.3)
 
 		if effplayer.hand:
 			while True:
@@ -304,7 +304,7 @@ class effectDamage(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
 		print("--------------------------------------")
-		time.sleep(2)
+		time.sleep(1.3)
 		
 		# extraParam = Life Point loss
 
@@ -314,7 +314,7 @@ class effectDamageSelf(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
 		print("--------------------------------------")
-		time.sleep(2)
+		time.sleep(1.3)
 		
 		# extra = Life Point Loss
 
@@ -324,7 +324,7 @@ class effectRestore(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
 		print("--------------------------------------")
-		time.sleep(2)
+		time.sleep(1.3)
 		
 		# extraParam = Life Point Gain
 
@@ -334,7 +334,7 @@ class effectCrash(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
 		print("--------------------------------------")
-		time.sleep(2)
+		time.sleep(1.3)
 
 		try:
 			effectMon.atkPoints = oppMon.atkPoints
@@ -348,7 +348,7 @@ class playerDraw(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
 		print("--------------------------------------")
-		time.sleep(2)
+		time.sleep(1.3)
 		
 		# extraParam = No of Cards to Draw
 
@@ -360,7 +360,7 @@ class controlDiscardDraw(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
 		print("--------------------------------------")
-		time.sleep(2)
+		time.sleep(1.3)
 		
 		# extraParam = Namespace to check for
 		# extraParam = No of Cards to draw
@@ -381,7 +381,7 @@ class siphonLife(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
 		print("--------------------------------------")
-		time.sleep(2)
+		time.sleep(1.3)
 		
 		# extraParam = Life Point Siphon Amount
 
@@ -392,12 +392,12 @@ class mill(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
 		print("--------------------------------------")
-		time.sleep(2)
+		time.sleep(1.3)
 		
 
 		effplayer.mill(effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer)
 
-		time.sleep(2)
+		time.sleep(1.3)
 
 		pass
 
@@ -405,7 +405,7 @@ class siphonLifeAndMill(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
 		print("--------------------------------------")
-		time.sleep(2)
+		time.sleep(1.3)
 		
 		# extraParam = Life Point Siphon Amount
 
@@ -418,7 +418,7 @@ class siphonLifeAndMill(effect):
 		# Mill a Card
 		effplayer.mill(effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer)
 
-		time.sleep(2)
+		time.sleep(1.3)
 
 		pass
 
@@ -426,7 +426,7 @@ class effectPlayerRandDiscard(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
 		print("--------------------------------------")
-		time.sleep(2)
+		time.sleep(1.3)
 		
 		# extraParam = No Of Cards to Discard
 
@@ -457,7 +457,7 @@ class effectOpponentDiscard(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
 		print("--------------------------------------")
-		time.sleep(2)
+		time.sleep(1.3)
 		
 		# extraParam = No Of Cards to Discard
 
@@ -488,7 +488,7 @@ class noBattleDestruction(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
 		print("--------------------------------------")
-		time.sleep(2)
+		time.sleep(1.3)
 
 		print("{} cannot be destroyed by Battle".format(effectMon.name))
 
@@ -498,7 +498,7 @@ class noEffectDestruction(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("Counter Monster Effect Activate!")
 		print("--------------------------------------")
-		time.sleep(2)
+		time.sleep(1.3)
 
 		print("{} cannot be destroyed by Effects".format(effectMon.name))
 
@@ -508,7 +508,7 @@ class searchDeck(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
 		print("--------------------------------------")
-		time.sleep(2)
+		time.sleep(1.3)
 		
 
 		effplayer.searchDeck()
@@ -517,7 +517,7 @@ class searchSpecificDeck(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
 		print("--------------------------------------")
-		time.sleep(2)
+		time.sleep(1.3)
 		
 		# extraParam = Namespace to Search
 		# nextraParam = Namespace to Search
@@ -528,7 +528,7 @@ class searchSpecificDeckNamespace(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
 		print("--------------------------------------")
-		time.sleep(2)
+		time.sleep(1.3)
 		
 		# extraParam = Namespace to Search
 		# nextraParam = Namespace to Search
@@ -539,7 +539,7 @@ class extraNormalSummon(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
 		print("--------------------------------------")
-		time.sleep(2)
+		time.sleep(1.3)
 		
 
 		print("You get one extra normal summon")
@@ -550,7 +550,7 @@ class gainAttack(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
 		print("--------------------------------------")
-		time.sleep(2)
+		time.sleep(1.3)
 		
 		# extraParam = Attack Point Gain
 
@@ -572,7 +572,7 @@ class gainAttackDifference(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
 		print("--------------------------------------")
-		time.sleep(2)
+		time.sleep(1.3)
 		
 
 		difference = effplayer.lifepoints - opponent.lifepoints
@@ -594,7 +594,7 @@ class grantAttack(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
 		print("--------------------------------------")
-		time.sleep(2)
+		time.sleep(1.3)
 		
 		# extraParam = Attack Point Gain
 
@@ -607,7 +607,7 @@ class grantAll(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
 		print("--------------------------------------")
-		time.sleep(2)
+		time.sleep(1.3)
 		# extraParam = ATK point increase
 
 		if effplayer.monfield.__len__() == 0:
@@ -623,7 +623,7 @@ class grantAttackNamespace(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
 		print("--------------------------------------")
-		time.sleep(2)
+		time.sleep(1.3)
 		
 		# extraParam = Namespace to grant attack to
 		# nextraParam = Amount of Attack per instance
@@ -642,7 +642,7 @@ class fieldToHand(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
 		print("--------------------------------------")
-		time.sleep(2)
+		time.sleep(1.3)
 		
 
 		if opponent.monfield:
@@ -671,7 +671,7 @@ class gyToHand(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
 		print("--------------------------------------")
-		time.sleep(2)
+		time.sleep(1.3)
 		
 
 		effplayer.graveyardToHand()
@@ -680,7 +680,7 @@ class tributeTOSSGy(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
 		print("--------------------------------------")
-		time.sleep(2)
+		time.sleep(1.3)
 		
 
 		while True:
@@ -714,7 +714,7 @@ class tributeTOSSGy(effect):
 class tributeTOSSDeckSpecific(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
-		time.sleep(2)
+		time.sleep(1.3)
 		
 		# extraParam = Namespace to summon from
 
@@ -750,7 +750,7 @@ class specialHand(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
 		print("--------------------------------------")
-		time.sleep(2)
+		time.sleep(1.3)
 		
 
 		effplayer.specialHandEffect(effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer)
@@ -760,7 +760,7 @@ class specialSpecificHand(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
 		print("--------------------------------------")
-		time.sleep(2)
+		time.sleep(1.3)
 		
 		# extraParam = Namespace to special/search
 
@@ -770,7 +770,7 @@ class discardToSpecialHand(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
 		print("--------------------------------------")
-		time.sleep(2)
+		time.sleep(1.3)
 		
 		# extraParam = Namespace to special/search
 
@@ -782,7 +782,7 @@ class discardToSpecialGY(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
 		print("--------------------------------------")
-		time.sleep(2)
+		time.sleep(1.3)
 		
 		# extraParam = Namespace to special/search
 
@@ -797,7 +797,7 @@ class specialExactHand(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
 		print("--------------------------------------")
-		time.sleep(2)
+		time.sleep(1.3)
 		
 		# extraParam = Namespace to special/search
 
@@ -808,7 +808,7 @@ class specialMeHand(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates in the Hand!".format(effectMon.name))
 		print("--------------------------------------")
-		time.sleep(2)
+		time.sleep(1.3)
 
 		effplayer.summonfromHand(effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer)
 
@@ -816,7 +816,7 @@ class specialDeckExact(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
 		print("--------------------------------------")
-		time.sleep(2)
+		time.sleep(1.3)
 		
 		# extraParam = Namespace to special/search
 
@@ -826,7 +826,7 @@ class specialDeckSpecific(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
 		print("--------------------------------------")
-		time.sleep(2)
+		time.sleep(1.3)
 		# extraParam = Namespace to special/search
 		# nextraParam = extra Namespace
 
@@ -841,7 +841,7 @@ class specialGraveyardSpecific(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
 		print("--------------------------------------")
-		time.sleep(2)
+		time.sleep(1.3)
 		# extraParam = Namespace
 		# nextraParam = Namespace
 
@@ -852,7 +852,7 @@ class specialDeckSpecificLessAttack(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
 		print("--------------------------------------")
-		time.sleep(2)
+		time.sleep(1.3)
 		# extraParam = Namespace to special/search
 
 		effplayer.specialDeckSpecificLessAttack(self.extraParam, self.nextraParam, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer)
@@ -861,7 +861,7 @@ class gainAtkforInstance(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
 		print("--------------------------------------")
-		time.sleep(2)
+		time.sleep(1.3)
 		
 		# extraParam = Namespace to gain attack from
 		# nextraPAram = Attack Point Increase
@@ -912,14 +912,14 @@ class halfAttacked(effect):
 
 		oppMon.atkPoints = int(oppMon.atkPoints / 2)
 		print("{}'s ATK points have been halved to {}".format(oppMon.name, oppMon.atkPoints))
-		time.sleep(2)
+		time.sleep(1.3)
 
 # Same as above but can be used alone
 class halfAttackedMessage(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
 		print("--------------------------------------")
-		time.sleep(2)
+		time.sleep(1.3)
 
 		oppMon.atkPoints = int(oppMon.atkPoints / 2)
 		print("{}'s ATK points have been halved to {}".format(oppMon.name, oppMon.atkPoints))
@@ -928,18 +928,18 @@ class zeroAttack(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
 		print("--------------------------------------")
-		time.sleep(2)
+		time.sleep(1.3)
 		
 
 		oppMon.atkPoints = 0
 		print("{}'s ATK points have been reduced to 0".format(oppMon.name))
 
-		time.sleep(2)
+		time.sleep(1.3)
 
 class tributetoGrantAttack(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
-		time.sleep(2)
+		time.sleep(1.3)
 		
 
 		while True:
@@ -971,7 +971,7 @@ class tributetoGrantAttack(effect):
 class gainLPforHand(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
-		time.sleep(2)
+		time.sleep(1.3)
 		
 		# extraParam = Life Point Gain per Card in Hand
 
@@ -1010,7 +1010,7 @@ class stealMonster(effect):
 class controlStealMonster(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
-		time.sleep(2)
+		time.sleep(1.3)
 		
 		# self.extraParam = Namespace to check for
 
@@ -1026,7 +1026,7 @@ class tributetoSteal(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("--------------------------------------")
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
-		time.sleep(2)
+		time.sleep(1.3)
 		
 		# self.extraParam = Namespace to check for
 
@@ -1093,7 +1093,7 @@ class shuffleToSSGraveyard(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("--------------------------------------")
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
-		time.sleep(2)
+		time.sleep(1.3)
 		
 		# extraParam = No. of Cards to shuffle back
 
@@ -1105,7 +1105,7 @@ class drawForDifference(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("--------------------------------------")
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
-		time.sleep(2)
+		time.sleep(1.3)
 		
 
 		if effplayer.lifepoints > opponent.lifepoints:
@@ -1121,12 +1121,12 @@ class drawForDifference(effect):
 			print("Difference is: {}".format(difference))
 			effplayer.draw(cardsDrawn)
 
-		time.sleep(2)
+		time.sleep(1.3)
 
 class tributeToDraw(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
-		time.sleep(2)
+		time.sleep(1.3)
 		# extraParam = No of cards to draw
 
 		while True:
@@ -1161,7 +1161,7 @@ class phoenixResurrection(effect):
 			if effplayer == turnPlayer:
 				print("--------------------------------------")
 				print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
-				time.sleep(2)
+				time.sleep(1.3)
 
 				if effectMon in effplayer.gy:
 					effplayer.monfield.append(effectMon)
@@ -1181,7 +1181,7 @@ class phoenixResurrection(effect):
 			else:
 				print("--------------------------------------")
 				print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
-				time.sleep(2)
+				time.sleep(1.3)
 
 				if effectMon in opponent.gy:
 					opponent.monfield.append(effectMon)
@@ -1197,18 +1197,16 @@ class phoenixResurrection(effect):
 					print(settings.green + "{}".format(effectMon.name) + settings.end + " Nukes the field!")
 					print("--------------------------------------")
 
-					time.sleep(2)
+					time.sleep(1.3)
 
 					destroyAll.resolve(resolve, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer)
 
 				else:
 					print("{} Must be in the graveyard to resolve this effect".format(effectMon.name))
 
-			settings.Standby
-
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
-		time.sleep(2)
+		time.sleep(1.3)
 
 		settings.addStandbyEffectChecker(effectMon, self)
 		print("{} will return next standby phase...".format(effectMon.name))
@@ -1216,7 +1214,7 @@ class phoenixResurrection(effect):
 class ffSummon(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
-		time.sleep(2)
+		time.sleep(1.3)
 		# self.extraParam = namespace
 		# nextraParam = no of different names fitting namespace
 

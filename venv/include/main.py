@@ -22,6 +22,8 @@ def cardSetup():
 	                    "effectTrigger": effTrigger.summon}
 	SpecialCyberseHand = {"effect"       : specialCyberseHand,
 	                      "effectTrigger": effTrigger.summon}
+	SpecialCyberseHandDest = {"effect"       : specialCyberseHand,
+	                      "effectTrigger": effTrigger.destructionBat}
 	DestroySum = {"effect"       : Destroy,
 	              "effectTrigger": effTrigger.summon}
 	OppDisc1 = {"effect"       : oppDisc1,
@@ -33,7 +35,7 @@ def cardSetup():
 	EffectSearch = {"effect"       : effectSearch,
 	                "effectTrigger": effTrigger.summon}
 	SpecialFromHand = {"effect"       : specialfromHand,
-	                   "effectTrigger": effTrigger.destructionEff}
+	                   "effectTrigger": effTrigger.battle}
 	MonsterBounce = {"effect"       : bounceMonster,
 	                 "effectTrigger": effTrigger.summon}
 
@@ -59,11 +61,11 @@ def cardSetup():
 	global codeDriver
 	global codeDriver2
 	microCoder = card("Micro Coder", 300, 0, [SpecialCodeDeck, PlayerDraw1Grav])
-	codeGenerator = card("Code Generator", 1300, 0, [EffectCyberseSearch])
-	codeRadiator = card("Code Radiator", 1600, 0, [DoubleSummon])
+	codeGenerator = card("Code Generator", 1300, 0, [EffectCyberseSearch, PlayerDraw1Grav])
+	codeRadiator = card("Code Radiator", 1600, 0, [DoubleSummon, PlayerDraw1Grav])
 	ladyDebug = card("Lady Debug", 1000, 0, [SpecialCyberseHand])
-	cyberseGadget = card("Cyberse Gadget", 1400, 0, [DestroySum])
-	cyberseAccelerator = card("Cyberse Accelerator", 2000, 0, [OppDisc1, SelfDisc1])
+	cyberseGadget = card("Cyberse Gadget", 1400, 0, [DestroySum, SpecialCyberseHandDest])
+	cyberseAccelerator = card("Cyberse Accelerator", 2300, 0, [OppDisc1, SelfDisc1])
 	cyberseWhiteHat = card("Cyberse White Hat", 2100, 1, [EffectSearch])
 	cyberseClockDragon = card("Cyberse Clock Dragon", 2500, 1, [SpecialFromHand])
 	dualAssembwurm = card("Dual Assembwurm", 2800, 1, [OppDisc2])
@@ -466,7 +468,7 @@ def cardSetup():
 	fireFormationTensu2 = deepcopy(fireFormationTensu)
 	fireFormationTenki = card("Fire Formation Tenki", 0, 0, [SearchFireDeck, Atk100Grave]) # Search a fire Fist | Grant ATK in grave
 	fireFormationGyokkou = card("Fire Formation Gyokkou", 0, 0, [TribDraw2, Atk100Grave]) # tribute to draw 2 | Grant ATK in grave
-	fireFormationSeito = card("Fire Formation Seito", 0, 0, [FFCheckSummon, Atk100Grave])  # if 4 fire different fire fist monsters in grave, Special summon 4 fire fists for Tribute | Grant ATK in grave
+	fireFormationSeito = card("Fire Formation Seito", 0, 1, [FFCheckSummon, Atk100Grave])  # if 4 fire different fire fist monsters in grave, Special summon 4 fire fists for Tribute | Grant ATK in grave
 
 # Prints Deck List before they are assigned to a player
 def printDeckList(DeckList: list):
