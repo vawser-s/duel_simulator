@@ -4,7 +4,17 @@ firstTurn = 0
 
 normalSummoned = 0
 
+global effectList
 effectList = []
+
+global standbyEffectList
+standbyEffectList = []
+
+bold = "\033[1m"
+yellow = '\033[93m'
+end = "\033[0m"
+darkcyan = '\033[36m'
+green = '\033[;33m'
 
 
 def printNormalSummon():
@@ -41,3 +51,23 @@ def returnEffectChecker(monster, trigger):  # format: [monster, trigger]
 def resetEffectChecker():
 	global effectList
 	effectList = []
+
+
+def addStandbyEffectChecker(monster, effect):
+	standbyEffectList.append([monster, effect])
+
+
+def resolveStandbyEffects(effplayer, opponent):
+	if standbyEffectList:
+		for entry in standbyEffectList:
+			entry[1].StandbyResolution(1, effplayer, opponent, entry[0], None, None, None, None)
+
+		resetStandbyEffectChecker()
+	else:
+		return
+
+
+def resetStandbyEffectChecker():
+	global standbyEffectList
+	standbyEffectList = []
+

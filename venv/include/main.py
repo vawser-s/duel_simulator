@@ -390,54 +390,128 @@ def cardSetup():
 	stormBirdAce = card("Ace: Storm Bird", 2000, 1, [StormBirdGain400])
 	stormBirdAce2 = deepcopy(stormBirdAce)
 
+	Atk100Grave = {"effect": atk100GrantAll,
+	               "effectTrigger": effTrigger.graveyard}
+	SpecialFireKingGrave = {"effect": specialFireKingGrave,
+	               "effectTrigger": effTrigger.summon}
+	SpecialEffectDestruction = {"effect": specialEffDestruction,
+	                            "effectTrigger": effTrigger.otherCardEffDestruction}
+	DestroyInHand = {"effect"       : destroyInHand,
+	                  "effectTrigger": effTrigger.summon}
+	FireSearchDest = {"effect": effectFireSearch,
+	                  "effectTrigger": effTrigger.destructionEff}
+	SpecialFormationDeck = {"effect": specialFormationDeck,
+	                  "effectTrigger": effTrigger.summon}
+	SpecialFormationDeckDest = {"effect": specialFormationDeck,
+	                  "effectTrigger": effTrigger.destructionEff}
+	Atk500Summon = {"effect": atk500GrantAll,
+	                  "effectTrigger": effTrigger.summon}
+	SpecialFistDeck = {"effect": specialFistDeckLess2000,
+	                   "effectTrigger": effTrigger.destroyBattle}
+	Atk500Kill = {"effect"       : atk500GrantAll,
+	                "effectTrigger": effTrigger.destroyBattle}
+	TribDraw2 = {"effect": tribDraw2,
+	             "effectTrigger": effTrigger.summon}
+	SearchFireDeck = {"effect": effectFireSearch,
+	                  "effectTrigger": effTrigger.summon}
+	MillieGrav = {"effect"       : Mill,
+	          "effectTrigger": effTrigger.graveyard}
+	MillieBat = {"effect"       : Mill,
+	          "effectTrigger": effTrigger.destructionBat}
+	DestroyGrav = {"effect": Destroy,
+	               "effectTrigger": effTrigger.graveyard}
+	PheonixResurrection = {"effect": PhoenixResurrection,
+	                       "effectTrigger": effTrigger.destructionEff}
+	FFCheckSummon = {"effect": FFSummon,
+	                 "effectTrigger": effTrigger.summon}
+
 	global fireKingArvata
+	global fireKingArvata2
 	global fireKingYaksha
+	global fireKingYaksha2
 	global fireKingGarunix
+	global fireKingGarunix2
 	global fireKingBarong
+	global fireKingBarong2
 	global fireFistBear
+	global fireFistBear2
 	global fireFistHawk
+	global fireFistHawk2
 	global fireFistKarin
+	global fireFistKarin2
 	global fireFistGorilla
-	global fireformationTensu
+	global fireFistGorilla2
+	global fireFormationTensu
+	global fireFormationTensu2
 	global fireFormationTenki
-	global fireformationGyokkou
-	global fireformationSeito
-	fireKingArvata = card("Fire King Arvata", 1800, 0, [])  # Special monster from Grave | Draw Card
-	fireKingYaksha = card("Fire King Yaksha", 1600, 0, [])  # Special Summons itself from hand | Destroys a card
-	fireKingGarunix = card("Fire King High Avatar Garunix", 2700, 1, [])  # Destroys all monsters on board, summons next turn
-	fireKingBarong = card("Fire King Barong", 1800, 0, [])  # Special Summons itself from hand | Searches
-	fireFistBear = card("Fire Fist Bear", 1800, 0, [])  # Special Summons a Formation
-	fireFistHawk = card("Fire Fist Hawk", 200, 0, [])  # Grants all Fire monsters 500 Atk | Draw
-	fireFistGorilla = card("Fire Fist Gorilla", 1800, 0, [])  # When destroy monster by battle, Special Fire Fist from deck
-	fireFistKarin = card("Fire Fist Karin", 1800, 1, [])  # When destroy monster by battle, grant all Fire monsters on field 500 Atk
-	fireformationTensu = card("Fire Formation Tensu", 0, 0, [DoubleSummon])
-	fireFormationTenki = card("Fire-Formation Tenki", 0, 0, []) # Search a fire Fist | Grant ATK in grave
-	fireformationGyokkou = card("Fire-Formation Gyokkou", 0, 0, []) # tribute to ... | Grant ATK in grave
-	fireformationSeito = card("Fire-Formation Seito", 0, 0, [])  # if 4 fire different fire fist monsters in grave, Special summon 4 fire fists for Tribute | Grant ATK in grave
+	global fireFormationGyokkou
+	global fireFormationSeito
+	fireKingArvata = card("Fire King Arvata", 1800, 0, [SpecialFistDeck, SpecialEffectDestruction])  # Special monster from Grave | Draw Card
+	fireKingArvata2 = deepcopy(fireKingArvata)
+	fireKingYaksha = card("Fire King Yaksha", 1900, 0, [SpecialEffectDestruction, FireSearchDest])  # Special Summons itself from hand | Destroys a card on field
+	fireKingYaksha2 = deepcopy(fireKingYaksha)
+	fireKingGarunix = card("Fire King High Avatar Garunix", 2700, 1, [PheonixResurrection, MillieBat])  # Destroys all monsters on board, summons next turn
+	fireKingGarunix2 = deepcopy(fireKingGarunix)
+	fireKingBarong = card("Fire King Barong", 1800, 0, [DestroyInHand, DestroyGrav])  # Special Summons itself from hand, then destroy a card | Searches
+	fireKingBarong2 = deepcopy(fireKingBarong)
+	fireFistBear = card("Fire Fist Bear", 1200, 0, [SpecialFormationDeck, SpecialFormationDeckDest])  # Special Summons a Formation
+	fireFistBear2 = deepcopy(fireFistBear)
+	fireFistHawk = card("Fire Fist Hawk", 200, 0, [Atk500Summon, SpecialEffectDestruction])  # Grants all Fire monsters 500 Atk | Draw
+	fireFistHawk2 = deepcopy(fireFistHawk)
+	fireFistGorilla = card("Fire Fist Gorilla", 1800, 0, [SpecialFireKingGrave, PlayerDraw1Grav])  # When destroy monster by battle, Special Fire Fist from deck
+	fireFistGorilla2 = deepcopy(fireFistGorilla)
+	fireFistKarin = card("Fire Fist Karin", 2600, 1, [Atk500Kill, MillieGrav])  # When destroy monster by battle, grant all Fire monsters on field 500 Atk | Mill a card
+	fireFistKarin2 = deepcopy(fireFistKarin)
+	fireFormationTensu = card("Fire Formation Tensu", 0, 0, [DoubleSummon, Atk100Grave])
+	fireFormationTensu2 = deepcopy(fireFormationTensu)
+	fireFormationTenki = card("Fire Formation Tenki", 0, 0, [SearchFireDeck, Atk100Grave]) # Search a fire Fist | Grant ATK in grave
+	fireFormationGyokkou = card("Fire Formation Gyokkou", 0, 0, [TribDraw2, Atk100Grave]) # tribute to draw 2 | Grant ATK in grave
+	fireFormationSeito = card("Fire Formation Seito", 0, 0, [FFCheckSummon, Atk100Grave])  # if 4 fire different fire fist monsters in grave, Special summon 4 fire fists for Tribute | Grant ATK in grave
 
 # Prints Deck List before they are assigned to a player
 def printDeckList(DeckList: list):
 	print("Deck List:")
 
+	tempList = []
+
 	if DeckList.__len__() != 0:
 		i = 0
 
+		#  Create a list with only one instance of each card
+		for monster in DeckList:
+			existing = False
+			for monsterTemp in tempList:
+				if monster.name == monsterTemp.name:
+					existing = True
+					continue
+
+			if existing:
+				continue
+			else:
+				tempList.append(monster)
+
+
 		max_len = _player.getMaxLength(DeckList)
 
-		for monster in DeckList:
+		for monster in tempList:
 			if i >= 9:
-				print("[{}] {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ),
-																			 str(monster.atkPoints).ljust(4, ),
-																			 monster.tribute, monster.effectText))
+				print(settings.green + "[{}] {}x {} | ATK: {} | Tributes: {} ".format((i + 1), countInstances(DeckList, monster) , monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute) + settings.end +  settings.darkcyan + "| Effect: {}".format(monster.effectText) + settings.end)
 			else:
-				print("[{}]  {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ),
-																			  str(monster.atkPoints).ljust(4, ),
-																			  monster.tribute, monster.effectText))
+				print(settings.green + "[{}]  {}x {} | ATK: {} | Tributes: {} ".format((i + 1), countInstances(DeckList, monster) , monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute) + settings.end +  settings.darkcyan + "| Effect: {}".format(monster.effectText) + settings.end)
 			i = i + 1
 
 	input("Press Enter to Continue...")
 
 	return
+
+def countInstances(array: list, monster: card):
+	i = 0
+
+	for entry in array:
+		if entry.name == monster.name:
+			i = i + 1
+
+	return i
 
 # Finds the max length of the words in a list of dictionaries (Menu Formatting)
 def findDictLength(dictionaryList: list, index: str):
@@ -460,6 +534,7 @@ def player_deck_setup():
 	HeraldDeck = []
 	MagicianDeck = []
 	StormDeck = []
+	FireDeck = []
 
 	PlayerList = []
 
@@ -587,12 +662,33 @@ def player_deck_setup():
 	StormDeck.append(stormBirdAce)
 	StormDeck.append(stormBirdAce2)
 
+	FireDeck.append(fireKingArvata)
+	FireDeck.append(fireKingArvata2)
+	FireDeck.append(fireKingYaksha)
+	FireDeck.append(fireKingYaksha2)
+	FireDeck.append(fireKingBarong)
+	FireDeck.append(fireKingBarong2)
+	FireDeck.append(fireFistBear)
+	FireDeck.append(fireFistBear2)
+	FireDeck.append(fireFistHawk)
+	FireDeck.append(fireFistHawk2)
+	FireDeck.append(fireKingGarunix)
+	FireDeck.append(fireFistKarin)
+	FireDeck.append(fireFistKarin2)
+	FireDeck.append(fireFistGorilla2)
+	FireDeck.append(fireFormationTensu)
+	FireDeck.append(fireFormationTensu2)
+	FireDeck.append(fireFormationTenki)
+	FireDeck.append(fireFormationGyokkou)
+	FireDeck.append(fireFormationSeito)
+
 	random.shuffle(CyberDeck)
 	random.shuffle(VampireDeck)
 	random.shuffle(GishkiDeck)
 	random.shuffle(HeraldDeck)
 	random.shuffle(MagicianDeck)
 	random.shuffle(StormDeck)
+	random.shuffle(FireDeck)
 
 	for monster in CyberDeck:
 		monster.attacked = 0
@@ -610,6 +706,9 @@ def player_deck_setup():
 		monster.attacked = 0
 
 	for monster in StormDeck:
+		monster.attacked = 0
+
+	for monster in FireDeck:
 		monster.attacked = 0
 
 	CyberPlayer = {
@@ -667,12 +766,22 @@ def player_deck_setup():
 		"voicelines": []
 	}
 
+	FirePlayer = {
+		"name"      : "Soulburner",
+		"desc"      : "A professional Speed Duelist with an explosive attitude. Isn't afraid to destroy his own monsters to burn his opponents down",
+		"deck"      : FireDeck,
+		"deckName"  : "Fire Kings/Fists",
+		"deckDesc"  : "Self Destruction / Fire Formations",
+		"voicelines": []
+	}
+
 	PlayerList.append(CyberPlayer)
 	PlayerList.append(VampirePlayer)
 	PlayerList.append(GishkiPlayer)
 	PlayerList.append(HeraldPlayer)
 	PlayerList.append(MagicianPlayer)
 	PlayerList.append(StormPlayer)
+	PlayerList.append(FirePlayer)
 
 	# Get the user's chosen Player
 	while True:
@@ -801,8 +910,13 @@ def reset():
 	_player.monfield = []
 	_foe.monfield = []
 
+	_player.gy = []
+	_foe.gy = []
+
 	_player.hand = []
 	_foe.hand = []
+
+
 
 	_player.lifepoints = 8000
 	_foe.lifepoints = 8000
@@ -959,6 +1073,9 @@ def mainMenu():
 
 				player_deck_setup()
 
+				_player.draw(4)
+				_foe.draw(4)
+
 				return
 			else:
 				# Return Error
@@ -1021,13 +1138,17 @@ def turnMenu(currentPlayer: duelist, passivePlayer: duelist):
 	# DRAW PHASE
 	if firstTurn == 0:
 		currentPlayer.draw(4)
+		# currentPlayer.draw(0)
 
+		## TODO: Placeholder to move to Card Add
 		# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
 		# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
 		# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
 		# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
 		# _player.hand.append()
+		# _player.monfield.append()
 		# _foe.hand.append()
+		# _foe.monfield.append()
 		# -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------
 		# -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------
 		# -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------
@@ -1041,6 +1162,9 @@ def turnMenu(currentPlayer: duelist, passivePlayer: duelist):
 	# Print current field status
 	print("--------------------------------------")
 	currentPlayer.checkField()
+
+	# STANDBY PHASE
+	settings.resolveStandbyEffects(currentPlayer, passivePlayer)
 
 	# MAIN PHASE
 	while True:
@@ -1159,6 +1283,13 @@ def turnMenu(currentPlayer: duelist, passivePlayer: duelist):
 		print("Turn End")
 		time.sleep(0.5)
 
+		# Reset atk in grave
+		for monster in currentPlayer.gy:
+			monster.atkPoints = monster.origAtk
+
+		for monster in passivePlayer.gy:
+			monster.atkPoints = monster.origAtk
+
 		if firstTurn == 0:
 			firstTurn = 1
 
@@ -1173,6 +1304,7 @@ def turnMenu(currentPlayer: duelist, passivePlayer: duelist):
 				currentPlayer.effectdiscardCard(currentPlayer, passivePlayer, None, None, currentPlayer.gy, passivePlayer.gy, currentPlayer)
 
 		print("\n" * 50)
+
 
 		return exitProg
 	elif destination == "menu":
@@ -1370,10 +1502,17 @@ def battleMenu(turnPlayer: duelist, passivePlayer: duelist):
 
 						if result == 0:
 							passivePlayer.destroyMonsterBat(atkTarget, passivePlayer, turnPlayer, oppmonster, atkMon, passivePlayer.gy, turnPlayer.gy, turnPlayer)
+
+							if atkMon.checkResolve(effTrigger.destroyBattle):
+								atkMon.ResolveEffect(effTrigger.destroyBattle, turnPlayer, passivePlayer, atkMon, atkTarget, turnPlayer.gy, passivePlayer.gy, turnPlayer)
+
 						else:
 							pass
 					else:
 						passivePlayer.destroyMonsterBat(atkTarget, passivePlayer, turnPlayer, oppmonster, atkMon, passivePlayer.gy, turnPlayer.gy, turnPlayer)
+
+						if atkMon.checkResolve(effTrigger.destroyBattle):
+							atkMon.ResolveEffect(effTrigger.destroyBattle, turnPlayer, passivePlayer, atkMon, atkTarget, turnPlayer.gy, passivePlayer.gy, turnPlayer)
 				except IndexError:
 					pass
 				except AttributeError:
