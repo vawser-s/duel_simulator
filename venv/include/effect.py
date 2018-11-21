@@ -31,10 +31,11 @@ def checkControlInstance(InstanceName: str, monfield: list, noOfInstances: int):
 	return result
 
 class effect:
-	def __init__(self, desc, extraParam=None, extraParam2=None):
+	def __init__(self, desc, extraParam=None, extraParam2=None, extraParam3=None):
 		self.desc = desc
 		self.extraParam = extraParam
 		self.nextraParam = extraParam2
+		self.dextraParam = extraParam3
 
 	## TODO Refactor parameters
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
@@ -602,7 +603,6 @@ class grantAttack(effect):
 
 		return
 
-
 class grantAll(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
@@ -618,7 +618,6 @@ class grantAll(effect):
 			monster.atkPoints = monster.atkPoints + self.extraParam
 			print("{} has gained {} Atk Points".format(monster.name, self.extraParam))
 
-
 class grantAttackNamespace(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
@@ -633,6 +632,14 @@ class grantAttackNamespace(effect):
 		for monster in effplayer.monfield:
 			if self.extraParam in monster.name:
 				total = total + 1
+
+		if total == 0:
+			print("No {} monsters on field".format(self.extraParam))
+			return
+		else:
+			print("--------------------------------------")
+			print("You have {} ".format(total) + settings.green + "{}".format(self.extraParam) + settings.end + " monsters on the field, so you give {} Atk to {} monsters".format(self.nextraParam, total))
+			print("--------------------------------------")
 
 		for monster in effplayer.monfield:
 			if self.extraParam in monster.name:
@@ -754,7 +761,6 @@ class specialHand(effect):
 		
 
 		effplayer.specialHandEffect(effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer)
-		return 0
 
 class specialSpecificHand(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
@@ -835,8 +841,6 @@ class specialDeckSpecific(effect):
 		else:
 			effplayer.specialDeckSpecific(self.extraParam, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer)
 
-
-
 class specialGraveyardSpecific(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
@@ -846,7 +850,6 @@ class specialGraveyardSpecific(effect):
 		# nextraParam = Namespace
 
 		effplayer.specialGraveyardSpecific(effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer, self.extraParam, self.nextraParam)
-
 
 class specialDeckSpecificLessAttack(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
@@ -1123,7 +1126,7 @@ class drawForDifference(effect):
 
 		time.sleep(1.3)
 
-class tributeToDraw(effect):
+class tributeToDrawDisc(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
 		time.sleep(1.3)
@@ -1140,11 +1143,28 @@ class tributeToDraw(effect):
 				monster = effectMon
 
 				target = effplayer.checkArrayLoc(effplayer.monfield, monster)
+
+				## TODO: Figure out how to handle a non int error for checkArrayLoc
+				if not isinstance(target, int):
+					print("--------------------------------------")
+					print("--------------------------------------")
+					print("--------------------------------------")
+					print("--------------------------------------")
+					print("checkArrayLoc Broke in this instance, producing: " + str(target))
+					print("--------------------------------------")
+					print("--------------------------------------")
+					print("--------------------------------------")
+					print("--------------------------------------")
+					raise TypeError
+
+
 				del effplayer.monfield[target]
 
 				print("{} Has been tributed".format(effectMon.name))
 
 				print("--------------------------------------")
+
+				effplayer.effectdiscardCard(effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer)
 
 				effplayer.draw(self.extraParam)
 
@@ -1215,19 +1235,20 @@ class ffSummon(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
 		time.sleep(1.3)
-		# self.extraParam = namespace
-		# nextraParam = no of different names fitting namespace
+		# extraParam = namespace
+		# nextraParam = namespace
+		# dextraParam = no of different names fitting namespace
 
 		count = 0
 		tempList = []
 
 		# Count the number of namespace Card in Grave
 		for monster in effplayer.gy:
-			if self.extraParam in monster.name and monster not in tempList:
+			if self.extraParam in monster.name and monster not in tempList or self.nextraParam in monster.name and monster not in tempList:
 				count = count + 1
 				tempList.append(monster)
 
-		if count >= self.nextraParam:
+		if count >= self.dextraParam:
 			print("--------------------------------------")
 			print("You meet the requirements to activate {}'s effect".format(effectMon.name))
 			selection = input("Activate Effect? (Y/N): ")
@@ -1238,9 +1259,9 @@ class ffSummon(effect):
 
 				# Do the thing
 				i = 0
-				x = self.nextraParam
-				while i < self.nextraParam:
-					effplayer.specialGraveyardSpecificNeg(effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer, self.extraParam)
+				x = self.dextraParam
+				while i < self.dextraParam:
+					effplayer.specialGraveyardSpecificNeg(self.extraParam, self.nextraParam)
 					x = x - 1
 					if x:
 						print("{} More monsters to summon".format(x))
@@ -1255,13 +1276,12 @@ class ffSummon(effect):
 			return
 		pass
 
-
 # Drawing Effects
 playerDraw1 = playerDraw("Draw One Card", 1)
 playerDraw2 = playerDraw("Draw Two Cards", 2)
 controlStormriderDraw2 = controlDiscardDraw("If you control a Storm Rider; Discard 1 card; Draw 2 cards", "Storm Rider", 2)
 DifferenceDraw = drawForDifference("Draw one card per 1000 point difference between both players lifepoints)", 0)
-tribDraw2 = tributeToDraw ("You can tribute this card; Draw 2 cards", 2)
+tribDisc1Draw2 = tributeToDrawDisc("You can tribute this card; Draw 2 cards, then discard one card", 2)
 
 # Disruptive Effects
 Destroy = effectDestroy("Destroy Your Opponents Monster", 0)
@@ -1323,7 +1343,7 @@ evigishkiGain400 = gainAtkforInstance("Gain 400 attack for each 'Evigishki' mons
 heraldGain400 = gainAtkforInstance("Gain 400 attack for each 'Herald' monster on the field or in the graveyard", "Herald", 400)
 stormBirdGain400 = gainAtkforInstance("Gain 400 attack for each 'Storm Bird' monster on the field or in the graveyard", "Storm Bird", 400)
 stormRiderGain400 = gainAtkforInstance("Gain 400 attack for each 'Storm Rider' monster on the field or in the graveyard", "Storm Rider", 400)
-halfAtk = halfAttacked("Half the attacking monsters attack; Draw Two Cards", 2)
+halfAtk = halfAttacked("Half the attacking monsters attack", 2)
 halfAtkMsg = halfAttackedMessage("Half the attacking monsters attack", 2)
 atk0 = zeroAttack("Reduce target monster's attack to 0", 0)
 tribtoGrantAtk = tributetoGrantAttack("You can tribute this card: Grant another monster this monsters ATK points", 0)
@@ -1357,7 +1377,7 @@ tribToSpecialStormBird = tributeTOSSDeckSpecific("You can tribute this card; Spe
 shuffleToSSGraveyard = shuffleToSSGraveyard("Shuffle 1 card from your hand into the deck; Special summon a monster from your Graveyard", 1)
 specialFireKingGrave = specialGraveyardSpecific("Special Summon a Fire King or Fire Fist monster from your graveyard", "Fire Fist", "Fire King")
 specialEffDestruction = specialMeHand("Special summon this card from your hand", 0)
-FFSummon = ffSummon("If you have 3 different 'Fire Formation' cards in your graveyard, Special Summon 3 monsters from your graveyard (Summon Effects Negated)", "Fire Formation", 3)
+FFSummon = ffSummon("If you have 3 different 'Fire Formation' cards in your graveyard, Special Summon 3 monsters from your graveyard (Summon Effects Negated)", "Fire Fist", "Fire King", 3)
 
 # Recursion Effects
 gyToHand = gyToHand("Return a card from your Graveyard to your Hand", 0)

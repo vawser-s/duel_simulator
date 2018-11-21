@@ -287,7 +287,7 @@ def cardSetup():
 	SpecialDarkMagicianDeck = {"effect": specialDarkMagicianDeck,
 	                "effectTrigger": effTrigger.summon}
 	Atk0 = {"effect": atk0,
-	        "effectTrigger": effTrigger.summon}
+	        "effectTrigger": effTrigger.defend}
 
 	# Magician Deck
 	global darkMagician
@@ -387,7 +387,7 @@ def cardSetup():
 	stormBirdHellDiver2 = deepcopy(stormBirdHellDiver)
 	stormBirdSkylar = card("Skylar: Storm Bird", 1000, 0, [GrantStormriderAttack])
 	stormBirdSkylar2 = deepcopy(stormBirdSkylar)
-	stormBirdGale = card("Gale: Storm bird", 1500, 0, [TribToSpecialStormBird])
+	stormBirdGale = card("Gale: Storm Bird", 1500, 0, [TribToSpecialStormBird])
 	stormBirdGale2 = deepcopy(stormBirdGale)
 	stormBirdAce = card("Ace: Storm Bird", 2000, 1, [StormBirdGain400])
 	stormBirdAce2 = deepcopy(stormBirdAce)
@@ -412,7 +412,7 @@ def cardSetup():
 	                   "effectTrigger": effTrigger.destroyBattle}
 	Atk500Kill = {"effect"       : atk500GrantAll,
 	                "effectTrigger": effTrigger.destroyBattle}
-	TribDraw2 = {"effect": tribDraw2,
+	TribDraw2 = {"effect": tribDisc1Draw2,
 	             "effectTrigger": effTrigger.summon}
 	SearchFireDeck = {"effect": effectFireSearch,
 	                  "effectTrigger": effTrigger.summon}
@@ -1321,7 +1321,8 @@ def turnMenu(currentPlayer: duelist, passivePlayer: duelist):
 		# Return to Main Menu
 		return exitProg
 
-# Menu that contains the battle phase
+# Menu that contains th
+# e battle phase
 def battleMenu(turnPlayer: duelist, passivePlayer: duelist):
 	print("Battle Phase Engaged")
 
@@ -1453,7 +1454,7 @@ def battleMenu(turnPlayer: duelist, passivePlayer: duelist):
 				damage = atkMon.atkPoints
 				atkTarget = None
 
-			##TODO Fix logic here for damage calculatiuon
+			##TODO Fix logic here for damage calculation
 			# Monster Effect: Attacker (Returns Damage)
 			if atkMon.checkResolve(effTrigger.attack) and returnEffectChecker(atkMon, effTrigger.destructionBat):
 				damage = atkMon.ResolveEffect(effTrigger.attack, turnPlayer, passivePlayer, atkMon, atkTarget, turnPlayer.gy, passivePlayer.gy, turnPlayer)

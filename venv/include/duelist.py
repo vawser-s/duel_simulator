@@ -748,7 +748,6 @@ class duelist:
 		pass
 
 		self.discardCard(selection)
-		del self.hand[selection]
 
 		time.sleep(1)
 
@@ -1144,10 +1143,17 @@ class duelist:
 			for monster in self.monfield:
 				if monster.name != playedCard.name:
 					if i >= 9:
-						print("[{}] {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute, monster.effectText))
-
+						print(settings.green + "[{}] {} | ATK: {} | Tributes: {} ".format((i + 1),
+						                                                                  monster.name.ljust(max_len, ),
+						                                                                  str(monster.atkPoints).ljust(
+							                                                                  4, ),
+						                                                                  monster.tribute) + settings.end + settings.darkcyan + "| Effect: {}".format(
+							monster.effectText) + settings.end)
 					else:
-						print("[{}]  {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute, monster.effectText))
+						print(settings.green + "[{}]  {} | ATK: {} | Tributes: {} ".format((i + 1), monster.name.ljust(
+							max_len, ), str(monster.atkPoints).ljust(4, ),
+						                                                                   monster.tribute) + settings.end + settings.darkcyan + "| Effect: {}".format(
+							monster.effectText) + settings.end)
 					tempListNum.append(i)
 				else:
 					pass
@@ -1394,11 +1400,10 @@ class duelist:
 		else:
 			print("No Possible Targets")
 
-	def specialGraveyardSpecificNeg(self, effplayer, opponent, sentMon, oppMon, effgy, oppgy, turnPlayer, *names):
+	def specialGraveyardSpecificNeg(self, *names):
 		i = 0
 		tempListNum = []
 		print("{}s GY:".format(self.name))
-		del sentMon
 
 		max_len = self.getMaxLength(self.gy)
 
