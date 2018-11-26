@@ -270,7 +270,7 @@ class duelist:
 		self.hand.append(addedCard)
 		print("--------------------------------------")
 		print("{} has searched the following card:".format(self.name))
-		print(settings.green + "Name: {} | ATK: {} | Tribute: {} | Effect: ".format(addedCard.name, str(addedCard.atkPoints), str(addedCard.tribute)) + settings.end + settings.darkcyan + "{}".format(addedCard.effectText))
+		print(settings.green + "Name: {} | ATK: {} | Tribute: {} | Effect: ".format(addedCard.name, str(addedCard.atkPoints), str(addedCard.tribute)) + settings.end + settings.darkcyan + "{}".format(addedCard.effectText) + settings.end)
 
 		del self.deck[selection]
 
@@ -459,7 +459,22 @@ class duelist:
 
 		self.gy.append(sentMon)
 
+		# Reset variables
+		sentMon.atkPoints = sentMon.origAtk
+		sentMon.effectList = sentMon.origEffectList
+		sentMon.effectText = sentMon.origEffectText
+
 		sentMon.ResolveEffect(effTrigger.graveyard, effplayer, opponent, sentMon, oppMon, effgy, oppgy, turnPlayer)
+
+		self.shuffle()
+
+	def sendToGraveBasic(self, sentMon):
+		self.gy.append(sentMon)
+
+		# Reset variables
+		sentMon.atkPoints = sentMon.origAtk
+		sentMon.effectList = sentMon.origEffectList
+		sentMon.effectText = sentMon.origEffectText
 
 		self.shuffle()
 
@@ -574,7 +589,7 @@ class duelist:
 					# Play the card from your hand
 					self.monfield.append(playedCard)
 					self.removeCard(selection)
-					self.gy.append(tribute)
+					self.sendToGraveBasic(tribute)
 
 					settings.changeNormalSummon()  # Normal Summon = 1
 
@@ -667,7 +682,7 @@ class duelist:
 			monster = self.hand[selection]
 			del self.hand[selection]
 
-			self.gy.append(monster)
+			self.sendToGraveBasic(monster)
 
 			print("The following card has been discarded from {}'s hand".format(self.name))
 			print(settings.green + "Name: {} | ATK: {} | Effect: ".format(monster.name, str(monster.atkPoints), monster.effectText) + settings.end + settings.darkcyan + "{}".format(monster.effectText) + settings.end)
@@ -796,7 +811,7 @@ class duelist:
 		time.sleep(0.5)
 
 		# Append to graveyard and print result
-		self.gy.append(destroyedMonster)
+		self.sendToGraveBasic(destroyedMonster)
 		print("{} has been destroyed and sent to the Graveyard".format(destroyedMonster.name))
 
 		destroyedMonster.ResolveEffect(effTrigger.graveyard, effplayer, opponent, destroyedMonster, oppMon, effgy, oppgy, turnPlayer)
@@ -817,7 +832,7 @@ class duelist:
 		del self.monfield[location]
 
 		# Append to graveyard and print result
-		self.gy.append(destroyedMonster)
+		self.sendToGraveBasic(destroyedMonster)
 		print("{} has been destroyed and sent to the Graveyard".format(destroyedMonster.name))
 
 		time.sleep(0.5)
@@ -845,7 +860,7 @@ class duelist:
 
 		# Append to graveyard and print result
 		print("--------------------------------------")
-		self.gy.append(destroyedMonster)
+		self.sendToGraveBasic(destroyedMonster)
 		print("{} has been destroyed and sent to the Graveyard".format(destroyedMonster.name))
 
 		time.sleep(0.5)
@@ -1480,6 +1495,85 @@ class duelist:
 			effmon.ResolveEffect(effTrigger.summon, effplayer, opponent, effmon, oppMon, effgy, oppgy, turnPlayer)
 		else:
 			raise NotImplementedError
+
+	def grantEffect(self, Effect: effect):
+
+		while True:
+			self.checkField()
+			selection = input("~~Please select a target: ")
+
+			try:
+				selection = int(selection) - 1
+			except TypeError:
+				print("Invalid Selection")
+				print("--------------------------------------")
+				continue
+
+			try:
+				target = self.monfield[selection]
+				break
+			except (TypeError, IndexError):
+				print("Invalid Selection")
+				print("--------------------------------------")
+
+		print("Euch Before: {}".format(target.effectText))
+
+		target.effectList.append(Effect)
+		target.effectText = target.returnEffectList()
+
+		print("Euch After: {}".format(target.effectText))
+
+		self.checkField()
+
+	def grantEffectSpecific(self, Effect: effect, *names):
+		i = 0
+		tempListNum = []
+		print("{}s Field:".format(self.name))
+		max_len = self.getMaxLength(self.monfield)
+
+		# Loop through the hand and display each card fitting the namespace
+		for monster in self.monfield:
+			for name in names:
+				if name in monster.name:
+					if i >= 9:
+						print(settings.green + "[{}] {} | ATK: {} | Tributes: {} ".format((i + 1),
+						                                                                  monster.name.ljust(max_len, ),
+						                                                                  str(monster.atkPoints).ljust(
+							                                                                  4, ),
+						                                                                  monster.tribute) + settings.end + settings.darkcyan + "| Effect: {}".format(
+							monster.effectText) + settings.end)
+					else:
+						print(settings.green + "[{}]  {} | ATK: {} | Tributes: {} ".format((i + 1), monster.name.ljust(
+							max_len, ), str(monster.atkPoints).ljust(4, ),
+						                                                                   monster.tribute) + settings.end + settings.darkcyan + "| Effect: {}".format(
+							monster.effectText) + settings.end)
+					tempListNum.append(i)
+				else:
+					pass
+			i = i + 1
+
+		if tempListNum:
+			while True:
+				selection = input("~~Select a target: ".format())
+
+				try:
+					selection = int(selection) - 1
+				except TypeError:
+					print("Invalid Selection")
+					print("--------------------------------------")
+					continue
+
+				try:
+					target = self.monfield[selection]
+					break
+				except (TypeError, IndexError):
+					print("Invalid Selection")
+					print("--------------------------------------")
+
+			target.effectList.append(Effect)
+			target.effectText = target.returnEffectList()
+		else:
+			print("No Possible Targets")
 
 
 

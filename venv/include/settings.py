@@ -40,10 +40,10 @@ def addEffectChecker(monster, effect):
 	effectList.append([monster, effect])
 
 
-def returnEffectChecker(monster, trigger):  # format: [monster, trigger]
+def returnEffectChecker(monster, effect):  # format: [monster, trigger]
 	for entry in effectList:
 		if monster == entry[0]:
-			if trigger == entry[1]:
+			if effect == entry[1]:
 				return False
 	return True
 
