@@ -355,7 +355,7 @@ class playerDraw(effect):
 
 		effplayer.draw(self.extraParam)
 
-		return 0
+		return
 
 class controlDiscardDraw(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
@@ -612,7 +612,7 @@ class grantAll(effect):
 
 		if effplayer.monfield.__len__() == 0:
 			print("Field Empty")
-			return 0
+			return
 
 		for monster in effplayer.monfield:
 			monster.atkPoints = monster.atkPoints + self.extraParam
@@ -672,7 +672,7 @@ class fieldToHand(effect):
 				print("No Opponent monster to return")
 
 				return
-		return 0
+		return
 
 class gyToHand(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
@@ -1144,7 +1144,6 @@ class tributeToDrawDisc(effect):
 
 				target = effplayer.checkArrayLoc(effplayer.monfield, monster)
 
-				## TODO: Figure out how to handle a non int error for checkArrayLoc
 				if not isinstance(target, int):
 					print("--------------------------------------")
 					print("--------------------------------------")
@@ -1276,6 +1275,32 @@ class ffSummon(effect):
 			return
 		pass
 
+
+class addEffect(effect):
+	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
+		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(
+			effectMon.effectText) + settings.end)
+		time.sleep(1.3)
+		# extraParam = Effect Dictionary
+
+		effplayer.grantEffect(self.extraParam)
+
+
+class addEffectSpecific(effect):
+	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
+		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(
+			effectMon.effectText) + settings.end)
+		time.sleep(1.3)
+		# extraParam = Effect Dictionary
+		# nextraParsm = namespace
+		# dextraParsm = namespace
+
+		if self.dextraParam:
+			effplayer.grantEffectSpecific(self.extraParam, self.nextraParam, self.dextraParam)
+		else:
+			effplayer.grantEffectSpecific(self.extraParam, self.nextraParam)
+
+
 # Drawing Effects
 playerDraw1 = playerDraw("Draw One Card", 1)
 playerDraw2 = playerDraw("Draw Two Cards", 2)
@@ -1320,7 +1345,7 @@ effectImmune = noEffectDestruction("Is Not Destroyed by that effect", 0)
 
 # Card Searching Effects
 effectSearch = searchDeck("Add a card from Deck to Hand", 0)
-effectCodeSearch = searchSpecificDeck("Add a 'Code' card from Deck to hand", "Code")
+effectCodeSearch = searchSpecificDeckNamespace("Add a 'Code' or '-code' card from Deck to hand", "Code", "code")
 effectCyberseSearch = searchSpecificDeck("Add a 'Cyberse' card from Deck to hand", "Cyberse")
 effectVampSearch = searchSpecificDeck("Add a 'Vampire' card from Deck to hand", "Vampire")
 effectHeraldSearch = searchSpecificDeck("Add a 'Herald' card from Deck to hand", "Herald")
@@ -1386,3 +1411,12 @@ Mill = mill("Send one card from your deck to the graveyard", 0)
 
 # Special Effects
 PhoenixResurrection = phoenixResurrection("Next Standby Phase; Special Summon this card and destroy all monsters on the field", 0)
+
+# Effect Manipulation Effects
+GrantFloat1 = addEffect("Grant a monster on the field the effect: 'When sent to Graveyard; Draw 1 Card'",
+                        {"effect"       : playerDraw1,
+                         "effectTrigger": effTrigger.graveyard})
+GrantFloat1Cyberse = addEffectSpecific(
+	"Grant a 'Cyberse' monster on the field the effect: 'When sent to Graveyard; Draw 1 Card'", {"effect"       : playerDraw1,
+	                                                                                             "effectTrigger": effTrigger.graveyard},
+	"Cyberse")

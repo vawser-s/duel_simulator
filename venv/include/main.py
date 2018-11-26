@@ -16,6 +16,8 @@ def cardSetup():
 	                "effectTrigger": effTrigger.summon}
 	SpecialCodeDeck = {"effect"       : specialCodeDeck,
 	                       "effectTrigger": effTrigger.summon}
+	SpecialCodeHand = {"effect"       : specialCodeHand,
+	                   "effectTrigger": effTrigger.graveyard}
 	PlayerDraw1Grav = {"effect"       : playerDraw1,
 	                   "effectTrigger": effTrigger.graveyard}
 	EffectCyberseSearch = {"effect"       : effectCyberseSearch,
@@ -38,6 +40,10 @@ def cardSetup():
 	                   "effectTrigger": effTrigger.battle}
 	MonsterBounce = {"effect"       : bounceMonster,
 	                 "effectTrigger": effTrigger.summon}
+	GrantFloat1Sum = {"effect"       : GrantFloat1,
+	                  "effectTrigger": effTrigger.summon}
+	GrantFloat1CyberseSum = {"effect"       : GrantFloat1Cyberse,
+	                         "effectTrigger": effTrigger.summon}
 
 	# Cyber Deck
 	global microCoder
@@ -54,31 +60,31 @@ def cardSetup():
 	global cyberseAccelerator2
 	global cyberseWhiteHat
 	global cyberseWhiteHat2
-	global cyberseClockDragon
-	global cyberseClockDragon2
+	global excodeTalker
+	global excodeTalker2
 	global dualAssembwurm
 	global dualAssembwurm2
-	global codeDriver
-	global codeDriver2
+	global cyberseDriver
+	global cyberseDriver2
 	microCoder = card("Micro Coder", 300, 0, [SpecialCodeDeck, PlayerDraw1Grav])
-	codeGenerator = card("Code Generator", 1300, 0, [EffectCyberseSearch, PlayerDraw1Grav])
+	codeGenerator = card("Code Generator", 1300, 0, [EffectCyberseSearch, SpecialCodeHand])
 	codeRadiator = card("Code Radiator", 1600, 0, [DoubleSummon, PlayerDraw1Grav])
 	ladyDebug = card("Lady Debug", 1000, 0, [SpecialCyberseHand])
 	cyberseGadget = card("Cyberse Gadget", 1400, 0, [DestroySum, SpecialCyberseHandDest])
 	cyberseAccelerator = card("Cyberse Accelerator", 2300, 0, [OppDisc1, SelfDisc1])
 	cyberseWhiteHat = card("Cyberse White Hat", 2100, 1, [EffectSearch])
-	cyberseClockDragon = card("Cyberse Clock Dragon", 2500, 1, [SpecialFromHand])
+	excodeTalker = card("Excode Talker", 2300, 0, [GrantFloat1CyberseSum])
 	dualAssembwurm = card("Dual Assembwurm", 2800, 1, [OppDisc2])
-	codeDriver = card("Cyberse Driver", 2200, 1, [MonsterBounce])
+	cyberseDriver = card("Cyberse Driver", 2200, 1, [MonsterBounce])
 	microCoder2 = deepcopy(microCoder)
 	codeGenerator2 = deepcopy(codeGenerator)
 	codeRadiator2 = deepcopy(codeRadiator)
-	codeDriver2 = deepcopy(codeDriver)
+	cyberseDriver2 = deepcopy(cyberseDriver)
 	ladyDebug2 = deepcopy(ladyDebug)
 	cyberseGadget2 = deepcopy(cyberseGadget)
 	cyberseAccelerator2 = deepcopy(cyberseAccelerator)
 	cyberseWhiteHat2 = deepcopy(cyberseWhiteHat)
-	cyberseClockDragon2 = deepcopy(cyberseClockDragon)
+	excodeTalker2 = deepcopy(excodeTalker)
 	dualAssembwurm2 = deepcopy(dualAssembwurm)
 
 	EffectVampSearch = {"effect"       : effectVampSearch,
@@ -470,6 +476,19 @@ def cardSetup():
 	fireFormationGyokkou = card("Fire Formation Gyokkou", 0, 0, [TribDraw2, Atk100Grave]) # tribute to draw 2 | Grant ATK in grave
 	fireFormationSeito = card("Fire Formation Seito", 0, 1, [FFCheckSummon, Atk100Grave])  # if 4 fire different fire fist monsters in grave, Special summon 4 fire fists for Tribute | Grant ATK in grave
 
+	global jungleMasterKarliah  # Searches a Jungle on Summon / Double Summon
+	global mimicMeercat  # grants Karliah float eff to return herself to hand / copies atk
+	global duckDucker  # grants Karliah OPT battle destruction / cannot be targetted for an attack
+	global wokeWombat  # SS a Jungle from Grave / search a Karliah
+	global soaringOsprey  # grants Karliah double atk / Float: draw 1
+	global crouchingTiger  # if you control Karliah, destroy 1 monster / Float: Grant a Karliah 800 Atk
+	global tentativeTurtle  # if Karliah would be destroyed by Card Effects; You can discard this card instead
+	global bushTourGuide  # SS a Jungle from Deck
+	global softSquid  # if Karliah would be returned to Hand; You can discard this card Instead / Summon: discard 1 draw 2
+
+
+##TODO 1 Tribure Karliah
+
 # Prints Deck List before they are assigned to a player
 def printDeckList(DeckList: list):
 	print("Deck List:")
@@ -548,8 +567,8 @@ def player_deck_setup():
 	CyberDeck.append(codeGenerator2)
 	CyberDeck.append(codeRadiator)
 	CyberDeck.append(codeRadiator2)
-	CyberDeck.append(codeDriver)
-	CyberDeck.append(codeDriver2)
+	CyberDeck.append(cyberseDriver)
+	CyberDeck.append(cyberseDriver2)
 	CyberDeck.append(ladyDebug)
 	CyberDeck.append(ladyDebug2)
 	CyberDeck.append(cyberseGadget)
@@ -558,9 +577,10 @@ def player_deck_setup():
 	CyberDeck.append(cyberseAccelerator2)
 	CyberDeck.append(cyberseWhiteHat)
 	CyberDeck.append(cyberseWhiteHat2)
-	CyberDeck.append(cyberseClockDragon)
-	CyberDeck.append(cyberseClockDragon2)
+	CyberDeck.append(excodeTalker)
+	CyberDeck.append(excodeTalker2)
 	CyberDeck.append(dualAssembwurm)
+	CyberDeck.append(dualAssembwurm2)
 
 	VampireDeck.append(vampireFamiliar)
 	VampireDeck.append(vampireFamiliar2)
@@ -714,68 +734,77 @@ def player_deck_setup():
 		monster.attacked = 0
 
 	CyberPlayer = {
-		"name": "Playmaker",
-		"desc": "A tech-savvy kid, who knows his way around a computer. Plays to undermine his opponents strategy from the roots",
-		"deck": CyberDeck,
-		"deckName": "Cyberse",
-		"deckDesc": "Discarding / SS Hand",
+		"name"      : "Playmaker",
+		"desc"      : "      " + settings.darkcyan + "A tech-savvy kid, who knows his way around a computer. Plays to undermine his opponents strategy from the roots" + settings.end,
+		"deck"      : CyberDeck,
+		"deckName"  : "Cyberse",
+		"deckDesc"  : "Discarding / SS Hand",
 		"voicelines": []
 	}
 
 	VampirePlayer = {
-		"name": "Count Klaric",
-		"desc": "A skilled player with an obsession with vampire mythology. Focuses on sacrificing her own cards to drain his opponents' life dry",
-		"deck": VampireDeck,
-		"deckName": "Vampire",
-		"deckDesc": "Stealing Life / Graveyard Effects",
+		"name"      : "Count Klaric",
+		"desc"      : "      " + settings.darkcyan + "A skilled player with an obsession with vampire mythology. Focuses on sacrificing her own cards to drain his opponents' life dry" + settings.end,
+		"deck"      : VampireDeck,
+		"deckName"  : "Vampire",
+		"deckDesc"  : "Stealing Life / Graveyard Effects",
 		"voicelines": []
 	}
 
 	GishkiPlayer = {
-		"name": "Gishki Avance",
-		"desc": "A distant traveler who has seen all walks of life. His deck mercilessely attacks his opponent, growing stronger each battle",
-		"deck": GishkiDeck,
-		"deckName": "Gishki",
-		"deckDesc": "Attack Boosts / Battling",
+		"name"      : "Gishki Avance",
+		"desc"      : "      " + settings.darkcyan + "A distant traveler who has seen all walks of life. His deck mercilessely attacks his opponent, growing stronger each battle" + settings.end,
+		"deck"      : GishkiDeck,
+		"deckName"  : "Gishki",
+		"deckDesc"  : "Attack Boosts / Battling",
 		"voicelines": []
 	}
 
 	HeraldPlayer = {
-		"name": "Arch Priest Xero",
-		"desc": "A high ranking official within a church he is devoted to. His deck aims to  restore his own life and gain power as he does so",
-		"deck": HeraldDeck,
-		"deckName": "Herald Agents",
-		"deckDesc": "Life Point Gain / Special Summon From Hand",
+		"name"      : "Arch Priest Xero",
+		"desc"      : "      " + settings.darkcyan + "A high ranking official within a church he is devoted to. His deck aims to  restore his own life and gain power as he does so" + settings.end,
+		"deck"      : HeraldDeck,
+		"deckName"  : "Herald Agents",
+		"deckDesc"  : "Benefitting in difference in Life Points",
 		"voicelines": []
 	}
 
 	MagicianPlayer = {
-		"name": "Dennis",
-		"desc": "A sidewalk performer with a nack of delivering a spectacle. his deck focuses on defending himself until his best magician is ready",
-		"deck": MagicianDeck,
-		"deckName": "Magicians",
-		"deckDesc": "Defending / Summoning Dark Magician",
+		"name"      : "Dennis",
+		"desc"      : "      " + settings.darkcyan + "A sidewalk performer with a nack of delivering a spectacle. his deck focuses on defending himself until his best magician is ready" + settings.end,
+		"deck"      : MagicianDeck,
+		"deckName"  : "Magicians",
+		"deckDesc"  : "Defending / Summoning Dark Magician",
 		"voicelines": []
-
 	}
 
 	StormPlayer = {
-		"name": "Ventus",
-		"desc": "A professional Speed Duelist who like to ride the wind on his hoverboard. His deck focuses on swarming Riders which power up his Stormbirds",
-		"deck": StormDeck,
-		"deckName": "Stormriders",
-		"deckDesc": "Swarming / Stealing Monsters",
+		"name"      : "Ventus",
+		"desc"      : "      " + settings.darkcyan + "A professional Speed Duelist who like to ride the wind on his hoverboard. His deck focuses on swarming Riders which power up his Stormbirds" + settings.end,
+		"deck"      : StormDeck,
+		"deckName"  : "Stormriders",
+		"deckDesc"  : "Swarming / Stealing Monsters",
 		"voicelines": []
 	}
 
 	FirePlayer = {
 		"name"      : "Soulburner",
-		"desc"      : "A professional Speed Duelist with an explosive attitude. Isn't afraid to destroy his own monsters to burn his opponents down",
+		"desc"      : "      " + settings.darkcyan + "A professional Speed Duelist with an explosive attitude. Isn't afraid to destroy his own monsters to burn his opponents down" + settings.end,
 		"deck"      : FireDeck,
 		"deckName"  : "Fire Kings/Fists",
 		"deckDesc"  : "Self Destruction / Fire Formations",
 		"voicelines": []
 	}
+
+	# JunglePlayer = {
+	# 	"name": "Karliah",
+	# 	"desc": "      " + settings.darkcyan + "A Duelist with a Wild side. She has a mismatch of cards that are guarenteed to confuse you stupid" + settings.end,
+	# 	"deck": FireDeck,
+	# 	"deckName": "Jungle Beasts",
+	# 	"deckDesc": "Wild Effects / Monster Copying",
+	# 	"voicelines": []
+	# }
+
 
 	PlayerList.append(CyberPlayer)
 	PlayerList.append(VampirePlayer)
@@ -816,6 +845,7 @@ def player_deck_setup():
 
 			print("--------------------------------------")
 			print("You have selected {} as your player character".format(_player.name))
+			print(settings.darkcyan + "{}".format(PlayerList[selection].get("desc")) + settings.end)
 
 			while True:
 				print("--------------------------------------")
@@ -884,7 +914,7 @@ def player_deck_setup():
 			_foe.deck = PlayerList[selection].get("deck")
 
 			print("--------------------------------------")
-			print("You have selected {} as your oposition character".format(_foe.name))
+			print("You have selected {} as your opposition character".format(_foe.name))
 
 			print("--------------------------------------")
 			selection = input("Confirm Selection (Y/N): ")
@@ -1075,8 +1105,16 @@ def mainMenu():
 
 				player_deck_setup()
 
-				_player.draw(4)
+				_player.draw(0)
 				_foe.draw(4)
+
+				'''_player.hand.append(microCoder)
+
+				DoubleSummon = {"effect"       : doubleSummon, "effectTrigger": effTrigger.summon}
+
+				_player.hand[0].effectList.append(DoubleSummon)
+
+				_player.hand[0].effectList = _player.hand[0].returnEffectList()'''
 
 				return
 			else:
@@ -1096,12 +1134,12 @@ def turnMenu(currentPlayer: duelist, passivePlayer: duelist):
 	try:
 		for monster in currentPlayer.monfield:
 			monster.attacked = 0
-	except IndexError:
+	except (IndexError, AttributeError):
 		pass
 	try:
 		for monster in passivePlayer.monfield:
 			monster.attacked = 0
-	except IndexError:
+	except (IndexError, AttributeError):
 		pass
 
 	# resetting attacked values in graveyard
@@ -1109,13 +1147,13 @@ def turnMenu(currentPlayer: duelist, passivePlayer: duelist):
 	try:
 		for monster in currentPlayer.gy:
 			monster.attacked = 0
-	except IndexError:
+	except (IndexError, AttributeError):
 		pass
 
 	try:
 		for monster in passivePlayer.gy:
 			monster.attacked = 0
-	except IndexError:
+	except (IndexError, AttributeError):
 		pass
 
 	# Retrieve the global variables and set up rest of needed variables
@@ -1147,8 +1185,6 @@ def turnMenu(currentPlayer: duelist, passivePlayer: duelist):
 		# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
 		# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
 		# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
-		# _player.hand.append()
-		# _player.monfield.append()
 		# _foe.hand.append()
 		# _foe.monfield.append()
 		# -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------
@@ -1456,19 +1492,19 @@ def battleMenu(turnPlayer: duelist, passivePlayer: duelist):
 
 			##TODO Fix logic here for damage calculation
 			# Monster Effect: Attacker (Returns Damage)
-			if atkMon.checkResolve(effTrigger.attack) and returnEffectChecker(atkMon, effTrigger.destructionBat):
+			if atkMon.checkResolve(effTrigger.attack):
 				damage = atkMon.ResolveEffect(effTrigger.attack, turnPlayer, passivePlayer, atkMon, atkTarget, turnPlayer.gy, passivePlayer.gy, turnPlayer)
 
-			if atkMon.checkResolve(effTrigger.battle) and returnEffectChecker(atkMon, effTrigger.destructionBat):
+			if atkMon.checkResolve(effTrigger.battle):
 				damage = atkMon.ResolveEffect(effTrigger.battle, turnPlayer, passivePlayer, atkMon, atkTarget, turnPlayer.gy, passivePlayer.gy, turnPlayer)
 
 
 			# Monster Effect: Defender (Returns Damage)
 			try:
-				if atkTarget.checkResolve(effTrigger.defend) and returnEffectChecker(atkTarget, effTrigger.destructionBat):
+				if atkTarget.checkResolve(effTrigger.defend):
 					damage = atkTarget.ResolveEffect(effTrigger.defend, passivePlayer, turnPlayer, atkTarget, atkMon, passivePlayer.gy, turnPlayer.gy, turnPlayer)
 
-				if atkTarget.checkResolve(effTrigger.battle) and returnEffectChecker(atkTarget, effTrigger.destructionBat):
+				if atkTarget.checkResolve(effTrigger.battle):
 					damage = atkTarget.ResolveEffect(effTrigger.battle, passivePlayer, turnPlayer, atkTarget, atkMon, passivePlayer.gy, turnPlayer.gy, turnPlayer)
 			except (AttributeError, TypeError, UnboundLocalError):
 				pass
