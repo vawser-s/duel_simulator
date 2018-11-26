@@ -36,7 +36,9 @@ class card:
 		self.name = name
 		self.atkPoints = atkPoints
 		self.effectList = cardEffectList
+		self.origEffectList = cardEffectList
 		self.effectText = self.returnEffectList()
+		self.origEffectText = self.returnEffectList()
 		self.attacked = attacked
 		self.tribute = tribute
 		self.origAtk = atkPoints
