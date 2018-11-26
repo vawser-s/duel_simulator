@@ -16,12 +16,16 @@ def cardSetup():
 	                "effectTrigger": effTrigger.summon}
 	SpecialCodeDeck = {"effect"       : specialCodeDeck,
 	                       "effectTrigger": effTrigger.summon}
+	SpecialCodeHand = {"effect"       : specialCodeHand,
+	                   "effectTrigger": effTrigger.graveyard}
 	PlayerDraw1Grav = {"effect"       : playerDraw1,
 	                   "effectTrigger": effTrigger.graveyard}
 	EffectCyberseSearch = {"effect"       : effectCyberseSearch,
 	                    "effectTrigger": effTrigger.summon}
 	SpecialCyberseHand = {"effect"       : specialCyberseHand,
 	                      "effectTrigger": effTrigger.summon}
+	SpecialCyberseHandDest = {"effect"       : specialCyberseHand,
+	                      "effectTrigger": effTrigger.destructionBat}
 	DestroySum = {"effect"       : Destroy,
 	              "effectTrigger": effTrigger.summon}
 	OppDisc1 = {"effect"       : oppDisc1,
@@ -33,9 +37,13 @@ def cardSetup():
 	EffectSearch = {"effect"       : effectSearch,
 	                "effectTrigger": effTrigger.summon}
 	SpecialFromHand = {"effect"       : specialfromHand,
-	                   "effectTrigger": effTrigger.destructionEff}
+	                   "effectTrigger": effTrigger.battle}
 	MonsterBounce = {"effect"       : bounceMonster,
 	                 "effectTrigger": effTrigger.summon}
+	GrantFloat1Sum = {"effect"       : GrantFloat1,
+	                  "effectTrigger": effTrigger.summon}
+	GrantFloat1CyberseSum = {"effect"       : GrantFloat1Cyberse,
+	                         "effectTrigger": effTrigger.summon}
 
 	# Cyber Deck
 	global microCoder
@@ -52,31 +60,31 @@ def cardSetup():
 	global cyberseAccelerator2
 	global cyberseWhiteHat
 	global cyberseWhiteHat2
-	global cyberseClockDragon
-	global cyberseClockDragon2
+	global excodeTalker
+	global excodeTalker2
 	global dualAssembwurm
 	global dualAssembwurm2
-	global codeDriver
-	global codeDriver2
+	global cyberseDriver
+	global cyberseDriver2
 	microCoder = card("Micro Coder", 300, 0, [SpecialCodeDeck, PlayerDraw1Grav])
-	codeGenerator = card("Code Generator", 1300, 0, [EffectCyberseSearch])
-	codeRadiator = card("Code Radiator", 1600, 0, [DoubleSummon])
+	codeGenerator = card("Code Generator", 1300, 0, [EffectCyberseSearch, SpecialCodeHand])
+	codeRadiator = card("Code Radiator", 1600, 0, [DoubleSummon, PlayerDraw1Grav])
 	ladyDebug = card("Lady Debug", 1000, 0, [SpecialCyberseHand])
-	cyberseGadget = card("Cyberse Gadget", 1400, 0, [DestroySum])
-	cyberseAccelerator = card("Cyberse Accelerator", 2000, 0, [OppDisc1, SelfDisc1])
+	cyberseGadget = card("Cyberse Gadget", 1400, 0, [DestroySum, SpecialCyberseHandDest])
+	cyberseAccelerator = card("Cyberse Accelerator", 2300, 0, [OppDisc1, SelfDisc1])
 	cyberseWhiteHat = card("Cyberse White Hat", 2100, 1, [EffectSearch])
-	cyberseClockDragon = card("Cyberse Clock Dragon", 2500, 1, [SpecialFromHand])
+	excodeTalker = card("Excode Talker", 2300, 0, [GrantFloat1CyberseSum])
 	dualAssembwurm = card("Dual Assembwurm", 2800, 1, [OppDisc2])
-	codeDriver = card("Cyberse Driver", 2200, 1, [MonsterBounce])
+	cyberseDriver = card("Cyberse Driver", 2200, 1, [MonsterBounce])
 	microCoder2 = deepcopy(microCoder)
 	codeGenerator2 = deepcopy(codeGenerator)
 	codeRadiator2 = deepcopy(codeRadiator)
-	codeDriver2 = deepcopy(codeDriver)
+	cyberseDriver2 = deepcopy(cyberseDriver)
 	ladyDebug2 = deepcopy(ladyDebug)
 	cyberseGadget2 = deepcopy(cyberseGadget)
 	cyberseAccelerator2 = deepcopy(cyberseAccelerator)
 	cyberseWhiteHat2 = deepcopy(cyberseWhiteHat)
-	cyberseClockDragon2 = deepcopy(cyberseClockDragon)
+	excodeTalker2 = deepcopy(excodeTalker)
 	dualAssembwurm2 = deepcopy(dualAssembwurm)
 
 	EffectVampSearch = {"effect"       : effectVampSearch,
@@ -285,7 +293,7 @@ def cardSetup():
 	SpecialDarkMagicianDeck = {"effect": specialDarkMagicianDeck,
 	                "effectTrigger": effTrigger.summon}
 	Atk0 = {"effect": atk0,
-	        "effectTrigger": effTrigger.summon}
+	        "effectTrigger": effTrigger.defend}
 
 	# Magician Deck
 	global darkMagician
@@ -348,7 +356,6 @@ def cardSetup():
 	StormRiderGain400 = {"effect": stormRiderGain400,
 	                        "effectTrigger": effTrigger.summon}
 
-
 	# Storm Deck
 	global stormRiderAllyson
 	global stormRiderAllyson2
@@ -386,34 +393,146 @@ def cardSetup():
 	stormBirdHellDiver2 = deepcopy(stormBirdHellDiver)
 	stormBirdSkylar = card("Skylar: Storm Bird", 1000, 0, [GrantStormriderAttack])
 	stormBirdSkylar2 = deepcopy(stormBirdSkylar)
-	stormBirdGale = card("Gale: Storm bird", 1500, 0, [TribToSpecialStormBird])
+	stormBirdGale = card("Gale: Storm Bird", 1500, 0, [TribToSpecialStormBird])
 	stormBirdGale2 = deepcopy(stormBirdGale)
 	stormBirdAce = card("Ace: Storm Bird", 2000, 1, [StormBirdGain400])
 	stormBirdAce2 = deepcopy(stormBirdAce)
+
+	Atk100Grave = {"effect": atk100GrantAll,
+	               "effectTrigger": effTrigger.graveyard}
+	SpecialFireKingGrave = {"effect": specialFireKingGrave,
+	               "effectTrigger": effTrigger.summon}
+	SpecialEffectDestruction = {"effect": specialEffDestruction,
+	                            "effectTrigger": effTrigger.otherCardEffDestruction}
+	DestroyInHand = {"effect"       : destroyInHand,
+	                  "effectTrigger": effTrigger.summon}
+	FireSearchDest = {"effect": effectFireSearch,
+	                  "effectTrigger": effTrigger.destructionEff}
+	SpecialFormationDeck = {"effect": specialFormationDeck,
+	                  "effectTrigger": effTrigger.summon}
+	SpecialFormationDeckDest = {"effect": specialFormationDeck,
+	                  "effectTrigger": effTrigger.destructionEff}
+	Atk500Summon = {"effect": atk500GrantAll,
+	                  "effectTrigger": effTrigger.summon}
+	SpecialFistDeck = {"effect": specialFistDeckLess2000,
+	                   "effectTrigger": effTrigger.destroyBattle}
+	Atk500Kill = {"effect"       : atk500GrantAll,
+	                "effectTrigger": effTrigger.destroyBattle}
+	TribDraw2 = {"effect": tribDisc1Draw2,
+	             "effectTrigger": effTrigger.summon}
+	SearchFireDeck = {"effect": effectFireSearch,
+	                  "effectTrigger": effTrigger.summon}
+	MillieGrav = {"effect"       : Mill,
+	          "effectTrigger": effTrigger.graveyard}
+	MillieBat = {"effect"       : Mill,
+	          "effectTrigger": effTrigger.destructionBat}
+	DestroyGrav = {"effect": Destroy,
+	               "effectTrigger": effTrigger.graveyard}
+	PheonixResurrection = {"effect": PhoenixResurrection,
+	                       "effectTrigger": effTrigger.destructionEff}
+	FFCheckSummon = {"effect": FFSummon,
+	                 "effectTrigger": effTrigger.summon}
+
+	global fireKingArvata
+	global fireKingArvata2
+	global fireKingYaksha
+	global fireKingYaksha2
+	global fireKingGarunix
+	global fireKingGarunix2
+	global fireKingBarong
+	global fireKingBarong2
+	global fireFistBear
+	global fireFistBear2
+	global fireFistHawk
+	global fireFistHawk2
+	global fireFistKarin
+	global fireFistKarin2
+	global fireFistGorilla
+	global fireFistGorilla2
+	global fireFormationTensu
+	global fireFormationTensu2
+	global fireFormationTenki
+	global fireFormationGyokkou
+	global fireFormationSeito
+	fireKingArvata = card("Fire King Arvata", 1800, 0, [SpecialFistDeck, SpecialEffectDestruction])  # Special monster from Grave | Draw Card
+	fireKingArvata2 = deepcopy(fireKingArvata)
+	fireKingYaksha = card("Fire King Yaksha", 1900, 0, [SpecialEffectDestruction, FireSearchDest])  # Special Summons itself from hand | Destroys a card on field
+	fireKingYaksha2 = deepcopy(fireKingYaksha)
+	fireKingGarunix = card("Fire King High Avatar Garunix", 2700, 1, [PheonixResurrection, MillieBat])  # Destroys all monsters on board, summons next turn
+	fireKingGarunix2 = deepcopy(fireKingGarunix)
+	fireKingBarong = card("Fire King Barong", 1800, 0, [DestroyInHand, DestroyGrav])  # Special Summons itself from hand, then destroy a card | Searches
+	fireKingBarong2 = deepcopy(fireKingBarong)
+	fireFistBear = card("Fire Fist Bear", 1200, 0, [SpecialFormationDeck, SpecialFormationDeckDest])  # Special Summons a Formation
+	fireFistBear2 = deepcopy(fireFistBear)
+	fireFistHawk = card("Fire Fist Hawk", 200, 0, [Atk500Summon, SpecialEffectDestruction])  # Grants all Fire monsters 500 Atk | Draw
+	fireFistHawk2 = deepcopy(fireFistHawk)
+	fireFistGorilla = card("Fire Fist Gorilla", 1800, 0, [SpecialFireKingGrave, PlayerDraw1Grav])  # When destroy monster by battle, Special Fire Fist from deck
+	fireFistGorilla2 = deepcopy(fireFistGorilla)
+	fireFistKarin = card("Fire Fist Karin", 2600, 1, [Atk500Kill, MillieGrav])  # When destroy monster by battle, grant all Fire monsters on field 500 Atk | Mill a card
+	fireFistKarin2 = deepcopy(fireFistKarin)
+	fireFormationTensu = card("Fire Formation Tensu", 0, 0, [DoubleSummon, Atk100Grave])
+	fireFormationTensu2 = deepcopy(fireFormationTensu)
+	fireFormationTenki = card("Fire Formation Tenki", 0, 0, [SearchFireDeck, Atk100Grave]) # Search a fire Fist | Grant ATK in grave
+	fireFormationGyokkou = card("Fire Formation Gyokkou", 0, 0, [TribDraw2, Atk100Grave]) # tribute to draw 2 | Grant ATK in grave
+	fireFormationSeito = card("Fire Formation Seito", 0, 1, [FFCheckSummon, Atk100Grave])  # if 4 fire different fire fist monsters in grave, Special summon 4 fire fists for Tribute | Grant ATK in grave
+
+	global jungleMasterKarliah  # Searches a Jungle on Summon / Double Summon
+	global mimicMeercat  # grants Karliah float eff to return herself to hand / copies atk
+	global duckDucker  # grants Karliah OPT battle destruction / cannot be targetted for an attack
+	global wokeWombat  # SS a Jungle from Grave / search a Karliah
+	global soaringOsprey  # grants Karliah double atk / Float: draw 1
+	global crouchingTiger  # if you control Karliah, destroy 1 monster / Float: Grant a Karliah 800 Atk
+	global tentativeTurtle  # if Karliah would be destroyed by Card Effects; You can discard this card instead
+	global bushTourGuide  # SS a Jungle from Deck
+	global softSquid  # if Karliah would be returned to Hand; You can discard this card Instead / Summon: discard 1 draw 2
+
+
+##TODO 1 Tribure Karliah
 
 # Prints Deck List before they are assigned to a player
 def printDeckList(DeckList: list):
 	print("Deck List:")
 
+	tempList = []
+
 	if DeckList.__len__() != 0:
 		i = 0
 
+		#  Create a list with only one instance of each card
+		for monster in DeckList:
+			existing = False
+			for monsterTemp in tempList:
+				if monster.name == monsterTemp.name:
+					existing = True
+					continue
+
+			if existing:
+				continue
+			else:
+				tempList.append(monster)
+
+
 		max_len = _player.getMaxLength(DeckList)
 
-		for monster in DeckList:
+		for monster in tempList:
 			if i >= 9:
-				print("[{}] {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ),
-																			 str(monster.atkPoints).ljust(4, ),
-																			 monster.tribute, monster.effectText))
+				print(settings.green + "[{}] {}x {} | ATK: {} | Tributes: {} ".format((i + 1), countInstances(DeckList, monster) , monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute) + settings.end +  settings.darkcyan + "| Effect: {}".format(monster.effectText) + settings.end)
 			else:
-				print("[{}]  {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ),
-																			  str(monster.atkPoints).ljust(4, ),
-																			  monster.tribute, monster.effectText))
+				print(settings.green + "[{}]  {}x {} | ATK: {} | Tributes: {} ".format((i + 1), countInstances(DeckList, monster) , monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute) + settings.end +  settings.darkcyan + "| Effect: {}".format(monster.effectText) + settings.end)
 			i = i + 1
 
 	input("Press Enter to Continue...")
 
 	return
+
+def countInstances(array: list, monster: card):
+	i = 0
+
+	for entry in array:
+		if entry.name == monster.name:
+			i = i + 1
+
+	return i
 
 # Finds the max length of the words in a list of dictionaries (Menu Formatting)
 def findDictLength(dictionaryList: list, index: str):
@@ -436,6 +555,7 @@ def player_deck_setup():
 	HeraldDeck = []
 	MagicianDeck = []
 	StormDeck = []
+	FireDeck = []
 
 	PlayerList = []
 
@@ -447,8 +567,8 @@ def player_deck_setup():
 	CyberDeck.append(codeGenerator2)
 	CyberDeck.append(codeRadiator)
 	CyberDeck.append(codeRadiator2)
-	CyberDeck.append(codeDriver)
-	CyberDeck.append(codeDriver2)
+	CyberDeck.append(cyberseDriver)
+	CyberDeck.append(cyberseDriver2)
 	CyberDeck.append(ladyDebug)
 	CyberDeck.append(ladyDebug2)
 	CyberDeck.append(cyberseGadget)
@@ -457,9 +577,10 @@ def player_deck_setup():
 	CyberDeck.append(cyberseAccelerator2)
 	CyberDeck.append(cyberseWhiteHat)
 	CyberDeck.append(cyberseWhiteHat2)
-	CyberDeck.append(cyberseClockDragon)
-	CyberDeck.append(cyberseClockDragon2)
+	CyberDeck.append(excodeTalker)
+	CyberDeck.append(excodeTalker2)
 	CyberDeck.append(dualAssembwurm)
+	CyberDeck.append(dualAssembwurm2)
 
 	VampireDeck.append(vampireFamiliar)
 	VampireDeck.append(vampireFamiliar2)
@@ -563,12 +684,33 @@ def player_deck_setup():
 	StormDeck.append(stormBirdAce)
 	StormDeck.append(stormBirdAce2)
 
+	FireDeck.append(fireKingArvata)
+	FireDeck.append(fireKingArvata2)
+	FireDeck.append(fireKingYaksha)
+	FireDeck.append(fireKingYaksha2)
+	FireDeck.append(fireKingBarong)
+	FireDeck.append(fireKingBarong2)
+	FireDeck.append(fireFistBear)
+	FireDeck.append(fireFistBear2)
+	FireDeck.append(fireFistHawk)
+	FireDeck.append(fireFistHawk2)
+	FireDeck.append(fireKingGarunix)
+	FireDeck.append(fireFistKarin)
+	FireDeck.append(fireFistKarin2)
+	FireDeck.append(fireFistGorilla2)
+	FireDeck.append(fireFormationTensu)
+	FireDeck.append(fireFormationTensu2)
+	FireDeck.append(fireFormationTenki)
+	FireDeck.append(fireFormationGyokkou)
+	FireDeck.append(fireFormationSeito)
+
 	random.shuffle(CyberDeck)
 	random.shuffle(VampireDeck)
 	random.shuffle(GishkiDeck)
 	random.shuffle(HeraldDeck)
 	random.shuffle(MagicianDeck)
 	random.shuffle(StormDeck)
+	random.shuffle(FireDeck)
 
 	for monster in CyberDeck:
 		monster.attacked = 0
@@ -588,60 +730,81 @@ def player_deck_setup():
 	for monster in StormDeck:
 		monster.attacked = 0
 
+	for monster in FireDeck:
+		monster.attacked = 0
+
 	CyberPlayer = {
-		"name": "Playmaker",
-		"desc": "A tech-savvy kid, who knows his way around a computer. Plays to undermine his opponents strategy from the roots",
-		"deck": CyberDeck,
-		"deckName": "Cyberse",
-		"deckDesc": "Discarding / SS Hand",
+		"name"      : "Playmaker",
+		"desc"      : "      " + settings.darkcyan + "A tech-savvy kid, who knows his way around a computer. Plays to undermine his opponents strategy from the roots" + settings.end,
+		"deck"      : CyberDeck,
+		"deckName"  : "Cyberse",
+		"deckDesc"  : "Discarding / SS Hand",
 		"voicelines": []
 	}
 
 	VampirePlayer = {
-		"name": "Count Klaric",
-		"desc": "A skilled player with an obsession with vampire mythology. Focuses on sacrificing her own cards to drain his opponents' life dry",
-		"deck": VampireDeck,
-		"deckName": "Vampire",
-		"deckDesc": "Stealing Life / Graveyard Effects",
+		"name"      : "Count Klaric",
+		"desc"      : "      " + settings.darkcyan + "A skilled player with an obsession with vampire mythology. Focuses on sacrificing her own cards to drain his opponents' life dry" + settings.end,
+		"deck"      : VampireDeck,
+		"deckName"  : "Vampire",
+		"deckDesc"  : "Stealing Life / Graveyard Effects",
 		"voicelines": []
 	}
 
 	GishkiPlayer = {
-		"name": "Gishki Avance",
-		"desc": "A distant traveler who has seen all walks of life. His deck mercilessely attacks his opponent, growing stronger each battle",
-		"deck": GishkiDeck,
-		"deckName": "Gishki",
-		"deckDesc": "Attack Boosts / Battling",
+		"name"      : "Gishki Avance",
+		"desc"      : "      " + settings.darkcyan + "A distant traveler who has seen all walks of life. His deck mercilessely attacks his opponent, growing stronger each battle" + settings.end,
+		"deck"      : GishkiDeck,
+		"deckName"  : "Gishki",
+		"deckDesc"  : "Attack Boosts / Battling",
 		"voicelines": []
 	}
 
 	HeraldPlayer = {
-		"name": "Arch Priest Xero",
-		"desc": "A high ranking official within a church he is devoted to. His deck aims to  restore his own life and gain power as he does so",
-		"deck": HeraldDeck,
-		"deckName": "Herald Agents",
-		"deckDesc": "Life Point Gain / Special Summon From Hand",
+		"name"      : "Arch Priest Xero",
+		"desc"      : "      " + settings.darkcyan + "A high ranking official within a church he is devoted to. His deck aims to  restore his own life and gain power as he does so" + settings.end,
+		"deck"      : HeraldDeck,
+		"deckName"  : "Herald Agents",
+		"deckDesc"  : "Benefitting in difference in Life Points",
 		"voicelines": []
 	}
 
 	MagicianPlayer = {
-		"name": "Dennis",
-		"desc": "A sidewalk performer with a nack of delivering a spectacle. his deck focuses on defending himself until his best magician is ready",
-		"deck": MagicianDeck,
-		"deckName": "Magicians",
-		"deckDesc": "Defending / Summoning Dark Magician",
+		"name"      : "Dennis",
+		"desc"      : "      " + settings.darkcyan + "A sidewalk performer with a nack of delivering a spectacle. his deck focuses on defending himself until his best magician is ready" + settings.end,
+		"deck"      : MagicianDeck,
+		"deckName"  : "Magicians",
+		"deckDesc"  : "Defending / Summoning Dark Magician",
 		"voicelines": []
-
 	}
 
 	StormPlayer = {
-		"name": "Ventus",
-		"desc": "A professional Speed Duelist who like to ride the wind on his hoverboard. His deck focuses on swarming Riders which power up his Stormbirds",
-		"deck": StormDeck,
-		"deckName": "Stormriders",
-		"deckDesc": "Swarming / Stealing Monsters",
+		"name"      : "Ventus",
+		"desc"      : "      " + settings.darkcyan + "A professional Speed Duelist who like to ride the wind on his hoverboard. His deck focuses on swarming Riders which power up his Stormbirds" + settings.end,
+		"deck"      : StormDeck,
+		"deckName"  : "Stormriders",
+		"deckDesc"  : "Swarming / Stealing Monsters",
 		"voicelines": []
 	}
+
+	FirePlayer = {
+		"name"      : "Soulburner",
+		"desc"      : "      " + settings.darkcyan + "A professional Speed Duelist with an explosive attitude. Isn't afraid to destroy his own monsters to burn his opponents down" + settings.end,
+		"deck"      : FireDeck,
+		"deckName"  : "Fire Kings/Fists",
+		"deckDesc"  : "Self Destruction / Fire Formations",
+		"voicelines": []
+	}
+
+	# JunglePlayer = {
+	# 	"name": "Karliah",
+	# 	"desc": "      " + settings.darkcyan + "A Duelist with a Wild side. She has a mismatch of cards that are guarenteed to confuse you stupid" + settings.end,
+	# 	"deck": FireDeck,
+	# 	"deckName": "Jungle Beasts",
+	# 	"deckDesc": "Wild Effects / Monster Copying",
+	# 	"voicelines": []
+	# }
+
 
 	PlayerList.append(CyberPlayer)
 	PlayerList.append(VampirePlayer)
@@ -649,6 +812,7 @@ def player_deck_setup():
 	PlayerList.append(HeraldPlayer)
 	PlayerList.append(MagicianPlayer)
 	PlayerList.append(StormPlayer)
+	PlayerList.append(FirePlayer)
 
 	# Get the user's chosen Player
 	while True:
@@ -681,6 +845,7 @@ def player_deck_setup():
 
 			print("--------------------------------------")
 			print("You have selected {} as your player character".format(_player.name))
+			print(settings.darkcyan + "{}".format(PlayerList[selection].get("desc")) + settings.end)
 
 			while True:
 				print("--------------------------------------")
@@ -749,7 +914,7 @@ def player_deck_setup():
 			_foe.deck = PlayerList[selection].get("deck")
 
 			print("--------------------------------------")
-			print("You have selected {} as your oposition character".format(_foe.name))
+			print("You have selected {} as your opposition character".format(_foe.name))
 
 			print("--------------------------------------")
 			selection = input("Confirm Selection (Y/N): ")
@@ -777,8 +942,13 @@ def reset():
 	_player.monfield = []
 	_foe.monfield = []
 
+	_player.gy = []
+	_foe.gy = []
+
 	_player.hand = []
 	_foe.hand = []
+
+
 
 	_player.lifepoints = 8000
 	_foe.lifepoints = 8000
@@ -935,6 +1105,17 @@ def mainMenu():
 
 				player_deck_setup()
 
+				_player.draw(0)
+				_foe.draw(4)
+
+				'''_player.hand.append(microCoder)
+
+				DoubleSummon = {"effect"       : doubleSummon, "effectTrigger": effTrigger.summon}
+
+				_player.hand[0].effectList.append(DoubleSummon)
+
+				_player.hand[0].effectList = _player.hand[0].returnEffectList()'''
+
 				return
 			else:
 				# Return Error
@@ -953,12 +1134,12 @@ def turnMenu(currentPlayer: duelist, passivePlayer: duelist):
 	try:
 		for monster in currentPlayer.monfield:
 			monster.attacked = 0
-	except IndexError:
+	except (IndexError, AttributeError):
 		pass
 	try:
 		for monster in passivePlayer.monfield:
 			monster.attacked = 0
-	except IndexError:
+	except (IndexError, AttributeError):
 		pass
 
 	# resetting attacked values in graveyard
@@ -966,13 +1147,13 @@ def turnMenu(currentPlayer: duelist, passivePlayer: duelist):
 	try:
 		for monster in currentPlayer.gy:
 			monster.attacked = 0
-	except IndexError:
+	except (IndexError, AttributeError):
 		pass
 
 	try:
 		for monster in passivePlayer.gy:
 			monster.attacked = 0
-	except IndexError:
+	except (IndexError, AttributeError):
 		pass
 
 	# Retrieve the global variables and set up rest of needed variables
@@ -997,13 +1178,15 @@ def turnMenu(currentPlayer: duelist, passivePlayer: duelist):
 	# DRAW PHASE
 	if firstTurn == 0:
 		currentPlayer.draw(4)
+		# currentPlayer.draw(0)
 
+		## TODO: Placeholder to move to Card Add
 		# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
 		# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
 		# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
 		# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
-		# _player.hand.append()
 		# _foe.hand.append()
+		# _foe.monfield.append()
 		# -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------
 		# -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------
 		# -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------
@@ -1017,6 +1200,9 @@ def turnMenu(currentPlayer: duelist, passivePlayer: duelist):
 	# Print current field status
 	print("--------------------------------------")
 	currentPlayer.checkField()
+
+	# STANDBY PHASE
+	settings.resolveStandbyEffects(currentPlayer, passivePlayer)
 
 	# MAIN PHASE
 	while True:
@@ -1135,6 +1321,13 @@ def turnMenu(currentPlayer: duelist, passivePlayer: duelist):
 		print("Turn End")
 		time.sleep(0.5)
 
+		# Reset atk in grave
+		for monster in currentPlayer.gy:
+			monster.atkPoints = monster.origAtk
+
+		for monster in passivePlayer.gy:
+			monster.atkPoints = monster.origAtk
+
 		if firstTurn == 0:
 			firstTurn = 1
 
@@ -1150,6 +1343,7 @@ def turnMenu(currentPlayer: duelist, passivePlayer: duelist):
 
 		print("\n" * 50)
 
+
 		return exitProg
 	elif destination == "menu":
 		# Reset
@@ -1163,7 +1357,8 @@ def turnMenu(currentPlayer: duelist, passivePlayer: duelist):
 		# Return to Main Menu
 		return exitProg
 
-# Menu that contains the battle phase
+# Menu that contains th
+# e battle phase
 def battleMenu(turnPlayer: duelist, passivePlayer: duelist):
 	print("Battle Phase Engaged")
 
@@ -1295,21 +1490,21 @@ def battleMenu(turnPlayer: duelist, passivePlayer: duelist):
 				damage = atkMon.atkPoints
 				atkTarget = None
 
-			##TODO Fix logic here for damage calculatiuon
+			##TODO Fix logic here for damage calculation
 			# Monster Effect: Attacker (Returns Damage)
-			if atkMon.checkResolve(effTrigger.attack) and returnEffectChecker(atkMon, effTrigger.destructionBat):
+			if atkMon.checkResolve(effTrigger.attack):
 				damage = atkMon.ResolveEffect(effTrigger.attack, turnPlayer, passivePlayer, atkMon, atkTarget, turnPlayer.gy, passivePlayer.gy, turnPlayer)
 
-			if atkMon.checkResolve(effTrigger.battle) and returnEffectChecker(atkMon, effTrigger.destructionBat):
+			if atkMon.checkResolve(effTrigger.battle):
 				damage = atkMon.ResolveEffect(effTrigger.battle, turnPlayer, passivePlayer, atkMon, atkTarget, turnPlayer.gy, passivePlayer.gy, turnPlayer)
 
 
 			# Monster Effect: Defender (Returns Damage)
 			try:
-				if atkTarget.checkResolve(effTrigger.defend) and returnEffectChecker(atkTarget, effTrigger.destructionBat):
+				if atkTarget.checkResolve(effTrigger.defend):
 					damage = atkTarget.ResolveEffect(effTrigger.defend, passivePlayer, turnPlayer, atkTarget, atkMon, passivePlayer.gy, turnPlayer.gy, turnPlayer)
 
-				if atkTarget.checkResolve(effTrigger.battle) and returnEffectChecker(atkTarget, effTrigger.destructionBat):
+				if atkTarget.checkResolve(effTrigger.battle):
 					damage = atkTarget.ResolveEffect(effTrigger.battle, passivePlayer, turnPlayer, atkTarget, atkMon, passivePlayer.gy, turnPlayer.gy, turnPlayer)
 			except (AttributeError, TypeError, UnboundLocalError):
 				pass
@@ -1346,10 +1541,17 @@ def battleMenu(turnPlayer: duelist, passivePlayer: duelist):
 
 						if result == 0:
 							passivePlayer.destroyMonsterBat(atkTarget, passivePlayer, turnPlayer, oppmonster, atkMon, passivePlayer.gy, turnPlayer.gy, turnPlayer)
+
+							if atkMon.checkResolve(effTrigger.destroyBattle):
+								atkMon.ResolveEffect(effTrigger.destroyBattle, turnPlayer, passivePlayer, atkMon, atkTarget, turnPlayer.gy, passivePlayer.gy, turnPlayer)
+
 						else:
 							pass
 					else:
 						passivePlayer.destroyMonsterBat(atkTarget, passivePlayer, turnPlayer, oppmonster, atkMon, passivePlayer.gy, turnPlayer.gy, turnPlayer)
+
+						if atkMon.checkResolve(effTrigger.destroyBattle):
+							atkMon.ResolveEffect(effTrigger.destroyBattle, turnPlayer, passivePlayer, atkMon, atkTarget, turnPlayer.gy, passivePlayer.gy, turnPlayer)
 				except IndexError:
 					pass
 				except AttributeError:

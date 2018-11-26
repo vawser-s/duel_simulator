@@ -1,6 +1,6 @@
 import sys
-from effect import *
 from card import *
+import settings
 
 
 class duelist:
@@ -84,14 +84,9 @@ class duelist:
 		for monster in self.deck:
 			if name in monster.name:
 				if i >= 9:
-					print("[{}] {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ),
-																				 str(monster.atkPoints).ljust(4, ),
-																				 monster.tribute, monster.effectText))
+					print(settings.green + "[{}] {} | ATK: {} | Tributes: {} | Effect: ".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute) + settings.end + settings.darkcyan + "{}".format(monster.effectText) + settings.end)
 				else:
-					print(
-						"[{}]  {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ),
-																				str(monster.atkPoints).ljust(4, ),
-																				monster.tribute, monster.effectText))
+					print(settings.green + "[{}]  {} | ATK: {} | Tributes: {} | Effect: ".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute) + settings.end + settings.darkcyan + "{}".format(monster.effectText) + settings.end)
 				tempListNum.append(i)
 			else:
 				pass
@@ -113,9 +108,8 @@ class duelist:
 					addedCard = self.deck[selection]
 					self.hand.append(addedCard)
 					print("--------------------------------------")
-					print("{} has searched the following card:".format(self.name))
-					print("Name: {} | ATK: {} | Effect: {}".format(addedCard.name, str(addedCard.atkPoints),
-																   addedCard.effectText))
+					print(settings.green + "{}".format(addedCard.name) + settings.end + " has been Added")
+					print(settings.green + "ATK: {} | Effect: ".format(str(addedCard.atkPoints), addedCard.effectText) + settings.end + settings.darkcyan + "{}".format(addedCard.effectText) + settings.end)
 
 					del self.deck[selection]
 
@@ -147,9 +141,17 @@ class duelist:
 			for name in names:
 				if name in monster.name:
 					if i >= 9:
-						print("[{}] {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute, monster.effectText))
+						print(settings.green + "[{}] {} | ATK: {} | Tributes: {} ".format((i + 1),
+						                                                                  monster.name.ljust(max_len, ),
+						                                                                  str(monster.atkPoints).ljust(
+							                                                                  4, ),
+						                                                                  monster.tribute) + settings.end + settings.darkcyan + "| Effect: {}".format(
+							monster.effectText) + settings.end)
 					else:
-						print("[{}]  {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute, monster.effectText))
+						print(settings.green + "[{}]  {} | ATK: {} | Tributes: {} ".format((i + 1), monster.name.ljust(
+							max_len, ), str(monster.atkPoints).ljust(4, ),
+						                                                                   monster.tribute) + settings.end + settings.darkcyan + "| Effect: {}".format(
+							monster.effectText) + settings.end)
 					tempListNum.append(i)
 				else:
 					pass
@@ -172,7 +174,7 @@ class duelist:
 					self.hand.append(addedCard)
 					print("--------------------------------------")
 					print("{} has searched the following card:".format(self.name))
-					print("Name: {} | ATK: {} | Effect: {}".format(addedCard.name, str(addedCard.atkPoints), addedCard.effectText))
+					print(settings.green + "Name: {} | ATK: {} | Effect: ".format(addedCard.name, str(addedCard.atkPoints)) + settings.end + settings.darkcyan + "{}".format(addedCard.effectText) + settings.end)
 
 					del self.deck[selection]
 
@@ -203,9 +205,19 @@ class duelist:
 				for name in names:
 					if name in monster.name:
 						if i >= 9:
-							print("[{}] {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute, monster.effectText))
+							print(settings.green + "[{}] {} | ATK: {} | Tributes: {} ".format((i + 1),
+							                                                                  monster.name.ljust(
+								                                                                  max_len, ), str(
+									monster.atkPoints).ljust(4, ),
+							                                                                  monster.tribute) + settings.end + settings.darkcyan + "| Effect: {}".format(
+								monster.effectText) + settings.end)
 						else:
-							print("[{}]  {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute, monster.effectText))
+							print(settings.green + "[{}]  {} | ATK: {} | Tributes: {} ".format((i + 1),
+							                                                                   monster.name.ljust(
+								                                                                   max_len, ), str(
+									monster.atkPoints).ljust(4, ),
+							                                                                   monster.tribute) + settings.end + settings.darkcyan + "| Effect: {}".format(
+								monster.effectText) + settings.end)
 						tempListNum.append(i)
 					else:
 						pass
@@ -258,7 +270,7 @@ class duelist:
 		self.hand.append(addedCard)
 		print("--------------------------------------")
 		print("{} has searched the following card:".format(self.name))
-		print("Name: {} | ATK: {} | Tribute: {} | Effect: {}".format(addedCard.name, str(addedCard.atkPoints), str(addedCard.tribute), addedCard.effectText))
+		print(settings.green + "Name: {} | ATK: {} | Tribute: {} | Effect: ".format(addedCard.name, str(addedCard.atkPoints), str(addedCard.tribute)) + settings.end + settings.darkcyan + "{}".format(addedCard.effectText))
 
 		del self.deck[selection]
 
@@ -271,10 +283,10 @@ class duelist:
 
 			for monster in self.hand:
 				if i >= 9:
-					print("[{}] {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute, monster.effectText))
+					print(settings.green + "[{}] {} | ATK: {} | Tributes: {} | Effect: ".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute) + settings.end + settings.darkcyan + "{}".format(monster.effectText) + settings.end)
+
 				else:
-					print(
-						"[{}]  {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute, monster.effectText))
+					print(settings.green + "[{}]  {} | ATK: {} | Tributes: {} | Effect: ".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute) + settings.end + settings.darkcyan + "{}".format(monster.effectText) + settings.end)
 				i = i + 1
 		else:
 			print("Hand Empty")
@@ -291,10 +303,9 @@ class duelist:
 
 			for monster in self.monfield:
 				if i >= 9:
-					print("[{}] {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute, monster.effectText))
+					print(settings.green + "[{}] {} | ATK: {} | Tributes: {} | Effect: ".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute) + settings.end + settings.darkcyan + "{}".format(monster.effectText) + settings.end)
 				else:
-					print(
-						"[{}]  {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute, monster.effectText))
+					print(settings.green + "[{}]  {} | ATK: {} | Tributes: {} | Effect: ".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute) + settings.end + settings.darkcyan + "{}".format(monster.effectText) + settings.end)
 				i = i + 1
 		else:
 			print("Field Empty")
@@ -312,10 +323,9 @@ class duelist:
 			for monster in self.monfield:
 				if monster.attacked == 0:
 					if i >= 9:
-						print("[{}] {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute, monster.effectText))
+						print(settings.green + "[{}] {} | ATK: {} | Tributes: {} | Effect: ".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute) + settings.end + settings.darkcyan + "{}".format(monster.effectText) + settings.end)
 					else:
-						print(
-							"[{}]  {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute, monster.effectText))
+						print(settings.green + "[{}]  {} | ATK: {} | Tributes: {} | Effect: ".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ),monster.tribute) + settings.end + settings.darkcyan + "{}".format(monster.effectText) + settings.end)
 				else:
 					pass
 				i = i + 1
@@ -334,9 +344,9 @@ class duelist:
 
 			for monster in self.deck:
 				if i >= 9:
-					print("[{}] {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute, monster.effectText))
+					print(settings.green + "[{}] {} | ATK: {} | Tributes: {} | Effect: ".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute) + settings.end + settings.darkcyan + "{}".format(monster.effectText) + settings.end)
 				else:
-					print("[{}]  {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute, monster.effectText))
+					print(settings.green + "[{}]  {} | ATK: {} | Tributes: {} | Effect: ".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute) + settings.end + settings.darkcyan + "{}".format(monster.effectText) + settings.end)
 				i = i + 1
 		else:
 			print("Deck Empty")
@@ -353,10 +363,9 @@ class duelist:
 
 			for monster in self.gy:
 				if i >= 9:
-					print("[{}] {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute, monster.effectText))
+					print(settings.green + "[{}] {} | ATK: {} | Tributes: {} | Effect: ".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute) + settings.end + settings.darkcyan + "{}".format(monster.effectText) + settings.end)
 				else:
-					print(
-						"[{}]  {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute, monster.effectText))
+					print(settings.green + "[{}]  {} | ATK: {} | Tributes: {} | Effect: ".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute) + settings.end + settings.darkcyan + "{}".format(monster.effectText) + settings.end)
 				i = i + 1
 		else:
 			print("Graveyard Empty")
@@ -381,7 +390,7 @@ class duelist:
 
 			try:
 				if self.gy.__len__() - 1 >= selection >= 0:
-					playedCard = self.gy[selection]
+					specialedCard = self.gy[selection]
 					break
 				else:
 					print("--------------------------------------")
@@ -394,10 +403,10 @@ class duelist:
 
 		pass
 
-		self.summon(playedCard)
+		self.summon(specialedCard)
 		print("--------------------------------------")
-		print("{} has been Special Summoned".format(playedCard.name))
-		print("ATK: {} | Effect: {}".format(str(playedCard.atkPoints), playedCard.effectText))
+		print(settings.green + "{}".format(specialedCard.name) + settings.end + " has been Special Summoned".format(specialedCard.name))
+		print(settings.green + "ATK: {} | Effect: ".format(str(specialedCard.atkPoints), specialedCard.effectText) + settings.end + settings.darkcyan + "{}".format(specialedCard.effectText) + settings.end)
 		time.sleep(1)
 
 	# Return card from Graveyard to Hand
@@ -492,7 +501,7 @@ class duelist:
 
 		print("--------------------------------------")
 		print("{} has milled the following card:".format(self.name))
-		print("Name: {} | ATK: {} | Effect: {}".format(milledCard.name, str(milledCard.atkPoints), milledCard.effectText))
+		print(settings.green + "Name: {} | ATK: {} | Effect: ".format(milledCard.name, str(milledCard.atkPoints), milledCard.effectText) + settings.end + settings.darkcyan + "{}".format(milledCard.effectText) + settings.end)
 
 		del self.deck[selection]
 
@@ -546,10 +555,16 @@ class duelist:
 
 					self.checkField()
 
-					# Allow user to choose which monster to Tribute
-					selectionTrib = input(
-						"~~{} requires {} Tribute. Select a monster to tribute:".format(playedCard.name, playedCard.tribute))
-					selectionTrib = int(selectionTrib) - 1
+					while True:
+						# Allow user to choose which monster to Tribute
+						selectionTrib = input("~~{} requires {} Tribute. Select a monster to tribute:".format(playedCard.name, playedCard.tribute))
+
+						try:
+							selectionTrib = int(selectionTrib) - 1
+							break
+						except(TypeError, ValueError):
+							print("--------------------------------------")
+							print("Invalid Selection")
 
 					# Tribute the selection
 					tribute = self.monfield[selectionTrib]
@@ -566,8 +581,8 @@ class duelist:
 					print("--------------------------------------")
 
 					# Print the stats of the played card
-					print("{} has Played ~{}~ from their hand".format(self.name, playedCard.name))
-					print("ATK: {} | Effect: {}".format(str(playedCard.atkPoints), playedCard.effectText))
+					print("{} has Played ".format(self.name) + settings.green + "~{}~".format(playedCard.name) + settings.end + " from their hand")
+					print(settings.green + "ATK: {} | Effect: ".format(str(playedCard.atkPoints), playedCard.effectText) + settings.end + settings.darkcyan + "{}".format(playedCard.effectText) + settings.end)
 
 					# Return Result
 					return 1  # 1 = Successful Summon
@@ -582,8 +597,8 @@ class duelist:
 					print("--------------------------------------")
 
 					# Print the stats of the played card
-					print("{} has Played ~{}~ from their hand".format(self.name, playedCard.name))
-					print("ATK: {} | Effect: {}".format(str(playedCard.atkPoints), playedCard.effectText))
+					print("{} has Played ".format(self.name) + settings.green + "~{}~".format(playedCard.name) + settings.end + " from their hand")
+					print(settings.green + "ATK: {} | Effect: ".format(str(playedCard.atkPoints), playedCard.effectText) + settings.end + settings.darkcyan + "{}".format(playedCard.effectText) + settings.end)
 
 					# Return Result
 					return 1  # 1 = Successful Summon
@@ -609,8 +624,10 @@ class duelist:
 					print("--------------------------------------")
 
 					# Print the stats of the played card
-					print("{} has Played ~{}~ from their hand".format(self.name, playedCard.name))
-					print("ATK: {} | Effect: {}".format(str(playedCard.atkPoints), playedCard.effectText))
+					print("{} has Played ".format(self.name) + settings.green + "~{}~".format(playedCard.name) + settings.end + " from their hand")
+					print(settings.green + "ATK: {} | Effect: ".format(str(playedCard.atkPoints),
+					                                                   playedCard.effectText) + settings.end + settings.darkcyan + "{}".format(
+						playedCard.effectText) + settings.end)
 
 					# Return Result
 					return 1  # 1 = Successful Summon
@@ -652,8 +669,8 @@ class duelist:
 
 			self.gy.append(monster)
 
-			print("The Following card was discarded from {}'s Hand:".format(self.name))
-			print("{} | ATK: {} | Effect: {}".format(monster.name, monster.atkPoints, monster.effectText))
+			print("The following card has been discarded from {}'s hand".format(self.name))
+			print(settings.green + "Name: {} | ATK: {} | Effect: ".format(monster.name, str(monster.atkPoints), monster.effectText) + settings.end + settings.darkcyan + "{}".format(monster.effectText) + settings.end)
 		except IndexError:
 			if self.hand.__len__() == 0:
 				print("Hand is Empty")
@@ -730,10 +747,7 @@ class duelist:
 
 		pass
 
-		effplayer.gy.append(discardedCard)
-		del self.hand[selection]
-
-		print("{} has been discarded from {}'s hand".format(discardedCard.name, self.name))
+		self.discardCard(selection)
 
 		time.sleep(1)
 
@@ -787,7 +801,6 @@ class duelist:
 
 		destroyedMonster.ResolveEffect(effTrigger.graveyard, effplayer, opponent, destroyedMonster, oppMon, effgy, oppgy, turnPlayer)
 
-
 	# Destroy Monster (Effect)
 	def destroyMonsterEff(self, target, effplayer, opponent, sentMon, oppMon, effgy, oppgy, turnPlayer):
 		del sentMon
@@ -810,6 +823,37 @@ class duelist:
 		time.sleep(0.5)
 
 		destroyedMonster.ResolveEffect(effTrigger.graveyard, effplayer, opponent, destroyedMonster, oppMon, effgy, oppgy, turnPlayer)
+
+		for card in self.hand:
+			if card.checkResolve(effTrigger.otherCardEffDestruction):
+				card.ResolveEffect(effTrigger.otherCardEffDestruction, effplayer, opponent, card, oppMon, effgy, oppgy, turnPlayer)
+
+	# Destroy Monster Hand (Effect)
+	def destroyMonsterEffHand(self, target, effplayer, opponent, sentMon, oppMon, effgy, oppgy, turnPlayer):
+		del sentMon
+
+		location = self.checkArrayLoc(self.hand, target)
+
+		# Select the destroyed Monster
+		destroyedMonster = self.hand[location]
+
+		# resetting attack values, for the AtkGain Effect
+		destroyedMonster.atkPoints = destroyedMonster.origAtk
+
+		# Remove from field array
+		del self.hand[location]
+
+		# Append to graveyard and print result
+		print("--------------------------------------")
+		self.gy.append(destroyedMonster)
+		print("{} has been destroyed and sent to the Graveyard".format(destroyedMonster.name))
+
+		time.sleep(0.5)
+
+		destroyedMonster.ResolveEffect(effTrigger.graveyard, effplayer, opponent, destroyedMonster, oppMon, effgy, oppgy, turnPlayer)
+
+		for card in self.hand:
+			card.ResolveEffect(effTrigger.otherCardEffDestruction, effplayer, opponent, card, oppMon, effgy, oppgy, turnPlayer)
 
 	# Return Monster to Opponents Hand
 	def bounce(self, target):
@@ -866,9 +910,8 @@ class duelist:
 		self.summon(specialedCard)
 		del self.hand[selection]
 		print("--------------------------------------")
-		print("{} has been Special Summoned".format(specialedCard.name))
-		print("ATK: {} | Effect: {}".format(str(specialedCard.atkPoints), specialedCard.effectText))
-
+		print(settings.green + "{}".format(specialedCard.name) + settings.end + " has been Special Summoned".format(specialedCard.name))
+		print(settings.green + "ATK: {} | Effect: ".format(str(specialedCard.atkPoints), specialedCard.effectText) + settings.end + settings.darkcyan + "{}".format(specialedCard.effectText) + settings.end)
 		time.sleep(1)
 
 
@@ -880,6 +923,8 @@ class duelist:
 		tempListNum = []
 		print("{}s Hand:".format(self.name))
 		del sentMon
+
+		max_len = self.getMaxLength(self.hand)
 
 		# Loop through the hand and display each card fitting the namespace
 		while True:
@@ -893,7 +938,11 @@ class duelist:
 				break
 
 			if name in currentCard.name:
-				print("[{}] {} | ATK: {} | Effect: {}".format((i + 1), currentCard.name.ljust(25, ), str(currentCard.atkPoints).ljust(4, ), currentCard.effectText))
+				print(
+					settings.green + "[{}] {} | ATK: {} | Tributes: {} ".format((i + 1), currentCard.name.ljust(max_len, ),
+					                                                            str(currentCard.atkPoints).ljust(4, ),
+					                                                            currentCard.tribute) + settings.end + settings.darkcyan + "| Effect: {}".format(
+						currentCard.effectText) + settings.end)
 				tempListNum.append(i)
 			else:
 				pass
@@ -922,8 +971,10 @@ class duelist:
 					del self.hand[selection]
 
 					print("--------------------------------------")
-					print("{} has been Special Summoned".format(specialedCard.name))
-					print("ATK: {} | Effect: {}".format(str(specialedCard.atkPoints), specialedCard.effectText))
+					print(
+						settings.green + "{}".format(specialedCard.name) + settings.end + " has been Special Summoned")
+					print(settings.green + "ATK: {} | Effect: ".format(str(specialedCard.atkPoints),
+					                                                   specialedCard.effectText) + settings.end + settings.darkcyan + "{}".format(specialedCard.effectText) + settings.end)
 
 					time.sleep(1)
 
@@ -952,9 +1003,18 @@ class duelist:
 		for monster in self.hand:
 			if monster.name == name:
 				if i >= 9:
-					print("[{}] {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute, monster.effectText))
+					print(settings.green + "[{}] {} | ATK: {} | Tributes: {} ".format((i + 1),
+					                                                                  monster.name.ljust(max_len, ),
+					                                                                  str(monster.atkPoints).ljust(4, ),
+					                                                                  monster.tribute) + settings.end + settings.darkcyan + "| Effect: {}".format(
+						monster.effectText) + settings.end)
 				else:
-					print("[{}]  {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute, monster.effectText))
+					print(settings.green + "[{}]  {} | ATK: {} | Tributes: {} ".format((i + 1),
+					                                                                   monster.name.ljust(max_len, ),
+					                                                                   str(monster.atkPoints).ljust(
+						                                                                   4, ),
+					                                                                   monster.tribute) + settings.end + settings.darkcyan + "| Effect: {}".format(
+						monster.effectText) + settings.end)
 				tempListNum.append(i)
 			else:
 				pass
@@ -980,8 +1040,10 @@ class duelist:
 					del self.hand[selection]
 
 					print("--------------------------------------")
-					print("{} has been Special Summoned".format(specialedCard.name))
-					print("ATK: {} | Effect: {}".format(str(specialedCard.atkPoints), specialedCard.effectText))
+					print(
+						settings.green + "{}".format(specialedCard.name) + settings.end + " has been Special Summoned")
+					print(settings.green + "ATK: {} | Effect: ".format(str(specialedCard.atkPoints),
+					                                                   specialedCard.effectText) + settings.end + settings.darkcyan + "{}".format(specialedCard.effectText) + settings.end)
 
 					time.sleep(1)
 
@@ -1010,9 +1072,18 @@ class duelist:
 		for monster in self.deck:
 			if monster.name == name:
 				if i >= 9:
-					print("[{}] {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute, monster.effectText))
+					print(settings.green + "[{}] {} | ATK: {} | Tributes: {} ".format((i + 1),
+					                                                                  monster.name.ljust(max_len, ),
+					                                                                  str(monster.atkPoints).ljust(4, ),
+					                                                                  monster.tribute) + settings.end + settings.darkcyan + "| Effect: {}".format(
+						monster.effectText) + settings.end)
 				else:
-					print("[{}]  {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute, monster.effectText))
+					print(settings.green + "[{}]  {} | ATK: {} | Tributes: {} ".format((i + 1),
+					                                                                   monster.name.ljust(max_len, ),
+					                                                                   str(monster.atkPoints).ljust(
+						                                                                   4, ),
+					                                                                   monster.tribute) + settings.end + settings.darkcyan + "| Effect: {}".format(
+						monster.effectText) + settings.end)
 				tempListNum.append(i)
 			else:
 				pass
@@ -1036,8 +1107,10 @@ class duelist:
 					self.summon(specialedCard)
 
 					print("--------------------------------------")
-					print("{} has been Special Summoned".format(specialedCard.name))
-					print("ATK: {} | Effect: {}".format(str(specialedCard.atkPoints), specialedCard.effectText))
+					print(
+						settings.green + "{}".format(specialedCard.name) + settings.end + " has been Special Summoned")
+					print(settings.green + "ATK: {} | Effect: ".format(str(specialedCard.atkPoints),
+					                                                   specialedCard.effectText) + settings.end + settings.darkcyan + "{}".format(specialedCard.effectText) + settings.end)
 
 					time.sleep(1)
 
@@ -1070,10 +1143,17 @@ class duelist:
 			for monster in self.monfield:
 				if monster.name != playedCard.name:
 					if i >= 9:
-						print("[{}] {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute, monster.effectText))
-
+						print(settings.green + "[{}] {} | ATK: {} | Tributes: {} ".format((i + 1),
+						                                                                  monster.name.ljust(max_len, ),
+						                                                                  str(monster.atkPoints).ljust(
+							                                                                  4, ),
+						                                                                  monster.tribute) + settings.end + settings.darkcyan + "| Effect: {}".format(
+							monster.effectText) + settings.end)
 					else:
-						print("[{}]  {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute, monster.effectText))
+						print(settings.green + "[{}]  {} | ATK: {} | Tributes: {} ".format((i + 1), monster.name.ljust(
+							max_len, ), str(monster.atkPoints).ljust(4, ),
+						                                                                   monster.tribute) + settings.end + settings.darkcyan + "| Effect: {}".format(
+							monster.effectText) + settings.end)
 					tempListNum.append(i)
 				else:
 					pass
@@ -1117,7 +1197,7 @@ class duelist:
 			return
 
 	# Special Summon a monster from the deck FITTING the namespace
-	def specialDeckSpecific(self, name, effplayer, opponent, sentMon, oppMon, effgy, oppgy, turnPlayer):
+	def specialDeckSpecific(self, name, effplayer, opponent, sentMon, oppMon, effgy, oppgy, turnPlayer, *names):
 		i = 0
 		tempListNum = []
 		print("{}s Deck:".format(self.name))
@@ -1127,12 +1207,20 @@ class duelist:
 
 		# Loop through the hand and display each card fitting the namespace
 		for monster in self.deck:
-			if name in monster.name:
+			if name in monster.name or name in names:
 				if i >= 9:
-					print("[{}] {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute, monster.effectText))
+					print(settings.green + "[{}] {} | ATK: {} | Tributes: {} ".format((i + 1),
+					                                                                  monster.name.ljust(max_len, ),
+					                                                                  str(monster.atkPoints).ljust(4, ),
+					                                                                  monster.tribute) + settings.end + settings.darkcyan + "| Effect: {}".format(
+						monster.effectText) + settings.end)
 				else:
-					print("[{}]  {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute, monster.effectText))
-
+					print(settings.green + "[{}]  {} | ATK: {} | Tributes: {} ".format((i + 1),
+					                                                                   monster.name.ljust(max_len, ),
+					                                                                   str(monster.atkPoints).ljust(
+						                                                                   4, ),
+					                                                                   monster.tribute) + settings.end + settings.darkcyan + "| Effect: {}".format(
+						monster.effectText) + settings.end)
 				tempListNum.append(i)
 			else:
 				pass
@@ -1158,8 +1246,10 @@ class duelist:
 					del self.deck[selection]
 
 					print("--------------------------------------")
-					print("{} has been Special Summoned".format(specialedCard.name))
-					print("ATK: {} | Effect: {}".format(str(specialedCard.atkPoints), specialedCard.effectText))
+					print(
+						settings.green + "{}".format(specialedCard.name) + settings.end + " has been Special Summoned")
+					print(settings.green + "ATK: {} | Effect: ".format(str(specialedCard.atkPoints),
+					                                                   specialedCard.effectText) + settings.end + settings.darkcyan + "{}".format(specialedCard.effectText) + settings.end)
 
 					time.sleep(1)
 
@@ -1187,10 +1277,18 @@ class duelist:
 		for monster in self.deck:
 			if name in monster.name and monster.atkPoints < atk:
 				if i >= 9:
-					print("[{}] {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute, monster.effectText))
+					print(settings.green + "[{}] {} | ATK: {} | Tributes: {} ".format((i + 1),
+					                                                                  monster.name.ljust(max_len, ),
+					                                                                  str(monster.atkPoints).ljust(4, ),
+					                                                                  monster.tribute) + settings.end + settings.darkcyan + "| Effect: {}".format(
+						monster.effectText) + settings.end)
 				else:
-					print("[{}]  {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute, monster.effectText))
-
+					print(settings.green + "[{}]  {} | ATK: {} | Tributes: {} ".format((i + 1),
+					                                                                   monster.name.ljust(max_len, ),
+					                                                                   str(monster.atkPoints).ljust(
+						                                                                   4, ),
+					                                                                   monster.tribute) + settings.end + settings.darkcyan + "| Effect: {}".format(
+						monster.effectText) + settings.end)
 				tempListNum.append(i)
 			else:
 				pass
@@ -1216,8 +1314,10 @@ class duelist:
 					del self.deck[selection]
 
 					print("--------------------------------------")
-					print("{} has been Special Summoned".format(specialedCard.name))
-					print("ATK: {} | Effect: {}".format(str(specialedCard.atkPoints), specialedCard.effectText))
+					print(
+						settings.green + "{}".format(specialedCard.name) + settings.end + " has been Special Summoned")
+					print(settings.green + "ATK: {} | Effect: ".format(str(specialedCard.atkPoints),
+					                                                   specialedCard.effectText) + settings.end + settings.darkcyan + "{}".format(specialedCard.effectText) + settings.end)
 
 					time.sleep(1)
 
@@ -1246,10 +1346,17 @@ class duelist:
 			for name in names:
 				if name in monster.name:
 					if i >= 9:
-						print("[{}] {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute, monster.effectText))
+						print(settings.green + "[{}] {} | ATK: {} | Tributes: {} ".format((i + 1),
+						                                                                  monster.name.ljust(max_len, ),
+						                                                                  str(monster.atkPoints).ljust(
+							                                                                  4, ),
+						                                                                  monster.tribute) + settings.end + settings.darkcyan + "| Effect: {}".format(
+							monster.effectText) + settings.end)
 					else:
-						print("[{}]  {} | ATK: {} | Tributes: {} | Effect: {}".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute, monster.effectText))
-
+						print(settings.green + "[{}]  {} | ATK: {} | Tributes: {} ".format((i + 1), monster.name.ljust(
+							max_len, ), str(monster.atkPoints).ljust(4, ),
+						                                                                   monster.tribute) + settings.end + settings.darkcyan + "| Effect: {}".format(
+							monster.effectText) + settings.end)
 					tempListNum.append(i)
 				else:
 					pass
@@ -1274,8 +1381,10 @@ class duelist:
 					del self.gy[selection]
 
 					print("--------------------------------------")
-					print("{} has been Special Summoned".format(specialedCard.name))
-					print("ATK: {} | Effect: {}".format(str(specialedCard.atkPoints), specialedCard.effectText))
+					print(
+						settings.green + "{}".format(specialedCard.name) + settings.end + " has been Special Summoned")
+					print(settings.green + "ATK: {} | Effect: ".format(str(specialedCard.atkPoints),
+					                                                   specialedCard.effectText) + settings.end + settings.darkcyan + "{}".format(specialedCard.effectText) + settings.end)
 
 					time.sleep(1)
 
@@ -1290,5 +1399,87 @@ class duelist:
 					print("--------------------------------------")
 		else:
 			print("No Possible Targets")
+
+	def specialGraveyardSpecificNeg(self, *names):
+		i = 0
+		tempListNum = []
+		print("{}s GY:".format(self.name))
+
+		max_len = self.getMaxLength(self.gy)
+
+		# Loop through the hand and display each card fitting the namespace
+		for monster in self.gy:
+			for name in names:
+				if name in monster.name:
+					if i >= 9:
+						print(settings.green + "[{}] {} | ATK: {} | Tributes: {} ".format((i + 1),
+						                                                                  monster.name.ljust(max_len, ),
+						                                                                  str(monster.atkPoints).ljust(
+							                                                                  4, ),
+						                                                                  monster.tribute) + settings.end + settings.darkcyan + "| Effect: {}".format(
+							monster.effectText) + settings.end)
+					else:
+						print(settings.green + "[{}]  {} | ATK: {} | Tributes: {} ".format((i + 1), monster.name.ljust(
+							max_len, ), str(monster.atkPoints).ljust(4, ),
+						                                                                   monster.tribute) + settings.end + settings.darkcyan + "| Effect: {}".format(
+							monster.effectText) + settings.end)
+					tempListNum.append(i)
+				else:
+					pass
+			i = i + 1
+
+		if tempListNum:
+			while True:
+				# Get user Selection
+				selection = input("~~~Select the card to Summon (Type the Number):")
+
+				try:
+					selection = int(selection) - 1
+				except ValueError:
+					pass
+
+				# Special Summon the Card
+				if selection in tempListNum:
+					specialedCard = self.gy[selection]
+
+					self.summon(specialedCard)
+
+					del self.gy[selection]
+
+					print("--------------------------------------")
+					print(
+						settings.green + "{}".format(specialedCard.name) + settings.end + " has been Special Summoned")
+					print(settings.green + "ATK: {} | Effect: ".format(str(specialedCard.atkPoints),
+					                                                   specialedCard.effectText) + settings.end + settings.darkcyan + "{}".format(specialedCard.effectText) + settings.end)
+
+					time.sleep(1)
+
+					return
+
+				else:
+					print("--------------------------------------")
+					print("Invalid Selection")
+					print("--------------------------------------")
+		else:
+			print("No Possible Targets")
+
+	def summonfromHand(self, effplayer, opponent, effmon, oppMon, effgy, oppgy, turnPlayer):
+
+		i = self.checkArrayLoc(self.hand, effmon)
+
+		if i or i == 0:
+			del self.hand[i]
+
+			self.summon(effmon)
+
+			specialedCard = effmon
+
+			print(settings.green + "{}".format(specialedCard.name) + settings.end + " has been Special Summoned")
+			print(settings.green + "ATK: {} | Effect: ".format(str(specialedCard.atkPoints)) + settings.end + settings.darkcyan + "{}".format(specialedCard.effectText) + settings.end)
+
+			effmon.ResolveEffect(effTrigger.summon, effplayer, opponent, effmon, oppMon, effgy, oppgy, turnPlayer)
+		else:
+			raise NotImplementedError
+
 
 

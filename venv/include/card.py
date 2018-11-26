@@ -1,9 +1,11 @@
 from effect import *
 import settings
+
 def effectDescBuilder(trigger: Enum, Desc: str):
 
 	if trigger.name == "n_a":
 		effectDescription = Desc
+		return effectDescription
 	elif trigger.name == "summon":
 		effectDescription = "when Summoned: " + Desc
 	elif trigger.name == "attack":
@@ -18,7 +20,12 @@ def effectDescBuilder(trigger: Enum, Desc: str):
 		effectDescription = "when destroyed by Battle: " + Desc
 	elif trigger.name == "destructionEff":
 		effectDescription = "when destroyed by Card Effects: " + Desc
+	elif trigger.name == "otherCardEffDestruction":
+		effectDescription = "When one of your monsters is destroyed by a card effect: " + Desc
+	elif trigger.name == "destroyBattle":
+		effectDescription = "When this card destroys a monster by battle: " + Desc
 	else:
+		print(trigger)
 		raise TypeError
 
 	return "(OPT) " + effectDescription
@@ -45,9 +52,11 @@ class card:
 					pass
 					if settings.returnEffectChecker(self, Effect):
 						settings.addEffectChecker(effectMon, Effect)
+						print("--------------------------------------")
 						result = Effect.get("effect").resolve(effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer)
 						changed = True
 					else:
+						print("--------------------------------------")
 						print("{}'s ({}) effect is One Per Turn only".format(effectMon.name, i))
 				else:
 					pass
@@ -60,7 +69,7 @@ class card:
 	def returnEffectList(self):
 		text = ""
 		for Effect in self.effectList:
-			text = text + "" + effectDescBuilder(Effect.get("effectTrigger"), Effect.get("effect").desc) + ". "
+			text = text + "\n   " + effectDescBuilder(Effect.get("effectTrigger"), Effect.get("effect").desc) + ". "
 
 		return text
 
