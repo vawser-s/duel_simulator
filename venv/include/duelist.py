@@ -1618,7 +1618,7 @@ class duelist:
 
 		self.checkField()
 
-	def grantEffectSpecific(self, Effect: effect, *names):
+	def grantEffectSpecific(self, Effect: effect, desc, *names):
 		i = 0
 		tempListNum = []
 		print("{}s Field:".format(self.name))
@@ -1674,5 +1674,7 @@ class duelist:
 
 			target.effectList.append(Effect)
 			target.effectText = target.returnEffectList()
+
+			print(settings.green + "{}".format(target.name) + settings.end + " has been gifted the following effect: " + settings.darkcyan + "{}".format(desc) + settings.end)
 		else:
 			print("No Possible Targets")

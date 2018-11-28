@@ -1253,7 +1253,7 @@ def turnMenu(currentPlayer: duelist, passivePlayer: duelist):
 
 	# DRAW PHASE
 	if firstTurn == 0:
-		currentPlayer.draw(0)
+		currentPlayer.draw(4)
 		# currentPlayer.draw(0)
 
 		## NAVI: Placeholder to move to Card Add
@@ -1262,13 +1262,11 @@ def turnMenu(currentPlayer: duelist, passivePlayer: duelist):
 		# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
 		# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
 		# _player.hand.append()
-		_foe.hand.append(cyberseGadget)
-		_player.hand.append(duckDucker)
-		_player.monfield.append(jungleTravellerKarliah)
 		# _player.gy.append()
 		# _foe.hand.append()
 		# _foe.monfield.append(jungleTravellerKarliah)
 		# _foe.gy.append()
+		# -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------
 		# -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------
 		# -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------
 		# -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------

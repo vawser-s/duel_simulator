@@ -1375,13 +1375,10 @@ class addEffectSpecific(effect):
 			effectMon.effectText) + settings.end)
 		time.sleep(1.3)
 		# extraParam = Effect Dictionary
-		# nextraParsm = namespace
+		# nextraParsm = Description
 		# dextraParsm = namespace
 
-		if self.dextraParam:
-			effplayer.grantEffectSpecific(self.extraParam, self.nextraParam, self.dextraParam)
-		else:
-			effplayer.grantEffectSpecific(self.extraParam, self.nextraParam)
+		effplayer.grantEffectSpecific(self.extraParam, self.nextraParam, self.dextraParam)
 
 class jungleDefense(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
@@ -1552,10 +1549,10 @@ GrantFloat1 = addEffect("Grant a monster on the field the effect: 'When sent to 
 GrantDisc1Cyberse = addEffectSpecific("Grant a 'Cyberse' monster on the field the effect: 'When sent to Graveyard; Opponent Discards 1 card'", {"effect": oppDisc1,
 	                                                                                             "effectTrigger": effTrigger.graveyard}, "Cyberse")
 GrantBattleDestructionKarliah = addEffectSpecific("Grant a 'Karliah' monster on your field the effect: '(OPT) Cannot be Destroyed by Battle'", {"effect": battleImmune,
-                                                                                                                                   "effectTrigger": effTrigger.destructionBat}, "Karliah")
+                                                                                                                                   "effectTrigger": effTrigger.destructionBat}, "(OPT) Cannot be Destroyed by Battle", "Karliah")
 GrantSelfFloat = addEffectSpecific("Grant a 'Karliah' monster on your field the effect: 'Return A Copy of this card from your graveyard to your hand'", {"effect": gyToHandKarliah,
-                                                                                                                                                         "effectTrigger": effTrigger.graveyard}, "Karliah")
-GrantEffectImmuneKarliah = addEffectSpecific("Grant a 'Karliah' monster on your field the effect: '(OPT) Cannot be Destroyed by Card Effects'", {"effect": effectImmune, "effectTrigger": effTrigger.destructionEff}, "Karliah")
+                                                                                                                                                         "effectTrigger": effTrigger.graveyard}, "Return A Copy of this card from your graveyard to your hand", "Karliah")
+GrantEffectImmuneKarliah = addEffectSpecific("Grant a 'Karliah' monster on your field the effect: '(OPT) Cannot be Destroyed by Card Effects'", {"effect": effectImmune, "effectTrigger": effTrigger.destructionEff}, "(OPT) Cannot be Destroyed by Card Effects" "Karliah")
 jungleDiscDefense = discardDefense("You can discard this card to prevent Karliah from being destroyed")
 
 # Other Effects
