@@ -42,7 +42,7 @@ def addEffectChecker(monster, effect):
 
 def returnEffectChecker(monster, effect):  # format: [monster, trigger]
 	for entry in effectList:
-		if monster == entry[0]:
+		if monster.name == entry[0].name:
 			if effect == entry[1]:
 				return False
 	return True

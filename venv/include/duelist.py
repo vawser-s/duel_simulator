@@ -1,7 +1,9 @@
 import sys
-from card import *
+import time
 import settings
-
+import effect
+import random
+from effect import effTrigger
 
 class duelist:
 
@@ -37,6 +39,8 @@ class duelist:
 			if m == monster:
 				return i
 			i = i + 1
+
+		raise NotImplementedError
 
 	# Add card(s) to Hand
 	def draw(self, noOfCards):
@@ -333,6 +337,19 @@ class duelist:
 			print("Field Empty")
 			return
 
+	# Used for checking for monsters that cannot be targetted for attacks
+	def checkFieldDef(self):
+		# check the monster zone array
+
+		if self.monfield.__len__() != 0:
+			for monster in self.monfield:
+				if monster.canBeAttacked:
+					return True
+			return False
+		else:
+			print("Field Empty")
+			return False
+
 	# Display Player Deck
 	def checkDeck(self):
 		print("{}s Deck:".format(self.name))
@@ -370,6 +387,8 @@ class duelist:
 		else:
 			print("Graveyard Empty")
 			return
+
+		return
 
 	# Special Summon from Graveyard
 	def ssGraveyard(self):
@@ -446,7 +465,76 @@ class duelist:
 		print("{} has been added to {}'s Hand".format(addedCard.name, self.name))
 		print("ATK: {} | Effect: {}".format(str(addedCard.atkPoints), addedCard.effectText))
 
-	def summon(self, monster: card):
+	def graveyardToHandSpecific(self, *names):
+		if self.gy.__len__() == 0:
+			print("Graveyard is Empty")
+			return
+
+		while True:
+			i = 0
+			tempListNum = []
+			print("{}s Graveyard:".format(self.name))
+
+			max_len = self.getMaxLength(self.gy)
+
+			# Loop through the hand and display each card fitting the namespace
+			for monster in self.gy:
+				for name in names:
+					if name in monster.name:
+						if i >= 9:
+							print(settings.green + "[{}] {} | ATK: {} | Tributes: {} ".format((i + 1),
+							                                                                  monster.name.ljust(
+								                                                                  max_len, ),
+							                                                                  str(
+								                                                                  monster.atkPoints).ljust(
+								                                                                  4, ),
+							                                                                  monster.tribute) + settings.end + settings.darkcyan + "| Effect: {}".format(
+								monster.effectText) + settings.end)
+						else:
+							print(settings.green + "[{}]  {} | ATK: {} | Tributes: {} ".format((i + 1),
+							                                                                   monster.name.ljust(
+								                                                                   max_len, ), str(
+									monster.atkPoints).ljust(4, ),
+							                                                                   monster.tribute) + settings.end + settings.darkcyan + "| Effect: {}".format(
+								monster.effectText) + settings.end)
+						tempListNum.append(i)
+					else:
+						pass
+
+				i = i + 1
+
+			if tempListNum:
+				while True:
+					# Get user Selection
+					selection = input("~~~Select the card to Add (Type the Number):")
+
+					try:
+						selection = int(selection) - 1
+					except ValueError:
+						pass
+
+					# Add the card to the hand
+					if selection in tempListNum:
+						addedCard = self.gy[selection]
+						self.hand.append(addedCard)
+						print("--------------------------------------")
+						print("{} has added the following card:".format(self.name))
+						print(settings.green + "Name: {} | ATK: {} | Effect: ".format(addedCard.name, str(
+							addedCard.atkPoints)) + settings.end + settings.darkcyan + "{}".format(
+							addedCard.effectText) + settings.end)
+
+						del self.gy[selection]
+
+						return
+					else:
+						print("--------------------------------------")
+						print("Invalid Selection")
+						print("--------------------------------------")
+			else:
+				print("No Cards to add")
+				return
+
+	def summon(self, monster):
 		if self.monfield.__len__() == 5:
 			print("Monster Field is Full, cannot Summon")
 			return 0
@@ -466,8 +554,6 @@ class duelist:
 
 		sentMon.ResolveEffect(effTrigger.graveyard, effplayer, opponent, sentMon, oppMon, effgy, oppgy, turnPlayer)
 
-		self.shuffle()
-
 	def sendToGraveBasic(self, sentMon):
 		self.gy.append(sentMon)
 
@@ -475,8 +561,6 @@ class duelist:
 		sentMon.atkPoints = sentMon.origAtk
 		sentMon.effectList = sentMon.origEffectList
 		sentMon.effectText = sentMon.origEffectText
-
-		self.shuffle()
 
 	# Send a card from Deck to grave
 	def mill(self, effplayer, opponent, sentMon, oppMon, effgy, oppgy, turnPlayer):
@@ -804,6 +888,8 @@ class duelist:
 
 		# resetting attack values, for the AtkGain Effect
 		destroyedMonster.atkPoints = destroyedMonster.origAtk
+		destroyedMonster.effectList = destroyedMonster.origEffectList
+		destroyedMonster.effectText = destroyedMonster.origEffectText
 
 		# Remove from field array
 		del self.monfield[location]
@@ -826,7 +912,10 @@ class duelist:
 		destroyedMonster = self.monfield[location]
 
 		# resetting attack values, for the AtkGain Effect
+
 		destroyedMonster.atkPoints = destroyedMonster.origAtk
+		destroyedMonster.effectList = destroyedMonster.origEffectList
+		destroyedMonster.effectText = destroyedMonster.origEffectText
 
 		# Remove from field array
 		del self.monfield[location]
@@ -882,6 +971,10 @@ class duelist:
 
 		# Remove from field array
 		del self.monfield[location]
+
+		bouncedMonster.atkPoints = bouncedMonster.origAtk
+		bouncedMonster.effectList = bouncedMonster.origEffectList
+		bouncedMonster.effectText = bouncedMonster.origEffectText
 
 		# Append to graveyard and print result
 		self.hand.append(bouncedMonster)
@@ -1555,25 +1648,31 @@ class duelist:
 		if tempListNum:
 			while True:
 				selection = input("~~Select a target: ".format())
-
 				try:
 					selection = int(selection) - 1
 				except TypeError:
+					pass
+
+				if selection is None or selection == "":
 					print("Invalid Selection")
 					print("--------------------------------------")
 					continue
 
-				try:
-					target = self.monfield[selection]
-					break
-				except (TypeError, IndexError):
+				if selection in tempListNum:
+					try:
+
+						target = self.monfield[selection]
+						break
+					except (TypeError, ValueError):
+						print("Invalid Selection")
+						print("--------------------------------------")
+						continue
+				else:
 					print("Invalid Selection")
 					print("--------------------------------------")
+					continue
 
 			target.effectList.append(Effect)
 			target.effectText = target.returnEffectList()
 		else:
 			print("No Possible Targets")
-
-
-

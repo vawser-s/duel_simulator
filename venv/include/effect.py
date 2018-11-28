@@ -1,10 +1,10 @@
 import time
 import random
-from enum import Enum
+import enum
 import settings
 import math
 
-class effTrigger(Enum):
+class effTrigger(enum.Enum):
 	n_a = 1
 	summon = 2
 	attack = 3
@@ -15,6 +15,7 @@ class effTrigger(Enum):
 	destructionEff = 8
 	otherCardEffDestruction = 9
 	destroyBattle = 10
+	discardDest = 11
 
 def checkControlInstance(InstanceName: str, monfield: list, noOfInstances: int):
 	# Check if you control the correct Monster
@@ -40,6 +41,10 @@ class effect:
 	## TODO Refactor parameters
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		raise NotImplementedError("Subclass must implement abstract method")
+
+class placeholder(effect):
+	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
+		pass
 
 class effectDestroy(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
@@ -618,6 +623,59 @@ class grantAll(effect):
 			monster.atkPoints = monster.atkPoints + self.extraParam
 			print("{} has gained {} Atk Points".format(monster.name, self.extraParam))
 
+class doubleAttackSpecific(effect):
+	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
+		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
+		print("--------------------------------------")
+		time.sleep(1.3)
+		# extraParam = namespace
+
+		i = 0
+		print("{}s Field:".format(effplayer.name))
+		max_len = effplayer.getMaxLength(effplayer.monfield)
+		tempListNum = []
+
+		for monster in effplayer.monfield:
+			if self.extraParam in monster.name:
+				if i >= 9:
+					print(settings.green + "[{}] {} | ATK: {} | Tributes: {} | Effect: ".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute) + settings.end + settings.darkcyan + "{}".format(monster.effectText) + settings.end)
+				else:
+					print(settings.green + "[{}]  {} | ATK: {} | Tributes: {} | Effect: ".format((i + 1), monster.name.ljust(max_len, ), str(monster.atkPoints).ljust(4, ), monster.tribute) + settings.end + settings.darkcyan + "{}".format(monster.effectText) + settings.end)
+				tempListNum.append(i)
+			else:
+				pass
+
+			i = i + 1
+
+		if tempListNum:
+			while True:
+				# Get user Selection
+				selection = input("~~~Select the card to Buff (Type the Number):")
+
+				try:
+					selection = int(selection) - 1
+				except ValueError:
+					pass
+
+				# Add the card to the hand
+				if selection in tempListNum:
+
+					buffedCard = effplayer.monfield[selection]
+
+					buffedCard.atkPoints = buffedCard.atkPoints * 2
+
+					print("{}'s attack has been doubled".format(buffedCard.name))
+					print("{}'s new Attack: {}".format(buffedCard.name, buffedCard.atkPoints))
+
+					return
+				else:
+					print("--------------------------------------")
+					print("Invalid Selection")
+					print("--------------------------------------")
+		else:
+			print("No Cards to search")
+			return
+
 class grantAttackNamespace(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
@@ -683,6 +741,21 @@ class gyToHand(effect):
 
 		effplayer.graveyardToHand()
 
+class gyToHandSpecific(effect):
+	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
+		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
+		print("--------------------------------------")
+		time.sleep(1.3)
+
+		if self.nextraParam:
+			if self.dextraParam:
+				effplayer.graveyardToHandSpecific(self.extraParam, self.nextraParam, self.dextraParam)
+			else:
+				effplayer.graveyardToHandSpecific(self.extraParam, self.nextraParam)
+		else:
+			effplayer.graveyardToHandSpecific(self.extraParam)
+
+
 class tributeTOSSGy(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
@@ -697,26 +770,31 @@ class tributeTOSSGy(effect):
 			print("--------------------------------------")
 			selection = str(selection)
 
-			if selection == "Y" or selection == "y":
+			while True:
+				if selection == "Y" or selection == "y":
 
-				monster = effectMon
+					monster = effectMon
 
-				target = effplayer.checkArrayLoc(effplayer.monfield, monster)
-				del effplayer.monfield[target]
+					target = effplayer.checkArrayLoc(effplayer.monfield, monster)
+					del effplayer.monfield[target]
 
-				print("{} Has been tributed".format(effectMon.name))
+					print("{} Has been tributed".format(effectMon.name))
 
-				print("--------------------------------------")
+					print("--------------------------------------")
 
-				effplayer.ssGraveyard()
+					effplayer.ssGraveyard()
 
-				print("--------------------------------------")
+					print("--------------------------------------")
 
-				effplayer.sendToGrave(monster, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer)
+					effplayer.sendToGrave(monster, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer)
 
-				return
-			elif selection == "N" or selection == "n":
-				return
+					return
+				elif selection == "N" or selection == "n":
+					return
+				else:
+					print("--------------------------------------")
+					print("Invalid Selection")
+					continue
 
 class tributeTOSSDeckSpecific(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
@@ -849,7 +927,14 @@ class specialGraveyardSpecific(effect):
 		# extraParam = Namespace
 		# nextraParam = Namespace
 
-		effplayer.specialGraveyardSpecific(effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer, self.extraParam, self.nextraParam)
+		if self.nextraParam:
+			if self.dextraParam:
+				effplayer.specialGraveyardSpecific(effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer, self.extraParam, self.nextraParam, self.dextraParam)
+				return
+			effplayer.specialGraveyardSpecific(effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer, self.extraParam, self.nextraParam)
+			return
+		effplayer.specialGraveyardSpecific(effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer, self.extraParam)
+
 
 class specialDeckSpecificLessAttack(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
@@ -1275,7 +1360,6 @@ class ffSummon(effect):
 			return
 		pass
 
-
 class addEffect(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(
@@ -1284,7 +1368,6 @@ class addEffect(effect):
 		# extraParam = Effect Dictionary
 
 		effplayer.grantEffect(self.extraParam)
-
 
 class addEffectSpecific(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
@@ -1300,13 +1383,55 @@ class addEffectSpecific(effect):
 		else:
 			effplayer.grantEffectSpecific(self.extraParam, self.nextraParam)
 
+class jungleDefense(effect):
+	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
+
+
+
+		for monster in effplayer.hand:
+			if monster.checkResolve(effTrigger.discardDest):
+				result = monster.ResolveEffect(effTrigger.discardDest, effplayer, opponent, monster, effectMon, effgy, oppgy, turnPlayer)
+
+				if result:
+					return 1
+				else:
+					return 0
+		return 0
+
+class discardDefense(effect):
+	def resolve(self, effplayer, opponent, effectMon, defendingMon, effgy, oppgy, turnPlayer):
+		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
+		time.sleep(1.3)
+
+		print("--------------------------------------")
+		selection = input(settings.green + "{}".format(defendingMon.name) + settings.end + " Is about to be destroyed, discard " + settings.green + "{}".format(effectMon.name) + settings.end + " to negate destruction? (Y/N): ")
+
+		print("--------------------------------------")
+		selection = str(selection)
+
+		while True:
+			if selection == "Y" or selection == "y":
+
+				spot = effplayer.checkArrayLoc(effplayer.hand, effectMon)
+
+				effplayer.discardCard(spot)
+
+				print("\n" + settings.green + "{}".format(effectMon.name) + settings.end + " Has defended " + settings.green + "{}".format(effectMon.name) + settings.end)
+
+				return 1
+			elif selection == "N" or selection == "n":
+				return 0
+			else:
+				print("--------------------------------------")
+				print("Invalid Selection")
+				continue
 
 # Drawing Effects
 playerDraw1 = playerDraw("Draw One Card", 1)
 playerDraw2 = playerDraw("Draw Two Cards", 2)
 controlStormriderDraw2 = controlDiscardDraw("If you control a Storm Rider; Discard 1 card; Draw 2 cards", "Storm Rider", 2)
 DifferenceDraw = drawForDifference("Draw one card per 1000 point difference between both players lifepoints)", 0)
-tribDisc1Draw2 = tributeToDrawDisc("You can tribute this card; Draw 2 cards, then discard one card", 2)
+tribDisc1Draw2 = tributeToDrawDisc("You can tribute this card; Discard 1 card, then Draw 2 cards", 2)
 
 # Disruptive Effects
 Destroy = effectDestroy("Destroy Your Opponents Monster", 0)
@@ -1314,6 +1439,7 @@ destroyEither = effectDestroyBoth("Destroy a monster on either player's field", 
 destroyInHand = destroyHand("Destroy a monster in your hand", 0)
 bounceMonster = fieldToHand("Bounce an Opponents Monster", 0)
 controlStormriderDestroy = controlDestroy("If you control a 'Storm Rider' card, destroy up to 2 monsters your opponent controls", "Storm Rider", 2)
+controlKarliahDestroy = controlDestroy("If you control a 'Karliah' card, destroy 1 monsters your opponent controls", "Karliah", 1)
 StealMonster = stealMonster("Steal an Opponents Monster", 0)
 StormriderStealMonster = controlStealMonster("If you control 2 'Storm Rider' card; Switch player control of one opponents monster", "Storm Rider")
 tributeStormtoSteal = tributetoSteal("You can tribute any number of 'Storm Rider' or 'Storm Bird' Cards; Switch player control of the identical amount of opponents monsters", "Storm Rider", "Storm Bird")
@@ -1342,6 +1468,7 @@ oppDisc2 = effectOpponentDiscard("Opponent Discards Two Cards", 2)
 matchAttack = effectCrash("Copies Opponents Monsters Attack", 0)
 battleImmune = noBattleDestruction("Is Not Destroyed by that battle", 0)
 effectImmune = noEffectDestruction("Is Not Destroyed by that effect", 0)
+JungleDefense = jungleDefense("A Jungle Companion in the hand may help Karliah!")
 
 # Card Searching Effects
 effectSearch = searchDeck("Add a card from Deck to Hand", 0)
@@ -1357,6 +1484,8 @@ effectDarkMagicianSearch = searchSpecificDeck("Add a 'Dark Magician' card from y
 effectGirlSearch = searchSpecificDeck("Add a 'Magician Girl' from your Deck to your hand", "Magician Girl")
 effectStormSearch = searchSpecificDeckNamespace("Add a 'Storm Rider' or 'Storm Bird' card from your deck to your hand", "Storm Rider", "Storm Bird")
 effectFireSearch = searchSpecificDeckNamespace("Add a 'Fire Fist' or 'Fire King' card from your deck to your hand", "Fire Fist", "Fire King")
+effectJungleSearch = searchSpecificDeck("Add a 'Jungle Companion' card from your deck to your hand", "Jungle Companion")
+effectKarliahSearch = searchSpecificDeck("Add a 'Karliah' card from your deck to your hand", "Karliah")
 
 # Attack Manipulation Effects
 gain500 = gainAttack("Gains 500 attack before battle. Loses attack upon destruction", 500)
@@ -1375,6 +1504,7 @@ tribtoGrantAtk = tributetoGrantAttack("You can tribute this card: Grant another 
 grantStormriderAttack = grantAttackNamespace("For each 'Storm Rider' card on the field, grant a Card 300 ATK x No. of 'Storm Rider' Card on the field", "Storm Rider", 300)
 atk100GrantAll = grantAll("Grant all monsters on field 100 Atk", 100)
 atk500GrantAll = grantAll("Grant all monsters on field 500 Atk", 500)
+karliahDoubleAttack = doubleAttackSpecific("Grant a 'Karliah' monster on the field double its current attack", "Karliah")
 
 # Summon Manipulation Effects
 doubleSummon = extraNormalSummon("Gain an extra normal summon", 0)
@@ -1396,6 +1526,8 @@ specialGishkiDeck = specialDeckSpecific("Special Summon a 'Gishki' monster from 
 specialAgentDeck = specialDeckSpecific("Special Summon a 'Agent' monster from your deck", "Agent")
 specialHeraldDeck = specialDeckSpecific("Special Summon a 'Herald' monster from your deck", "Herald")
 specialFormationDeck = specialDeckSpecific("Special Summon a 'Fire Formation' monster from your deck", "Fire Formation")
+specialJungleDeck = specialDeckSpecific("Special Summon a 'Jungle Companion' monster from your deck", "Jungle Companion")
+specialKarliahDeck = specialDeckSpecific("Special Summon a 'Karliah' monster from your deck", "Karliah")
 specialFistDeckLess2000 = specialDeckSpecificLessAttack("Special Summon a 'Fire Fist' monster from your deck (< 2000 ATK)", "Fire Fist", 2000)
 specialGirlLess2000 = specialDeckSpecificLessAttack("Special Summon a 'Magician Girl' monster from your deck (< 2000 ATK)", "Magician Girl", 2000)
 tribToSpecialStormBird = tributeTOSSDeckSpecific("You can tribute this card; Special summon a 'Storm Bird' card from your deck", "Storm Bird")
@@ -1403,20 +1535,28 @@ shuffleToSSGraveyard = shuffleToSSGraveyard("Shuffle 1 card from your hand into 
 specialFireKingGrave = specialGraveyardSpecific("Special Summon a Fire King or Fire Fist monster from your graveyard", "Fire Fist", "Fire King")
 specialEffDestruction = specialMeHand("Special summon this card from your hand", 0)
 FFSummon = ffSummon("If you have 3 different 'Fire Formation' cards in your graveyard, Special Summon 3 monsters from your graveyard (Summon Effects Negated)", "Fire Fist", "Fire King", 3)
+specialJungleGrave = specialGraveyardSpecific("Special Summon a 'Jungle Companion' monster from your Graveyard", "Jungle Companion")
 
 # Recursion Effects
 gyToHand = gyToHand("Return a card from your Graveyard to your Hand", 0)
 Trib_SS_GY = tributeTOSSGy("you can Tribute this card: Special Summon a monster from the Graveyard", 0)
 Mill = mill("Send one card from your deck to the graveyard", 0)
+gyToHandKarliah = gyToHandSpecific("Return a 'Karliah' card from your graveyard to your hand", "Karliah")
 
 # Special Effects
 PhoenixResurrection = phoenixResurrection("Next Standby Phase; Special Summon this card and destroy all monsters on the field", 0)
 
 # Effect Manipulation Effects
-GrantFloat1 = addEffect("Grant a monster on the field the effect: 'When sent to Graveyard; Draw 1 Card'",
-                        {"effect"       : playerDraw1,
+GrantFloat1 = addEffect("Grant a monster on the field the effect: 'When sent to Graveyard; Draw 1 Card'", {"effect"       : playerDraw1,
                          "effectTrigger": effTrigger.graveyard})
-GrantFloat1Cyberse = addEffectSpecific(
-	"Grant a 'Cyberse' monster on the field the effect: 'When sent to Graveyard; Draw 1 Card'", {"effect"       : playerDraw1,
-	                                                                                             "effectTrigger": effTrigger.graveyard},
-	"Cyberse")
+GrantDisc1Cyberse = addEffectSpecific("Grant a 'Cyberse' monster on the field the effect: 'When sent to Graveyard; Opponent Discards 1 card'", {"effect": oppDisc1,
+	                                                                                             "effectTrigger": effTrigger.graveyard}, "Cyberse")
+GrantBattleDestructionKarliah = addEffectSpecific("Grant a 'Karliah' monster on your field the effect: '(OPT) Cannot be Destroyed by Battle'", {"effect": battleImmune,
+                                                                                                                                   "effectTrigger": effTrigger.destructionBat}, "Karliah")
+GrantSelfFloat = addEffectSpecific("Grant a 'Karliah' monster on your field the effect: 'Return A Copy of this card from your graveyard to your hand'", {"effect": gyToHandKarliah,
+                                                                                                                                                         "effectTrigger": effTrigger.graveyard}, "Karliah")
+GrantEffectImmuneKarliah = addEffectSpecific("Grant a 'Karliah' monster on your field the effect: '(OPT) Cannot be Destroyed by Card Effects'", {"effect": effectImmune, "effectTrigger": effTrigger.destructionEff}, "Karliah")
+jungleDiscDefense = discardDefense("You can discard this card to prevent Karliah from being destroyed")
+
+# Other Effects
+cannotBeAttacked = placeholder("This card cannot be Targetted for attacks. Your opponent can attack directly if this is the only monster you control")

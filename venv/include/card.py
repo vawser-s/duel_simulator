@@ -1,7 +1,7 @@
-from effect import *
+import enum
 import settings
 
-def effectDescBuilder(trigger: Enum, Desc: str):
+def effectDescBuilder(trigger: enum.Enum, Desc: str):
 
 	if trigger.name == "n_a":
 		effectDescription = Desc
@@ -24,6 +24,8 @@ def effectDescBuilder(trigger: Enum, Desc: str):
 		effectDescription = "When one of your monsters is destroyed by a card effect: " + Desc
 	elif trigger.name == "destroyBattle":
 		effectDescription = "When this card destroys a monster by battle: " + Desc
+	elif trigger.name == "discardDest":
+		effectDescription = "While in your hand: " + Desc
 	else:
 		print(trigger)
 		raise TypeError
@@ -31,7 +33,7 @@ def effectDescBuilder(trigger: Enum, Desc: str):
 	return "(OPT) " + effectDescription
 
 class card:
-	def __init__(self, name: object, atkPoints: object, tribute: object, cardEffectList: list, attacked: int = 0):
+	def __init__(self, name: object, atkPoints: object, tribute: object, cardEffectList: list, canBeAttacked = True, attacked: int = 0):
 		# Parameters
 		self.name = name
 		self.atkPoints = atkPoints
@@ -42,6 +44,7 @@ class card:
 		self.attacked = attacked
 		self.tribute = tribute
 		self.origAtk = atkPoints
+		self.canBeAttacked = canBeAttacked
 
 	def ResolveEffect(self, trigger, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 
@@ -53,7 +56,7 @@ class card:
 				if Effect.get("effectTrigger") == trigger:
 					pass
 					if settings.returnEffectChecker(self, Effect):
-						settings.addEffectChecker(effectMon, Effect)
+						settings.addEffectChecker(self, Effect)
 						print("--------------------------------------")
 						result = Effect.get("effect").resolve(effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer)
 						changed = True
@@ -63,7 +66,6 @@ class card:
 				else:
 					pass
 				i = i + 1
-		## TODO: Fix Dependency on Battle effects (that they do not conflict)
 		if changed is None:
 			return None
 		return result
