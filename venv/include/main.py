@@ -406,9 +406,6 @@ def card_player_deck_setup():
 	GrantBattleImmune = {"effect": effect.GrantBattleDestructionKarliah,
 	                     "effectTrigger": effTrigger.summon,
 	                "opt": True}
-	EffectJungleSearch = {"effect": effect.effectJungleSearch,
-	                     "effectTrigger": effTrigger.summon,
-	                "opt": True}
 	EffectKarliahSearch = {"effect": effect.effectKarliahSearch,
 	                       "effectTrigger": effTrigger.graveyard,
 	                "opt": True}
@@ -444,8 +441,10 @@ def card_player_deck_setup():
 	CannotBeAttacked = {"effect": effect.cannotBeAttacked,
 	                    "effectTrigger": effTrigger.n_a,
 	                "opt": False}
+	EffectEndJungleSearch = {"effect": effect.effectEndJungleSearch,
+	                         "effectTrigger": effTrigger.summon}
 
-	jungleTravellerKarliah = card("Jungle Traveller: Karliah", 1300, 0, [EffectJungleSearch, DoubleSummon, KarliahJungleDefenseBat, KarliahJungleDefenseEff])
+	jungleTravellerKarliah = card("Jungle Traveller: Karliah", 1300, 0, [EffectEndJungleSearch, DoubleSummon, KarliahJungleDefenseBat, KarliahJungleDefenseEff])
 	mimicMeercat = card("Jungle Companion: Mimic Meercat!", 0, 0, [grantSelfFloat, MatchAttack])
 	duckDucker = card("Jungle Companion: Duck Ducker!", 0, 0, [GrantBattleImmune, CannotBeAttacked], False)
 	wokeWombat = card("Jungle Companion: Woke Wombat!?", 1200, 0, [SpecialJungleGrave, EffectKarliahSearch])
@@ -884,6 +883,7 @@ def card_player_deck_setup():
 	# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
 	# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
 	# _player.hand.append()
+	_player.hand.append(jungleTravellerKarliah)
 	# _player.monfield.append()
 	# _player.gy.append()
 	# _foe.hand.append()
@@ -1097,9 +1097,11 @@ def mainMenu():
 				while True:
 					if turnOrder == 2:
 						exitProg = turnMenu(_foe, _player)
+						settings.resolveEndEffects(_foe)
 						turnOrder = 1
 					elif turnOrder == 1:
 						exitProg = turnMenu(_player, _foe)
+						settings.resolveEndEffects(_player)
 						turnOrder = 2
 					else:
 						print("Duel Machine Broke: Turn Error")
@@ -1198,7 +1200,7 @@ def turnMenu(currentPlayer: duelist, passivePlayer: duelist):
 	currentPlayer.checkField()
 
 	# STANDBY PHASE
-	settings.resolveStandbyEffects(currentPlayer, passivePlayer)
+	settings.resolveStandbyEffects(currentPlayer, passivePlayer, currentPlayer)
 
 	# MAIN PHASE
 	while True:
@@ -1450,7 +1452,6 @@ def battleMenu(turnPlayer: duelist, passivePlayer: duelist):
 				except (ValueError, IndexError, TypeError):
 					print("--------------------------------------")
 					print("Invalid Selection")
-					print("Group")
 
 			# retrieve the user attack target
 			if passivePlayer.monfield and passivePlayer.checkFieldDef():

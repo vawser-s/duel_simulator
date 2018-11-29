@@ -10,6 +10,9 @@ effectList = []
 global standbyEffectList
 standbyEffectList = []
 
+global endEffectList
+endEffectList = []
+
 bold = "\033[1m"
 yellow = '\033[93m'
 end = "\033[0m"
@@ -57,10 +60,10 @@ def addStandbyEffectChecker(monster, effect):
 	standbyEffectList.append([monster, effect])
 
 
-def resolveStandbyEffects(effplayer, opponent):
+def resolveStandbyEffects(effplayer, opponent, turnPlayer):
 	if standbyEffectList:
 		for entry in standbyEffectList:
-			entry[1].StandbyResolution(1, effplayer, opponent, entry[0], None, None, None, None)
+			entry[1].StandbyResolution(1, effplayer, opponent, entry[0], None, None, None, turnPlayer)
 
 		resetStandbyEffectChecker()
 	else:
@@ -70,4 +73,21 @@ def resolveStandbyEffects(effplayer, opponent):
 def resetStandbyEffectChecker():
 	global standbyEffectList
 	standbyEffectList = []
+
+
+def addEndEffectChecker(monster, effect):
+	endEffectList.append([monster, effect])
+
+def resolveEndEffects(effplayer):
+	if endEffectList:
+		for entry in endEffectList:
+			entry[1].EndResolution(1, effplayer, entry[0])
+
+		resetEndEffectChecker()
+	else:
+		return
+
+def resetEndEffectChecker():
+	global endEffectList
+	endEffectList = []
 

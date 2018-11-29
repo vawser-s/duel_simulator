@@ -1039,8 +1039,9 @@ class duelist:
 			try:
 				currentCard = self.hand[i]
 			except IndexError:
-				if self.deck.__len__() == 0:
+				if self.hand.__len__() == 0:
 					print("Hand is Empty")
+					return
 				else:
 					raise IndexError
 				break
