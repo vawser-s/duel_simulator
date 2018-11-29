@@ -799,6 +799,7 @@ class tributeTOSSGy(effect):
 class tributeTOSSDeckSpecific(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
+		print("--------------------------------------")
 		time.sleep(1.3)
 		
 		# extraParam = Namespace to summon from
@@ -1027,6 +1028,7 @@ class zeroAttack(effect):
 class tributetoGrantAttack(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
+		print("--------------------------------------")
 		time.sleep(1.3)
 		
 
@@ -1059,6 +1061,7 @@ class tributetoGrantAttack(effect):
 class gainLPforHand(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
+		print("--------------------------------------")
 		time.sleep(1.3)
 		
 		# extraParam = Life Point Gain per Card in Hand
@@ -1098,6 +1101,7 @@ class stealMonster(effect):
 class controlStealMonster(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
+		print("--------------------------------------")
 		time.sleep(1.3)
 		
 		# self.extraParam = Namespace to check for
@@ -1114,6 +1118,7 @@ class tributetoSteal(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("--------------------------------------")
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
+		print("--------------------------------------")
 		time.sleep(1.3)
 		
 		# self.extraParam = Namespace to check for
@@ -1181,6 +1186,7 @@ class shuffleToSSGraveyard(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("--------------------------------------")
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
+		print("--------------------------------------")
 		time.sleep(1.3)
 		
 		# extraParam = No. of Cards to shuffle back
@@ -1193,6 +1199,7 @@ class drawForDifference(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("--------------------------------------")
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
+		print("--------------------------------------")
 		time.sleep(1.3)
 		
 
@@ -1214,6 +1221,7 @@ class drawForDifference(effect):
 class tributeToDrawDisc(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
+		print("--------------------------------------")
 		time.sleep(1.3)
 		# extraParam = No of cards to draw
 
@@ -1310,6 +1318,7 @@ class phoenixResurrection(effect):
 
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
+		print("--------------------------------------")
 		time.sleep(1.3)
 
 		settings.addStandbyEffectChecker(effectMon, self)
@@ -1318,6 +1327,7 @@ class phoenixResurrection(effect):
 class ffSummon(effect):
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
+		print("--------------------------------------")
 		time.sleep(1.3)
 		# extraParam = namespace
 		# nextraParam = namespace
@@ -1398,6 +1408,7 @@ class jungleDefense(effect):
 class discardDefense(effect):
 	def resolve(self, effplayer, opponent, effectMon, defendingMon, effgy, oppgy, turnPlayer):
 		print("{}'s Effect Activates!".format(effectMon.name) + settings.darkcyan + "{}".format(effectMon.effectText) + settings.end)
+		print("--------------------------------------")
 		time.sleep(1.3)
 
 		print("--------------------------------------")
@@ -1545,14 +1556,19 @@ PhoenixResurrection = phoenixResurrection("Next Standby Phase; Special Summon th
 
 # Effect Manipulation Effects
 GrantFloat1 = addEffect("Grant a monster on the field the effect: 'When sent to Graveyard; Draw 1 Card'", {"effect"       : playerDraw1,
-                         "effectTrigger": effTrigger.graveyard})
+                         "effectTrigger": effTrigger.graveyard,
+	                "opt": True})
 GrantDisc1Cyberse = addEffectSpecific("Grant a 'Cyberse' monster on the field the effect: 'When sent to Graveyard; Opponent Discards 1 card'", {"effect": oppDisc1,
-	                                                                                             "effectTrigger": effTrigger.graveyard}, "Cyberse")
+	                                                                                             "effectTrigger": effTrigger.graveyard,
+	                "opt": True}, "Cyberse")
 GrantBattleDestructionKarliah = addEffectSpecific("Grant a 'Karliah' monster on your field the effect: '(OPT) Cannot be Destroyed by Battle'", {"effect": battleImmune,
-                                                                                                                                   "effectTrigger": effTrigger.destructionBat}, "(OPT) Cannot be Destroyed by Battle", "Karliah")
+                                                                                                                                   "effectTrigger": effTrigger.destructionBat,
+	                "opt": True}, "(OPT) Cannot be Destroyed by Battle", "Karliah")
 GrantSelfFloat = addEffectSpecific("Grant a 'Karliah' monster on your field the effect: 'Return A Copy of this card from your graveyard to your hand'", {"effect": gyToHandKarliah,
-                                                                                                                                                         "effectTrigger": effTrigger.graveyard}, "Return A Copy of this card from your graveyard to your hand", "Karliah")
-GrantEffectImmuneKarliah = addEffectSpecific("Grant a 'Karliah' monster on your field the effect: '(OPT) Cannot be Destroyed by Card Effects'", {"effect": effectImmune, "effectTrigger": effTrigger.destructionEff}, "(OPT) Cannot be Destroyed by Card Effects" "Karliah")
+                                                                                                                                                         "effectTrigger": effTrigger.graveyard,
+	                "opt": True}, "Return A Copy of this card from your graveyard to your hand", "Karliah")
+GrantEffectImmuneKarliah = addEffectSpecific("Grant a 'Karliah' monster on your field the effect: '(OPT) Cannot be Destroyed by Card Effects'", {"effect": effectImmune, "effectTrigger": effTrigger.destructionEff,
+	                "opt": True}, "(OPT) Cannot be Destroyed by Card Effects" "Karliah")
 jungleDiscDefense = discardDefense("You can discard this card to prevent Karliah from being destroyed")
 
 # Other Effects

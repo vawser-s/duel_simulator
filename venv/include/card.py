@@ -1,7 +1,7 @@
 import enum
 import settings
 
-def effectDescBuilder(trigger: enum.Enum, Desc: str):
+def effectDescBuilder(trigger: enum.Enum, Desc: str, opt):
 
 	if trigger.name == "n_a":
 		effectDescription = Desc
@@ -30,7 +30,10 @@ def effectDescBuilder(trigger: enum.Enum, Desc: str):
 		print(trigger)
 		raise TypeError
 
-	return "(OPT) " + effectDescription
+	if opt:
+		return "(OPT) " + effectDescription
+	else:
+		return effectDescription.capitalize()
 
 class card:
 	def __init__(self, name: object, atkPoints: object, tribute: object, cardEffectList: list, canBeAttacked = True, attacked: int = 0):
@@ -56,8 +59,10 @@ class card:
 				if Effect.get("effectTrigger") == trigger:
 					pass
 					if settings.returnEffectChecker(self, Effect):
-						settings.addEffectChecker(self, Effect)
-						print("--------------------------------------")
+
+						if Effect.get("opt"):
+							settings.addEffectChecker(self, Effect)
+
 						result = Effect.get("effect").resolve(effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer)
 						changed = True
 					else:
@@ -73,7 +78,7 @@ class card:
 	def returnEffectList(self):
 		text = ""
 		for Effect in self.effectList:
-			text = text + "\n   " + effectDescBuilder(Effect.get("effectTrigger"), Effect.get("effect").desc) + ". "
+			text = text + "\n   " + effectDescBuilder(Effect.get("effectTrigger"), Effect.get("effect").desc, Effect.get("opt")) + ". "
 
 		return text
 

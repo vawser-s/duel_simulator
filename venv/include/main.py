@@ -12,63 +12,48 @@ from settings import *
 # Method to setup the card database and runs player_deck_setup()
 def card_player_deck_setup():
 
-	# The card template is as follows:
-	# card(Name, Atk Points, Effect Name, Effect Trigger Enum, Effect Derscription)
-
 	DoubleSummon = {"effect"       : effect.doubleSummon,
-	                "effectTrigger": effTrigger.summon}
+	                "effectTrigger": effTrigger.summon,
+	                "opt": True}
 	SpecialCodeDeck = {"effect"       : effect.specialCodeDeck,
-	                       "effectTrigger": effTrigger.summon}
+	                       "effectTrigger": effTrigger.summon,
+	                "opt": True}
 	SpecialCodeHand = {"effect"       : effect.specialCodeHand,
-	                   "effectTrigger": effTrigger.graveyard}
+	                   "effectTrigger": effTrigger.graveyard,
+	                "opt": True}
 	PlayerDraw1Grav = {"effect"       : effect.playerDraw1,
-	                   "effectTrigger": effTrigger.graveyard}
+	                   "effectTrigger": effTrigger.graveyard,
+	                "opt": True}
 	EffectCyberseSearch = {"effect"       : effect.effectCyberseSearch,
-	                    "effectTrigger": effTrigger.summon}
+	                    "effectTrigger": effTrigger.summon,
+	                "opt": True}
 	SpecialCyberseHand = {"effect"       : effect.specialCyberseHand,
-	                      "effectTrigger": effTrigger.summon}
+	                      "effectTrigger": effTrigger.summon,
+	                "opt": True}
 	SpecialCyberseHandDest = {"effect"       : effect.specialCyberseHand,
-	                      "effectTrigger": effTrigger.destructionBat}
+	                      "effectTrigger": effTrigger.destructionBat,
+	                "opt": True}
 	DestroySum = {"effect"       : effect.Destroy,
-	              "effectTrigger": effTrigger.summon}
+	              "effectTrigger": effTrigger.summon,
+	                "opt": True}
 	OppDisc1 = {"effect"       : effect.oppDisc1,
-	            "effectTrigger": effTrigger.summon}
+	            "effectTrigger": effTrigger.summon,
+	                "opt": True}
 	OppDisc2 = {"effect"       : effect.oppDisc2,
-	            "effectTrigger": effTrigger.battle}
+	            "effectTrigger": effTrigger.battle,
+	                "opt": True}
 	SelfDisc1 = {"effect"       : effect.playerDisc1,
-	             "effectTrigger": effTrigger.graveyard}
+	             "effectTrigger": effTrigger.graveyard,
+	                "opt": True}
 	EffectSearch = {"effect"       : effect.effectSearch,
-	                "effectTrigger": effTrigger.summon}
-	# SpecialFromHand = {"effect"       : effect.specialfromHand,
-	#                    "effectTrigger": effTrigger.battle}
+	                "effectTrigger": effTrigger.summon,
+	                "opt": True}
 	MonsterBounce = {"effect"       : effect.bounceMonster,
-	                 "effectTrigger": effTrigger.summon}
-	# GrantFloat1Sum = {"effect"       : effect.GrantFloat1,
-	#                   "effectTrigger": effTrigger.summon}
+	                 "effectTrigger": effTrigger.summon,
+	                "opt": True}
 	GrantDisc1Cyberse = {"effect"       : effect.GrantDisc1Cyberse,
-	                         "effectTrigger": effTrigger.summon}
-
-	# Cyber Deck
-	# global microCoder
-	# global microCoder2
-	# global codeGenerator
-	# global codeGenerator2
-	# global codeRadiator
-	# global codeRadiator2
-	# global ladyDebug
-	# global ladyDebug2
-	global cyberseGadget
-	# global cyberseGadget2
-	# global cyberseAccelerator
-	# global cyberseAccelerator2
-	# global cyberseWhiteHat
-	# global cyberseWhiteHat2
-	# global excodeTalker
-	# global excodeTalker2
-	# global dualAssembwurm
-	# global dualAssembwurm2
-	# global cyberseDriver
-	# global cyberseDriver2
+	                         "effectTrigger": effTrigger.summon,
+	                "opt": True}
 
 	microCoder = card("Micro Coder", 300, 0, [SpecialCodeDeck, PlayerDraw1Grav])
 	codeGenerator = card("Code Generator", 1300, 0, [EffectCyberseSearch, SpecialCodeHand])
@@ -92,47 +77,37 @@ def card_player_deck_setup():
 	cyberseAssembwurm2 = copy.deepcopy(cyberseAssembwurm)
 
 	EffectVampSearch = {"effect"       : effect.effectVampSearch,
-	                "effectTrigger": effTrigger.graveyard}
+	                "effectTrigger": effTrigger.graveyard,
+	                "opt": True}
 	DiscSpecVampHand = {"effect"       : effect.discSpecVampHand,
-	                "effectTrigger": effTrigger.summon}
+	                "effectTrigger": effTrigger.summon,
+	                "opt": True}
 	BattleImmune = {"effect"       : effect.battleImmune,
-	                "effectTrigger": effTrigger.destructionBat}
+	                "effectTrigger": effTrigger.destructionBat,
+	                "opt": True}
 	SiphonLifeAndMill800 = {"effect"       : effect.siphonLifeAndMill800,
-	                "effectTrigger": effTrigger.summon}
+	                "effectTrigger": effTrigger.summon,
+	                "opt": True}
 	SiphonLifeAndMill1500 = {"effect"       : effect.siphonLifeAndMill1500,
-	                "effectTrigger": effTrigger.battle}
+	                "effectTrigger": effTrigger.battle,
+	                "opt": True}
 	ShuffleToSSGraveyard = {"effect": effect.shuffleToSSGraveyard,
-	                        "effectTrigger": effTrigger.graveyard}
+	                        "effectTrigger": effTrigger.graveyard,
+	                "opt": True}
 	GYToHand = {"effect"       : effect.gyToHand,
-	                    "effectTrigger": effTrigger.summon}
+	                    "effectTrigger": effTrigger.summon,
+	                "opt": True}
 	Siphon800 = {"effect"       : effect.siphonLife800,
-	            "effectTrigger": effTrigger.summon}
+	            "effectTrigger": effTrigger.summon,
+	                "opt": True}
 	Grant800 = {"effect"       : effect.grant800,
-	          "effectTrigger": effTrigger.summon}
+	          "effectTrigger": effTrigger.summon,
+	                "opt": True}
 	Millie = {"effect"       : effect.Mill,
-	            "effectTrigger": effTrigger.summon}
+	            "effectTrigger": effTrigger.summon,
+	                "opt": True}
 
 	# # Vampire Deck
-	# global vampireFamiliar
-	# global vampireFamiliar2
-	# global vampireSucker
-	# global vampireSucker2
-	# global vampireFraulein
-	# global vampireFraulein2
-	# global vampireGrace
-	# global vampireGrace2
-	# global vampireGenesis
-	# global vampireGenesis2
-	# global mezuki
-	# global mezuki2
-	# global unizombie
-	# global unizombie2
-	# global shiranuiSolitare
-	# global shiranuiSolitare2
-	# global armageddonKnight
-	# global armageddonKnight2
-	# global zombieMaster
-	# global zombieMaster2
 
 	vampireFamiliar = card("Vampire Familiar", 300, 0, [EffectVampSearch, Siphon800])
 	vampireFamiliar2 = copy.deepcopy(vampireFamiliar)
@@ -143,7 +118,6 @@ def card_player_deck_setup():
 	vampireGrace = card("Vampire Grace", 2200, 1, [SiphonLifeAndMill800])
 	vampireGrace2 = copy.deepcopy(vampireGrace)
 	vampireGenesis = card("Vampire Genesis", 2800, 1, [SiphonLifeAndMill1500])
-	# vampireGenesis2 = copy.deepcopy(vampireGenesis)
 	mezuki = card("Mezuki", 1600, 0, [ShuffleToSSGraveyard])
 	mezuki2 = copy.deepcopy(mezuki)
 	unizombie = card("Uni-Zombie", 1500, 0, [GYToHand])
@@ -156,45 +130,34 @@ def card_player_deck_setup():
 	zombieMaster2 = copy.deepcopy(zombieMaster)
 
 	Battle500 = {"effect"       : effect.gain500,
-	                    "effectTrigger": effTrigger.battle}
+	                    "effectTrigger": effTrigger.battle,
+	                "opt": True}
 	PlayerDraw2Battle = {"effect"       : effect.playerDraw2,
-	                    "effectTrigger": effTrigger.battle}
+	                    "effectTrigger": effTrigger.battle,
+	                "opt": True}
 	EvigishkiSearch = {"effect": effect.effectEvigishkiSearch,
-	                "effectTrigger": effTrigger.summon}
+	                "effectTrigger": effTrigger.summon,
+	                "opt": True}
 	MatchAttack = {"effect": effect.matchAttack,
-	               "effectTrigger": effTrigger.battle}
+	               "effectTrigger": effTrigger.battle,
+	                "opt": True}
 	SpecialGishkiDeck = {"effect"       : effect.specialGishkiDeck,
-	                    "effectTrigger": effTrigger.battle}
+	                    "effectTrigger": effTrigger.battle,
+	                "opt": True}
 	SearchGishkiAquamirror = {"effect": effect.effectGishkiMirrorSearch,
-	                          "effectTrigger": effTrigger.summon}
+	                          "effectTrigger": effTrigger.summon,
+	                "opt": True}
 	Battle1000 = {"effect"       : effect.gain1000,
-	             "effectTrigger": effTrigger.battle}
+	             "effectTrigger": effTrigger.battle,
+	                "opt": True}
 	EvigishkiGain400 = {"effect": effect.evigishkiGain400,
-	                    "effectTrigger": effTrigger.summon}
+	                    "effectTrigger": effTrigger.summon,
+	                "opt": True}
 	DestroyBat = {"effect": effect.Destroy,
-	              "effectTrigger": effTrigger.battle}
+	              "effectTrigger": effTrigger.battle,
+	                "opt": True}
 
 	# # Gishki Deck
-	# global gishkiBeast
-	# global gishkiBeast2
-	# global gishkiAbyss
-	# global gishkiAbyss2
-	# global gishkiAquamirror
-	# global gishkiAquamirror2
-	# global gishkiShadow
-	# global gishkiShadow2
-	# global visionGishki
-	# global visionGishki2
-	# global gishkiAriel
-	# global gishkiAriel2
-	# global evigishkiLevianima
-	# global evigishkiLevianima2
-	# global evigishkiSoulOgre
-	# global evigishkiSoulOgre2
-	# global evigishkiGustKraken
-	# global evigishkiGustKraken2
-	# global evigishkiPsychlone
-	# global evigishkiPsychlone2
 
 	gishkiBeast = card("Gishki Beast", 1500, 0, [Battle500])
 	gishkiBeast2 = copy.deepcopy(gishkiBeast)
@@ -211,7 +174,6 @@ def card_player_deck_setup():
 	evigishkiLevianima = card("Evigishki Levianima", 2200, 1, [SearchGishkiAquamirror, Battle500])
 	evigishkiLevianima2 = copy.deepcopy(evigishkiLevianima)
 	evigishkiSoulOgre = card("Evigishki Soul Ogre", 2800, 1, [Battle1000])
-	# evigishkiSoulOgre2 = copy.deepcopy(evigishkiSoulOgre)
 	evigishkiGustKraken = card("Evigishki Gustkraken", 2500, 1, [EvigishkiGain400])
 	evigishkiGustKraken2 = copy.deepcopy(evigishkiGustKraken)
 	evigishkiPsychlone = card("Evigishki Psychlone", 2000, 1, [DestroyBat])
@@ -239,26 +201,6 @@ def card_player_deck_setup():
 	               "effectTrigger": effTrigger.summon}
 
 	# Herald Deck
-	# global orangeHerald
-	# global orangeHerald2
-	# global purpleHerald
-	# global purpleHerald2
-	# global arcHerald
-	# global arcHerald2
-	# global dawnHerald
-	# global dawnHerald2
-	# global agentEarth
-	# global agentEarth2
-	# global agentVenus
-	# global agentVenus2
-	# global agentMars
-	# global agentMars2
-	# global agentSaturn
-	# global agentSaturn2
-	# global heraldPerfection
-	# global heraldPerfection2
-	# global masterHyperion
-	# global masterHyperion2
 
 	orangeHerald = card("Herald of Orange Light", 1000, 0, [SpecialHeraldDeck])
 	orangeHerald2 = copy.deepcopy(orangeHerald)
@@ -277,52 +219,40 @@ def card_player_deck_setup():
 	agentSaturn = card("Agent of Judgment: Saturn", 2400, 1, [Gain1000forHand])
 	agentSaturn2 = copy.deepcopy(agentSaturn)
 	heraldPerfection = card("Herald of Perfection", 2800, 1, [GainDifference])
-	# heraldPerfection2 = copy.deepcopy(heraldPerfection)
 	masterHyperion = card("Master Hyperion", 2800, 1, [SpecialHand])
-	# masterHyperion2 = copy.deepcopy(masterHyperion)
 
 	EffectImmune = {"effect": effect.effectImmune,
-	                "effectTrigger": effTrigger.destructionEff}
+	                "effectTrigger": effTrigger.destructionEff,
+	                "opt": True}
 	DarkMagicianGain400 = {"effect": effect.darkMagicianGain400,
-	                "effectTrigger": effTrigger.summon}
+	                "effectTrigger": effTrigger.summon,
+	                "opt": True}
 	SpecialDarkMagicianHand = {"effect": effect.specialDarkMagicianHand,
-	                "effectTrigger": effTrigger.summon}
+	                "effectTrigger": effTrigger.summon,
+	                "opt": True}
 	SpecialMagicianGirlHand = {"effect": effect.specialMagicianGirlHand,
-	                "effectTrigger": effTrigger.summon}
+	                "effectTrigger": effTrigger.summon,
+	                "opt": True}
 	HalfAtk = {"effect": effect.halfAtk,
-	                "effectTrigger": effTrigger.defend}
+	                "effectTrigger": effTrigger.defend,
+	                "opt": True}
 	HalfAtkMsg = {"effect": effect.halfAtkMsg,
-	                "effectTrigger": effTrigger.defend}
+	                "effectTrigger": effTrigger.defend,
+	                "opt": True}
 	PlayerDraw2Defend = {"effect": effect.playerDraw2,
-	                "effectTrigger": effTrigger.defend}
+	                "effectTrigger": effTrigger.defend,
+	                "opt": True}
 	SpecialGirlLess2000 = {"effect": effect.specialGirlLess2000,
-	                "effectTrigger": effTrigger.summon}
+	                "effectTrigger": effTrigger.summon,
+	                "opt": True}
 	SpecialDarkMagicianDeck = {"effect": effect.specialDarkMagicianDeck,
-	                "effectTrigger": effTrigger.summon}
+	                "effectTrigger": effTrigger.summon,
+	                "opt": True}
 	Atk0 = {"effect": effect.atk0,
-	        "effectTrigger": effTrigger.defend}
+	        "effectTrigger": effTrigger.defend,
+	                "opt": True}
 
-	# # Magician Deck
-	# global darkMagician
-	# global darkMagician2
-	# global darkGMagician
-	# global darkGMagician2
-	# global lemonGirl
-	# global lemonGirl2
-	# global magicianRobe
-	# global magicianRobe2
-	# global chocolateGirl
-	# global chocolateGirl2
-	# global appleGirl
-	# global appleGirl2
-	# global kiwiGirl
-	# global kiwiGirl2
-	# global berryGirl
-	# global berryGirl2
-	# global ebonIllusion
-	# global ebonIllusion2
-	# global magiMagiGirl
-	# global magiMagiGirl2
+	# Magician Deck
 
 	darkMagician = card("Dark Magician", 2500, 1, [EffectImmune])
 	darkMagician2 = copy.deepcopy(darkMagician)
@@ -346,45 +276,34 @@ def card_player_deck_setup():
 	magiMagiGirl2 = copy.deepcopy(magiMagiGirl)
 
 	SpecialStormBirdHand = {"effect": effect.specialStormBirdHand,
-	                        "effectTrigger": effTrigger.summon}
+	                        "effectTrigger": effTrigger.summon,
+	                "opt": True}
 	SpecialStormRiderDeck = {"effect": effect.specialStormRiderDeck,
-	                        "effectTrigger": effTrigger.summon}
+	                        "effectTrigger": effTrigger.summon,
+	                "opt": True}
 	DiscSpecStormGY = {"effect": effect.discSpecStormGY,
-	                        "effectTrigger": effTrigger.summon}
+	                        "effectTrigger": effTrigger.summon,
+	                "opt": True}
 	ControlStormriderDraw2 = {"effect": effect.controlStormriderDraw2,
-	                        "effectTrigger": effTrigger.summon}
+	                        "effectTrigger": effTrigger.summon,
+	                "opt": True}
 	ControlStormriderDestroy = {"effect": effect.controlStormriderDestroy,
-	                        "effectTrigger": effTrigger.summon}
+	                        "effectTrigger": effTrigger.summon,
+	                "opt": True}
 	GrantStormriderAttack = {"effect": effect.grantStormriderAttack,
-	                        "effectTrigger": effTrigger.summon}
+	                        "effectTrigger": effTrigger.summon,
+	                "opt": True}
 	TribToSpecialStormBird = {"effect": effect.tribToSpecialStormBird,
-	                        "effectTrigger": effTrigger.summon}
+	                        "effectTrigger": effTrigger.summon,
+	                "opt": True}
 	StormBirdGain400 = {"effect": effect.stormBirdGain400,
-	                        "effectTrigger": effTrigger.summon}
+	                        "effectTrigger": effTrigger.summon,
+	                "opt": True}
 	StormRiderGain400 = {"effect": effect.stormRiderGain400,
-	                        "effectTrigger": effTrigger.summon}
+	                        "effectTrigger": effTrigger.summon,
+	                "opt": True}
 
 	# # Storm Deck
-	# global stormRiderAllyson
-	# global stormRiderAllyson2
-	# global stormBirdZephris
-	# global stormBirdZephris2
-	# global stormRiderHellion
-	# global stormRiderHellion2
-	# global stormBirdHellDiver
-	# global stormBirdHellDiver2
-	# global stormRiderCanto
-	# global stormRiderCanto2
-	# global stormBirdSkylar
-	# global stormBirdSkylar2
-	# global stormRiderNess
-	# global stormRiderNess2
-	# global stormBirdGale
-	# global stormBirdGale2
-	# global stormRiderMason
-	# global stormRiderMason2
-	# global stormBirdAce
-	# global stormBirdAce2
 
 	stormRiderAllyson = card("Allyson: Storm Rider", 800, 0, [SpecialStormBirdHand])
 	stormRiderAllyson2 = copy.deepcopy(stormRiderAllyson)
@@ -408,68 +327,63 @@ def card_player_deck_setup():
 	stormBirdAce2 = copy.deepcopy(stormBirdAce)
 
 	Atk100Grave = {"effect": effect.atk100GrantAll,
-	               "effectTrigger": effTrigger.graveyard}
+	               "effectTrigger": effTrigger.graveyard,
+	                "opt": True}
 	SpecialFireKingGrave = {"effect": effect.specialFireKingGrave,
-	               "effectTrigger": effTrigger.summon}
+	               "effectTrigger": effTrigger.summon,
+	                "opt": True}
 	SpecialEffectDestruction = {"effect": effect.specialEffDestruction,
-	                            "effectTrigger": effTrigger.otherCardEffDestruction}
+	                            "effectTrigger": effTrigger.otherCardEffDestruction,
+	                "opt": True}
 	DestroyInHand = {"effect"       : effect.destroyInHand,
-	                  "effectTrigger": effTrigger.summon}
+	                  "effectTrigger": effTrigger.summon,
+	                "opt": True}
 	FireSearchDest = {"effect": effect.effectFireSearch,
-	                  "effectTrigger": effTrigger.destructionEff}
+	                  "effectTrigger": effTrigger.destructionEff,
+	                "opt": True}
 	SpecialFormationDeck = {"effect": effect.specialFormationDeck,
-	                  "effectTrigger": effTrigger.summon}
+	                  "effectTrigger": effTrigger.summon,
+	                "opt": True}
 	SpecialFormationDeckDest = {"effect": effect.specialFormationDeck,
-	                  "effectTrigger": effTrigger.destructionEff}
+	                  "effectTrigger": effTrigger.destructionEff,
+	                "opt": True}
 	Atk500Summon = {"effect": effect.atk500GrantAll,
-	                  "effectTrigger": effTrigger.summon}
+	                  "effectTrigger": effTrigger.summon,
+	                "opt": True}
 	SpecialFistDeck = {"effect": effect.specialFistDeckLess2000,
-	                   "effectTrigger": effTrigger.destroyBattle}
+	                   "effectTrigger": effTrigger.destroyBattle,
+	                "opt": True}
 	Atk500Kill = {"effect"       : effect.atk500GrantAll,
-	                "effectTrigger": effTrigger.destroyBattle}
+	                "effectTrigger": effTrigger.destroyBattle,
+	                "opt": True}
 	TribDraw2 = {"effect": effect.tribDisc1Draw2,
-	             "effectTrigger": effTrigger.summon}
+	             "effectTrigger": effTrigger.summon,
+	                "opt": True}
 	SearchFireDeck = {"effect": effect.effectFireSearch,
-	                  "effectTrigger": effTrigger.summon}
+	                  "effectTrigger": effTrigger.summon,
+	                "opt": True}
 	MillieGrav = {"effect"       : effect.Mill,
-	          "effectTrigger": effTrigger.graveyard}
+	          "effectTrigger": effTrigger.graveyard,
+	                "opt": True}
 	MillieBat = {"effect"       : effect.Mill,
 	          "effectTrigger": effTrigger.destructionBat}
 	DestroyGrav = {"effect": effect.Destroy,
-	               "effectTrigger": effTrigger.graveyard}
+	               "effectTrigger": effTrigger.graveyard,
+	                "opt": True}
 	PheonixResurrection = {"effect": effect.PhoenixResurrection,
-	                       "effectTrigger": effTrigger.destructionEff}
+	                       "effectTrigger": effTrigger.destructionEff,
+	                "opt": True}
 	FFCheckSummon = {"effect": effect.FFSummon,
-	                 "effectTrigger": effTrigger.summon}
+	                 "effectTrigger": effTrigger.summon,
+	                "opt": True}
 
 	# global fireKingArvata
-	# global fireKingArvata2
-	# global fireKingYaksha
-	# global fireKingYaksha2
-	# global fireKingGarunix
-	# global fireKingGarunix2
-	# global fireKingBarong
-	# global fireKingBarong2
-	# global fireFistBear
-	# global fireFistBear2
-	# global fireFistHawk
-	# global fireFistHawk2
-	# global fireFistKarin
-	# global fireFistKarin2
-	# global fireFistGorilla
-	# global fireFistGorilla2
-	# global fireFormationTensu
-	# global fireFormationTensu2
-	# global fireFormationTenki
-	# global fireFormationGyokkou
-	# global fireFormationSeito
 
 	fireKingArvata = card("Fire King Arvata", 1800, 0, [SpecialFistDeck, SpecialEffectDestruction])  # Special monster from Grave | Draw Card
 	fireKingArvata2 = copy.deepcopy(fireKingArvata)
 	fireKingYaksha = card("Fire King Yaksha", 1900, 0, [SpecialEffectDestruction, FireSearchDest])  # Special Summons itself from hand | Destroys a card on field
 	fireKingYaksha2 = copy.deepcopy(fireKingYaksha)
 	fireKingGarunix = card("Fire King High Avatar Garunix", 2700, 1, [PheonixResurrection, MillieBat])  # Destroys all monsters on board, summons next turn
-	# fireKingGarunix2 = copy.deepcopy(fireKingGarunix)
 	fireKingBarong = card("Fire King Barong", 1800, 0, [DestroyInHand, DestroyGrav])  # Special Summons itself from hand, then destroy a card | Searches
 	fireKingBarong2 = copy.deepcopy(fireKingBarong)
 	fireFistBear = card("Fire Fist Bear", 1200, 0, [SpecialFormationDeck, SpecialFormationDeckDest])  # Special Summons a Formation
@@ -487,46 +401,49 @@ def card_player_deck_setup():
 	fireFormationSeito = card("Fire Formation Seito", 0, 1, [FFCheckSummon, Atk100Grave])  # if 4 fire different fire fist monsters in grave, Special summon 4 fire fists for Tribute | Grant ATK in grave
 
 	SpecialJungleGrave = {"effect": effect.specialJungleGrave,
-	                      "effectTrigger": effTrigger.summon}
+	                      "effectTrigger": effTrigger.summon,
+	                "opt": True}
 	GrantBattleImmune = {"effect": effect.GrantBattleDestructionKarliah,
-	                     "effectTrigger": effTrigger.summon}
+	                     "effectTrigger": effTrigger.summon,
+	                "opt": True}
 	EffectJungleSearch = {"effect": effect.effectJungleSearch,
-	                     "effectTrigger": effTrigger.summon}
+	                     "effectTrigger": effTrigger.summon,
+	                "opt": True}
 	EffectKarliahSearch = {"effect": effect.effectKarliahSearch,
-	                       "effectTrigger": effTrigger.graveyard}
+	                       "effectTrigger": effTrigger.graveyard,
+	                "opt": True}
 	grantSelfFloat = {"effect": effect.GrantSelfFloat,
-	                     "effectTrigger": effTrigger.graveyard}
+	                     "effectTrigger": effTrigger.graveyard,
+	                "opt": True}
 	KarliahDoubleAttack = {"effect": effect.karliahDoubleAttack,
-	                       "effectTrigger": effTrigger.summon}
+	                       "effectTrigger": effTrigger.summon,
+	                "opt": True}
 	ControlKarliahDestroy = {"effect": effect.controlKarliahDestroy,
-	                         "effectTrigger": effTrigger.summon}
+	                         "effectTrigger": effTrigger.summon,
+	                "opt": True}
 	Grant800Grav = {"effect": effect.grant800,
-	                "effectTrigger": effTrigger.graveyard}
+	                "effectTrigger": effTrigger.graveyard,
+	                "opt": True}
 	SpecialJungleDeck = {"effect": effect.specialJungleDeck,
-	                     "effectTrigger": effTrigger.summon}
+	                     "effectTrigger": effTrigger.summon,
+	                "opt": True}
 	SpecialKarliahDeck = {"effect": effect.specialKarliahDeck,
-	                      "effectTrigger": effTrigger.summon}
+	                      "effectTrigger": effTrigger.summon,
+	                "opt": True}
 	GrantEffectImmune = {"effect": effect.GrantEffectImmuneKarliah,
-	                     "effectTrigger": effTrigger.summon}
+	                     "effectTrigger": effTrigger.summon,
+	                "opt": True}
 	JungleDiscDefense = {"effect": effect.jungleDiscDefense,
 	                     "effectTrigger": effTrigger.discardDest}
 	KarliahJungleDefenseBat = {"effect": effect.JungleDefense,
-	                        "effectTrigger": effTrigger.destructionBat}
+	                        "effectTrigger": effTrigger.destructionBat,
+	                "opt": False}
 	KarliahJungleDefenseEff = {"effect": effect.JungleDefense,
-	                        "effectTrigger": effTrigger.destructionEff}
+	                        "effectTrigger": effTrigger.destructionEff,
+	                "opt": False}
 	CannotBeAttacked = {"effect": effect.cannotBeAttacked,
-	                    "effectTrigger": effTrigger.n_a}
-
-	global jungleTravellerKarliah  # Searches a Jungle on Summon / Double Summon
-	global mimicMeercat  # grants Karliah float eff to return herself to hand / copies atk
-	global duckDucker  # grants Karliah OPT battle destruction / cannot be targetted for an attack
-	global wokeWombat  # SS a Jungle from Grave / gy: search a Karliah
-	global divingOsprey  # grants Karliah double atk / Float: draw 1
-	global crouchingTiger  # if you control Karliah, destroy 1 monster / Float: Grant a Karliah 800 Atk
-	global tentativeTurtle  # if Karliah would be destroyed by Card Effects; You can discard this card instead / Summon: Bounce a Monster
-	global bushTourGuide  # SS a Jungle from Deck
-	global squishySquid  # if Karliah would be returned to Hand; You can discard this card Instead / Summon: discard 1 draw 2
-	global followMeFalcon  # Summon: Search karliah
+	                    "effectTrigger": effTrigger.n_a,
+	                "opt": False}
 
 	jungleTravellerKarliah = card("Jungle Traveller: Karliah", 1300, 0, [EffectJungleSearch, DoubleSummon, KarliahJungleDefenseBat, KarliahJungleDefenseEff])
 	mimicMeercat = card("Jungle Companion: Mimic Meercat!", 0, 0, [grantSelfFloat, MatchAttack])
@@ -548,7 +465,6 @@ def card_player_deck_setup():
 	tentativeTurtle2 = copy.deepcopy(tentativeTurtle)
 	bushTourGuide2 = copy.deepcopy(bushTourGuide)
 	squishySquid2 = copy.deepcopy(squishySquid)
-	# followMeFalcon2 = copy.deepcopy(followMeFalcon)
 
 	CyberDeck = []
 	VampireDeck = []
@@ -962,6 +878,23 @@ def card_player_deck_setup():
 
 	print("--------------------------------------")
 
+	## NAVI: Placeholder to move to Card Add
+	# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
+	# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
+	# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
+	# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
+	# _player.hand.append()
+	# _player.monfield.append()
+	# _player.gy.append()
+	# _foe.hand.append()
+	# _foe.monfield.append()
+	# _foe.gy.append()
+	# -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------
+	# -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------
+	# -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------
+	# -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------
+	# -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------
+
 	time.sleep(0.5)
 
 	print("\n" * 100)
@@ -1254,23 +1187,6 @@ def turnMenu(currentPlayer: duelist, passivePlayer: duelist):
 	# DRAW PHASE
 	if firstTurn == 0:
 		currentPlayer.draw(4)
-		# currentPlayer.draw(0)
-
-		## NAVI: Placeholder to move to Card Add
-		# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
-		# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
-		# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
-		# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
-		# _player.hand.append()
-		# _player.gy.append()
-		# _foe.hand.append()
-		# _foe.monfield.append(jungleTravellerKarliah)
-		# _foe.gy.append()
-		# -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------
-		# -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------
-		# -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------
-		# -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------
-		# -------------^^-Add Cards here to Test-^^---------------------------------------------------------------------
 
 		passivePlayer.draw(3)
 
