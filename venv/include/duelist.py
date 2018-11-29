@@ -391,7 +391,7 @@ class duelist:
 		return
 
 	# Special Summon from Graveyard
-	def ssGraveyard(self):
+	def ssGraveyard(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 
 		if self.gy.__len__() == 0:
 			print("Graveyard is Empty")
@@ -427,6 +427,8 @@ class duelist:
 		print(settings.green + "{}".format(specialedCard.name) + settings.end + " has been Special Summoned".format(specialedCard.name))
 		print(settings.green + "ATK: {} | Effect: ".format(str(specialedCard.atkPoints), specialedCard.effectText) + settings.end + settings.darkcyan + "{}".format(specialedCard.effectText) + settings.end)
 		time.sleep(1)
+
+		specialedCard.ResolveEffect(effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer)
 
 	# Return card from Graveyard to Hand
 	def graveyardToHand(self):
@@ -780,6 +782,10 @@ class duelist:
 		x = 0
 		while x < noOfCards:
 			while True:
+				if self.hand.__len__() <= 0:
+					print("Hand Empty")
+					return
+
 				self.checkHand()
 
 				selection = input("~~Please select a monster to Shuffle:")

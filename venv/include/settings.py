@@ -75,17 +75,20 @@ def resetStandbyEffectChecker():
 	standbyEffectList = []
 
 
-def addEndEffectChecker(monster, effect):
-	endEffectList.append([monster, effect])
+def addEndEffectChecker(monster, effect, player):
+	endEffectList.append([monster, effect, player])
 
-def resolveEndEffects(effplayer):
+def resolveEndEffects():
 	if endEffectList:
-		for entry in endEffectList:
-			entry[1].EndResolution(1, effplayer, entry[0])
+		for entry in endEffectList:  # Entry: [monster, effect, player]
+			entry[1].EndResolution(1, entry[2], entry[0])
+			# effect.EndReslution(resolve, player, monster)
 
 		resetEndEffectChecker()
+
+		return True
 	else:
-		return
+		return False
 
 def resetEndEffectChecker():
 	global endEffectList

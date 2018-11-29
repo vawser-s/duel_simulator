@@ -406,6 +406,9 @@ def card_player_deck_setup():
 	GrantBattleImmune = {"effect": effect.GrantBattleDestructionKarliah,
 	                     "effectTrigger": effTrigger.summon,
 	                "opt": True}
+	EffectJungleSearch = {"effect": effect.effectJungleSearch,
+	                     "effectTrigger": effTrigger.summon,
+	                "opt": True}
 	EffectKarliahSearch = {"effect": effect.effectKarliahSearch,
 	                       "effectTrigger": effTrigger.graveyard,
 	                "opt": True}
@@ -725,7 +728,7 @@ def card_player_deck_setup():
 		"desc"      : "      " + settings.darkcyan + "A professional Speed Duelist who like to ride the wind on his hoverboard. His deck focuses on swarming Riders which power up his Stormbirds" + settings.end,
 		"deck"      : StormDeck,
 		"deckName"  : "Stormriders",
-		"deckDesc"  : "Swarming / Stealing Monsters",
+		"deckDesc"  : "Swarming / Gaining Effects from controlling Storm Riders",
 		"voicelines": []
 	}
 
@@ -883,7 +886,6 @@ def card_player_deck_setup():
 	# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
 	# -------------vv-Add Cards here to Test-vv---------------------------------------------------------------------
 	# _player.hand.append()
-	_player.hand.append(jungleTravellerKarliah)
 	# _player.monfield.append()
 	# _player.gy.append()
 	# _foe.hand.append()
@@ -1097,11 +1099,13 @@ def mainMenu():
 				while True:
 					if turnOrder == 2:
 						exitProg = turnMenu(_foe, _player)
-						settings.resolveEndEffects(_foe)
+						if settings.resolveEndEffects():
+							time.sleep(1)
 						turnOrder = 1
 					elif turnOrder == 1:
 						exitProg = turnMenu(_player, _foe)
-						settings.resolveEndEffects(_player)
+						if settings.resolveEndEffects():
+							time.sleep(1)
 						turnOrder = 2
 					else:
 						print("Duel Machine Broke: Turn Error")
@@ -1525,7 +1529,6 @@ def battleMenu(turnPlayer: duelist, passivePlayer: duelist):
 				damage = atkMon.atkPoints
 				atkTarget = None
 
-			##TODO Fix logic here for damage calculation
 			# Monster Effect: Attacker (Returns Damage)
 			if atkMon.checkResolve(effTrigger.attack):
 				damage = atkMon.ResolveEffect(effTrigger.attack, turnPlayer, passivePlayer, atkMon, atkTarget, turnPlayer.gy, passivePlayer.gy, turnPlayer)

@@ -38,7 +38,6 @@ class effect:
 		self.nextraParam = extraParam2
 		self.dextraParam = extraParam3
 
-	## TODO Refactor parameters
 	def resolve(self, effplayer, opponent, effectMon, oppMon, effgy, oppgy, turnPlayer):
 		raise NotImplementedError("Subclass must implement abstract method")
 
@@ -1390,7 +1389,7 @@ class endphaseSearchSpecificDeck(effect):
 		print("--------------------------------------")
 		time.sleep(1.3)
 
-		settings.addEndEffectChecker(effectMon, self)
+		settings.addEndEffectChecker(effectMon, self, effplayer)
 		print("At the end of the turn, a " + settings.green + "{}".format(self.extraParam) + settings.end + " monster will be added to {}'s Hand".format(effplayer.name))
 
 class ffSummon(effect):
@@ -1638,7 +1637,7 @@ GrantSelfFloat = addEffectSpecific("Grant a 'Karliah' monster on your field the 
                                                                                                                                                          "effectTrigger": effTrigger.graveyard,
 	                "opt": True}, "Return A Copy of this card from your graveyard to your hand", "Karliah")
 GrantEffectImmuneKarliah = addEffectSpecific("Grant a 'Karliah' monster on your field the effect: '(OPT) Cannot be Destroyed by Card Effects'", {"effect": effectImmune, "effectTrigger": effTrigger.destructionEff,
-	                "opt": True}, "(OPT) Cannot be Destroyed by Card Effects" "Karliah")
+	                "opt": True}, "(OPT) Cannot be Destroyed by Card Effects", "Karliah")
 jungleDiscDefense = discardDefense("You can discard this card to prevent Karliah from being destroyed")
 
 # Other Effects
